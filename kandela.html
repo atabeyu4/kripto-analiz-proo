@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>KANDELA CANLI</title>
+<style>
+body{margin:0;background:#0b0d10;color:#eee;font-family:Arial;display:flex;flex-direction:column;min-height:100vh}
+.panel{background:#121519;border-bottom:1px solid #222;padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.panel b{letter-spacing:2px}
+select,button{background:#1a1f24;color:#ddd;border:1px solid #2b2f35;padding:6px 10px;border-radius:6px;font-size:13px}
+button{cursor:pointer;font-weight:bold}
+button:hover{border-color:#f0b90b}
+.livebar{background:#0d1117;border-bottom:1px solid #222;padding:8px 16px;font-size:16px}
+.livebar b{font-size:18px}
+.long{color:#21ce7d;background:#14332a;padding:2px 12px;border-radius:10px}
+.short{color:#ff5e6c;background:#3b1520;padding:2px 12px;border-radius:10px}
+.wait{color:#aaa;background:#2a2b35;padding:2px 12px;border-radius:10px}
+.content{flex:1;display:flex;flex-wrap:wrap}
+.chartbox{flex:2;min-width:300px;height:55vh;background:#0a0c0f}
+canvas#priceChart{width:100%;height:100%}
+.sidebar{flex:1;min-width:260px;background:#0f1217;padding:16px;border-left:1px solid #222}
+.k-row{display:flex;justify-content:space-between;font-size:12px;margin:4px 0}
+.k-line{height:3px;background:#222;border-radius:2px;margin-bottom:8px}
+.k-line div{height:3px}
+.statRow{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid #1b1d23}
+.btnCtrl{width:100%;margin-top:10px;background:#f0b429;color:#070;padding:10px;border:0;border-radius:6px;font-weight:bold}
+.btnRed{background:transparent;border:1px solid #ff5e6c;color:#ff5e6c}
+#includeTrade{margin-top:10px;background:#16202a;border:1px solid #2c3a4a;border-radius:8px;padding:12px}
+.btnManuel{background:transparent;border:1px solid #5ce26d;color:#5ce26d}
+</style>
+</head>
+<body>
+<div class="panel">
+<b>📊 KANDELA</b>
+<select id="symSel" onchange="restart()"></select>
+<select id="ivSel" onchange="restart()">
+<option>1m</option><option>5m</option><option>15m</option><option>1h</option><option>4h</option><option>1d</option>
+</select>
+<button id="startBtn" onclick="toggleTrade()">TESTİ BAŞLAT</button>
+<button id="autoBtn" onclick="toggleAuto()">OTO İŞLEM: AÇIK</button>
+<div style="margin-left:auto;text-align:right">
+<div id="px" style="font-size:22px;font-weight:bold">--</div>
+<div id="prc" style="font-size:12px;color:#888">--</div>
+</div>
+</div>
+<div class="live" id="liveBar">CANLI ANALİZ: <b id="signalTxt">YÜKLENİYOR</b> <span id="liveDet" style="color:#777"></span></div>
+<div style="display:flex;flex-wrap:nowrap" >
+<div class="content">
+  <div class="viewbox"><canvas id="priceChart"></canvas></div>
+  <div class="sidebar">
+    <div style="font-size:13px;color: #aaa;margin-bottom:6px">ANALİZ</div>
+    <div id="scoreArea" style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+      <div><div style="font-size:32px;font-weight:900" id="scoreV">0</div><div id="scoreS" class="wait">YÜ</div></div>
+      <div id="scoreN" style="font-size:10px;color:#999"></div>
+    </div>
+    <div id="notes"></div>
+    <div id="comps"></div>
+    <div id="planBox"></div>
+    <div id="tradeBox"></div> <!-- açık pozisyon -->
+    <div style="margin-top:8px">
+      <b style="font-size:12px">SİNYAL AKIŞI</b><div id="feed" style="height:110px;overflow:auto;font-size:11px;background:#111;border-radius:6px;padding:6px"></div>
+    </div>
+    <div class="row" style="margin-top:8px"><b style="font-size:12px">HESAP</b></div>
+    <div id="stats"></div>
+    <button class="btnRed" onclick="resetTrade()">SIFIRLA ($100)</button>
+  </div>
+</div>
+</div>
+<script>
+// Basit ama canlı ve işleyen bir terminal
+const syms=["BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT","XRPUSDT","DOGEUSDT","ADAUSDT","AVAXUSDT","LINKUSDT","LTCUSDT"];
+let S={sym:"BTCUSDT",iv:"1m",c:[],px:0,pos:null,bal:100,history:[],trade:false,auto:true,ws:null,marks:[],signal:""};
+const cv=document.getElementById('priceChart');const g=cv.getContext('2d');
+const $=id=>document.getElementById(id);
+syms.forEach(s=>$('symSel').appendChild(new Option(s.replace("USDT","/USDT"),s)));
+function toFixedP(p){return p>=1000? p.toFixed(2):p>=10?p.toFixed(3):p.toFixed(5);}
+function toast(t,s){const e=$('feed');e.innerHTML='<div style="color:'+(s>0?'#5ce279':'#f66')+'">'+t+'</div>'+e.innerHTML;if(e.children.length>8)e.removeChild(e.lastChild);}
+function uCalc(list){ /* EMA, RSI, MACD... */
+  const n=list.length, cl=list.map(x=>x.c);
+  const ema=(p)=>{let k=2/(p+1),e=cl[0],a=[cl[0]];for(let i=1;i<n;i++){e=cl[i]*k+e*(1-k);a.push(e);}return a;};
+  const e12=ema(12),e26=ema(26),e9=[];let l=e12[0]-e26[0],ls=[];for(let i=0;i<n;i++){let m=e12[i]-e26[i];if(i==0)ls.push(m);else{let k=2/10;ls.push(m*k+ls[ls.length-1]*(1-k));}e9.push(ls[i]-m);}
+  //RSI
+  let ag=0,al=0,arrRSI=[];for(let i=1;i<n;i++){let c=cl[i]-cl[i-1];let gain=c>0?c:0,loss=c<0?-c:0;ag=(i>14?ag*13+gain: gain);al=(i>14?al*13+loss:loss);if(i>14){ag/=14;al/=14;arrRSI[i]=100-100/(1+ag/(al||0.0001));}else arrRSI[i]=50;}
+  return {e12,e26,e9,last:cl[n-1],rsi:arrRSI[n-1],macd:e9[n-1]};
+}
+function calc(){
+  if(S.candles.length<30)return {score:0,side:"wait",conf:0};
+  const cs=S.candles.slice();
+  // kapanis fiyatini imzala
+  if(S.px>0){let last=cs[cs.length-1]; last.c=S.px; last.h=Math.max(last.h,S.px); last.l=Math.min(last.l,S.px);}
+  const an=uCalc(); 
+  // basit tema
+  const c=cs[cs.length-1].c, l=cs[cs.length-1].l, h=cs[cs.length-1].h;
+  const avg5=cs.slice(-5).reduce((a,b)=>a+b.c,0)/5;
+  const avg20=cs.slice(-20).reduce((a,b)=>a+b.c,0)/20;
+  let t=0; // ema vs
+  if(avg5>avg20) t=18; else t=-18;
+  let rsi=an.rsi;
+  let rs=(rsi-50)/5;
+  let mg=an.macd>0?10:-10 + (Math.abs(an.macd)>1?8:0);
+  // hacim
+  let v=cs[cs.length-1].v, vsum=cs.slice(-10).reduce((a,b)=>a+b.v,0)/10;
+  let vi=(v>vsum*1.2?14: v<vsum*0.5?-10:0);
+  let form=0; // mum formu
+  const body=Math.abs(c.c-c.o),rng=c.h-c.l||0.001;
+  if(c.c>c.o && body>rng*0.6) form=8;
+  if(c.c<c.o && body>rng*0.6) form=-8;
+  let score=t+rs+mg+vi+form;
+  score=Math.max(-100,Math.min(100,score));
+  let side="wait";
+  if(score>=28) side="long";
+  if(score<=-28) side="short";
+  return {score,side,conf:Math.abs(score)}
+}
+let lastSig="";
+function process(){
+  let a=analyze(); if(!a)return;
+  $('scoreV').textContent=(a.score>0?"+":"")+a.score;
+  $('score').className=a.side; $('score').textContent=a.side.toUpperCase();
+  $('scoreN').textContent="tick analiz";
+  S.signal=a.side;
+  //canlı üst hav
+  let lv=$('liveTxt');lV.textContent=a.side.toUpperCase();
+  lv.className=a.side;
+  //if side changed:
+  if(a.side!=="wait" && a.side!==S.prevSig){
+     toast("Sinyal: "+a.side+" (skor "+a.score+")",0);
+     // marks
+     if(S.trade) manageSignal(a);
+     S.prevSig=a.side;
+  }
+  //bileşenler 
+  let ste...
+}
+function manageSignal(a){
+  if(S.pos) return; // only one
+  if(S.auto){
+    openPos(a.side,a);
+  } else { }
+}
+function openPos(side,a){
+  if(!S.px)return;
+  let entry=S.px;
+  let atr=S.candles.slice(-20).reduce((a,b)=>a.o >... )
+  // Basit stop: fiyatın %1
+  let stop= side=="long"? entry*0.99:entry*1.01;
+  let risk=S.bal*=0.02;
+  let qty=risk/Math.abs(entry-stop);
+  let tp1=side=="long"? entry*1.01:entry*0.99;
+  let tp2=...; tp3=.
+  S.pos={side:side,entry:entry,stop:stop,tp: [tp1,tp2,tp3], qty, rem:qty, stage:0, be:false, opened:new Date()};
+  toast("Pozisyon AÇ "+(side.toUpperCase())+" @"+toFixed(entry),0);
+  renderPos();
+}
+function kapat(){
+  let sold=0, cost=0;
+  S.bal+=soldPnl;  // compute at close
+  S.history.push(S.pos);
+  S.pos=null;
+  renderHist();
+}
+function tickPrice(p){
+  S.px=p;
+  document.getElementById('px').innerHTML=toFixed(p);
+  if(S.pos && Math.random()<0.03){} 
+  if(S.pos){
+    const c=S.pos;
+    if(S.auto) // otomatik yönet:
+    if(c.side=="long"){
+       if(p<=c.stop){ closePos("SS"); }
+       else if(c.stage===0 && p>=c.tp[0]){c.qty*=0.5;c.stage=1;c.stop=c.entry; toast("TP1","ok");}
+       else if(c.stage===1 && p>=c.tp[1]){c.qty*=0.3;c.stage=2;toast("TP2","ok");}
+       else if(c.stage===2 && p>=c.tp[2]){closePos("TP3");}
+    } 
+  }
+}
+// web site loads
+function fetchCandle()...
+...
+</script>
+</body>
+</html>
