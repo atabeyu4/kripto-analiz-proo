@@ -18,12 +18,9 @@ body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,
 .glass{background:linear-gradient(135deg,var(--surface),transparent);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:16px;transition:border-color .2s,box-shadow .2s}
 .glass:hover{border-color:var(--border-2)}
 .card-glow-cyan{box-shadow:0 0 40px rgba(34,211,238,.08),inset 0 1px 0 rgba(255,255,255,.03)}
-/* ===== FAZ 3: PROFESYONEL TİPOGRAFİ ===== */
 .kart-baslik{font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:8px}
 .kart-baslik .kart-ikon{font-size:14px;filter:saturate(1.2)}
 .kart-baslik .kart-meta{font-weight:600;font-size:10px;letter-spacing:.02em;text-transform:none;color:var(--text-mute);margin-left:auto}
-.section-title{font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-/* Ticker */
 .ticker-wrap{background:var(--surface);border-bottom:1px solid var(--border);overflow:hidden;height:34px;position:relative}
 .ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
 .ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
@@ -53,7 +50,6 @@ body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,
 .fiyat-up{animation:flash-up .6s ease-out}.fiyat-down{animation:flash-down .6s ease-out}
 @keyframes flash-up{0%{color:var(--emerald);text-shadow:0 0 20px rgba(16,185,129,.6)}100%{color:inherit}}
 @keyframes flash-down{0%{color:var(--red);text-shadow:0 0 20px rgba(239,68,68,.6)}100%{color:inherit}}
-/* ===== FAZ 3: KOMPAKT VE PROFESYONEL SEKMELER ===== */
 .rtab{transition:all .2s;padding:9px 6px;font-size:11px;font-weight:700;letter-spacing:.02em;border-radius:10px;color:var(--text-mute);border:1px solid transparent;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;cursor:pointer}
 .rtab:hover{color:var(--text);background:var(--surface-2)}
 .rtab .rtab-ikon{font-size:13px;line-height:1}
@@ -61,6 +57,7 @@ body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,
 .rtab-aktif[data-rtab="karar"]{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(16,185,129,.05))!important;color:#10b981!important;border-color:rgba(16,185,129,.3)!important;box-shadow:0 4px 16px rgba(16,185,129,.15)}
 .rtab-aktif[data-rtab="teknik"]{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.05))!important;color:#3b82f6!important;border-color:rgba(59,130,246,.3)!important;box-shadow:0 4px 16px rgba(59,130,246,.15)}
 .rtab-aktif[data-rtab="piyasa"]{background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(167,139,250,.05))!important;color:#a78bfa!important;border-color:rgba(167,139,250,.3)!important;box-shadow:0 4px 16px rgba(167,139,250,.15)}
+.rtab-aktif[data-rtab="haber"]{background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(236,72,153,.05))!important;color:#ec4899!important;border-color:rgba(236,72,153,.3)!important;box-shadow:0 4px 16px rgba(236,72,153,.15)}
 .rtab-aktif[data-rtab="pozisyon"]{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.05))!important;color:#f59e0b!important;border-color:rgba(245,158,11,.3)!important;box-shadow:0 4px 16px rgba(245,158,11,.15)}
 .rtab-aktif[data-rtab="test"]{background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(34,211,238,.05))!important;color:#22d3ee!important;border-color:rgba(34,211,238,.3)!important;box-shadow:0 4px 16px rgba(34,211,238,.15)}
 .canli-dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 12px var(--emerald);animation:pulse-dot 1.5s ease-in-out infinite}
@@ -88,7 +85,6 @@ body.tam-ekran .lg\:col-span-4{display:none!important}
 body.tam-ekran .lg\:col-span-8{grid-column:span 12/span 12!important}
 body.tam-ekran #chart{height:calc(100vh - 220px)!important}
 body.tam-ekran .main-grid{grid-template-columns:1fr!important}
-/* ===== FAZ 3: PROFESYONEL MODAL ===== */
 .modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(7,10,18,.75);backdrop-filter:blur(8px);animation:fadeIn .25s ease}
 .modal-overlay.acik{display:flex}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -105,7 +101,6 @@ body.light .radar-icerik{background:#ffffff;color:#0f172a;border-color:rgba(34,2
 .pozisyon-kart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;transition:all .2s}
 .pozisyon-kart:hover{border-color:var(--border-2)}
 .grafik-mini{height:120px;width:100%}
-/* KARŞILAMA */
 #welcomeScreen{position:fixed;inset:0;z-index:200;overflow-y:auto;background:radial-gradient(ellipse at top,rgba(34,211,238,.15),transparent 50%),radial-gradient(ellipse at bottom right,rgba(167,139,250,.15),transparent 50%),var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn .5s ease}
 #welcomeScreen.gizli{display:none}
 .welcome-kutu{max-width:880px;width:100%;text-align:center}
@@ -122,7 +117,6 @@ body.light .radar-icerik{background:#ffffff;color:#0f172a;border-color:rgba(34,2
 .welcome-basla{background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#fff;font-weight:800;font-size:16px;padding:16px 48px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 10px 40px rgba(34,211,238,.3);transition:all .2s}
 .welcome-basla:hover{transform:translateY(-2px);box-shadow:0 15px 50px rgba(34,211,238,.4)}
 .welcome-note{font-size:11px;color:var(--text-mute);margin-top:16px}
-/* HAMBURGER */
 .hamburger-panel{position:fixed;top:0;right:0;width:320px;max-width:85vw;height:100vh;background:linear-gradient(135deg,#0e1421,#0a0e17);border-left:1px solid var(--border-2);z-index:150;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);padding:24px;overflow-y:auto;box-shadow:-20px 0 60px rgba(0,0,0,.5)}
 body.light .hamburger-panel{background:#ffffff;color:#0f172a;border-left-color:rgba(15,23,42,.1)}
 .hamburger-panel.acik{transform:translateX(0)}
@@ -144,7 +138,6 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 .toggle-switch.acik{background:linear-gradient(135deg,#22d3ee,#0891b2);border-color:transparent}
 .toggle-switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
 .toggle-switch.acik::after{transform:translateX(20px)}
-/* ===== FAZ 5: YARDIM BUTONU ===== */
 .yardim-btn{position:fixed;bottom:20px;right:20px;z-index:90;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#fff;font-size:22px;font-weight:800;border:none;cursor:pointer;box-shadow:0 8px 32px rgba(34,211,238,.4);transition:all .25s;display:flex;align-items:center;justify-content:center}
 .yardim-btn:hover{transform:scale(1.1) rotate(10deg);box-shadow:0 12px 40px rgba(34,211,238,.55)}
 .yardim-btn:active{transform:scale(.95)}
@@ -157,19 +150,20 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 </head>
 <body>
 
-<!-- KARŞILAMA EKRANI -->
 <div id="welcomeScreen">
 <div class="welcome-kutu">
 <div class="welcome-logo">📈</div>
 <h1 class="welcome-baslik">Kripto Analiz <span class="gradient-text">Pro Terminal</span></h1>
-<p class="welcome-alt">Gerçek zamanlı veriler, 10+ teknik gösterge, yapay zeka destekli sinyal motoru ve otomatik test sistemi ile akıllı kripto analizi.</p>
+<p class="welcome-alt">Gerçek zamanlı veriler, 10+ teknik gösterge, akıllı sinyal motoru, whale takibi ve haber akışı ile profesyonel kripto analizi.</p>
 <div class="welcome-ozellikler">
 <div class="welcome-ozellik"><span class="welcome-ozellik-ikon">⚡</span><div class="welcome-ozellik-baslik">Canlı WebSocket</div><div class="welcome-ozellik-aciklama">Fiyatlar saniye saniye Bybit'ten akar. Gecikme yok.</div></div>
 <div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🧠</span><div class="welcome-ozellik-baslik">Akıllı Sinyal Motoru</div><div class="welcome-ozellik-aciklama">10+ gösterge birleşir, tek karar verir: LONG / SHORT.</div></div>
-<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🎯</span><div class="welcome-ozellik-baslik">Sinyal Radarı</div><div class="welcome-ozellik-aciklama">200 hacimli coini saniyeler içinde tara, fırsatları yakala.</div></div>
-<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🧪</span><div class="welcome-ozellik-baslik">Otomatik Test</div><div class="welcome-ozellik-aciklama">Bot kendi sinyallerini test eder, isabet oranını gösterir.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🎯</span><div class="welcome-ozellik-baslik">Sinyal Radarı</div><div class="welcome-ozellik-aciklama">500 hacimli coini saniyeler içinde tara, fırsatları yakala.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🐋</span><div class="welcome-ozellik-baslik">Whale Takibi</div><div class="welcome-ozellik-aciklama">Büyük transferler ve $1M+ işlemler anlık gösterilir.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">📰</span><div class="welcome-ozellik-baslik">Haber Akışı</div><div class="welcome-ozellik-aciklama">CoinDesk, Cointelegraph TR ve global haberler tek yerde.</div></div>
 <div class="welcome-ozellik"><span class="welcome-ozellik-ikon">💼</span><div class="welcome-ozellik-baslik">Pozisyon Takibi</div><div class="welcome-ozellik-aciklama">Açtığın işlemleri kaydet, kâr/zararını canlı takip et.</div></div>
 <div class="welcome-ozellik"><span class="welcome-ozellik-ikon">⌨️</span><div class="welcome-ozellik-baslik">Klavye Kısayolları</div><div class="welcome-ozellik-aciklama">Sağ alttaki ? butonundan tüm kısayolları görebilirsin.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🎨</span><div class="welcome-ozellik-baslik">Koyu & Açık Tema</div><div class="welcome-ozellik-aciklama">Gündüz için açık, gece için koyu tema. Tercih sende.</div></div>
 </div>
 <button class="welcome-basla" onclick="welcomeKapat()">🚀 Başla →</button>
 <p class="welcome-note">Bu bot <b>karar destek</b> aracıdır. Yatırım tavsiyesi değildir. Her işlemde stop-loss kullanın.</p>
@@ -182,7 +176,7 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-3 flex items-center gap-3">
 <div class="flex items-center gap-2.5 shrink-0">
 <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📈</span></div>
-<div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] mono" style="color:var(--text-mute)">PRO TERMINAL v3.2</div></div>
+<div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] mono" style="color:var(--text-mute)">PRO TERMINAL v3.3</div></div>
 </div>
 <div class="flex-1 flex items-center gap-2 max-w-2xl relative">
 <input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE...  ( / )" autocomplete="off" class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm">
@@ -278,6 +272,7 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1"><span class="rtab-ikon">🎯</span><span class="rtab-yazi">Karar</span></button>
 <button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1"><span class="rtab-ikon">📊</span><span class="rtab-yazi">Teknik</span></button>
 <button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1"><span class="rtab-ikon">🌍</span><span class="rtab-yazi">Piyasa</span></button>
+<button onclick="rTabGec('haber')" data-rtab="haber" class="rtab flex-1"><span class="rtab-ikon">📰</span><span class="rtab-yazi">Haber</span></button>
 <button onclick="rTabGec('pozisyon')" data-rtab="pozisyon" class="rtab flex-1"><span class="rtab-ikon">💼</span><span class="rtab-yazi">Pozisyon</span></button>
 <button onclick="rTabGec('test')" data-rtab="test" class="rtab flex-1"><span class="rtab-ikon">🧠</span><span class="rtab-yazi">Test</span></button>
 </div>
@@ -321,6 +316,25 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="glass p-4">
 <div class="kart-baslik mb-3"><span class="kart-ikon">📖</span>Order Book<span class="kart-meta text-cyan-400 font-bold">SPOT</span></div>
 <div id="obListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
+</div>
+</div>
+
+<div id="rtab-haber" class="space-y-3 hidden">
+<div class="glass p-4">
+<div class="kart-baslik mb-3"><span class="kart-ikon">🐋</span>Whale Hareketleri<span id="whaleUpdate" class="kart-meta">—</span></div>
+<p class="text-xs mb-3" style="color:var(--text-mute)">Son 24 saatteki büyük transferler (>$100K). Piyasa üzerindeki etkiyi gösterir.</p>
+<button onclick="whaleYukle()" id="whaleBtn" class="w-full btn-cyan rounded-xl py-2.5 font-bold text-sm text-white mb-3">🐋 Whale Tara</button>
+<div id="whaleListe" class="space-y-2 max-h-72 overflow-y-auto scroll-ince">
+<div class="text-xs text-center py-4" style="color:var(--text-mute)">Butona bas ve tara</div>
+</div>
+</div>
+<div class="glass p-4">
+<div class="kart-baslik mb-3"><span class="kart-ikon">📰</span>Kripto Haberleri<span id="haberUpdate" class="kart-meta">—</span></div>
+<p class="text-xs mb-3" style="color:var(--text-mute)">CoinDesk, Cointelegraph ve Türkçe kaynaklardan son haberler.</p>
+<button onclick="haberleriYukle()" id="haberBtn" class="w-full bg-blue-600 hover:bg-blue-500 rounded-xl py-2.5 font-bold text-sm text-white mb-3 transition">📰 Haberleri Getir</button>
+<div id="haberListe" class="space-y-2 max-h-96 overflow-y-auto scroll-ince">
+<div class="text-xs text-center py-4" style="color:var(--text-mute)">Butona bas ve haberleri getir</div>
+</div>
 </div>
 </div>
 
@@ -378,10 +392,8 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="text-center text-xs py-6 mt-4 mono" style="color:var(--text-mute)">⚠️ EĞİTİM AMAÇLIDIR • YATIRIM TAVSİYESİ DEĞİLDİR</div>
 </main>
 
-<!-- YARDIM BUTONU (Faz 5) -->
 <button onclick="yardimAc()" class="yardim-btn" title="Yardım (?)">?</button>
 
-<!-- RADAR MODAL -->
 <div id="radarModal" class="modal-overlay" onclick="if(event.target === this) radarKapat()">
 <div class="radar-icerik">
 <div class="flex items-center justify-between mb-4">
@@ -395,7 +407,6 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 </div>
 </div>
 
-<!-- POZİSYON MODAL -->
 <div id="pozisyonModal" class="modal-overlay" onclick="if(event.target === this) pozisyonModalKapat()">
 <div class="modal-kutu">
 <div class="flex items-center justify-between mb-4">
@@ -418,7 +429,6 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 </div>
 </div>
 
-<!-- AYARLAR MODAL -->
 <div id="ayarlarModal" class="modal-overlay" onclick="if(event.target === this) ayarlarKapat()">
 <div class="modal-kutu">
 <div class="flex items-center justify-between mb-4">
@@ -430,11 +440,11 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="ayar-satir"><div><div class="ayar-label">Varsayılan Zaman Dilimi</div><div class="ayar-aciklama">Site açılınca hangi TF ile başlasın</div></div><select id="ayarTF" class="ayar-select" onchange="ayarKaydet('varsayilanTF', this.value)"><option value="1">1 dakika</option><option value="5">5 dakika</option><option value="15">15 dakika</option><option value="60">1 saat</option><option value="240">4 saat</option><option value="D">1 gün</option></select></div>
 <div class="ayar-satir"><div><div class="ayar-label">Ses Uyarıları</div><div class="ayar-aciklama">Güçlü sinyal / alarm sesi</div></div><div id="ayarSes" class="toggle-switch" onclick="ayarToggle('ses')"></div></div>
 <div class="ayar-satir"><div><div class="ayar-label">Pozisyon Güncelleme</div><div class="ayar-aciklama">Kaç saniyede bir kontrol</div></div><select id="ayarPozGuncelleme" class="ayar-select" onchange="ayarKaydet('pozGuncelleme', parseInt(this.value))"><option value="15">15 saniye</option><option value="30">30 saniye</option><option value="60">1 dakika</option></select></div>
+<div class="ayar-satir"><div><div class="ayar-label">Whale Alert API Key</div><div class="ayar-aciklama">İsteğe bağlı — whale-alert.io ücretsiz anahtar</div></div><input id="ayarWhaleKey" type="text" placeholder="Boş bırak" class="ayar-select" style="width:140px" onchange="ayarKaydet('whaleAlertKey', this.value)"></div>
 <button onclick="ayarlariSifirla()" class="w-full mt-4 border border-red-500/30 text-red-400 rounded-xl py-2.5 font-bold text-sm hover:bg-red-500/10 transition">🔄 Ayarları Sıfırla</button>
 </div>
 </div>
 
-<!-- YARDIM MODALI (Faz 5) -->
 <div id="yardimModal" class="modal-overlay" onclick="if(event.target === this) yardimKapat()">
 <div class="modal-kutu">
 <div class="flex items-center justify-between mb-4">
@@ -444,27 +454,26 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="text-[11px] uppercase font-extrabold tracking-wider mb-2" style="color:var(--text-mute)">⌨️ Klavye Kısayolları</div>
 <div class="mb-4">
 <div class="kisayol-satir"><span class="kisayol-tus">R</span><span class="kisayol-aciklama">🎯 Sinyal Radarını Aç</span></div>
-<div class="kisayol-satir"><span class="kisayol-tus">T</span><span class="kisayol-aciklama">🌙 Tema Değiştir (Koyu/Açık)</span></div>
+<div class="kisayol-satir"><span class="kisayol-tus">T</span><span class="kisayol-aciklama">🌙 Tema Değiştir</span></div>
 <div class="kisayol-satir"><span class="kisayol-tus">F</span><span class="kisayol-aciklama">⛶ Tam Ekran Grafik</span></div>
 <div class="kisayol-satir"><span class="kisayol-tus">/</span><span class="kisayol-aciklama">🔍 Arama Kutusuna Odaklan</span></div>
 <div class="kisayol-satir"><span class="kisayol-tus">A</span><span class="kisayol-aciklama">⚙️ Ayarları Aç</span></div>
 <div class="kisayol-satir"><span class="kisayol-tus">H</span><span class="kisayol-aciklama">☰ Menüyü Aç</span></div>
 <div class="kisayol-satir"><span class="kisayol-tus">?</span><span class="kisayol-aciklama">❓ Bu Paneli Aç</span></div>
 <div class="kisayol-satir"><span class="kisayol-tus">ESC</span><span class="kisayol-aciklama">❌ Tüm Modalları Kapat</span></div>
-<div class="kisayol-satir"><span class="kisayol-tus">1</span> - <span class="kisayol-tus">6</span><span class="kisayol-aciklama">⏱️ Zaman Dilimi: 1dk / 5dk / 15dk / 1sa / 4sa / 1g</span></div>
+<div class="kisayol-satir"><span class="kisayol-tus">1</span> - <span class="kisayol-tus">6</span><span class="kisayol-aciklama">⏱️ Zaman Dilimi</span></div>
 </div>
 <div class="text-[11px] uppercase font-extrabold tracking-wider mb-2 pt-3" style="color:var(--text-mute);border-top:1px solid var(--border)">💡 İpuçları</div>
 <div class="text-xs leading-relaxed space-y-2" style="color:var(--text-dim)">
 <div>• <b>En iyi sinyal:</b> MTF "TAM LONG" ve Karar %70+ ise en güvenilir.</div>
 <div>• <b>Radar:</b> Güçlü sinyalleri tek tıkla bul, üstüne tıkla → direkt o coine git.</div>
+<div>• <b>Whale:</b> 1M$ üzeri transferler mor ile işaretlenir — dikkat.</div>
 <div>• <b>S.Test:</b> Bot kendi kendini test eder, hangi sinyal tipi daha tutarlı gösterir.</div>
 <div>• <b>Pozisyon:</b> Açtığın işlemleri buraya ekle, stop/hedef otomatik çalışır.</div>
-<div>• <b>Alarm:</b> Fiyat belli seviyeye gelince bildirim al.</div>
 </div>
 </div>
 </div>
 
-<!-- BİLGİ MODALI (Hakkında/SSS/Yenilikler) -->
 <div id="bilgiModal" class="modal-overlay" onclick="if(event.target === this) bilgiKapat()">
 <div class="modal-kutu">
 <div class="flex items-center justify-between mb-4">
@@ -475,11 +484,10 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 </div>
 </div>
 
-<!-- HAMBURGER PANEL -->
 <div id="hamburgerOverlay" class="hamburger-overlay" onclick="hamburgerKapat()"></div>
 <div id="hamburgerPanel" class="hamburger-panel">
 <div class="flex items-center justify-between mb-6">
-<div><div class="font-bold gradient-text text-lg">MENÜ</div><div class="text-[10px]" style="color:var(--text-mute)">PRO TERMINAL v3.2</div></div>
+<div><div class="font-bold gradient-text text-lg">MENÜ</div><div class="text-[10px]" style="color:var(--text-mute)">PRO TERMINAL v3.3</div></div>
 <button onclick="hamburgerKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
 </div>
 <div class="hamburger-item" onclick="ayarlarAc(); hamburgerKapat()"><span class="hamburger-ikon">⚙️</span>Ayarlar<span style="margin-left:auto;color:var(--text-mute);font-size:11px" class="mono">A</span></div>
@@ -503,12 +511,9 @@ let aktifTF = '15';
 let tamEkran = false;
 let gostergelerAcik = JSON.parse(localStorage.getItem('gostergelerAcik') || 'false');
 let pozGuncellemeIntervalId = null;
-let fiyatGuncellemeIntervalId = null;
-let hizliIntervalId = null;
-let tickerIntervalId = null;
-let testIntervalId = null;
+let haberAutoIntervalId = null;
 
-const AYARLAR_DEFAULT = { tema: 'dark', radarSayi: 100, varsayilanTF: '15', ses: false, pozGuncelleme: 30 };
+const AYARLAR_DEFAULT = { tema: 'dark', radarSayi: 100, varsayilanTF: '15', ses: false, pozGuncelleme: 30, whaleAlertKey: '' };
 let AYARLAR = { ...AYARLAR_DEFAULT, ...JSON.parse(localStorage.getItem('ayarlar') || '{}') };
 let sesAcik = AYARLAR.ses;
 let tema = AYARLAR.tema;
@@ -533,24 +538,15 @@ function fmt(n, d = 4) {
 }
 function uyku(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-/* ============ KARŞILAMA ============ */
-function welcomeKapat() {
-  document.getElementById('welcomeScreen').classList.add('gizli');
-  localStorage.setItem('welcomeGorundu', 'true');
-}
+/* KARŞILAMA */
+function welcomeKapat() { document.getElementById('welcomeScreen').classList.add('gizli'); localStorage.setItem('welcomeGorundu', 'true'); }
 function welcomeGoster() { document.getElementById('welcomeScreen').classList.remove('gizli'); }
 
-/* ============ HAMBURGER ============ */
-function hamburgerAc() {
-  document.getElementById('hamburgerPanel').classList.add('acik');
-  document.getElementById('hamburgerOverlay').classList.add('acik');
-}
-function hamburgerKapat() {
-  document.getElementById('hamburgerPanel').classList.remove('acik');
-  document.getElementById('hamburgerOverlay').classList.remove('acik');
-}
+/* HAMBURGER */
+function hamburgerAc() { document.getElementById('hamburgerPanel').classList.add('acik'); document.getElementById('hamburgerOverlay').classList.add('acik'); }
+function hamburgerKapat() { document.getElementById('hamburgerPanel').classList.remove('acik'); document.getElementById('hamburgerOverlay').classList.remove('acik'); }
 
-/* ============ AYARLAR ============ */
+/* AYARLAR */
 function ayarKaydet(key, deger) {
   AYARLAR[key] = deger;
   localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
@@ -576,11 +572,12 @@ function ayarlariYukle() {
   document.getElementById('ayarTF').value = AYARLAR.varsayilanTF;
   document.getElementById('ayarPozGuncelleme').value = AYARLAR.pozGuncelleme;
   document.getElementById('ayarSes').classList.toggle('acik', AYARLAR.ses);
+  document.getElementById('ayarWhaleKey').value = AYARLAR.whaleAlertKey || '';
 }
 function ayarlarAc() { ayarlariYukle(); document.getElementById('ayarlarModal').classList.add('acik'); }
 function ayarlarKapat() { document.getElementById('ayarlarModal').classList.remove('acik'); }
 
-/* ============ TEMA ============ */
+/* TEMA */
 function temaToggle() {
   tema = tema === 'dark' ? 'light' : 'dark';
   AYARLAR.tema = tema;
@@ -600,7 +597,7 @@ function temaUygula(t) {
   }
 }
 
-/* ============ SES ============ */
+/* SES */
 function sesToggle() {
   sesAcik = !sesAcik;
   AYARLAR.ses = sesAcik;
@@ -623,7 +620,7 @@ function sesCal(freq, sure) {
   } catch(e) {}
 }
 
-/* ============ GÖSTERGELER TOGGLE ============ */
+/* GÖSTERGELER TOGGLE */
 function gostergeleriToggle() {
   gostergelerAcik = !gostergelerAcik;
   localStorage.setItem('gostergelerAcik', JSON.stringify(gostergelerAcik));
@@ -647,95 +644,34 @@ function tamEkranToggle() {
   setTimeout(() => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); }, 100);
 }
 
-/* ============ BİLGİ MODALLARI ============ */
+/* BİLGİ MODALLARI */
 function hakkindaAc() {
   document.getElementById('bilgiBaslik').textContent = '📖 Hakkında';
-  document.getElementById('bilgiIcerik').innerHTML = `
-    <p class="mb-3"><b>Kripto Analiz Pro Terminal</b>, kripto para piyasalarında karar vermeni kolaylaştıran bir analiz aracıdır.</p>
-    <p class="mb-3"><b>Neler yapabilir?</b></p>
-    <ul class="list-disc pl-5 mb-3 space-y-1">
-      <li>10+ teknik gösterge (RSI, MACD, EMA, Bollinger, ADX...)</li>
-      <li>12 mum formasyonu + Divergence tespiti</li>
-      <li>Fair Value Gap (FVG), Fibonacci, Volume Profile</li>
-      <li>Çoklu zaman dilimi onayı (MTF)</li>
-      <li>200 coin sinyal radarı</li>
-      <li>Otomatik test sistemi + ciddi backtest</li>
-      <li>Pozisyon takibi (kâr/zarar canlı)</li>
-      <li>Klavye kısayolları (sağ alttaki ? butonundan)</li>
-    </ul>
-    <p class="text-xs italic" style="color:var(--text-mute)">Bu bot karar destek aracıdır. Yatırım tavsiyesi değildir.</p>
-  `;
+  document.getElementById('bilgiIcerik').innerHTML = `<p class="mb-3"><b>Kripto Analiz Pro Terminal v3.3</b>, kripto piyasasında karar vermeni kolaylaştıran profesyonel bir analiz aracıdır.</p><p class="mb-3"><b>Neler yapabilir?</b></p><ul class="list-disc pl-5 mb-3 space-y-1"><li>10+ teknik gösterge (RSI, MACD, EMA, Bollinger, ADX)</li><li>12 mum formasyonu + Divergence tespiti</li><li>Fair Value Gap, Fibonacci, Volume Profile</li><li>Çoklu zaman dilimi onayı (MTF)</li><li>500 coine kadar sinyal radarı</li><li>Whale takibi (Bybit + Whale Alert)</li><li>Haber akışı (CoinDesk, Cointelegraph TR)</li><li>Otomatik test + ciddi backtest</li><li>Pozisyon takibi (canlı kâr/zarar)</li><li>Klavye kısayolları</li></ul><p class="text-xs italic" style="color:var(--text-mute)">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function sssAc() {
-  document.getElementById('bilgiBaslik').textContent = '❓ Sıkça Sorulan Sorular';
-  document.getElementById('bilgiIcerik').innerHTML = `
-    <div class="mb-3"><b>❓ Nasıl LONG/SHORT yorumlarım?</b><div class="mt-1 text-xs">%70+ güven = güçlü sinyal. %50-70 = normal. Altı = bekle.</div></div>
-    <div class="mb-3"><b>❓ Veriler nereden geliyor?</b><div class="mt-1 text-xs">Bybit spot API'den WebSocket ile canlı.</div></div>
-    <div class="mb-3"><b>❓ Otomatik al/sat yapıyor mu?</b><div class="mt-1 text-xs">Hayır. Sadece sinyal verir. İşlemi sen açarsın.</div></div>
-    <div class="mb-3"><b>❓ Backtest ne kadar güvenilir?</b><div class="mt-1 text-xs">Geçmiş performans gelecek garantisi değildir. Yön doğruluğunu ölçer.</div></div>
-    <div class="mb-3"><b>❓ Hangi zaman dilimi daha iyi?</b><div class="mt-1 text-xs">15dk ve 1sa dengeli. 5dk gürültülü, 4sa/1g pozisyon için.</div></div>
-    <div class="mb-3"><b>❓ Stop-loss koymak zorunlu mu?</b><div class="mt-1 text-xs">Evet. Bot stop önerir, kullanman şart.</div></div>
-    <div class="mb-3"><b>❓ Klavye kısayolları var mı?</b><div class="mt-1 text-xs">Evet. Sağ alttaki ? butonundan tümünü görebilirsin.</div></div>
-  `;
+  document.getElementById('bilgiBaslik').textContent = '💬 SSS';
+  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><b>❓ Nasıl LONG/SHORT yorumlarım?</b><div class="mt-1 text-xs">%70+ güven = güçlü sinyal. %50-70 = normal. Altı = bekle.</div></div><div class="mb-3"><b>❓ Veriler nereden geliyor?</b><div class="mt-1 text-xs">Bybit spot API'den WebSocket ile canlı.</div></div><div class="mb-3"><b>❓ Otomatik al/sat yapıyor mu?</b><div class="mt-1 text-xs">Hayır. Sadece sinyal verir.</div></div><div class="mb-3"><b>❓ Backtest ne kadar güvenilir?</b><div class="mt-1 text-xs">Geçmiş performans gelecek garantisi değildir.</div></div><div class="mb-3"><b>❓ Hangi zaman dilimi?</b><div class="mt-1 text-xs">15dk ve 1sa dengeli. 5dk gürültülü.</div></div><div class="mb-3"><b>❓ Stop-loss zorunlu mu?</b><div class="mt-1 text-xs">Evet. Bot stop önerir, kullanman şart.</div></div><div class="mb-3"><b>❓ Whale Alert nedir?</b><div class="mt-1 text-xs">Büyük kripto transferlerini gösterir. Ücretsiz API anahtarı ile aktif olur.</div></div>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function yeniliklerAc() {
   document.getElementById('bilgiBaslik').textContent = '🆕 Yenilikler';
-  document.getElementById('bilgiIcerik').innerHTML = `
-    <div class="mb-3"><div class="font-bold text-emerald-400">v3.2 — Bu Sürüm</div>
-      <ul class="list-disc pl-5 mt-1 text-xs space-y-0.5">
-        <li>⌨️ Klavye kısayolları (R, T, F, /, A, H, ?, 1-6)</li>
-        <li>❓ Sağ alt köşede yardım butonu</li>
-        <li>🎨 Profesyonel tipografi (kart başlıkları, sectionlar)</li>
-        <li>🎯 Sekme renk kodlaması iyileştirildi</li>
-        <li>✨ Modal animasyonları (slide-up, fade)</li>
-        <li>📱 Mobilde sekmeler sadece ikon</li>
-      </ul>
-    </div>
-    <div class="mb-3"><div class="font-bold">v3.1</div>
-      <ul class="list-disc pl-5 mt-1 text-xs space-y-0.5">
-        <li>Karşılama ekranı eklendi</li>
-        <li>Hamburger menü + ayarlar modalı</li>
-        <li>Beyaz tema tamamen onarıldı</li>
-        <li>Radar coin sayısı ayarlanabilir (50-500)</li>
-      </ul>
-    </div>
-    <div class="mb-3"><div class="font-bold">v3.0</div>
-      <ul class="list-disc pl-5 mt-1 text-xs space-y-0.5">
-        <li>Ciddi backtest (K/Z + Equity + komisyon)</li>
-        <li>Pozisyon takibi modülü</li>
-      </ul>
-    </div>
-  `;
+  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><div class="font-bold text-emerald-400">v3.3 — Bu Sürüm</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🐋 Whale hareketleri takibi</li><li>📰 Haber akışı (CoinDesk, Cointelegraph TR)</li><li>Whale Alert API entegrasyonu (opsiyonel)</li><li>Haber sekmesi otomatik güncelleme</li></ul></div><div class="mb-3"><div class="font-bold">v3.2</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>⌨️ Klavye kısayolları</li><li>❓ Yardım butonu + kısayol listesi</li><li>🎨 Profesyonel tipografi</li></ul></div><div class="mb-3"><div class="font-bold">v3.1</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>Karşılama ekranı</li><li>Hamburger menü + ayarlar</li><li>Beyaz tema onarımı</li></ul></div>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function bilgiKapat() { document.getElementById('bilgiModal').classList.remove('acik'); }
 
-/* ============ YARDIM MODALI (FAZ 5) ============ */
+/* YARDIM MODALI */
 function yardimAc() { document.getElementById('yardimModal').classList.add('acik'); }
 function yardimKapat() { document.getElementById('yardimModal').classList.remove('acik'); }
 
-/* ============ KLAVYE KISAYOLLARI (FAZ 5) ============ */
+/* KLAVYE KISAYOLLARI */
 document.addEventListener('keydown', e => {
   const aktif = document.activeElement;
   const yaziyor = aktif && (aktif.tagName === 'INPUT' || aktif.tagName === 'TEXTAREA' || aktif.tagName === 'SELECT');
-
-  // ESC her zaman çalışır — modalları kapatır
-  if (e.key === 'Escape') {
-    hamburgerKapat();
-    radarKapat();
-    ayarlarKapat();
-    pozisyonModalKapat();
-    bilgiKapat();
-    yardimKapat();
-    document.getElementById('aramaOneri').classList.add('hidden');
-    return;
-  }
-
-  // Yazı yazarken diğer kısayollar devre dışı
+  if (e.key === 'Escape') { hamburgerKapat(); radarKapat(); ayarlarKapat(); pozisyonModalKapat(); bilgiKapat(); yardimKapat(); document.getElementById('aramaOneri').classList.add('hidden'); return; }
   if (yaziyor) return;
-
   const k = e.key;
   if (k === '/') { e.preventDefault(); document.getElementById('aramaCoin').focus(); return; }
   if (k === 'r' || k === 'R') { e.preventDefault(); radarAc(); return; }
@@ -744,13 +680,11 @@ document.addEventListener('keydown', e => {
   if (k === 'a' || k === 'A') { e.preventDefault(); ayarlarAc(); return; }
   if (k === 'h' || k === 'H') { e.preventDefault(); hamburgerAc(); return; }
   if (k === '?') { e.preventDefault(); yardimAc(); return; }
-
-  // Zaman dilimi kısayolları
   const tfMap = { '1': '1', '2': '5', '3': '15', '4': '60', '5': '240', '6': 'D' };
   if (tfMap[k]) { e.preventDefault(); tfDegistir(tfMap[k]); return; }
 });
 
-/* ============ RADAR ============ */
+/* RADAR */
 function radarAc() { document.getElementById('radarModal').classList.add('acik'); radarTaramayaBasla(); }
 function radarKapat() { document.getElementById('radarModal').classList.remove('acik'); }
 async function radarTaramayaBasla() {
@@ -801,7 +735,7 @@ async function radarTaramayaBasla() {
 }
 function radarCoinSec(coin) { radarKapat(); coinYukle(coin); }
 
-/* ============ POZİSYON ============ */
+/* POZİSYON */
 function pozisyonModalAc() {
   document.getElementById('pzCoin').value = aktifCoin;
   document.getElementById('pzGiris').value = sonAnaliz ? fmt(sonAnaliz.fiyat) : '';
@@ -862,31 +796,12 @@ function pozisyonPaneliDoldur() {
   const toplamKarZarar = acik.reduce((t, p) => t + (p.usdKarZarar || 0), 0);
   const kazananlar = kapali.filter(p => p.karZarar > 0).length;
   const winRate = kapali.length > 0 ? (kazananlar / kapali.length * 100) : 0;
-  document.getElementById('portfoyOzet').innerHTML = `
-    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Açık</div><div class="text-lg font-bold mono text-cyan-400">${acik.length}</div></div>
-    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">K/Z</div><div class="text-lg font-bold mono ${toplamKarZarar >= 0 ? 'text-emerald-400' : 'text-red-400'}">${toplamKarZarar >= 0 ? '+' : ''}$${toplamKarZarar.toFixed(2)}</div></div>
-    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Win</div><div class="text-lg font-bold mono ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(0)}</div></div>
-  `;
+  document.getElementById('portfoyOzet').innerHTML = `<div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Açık</div><div class="text-lg font-bold mono text-cyan-400">${acik.length}</div></div><div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">K/Z</div><div class="text-lg font-bold mono ${toplamKarZarar >= 0 ? 'text-emerald-400' : 'text-red-400'}">${toplamKarZarar >= 0 ? '+' : ''}$${toplamKarZarar.toFixed(2)}</div></div><div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Win</div><div class="text-lg font-bold mono ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(0)}</div></div>`;
   const liste = document.getElementById('pozisyonListesi');
   if (!acik.length) liste.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Açık pozisyon yok. Yukarıdan EKLE ile başla.</div>';
   else liste.innerHTML = acik.map(p => {
     const renk = p.karZarar >= 0 ? 'text-emerald-400' : 'text-red-400';
-    return `<div class="pozisyon-kart">
-      <div class="flex justify-between items-start mb-2">
-        <div><div class="font-bold">${p.coin.replace('USDT','')} <span class="${p.yon === 'LONG' ? 'text-emerald-400' : 'text-red-400'} text-xs">${p.yon}</span></div><div class="text-[10px]" style="color:var(--text-mute)">${new Date(p.acilisZamani).toLocaleString('tr-TR')}</div></div>
-        <button onclick="pozisyonKapat('${p.id}')" class="text-red-400 text-xs hover:text-red-300 font-bold">KAPAT</button>
-      </div>
-      <div class="grid grid-cols-2 gap-2 text-xs mono mb-2">
-        <div><span style="color:var(--text-mute)">Giriş:</span> $${fmt(p.giris)}</div>
-        <div><span style="color:var(--text-mute)">Şimdi:</span> $${fmt(p.guncelFiyat || p.giris)}</div>
-        <div><span style="color:var(--text-mute)">Stop:</span> $${p.stop ? fmt(p.stop) : '—'}</div>
-        <div><span style="color:var(--text-mute)">Hedef:</span> $${p.hedef ? fmt(p.hedef) : '—'}</div>
-      </div>
-      <div class="flex justify-between items-center pt-2 border-t" style="border-color:var(--border)">
-        <div class="text-xs" style="color:var(--text-mute)">${p.miktar.toFixed(0)}$ poz.</div>
-        <div class="${renk} font-bold mono">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% (${p.usdKarZarar >= 0 ? '+' : ''}$${(p.usdKarZarar || 0).toFixed(2)})</div>
-      </div>
-    </div>`;
+    return `<div class="pozisyon-kart"><div class="flex justify-between items-start mb-2"><div><div class="font-bold">${p.coin.replace('USDT','')} <span class="${p.yon === 'LONG' ? 'text-emerald-400' : 'text-red-400'} text-xs">${p.yon}</span></div><div class="text-[10px]" style="color:var(--text-mute)">${new Date(p.acilisZamani).toLocaleString('tr-TR')}</div></div><button onclick="pozisyonKapat('${p.id}')" class="text-red-400 text-xs hover:text-red-300 font-bold">KAPAT</button></div><div class="grid grid-cols-2 gap-2 text-xs mono mb-2"><div><span style="color:var(--text-mute)">Giriş:</span> $${fmt(p.giris)}</div><div><span style="color:var(--text-mute)">Şimdi:</span> $${fmt(p.guncelFiyat || p.giris)}</div><div><span style="color:var(--text-mute)">Stop:</span> $${p.stop ? fmt(p.stop) : '—'}</div><div><span style="color:var(--text-mute)">Hedef:</span> $${p.hedef ? fmt(p.hedef) : '—'}</div></div><div class="flex justify-between items-center pt-2 border-t" style="border-color:var(--border)"><div class="text-xs" style="color:var(--text-mute)">${p.miktar.toFixed(0)}$ poz.</div><div class="${renk} font-bold mono">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% (${p.usdKarZarar >= 0 ? '+' : ''}$${(p.usdKarZarar || 0).toFixed(2)})</div></div></div>`;
   }).join('');
   const kEl = document.getElementById('kapanmisListesi');
   if (!kapali.length) kEl.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Henüz kapanmış işlem yok.</div>';
@@ -904,7 +819,7 @@ function pozisyonKapat(id) {
   pozisyonPaneliDoldur();
 }
 
-/* ============ OTOMATİK TEST ============ */
+/* OTOMATİK TEST */
 function sinyalTestKaydet(analiz, coin, tf) {
   if (analiz.karar === 'BEKLE' || analiz.karar.includes('ZAYIF') || analiz.karar.includes('⚠️')) return;
   const sureMap = { '1': 10, '5': 30, '15': 75, '60': 240, '240': 720, 'D': 1440 };
@@ -975,7 +890,7 @@ function testleriTemizle() {
   testPaneliniGuncelle();
 }
 
-/* ============ CİDDİ BACKTEST ============ */
+/* CİDDİ BACKTEST */
 async function ciddiBacktestCalistir() {
   const btn = document.getElementById('btBtn'), el = document.getElementById('btSonuc');
   btn.disabled = true; btn.textContent = 'Simüle ediliyor...';
@@ -1060,11 +975,7 @@ async function ciddiBacktestCalistir() {
       ctx.setLineDash([]);
       ctx.strokeStyle = bakiye > BASLANGIC ? '#10b981' : '#ef4444'; ctx.lineWidth = 2;
       ctx.beginPath();
-      equity.forEach((e, i) => {
-        const x = ((e.time - minT) / (maxT - minT)) * w;
-        const y = h - 20 - ((e.value - minV) / (maxV - minV)) * (h - 30);
-        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      });
+      equity.forEach((e, i) => { const x = ((e.time - minT) / (maxT - minT)) * w; const y = h - 20 - ((e.value - minV) / (maxV - minV)) * (h - 30); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
       ctx.stroke();
       const grad = ctx.createLinearGradient(0, 0, 0, h);
       grad.addColorStop(0, bakiye > BASLANGIC ? 'rgba(16,185,129,.2)' : 'rgba(239,68,68,.2)');
@@ -1076,7 +987,7 @@ async function ciddiBacktestCalistir() {
   btn.disabled = false; btn.textContent = 'Simülasyonu Çalıştır';
 }
 
-/* ============ KLINE + TICKER + WS ============ */
+/* KLINE + TICKER + WS */
 async function klineCek(symbol, interval = '15', limit = 500) {
   try {
     const url = `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval}&limit=${limit}`;
@@ -1180,19 +1091,10 @@ function aramaOneriGoster(q) {
 }
 function oneriSec(sym) { document.getElementById('aramaOneri').classList.add('hidden'); document.getElementById('aramaCoin').value = ''; coinYukle(sym); }
 
-/* ============ GÖSTERGE FORMÜLLERİ ============ */
+/* GÖSTERGE FORMÜLLERİ */
 function sma(d, p) { const o = []; for (let i = 0; i < d.length; i++) { if (i < p - 1) { o.push(null); continue; } let s = 0; for (let j = i-p+1; j <= i; j++) s += d[j]; o.push(s / p); } return o; }
 function ema(d, p) { const k = 2/(p+1); const o = [d[0]]; for (let i = 1; i < d.length; i++) o.push(d[i]*k + o[i-1]*(1-k)); return o; }
-function rsi(d, p = 14) {
-  if (d.length < p+1) return [];
-  const o = new Array(p).fill(null);
-  let k = 0, y = 0;
-  for (let i = 1; i <= p; i++) { const f = d[i]-d[i-1]; if (f>=0) k+=f; else y-=f; }
-  let ok = k/p, oy = y/p;
-  o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy));
-  for (let i = p+1; i < d.length; i++) { const f = d[i]-d[i-1]; ok = (ok*(p-1) + (f>0?f:0))/p; oy = (oy*(p-1) + (f<0?-f:0))/p; o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy)); }
-  return o;
-}
+function rsi(d, p = 14) { if (d.length < p+1) return []; const o = new Array(p).fill(null); let k = 0, y = 0; for (let i = 1; i <= p; i++) { const f = d[i]-d[i-1]; if (f>=0) k+=f; else y-=f; } let ok = k/p, oy = y/p; o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy)); for (let i = p+1; i < d.length; i++) { const f = d[i]-d[i-1]; ok = (ok*(p-1) + (f>0?f:0))/p; oy = (oy*(p-1) + (f<0?-f:0))/p; o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy)); } return o; }
 function macd(d, h=12, y=26, s=9) { const eH = ema(d,h), eY = ema(d,y); const line = eH.map((v,i) => v - eY[i]); const sig = ema(line, s); return { line, sig, hist: line.map((v,i) => v - sig[i]) }; }
 function bollinger(d, p=20, sd=2) { const orta = sma(d,p); const ust = [], alt = []; for (let i = 0; i < d.length; i++) { if (orta[i] === null) { ust.push(null); alt.push(null); continue; } let t = 0; for (let j = i-p+1; j <= i; j++) t += Math.pow(d[j]-orta[i], 2); const s = Math.sqrt(t/p); ust.push(orta[i] + sd*s); alt.push(orta[i] - sd*s); } return { orta, ust, alt }; }
 function stochastic(y, d, c, p=14, s=3) { const K = []; for (let i = 0; i < c.length; i++) { if (i < p-1) { K.push(null); continue; } const yM = Math.max(...y.slice(i-p+1, i+1)); const dM = Math.min(...d.slice(i-p+1, i+1)); K.push(yM === dM ? 50 : ((c[i]-dM)/(yM-dM))*100); } const t = K.map(v => v === null ? 50 : v); return { K, D: sma(t, s) }; }
@@ -1207,7 +1109,7 @@ function divergenceBul(mumlar) { const kapanis = mumlar.map(m => m.close), r = r
 function fibonacciBul(mumlar) { const yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low); const son60Y = Math.max(...yuk.slice(-60)), son60D = Math.min(...dus.slice(-60)); const sonF = mumlar[mumlar.length-1].close, fark = son60Y - son60D; const oranlar = [0.236, 0.382, 0.5, 0.618, 0.786]; const seviyeler = oranlar.map(o => ({ oran: (o*100).toFixed(1) + '%', fiyat: son60D + fark * o })); const trend = sonF > (son60Y + son60D) / 2 ? 'yukarı' : 'aşağı'; return { ust: son60Y, alt: son60D, seviyeler, trend, fiyat: sonF }; }
 function volumeProfileBul(mumlar, bins = 25) { const son = mumlar.slice(-200); const yuk = Math.max(...son.map(m => m.high)), dus = Math.min(...son.map(m => m.low)); const adim = (yuk - dus) / bins; const kovalar = Array(bins).fill(0).map((_, i) => ({ hacim: 0, alt: dus + i*adim, ust: dus + (i+1)*adim })); son.forEach(m => { const tp = (m.high + m.low + m.close) / 3; const idx = Math.min(bins - 1, Math.max(0, Math.floor((tp - dus) / adim))); kovalar[idx].hacim += m.volume; }); const sirali = [...kovalar].sort((a,b) => b.hacim - a.hacim); return { poc: sirali[0], ustKovalar: sirali.slice(0, 3), kovalar: sirali }; }
 
-/* ============ ANALİZ MOTORU ============ */
+/* ANALİZ MOTORU */
 function analizEt(mumlar) {
   const kapanis = mumlar.map(m => m.close), yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low), hacim = mumlar.map(m => m.volume);
   const son = kapanis.length - 1, fiyat = kapanis[son];
@@ -1298,14 +1200,7 @@ function grafikOlustur() {
   const el = document.getElementById('chart');
   if (chart) chart.remove();
   const isLight = tema === 'light';
-  chart = LightweightCharts.createChart(el, {
-    layout: { background: { color: 'transparent' }, textColor: isLight ? '#475569' : '#94a3b8' },
-    grid: { vertLines: { color: isLight ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' }, horzLines: { color: isLight ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' } },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-    rightPriceScale: { borderColor: isLight ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)' },
-    timeScale: { borderColor: isLight ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)', timeVisible: true },
-    height: 520
-  });
+  chart = LightweightCharts.createChart(el, { layout: { background: { color: 'transparent' }, textColor: isLight ? '#475569' : '#94a3b8' }, grid: { vertLines: { color: isLight ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' }, horzLines: { color: isLight ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' } }, crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, rightPriceScale: { borderColor: isLight ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)' }, timeScale: { borderColor: isLight ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)', timeVisible: true }, height: 520 });
   candleSeries = chart.addCandlestickSeries({ upColor: '#10b981', downColor: '#ef4444', borderUpColor: '#10b981', borderDownColor: '#ef4444', wickUpColor: '#10b981', wickDownColor: '#ef4444' });
   volumeSeries = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
   chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } });
@@ -1439,6 +1334,97 @@ async function piyasaYukle(symbol) {
   })();
 }
 
+/* WHALE HAREKETLERİ */
+async function whaleYukle() {
+  const el = document.getElementById('whaleListe');
+  const btn = document.getElementById('whaleBtn');
+  const updEl = document.getElementById('whaleUpdate');
+  btn.disabled = true; btn.textContent = '🐋 Taranıyor...';
+  el.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)"><span class="spinner"></span> Yükleniyor...</div>';
+  const semboller = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'BNBUSDT', 'DOGEUSDT'];
+  const tumTrades = [];
+  for (const sym of semboller) {
+    try {
+      const r = await fetch(`https://api.bybit.com/v5/market/recent-trade?category=spot&symbol=${sym}&limit=1000`);
+      const j = await r.json();
+      if (j.retCode === 0 && j.result?.list) {
+        j.result.list.forEach(t => {
+          const miktar = parseFloat(t.size);
+          const fiyat = parseFloat(t.price);
+          const usd = miktar * fiyat;
+          if (usd >= 100000) tumTrades.push({ symbol: sym, taraf: t.side, miktar, fiyat, usd, zaman: parseInt(t.time), kaynak: 'Bybit' });
+        });
+      }
+    } catch(e) {}
+  }
+  if (AYARLAR.whaleAlertKey) {
+    try {
+      const r = await fetch(`https://api.whale-alert.io/v1/transactions?api_key=${AYARLAR.whaleAlertKey}&min_value=1000000&limit=15`);
+      const j = await r.json();
+      if (j.transactions && j.transactions.length) {
+        j.transactions.forEach(t => {
+          tumTrades.push({ symbol: t.symbol.toUpperCase(), taraf: 'transfer', miktar: t.amount, usd: t.amount_usd, zaman: t.timestamp * 1000, from: t.from?.owner_type || '?', to: t.to?.owner_type || '?', kaynak: 'Whale Alert' });
+        });
+      }
+    } catch(e) { console.log('Whale Alert API çağrılamadı', e); }
+  }
+  tumTrades.sort((a, b) => b.usd - a.usd);
+  const top = tumTrades.slice(0, 30);
+  if (!top.length) el.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Son 24 saatte büyük transfer bulunamadı</div>';
+  else {
+    el.innerHTML = top.map(t => {
+      const zaman = new Date(t.zaman).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+      const usdStr = t.usd >= 1000000 ? '$' + (t.usd/1000000).toFixed(2) + 'M' : '$' + (t.usd/1000).toFixed(0) + 'K';
+      const renk = t.taraf === 'Buy' ? 'text-emerald-400' : t.taraf === 'Sell' ? 'text-red-400' : 'text-purple-400';
+      const ikon = t.taraf === 'Buy' ? '🟢 ALIM' : t.taraf === 'Sell' ? '🔴 SATIM' : '🔄 Transfer';
+      const detay = t.taraf === 'transfer' ? `${t.from} → ${t.to}` : `${t.miktar.toFixed(4)} ${t.symbol.replace('USDT','')}`;
+      const buyukMu = t.usd >= 1000000;
+      return `<div class="rounded-xl p-2.5 border" style="background:${buyukMu ? 'rgba(167,139,250,.08)' : 'var(--surface)'};border-color:${buyukMu ? 'rgba(167,139,250,.3)' : 'var(--border)'}"><div class="flex justify-between items-center mb-1"><div class="flex items-center gap-2"><span class="font-bold text-xs">${t.symbol.replace('USDT','')}</span><span class="${renk} font-bold text-[10px]">${ikon}</span></div><span class="font-bold mono text-sm ${buyukMu ? 'text-purple-400' : ''}">${usdStr}</span></div><div class="flex justify-between text-[10px] mono" style="color:var(--text-mute)"><span>${detay}</span><span>${zaman}</span></div></div>`;
+    }).join('');
+  }
+  updEl.textContent = new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+  btn.disabled = false; btn.textContent = '🐋 Whale Tara';
+}
+
+/* HABERLER */
+async function haberleriYukle() {
+  const el = document.getElementById('haberListe');
+  const btn = document.getElementById('haberBtn');
+  const updEl = document.getElementById('haberUpdate');
+  btn.disabled = true; btn.textContent = '📰 Yükleniyor...';
+  el.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)"><span class="spinner"></span> Haberler çekiliyor...</div>';
+  const feeds = [
+    { url: 'https://www.coindesk.com/arc/outboundfeeds/rss/', kaynak: 'CoinDesk' },
+    { url: 'https://cointelegraph.com/rss', kaynak: 'Cointelegraph' },
+    { url: 'https://tr.cointelegraph.com/rss', kaynak: 'Cointelegraph TR' }
+  ];
+  const tumHaberler = [];
+  for (const feed of feeds) {
+    try {
+      const r = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(feed.url));
+      const text = await r.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, 'text/xml');
+      const items = Array.from(xml.querySelectorAll('item')).slice(0, 12);
+      items.forEach(item => {
+        tumHaberler.push({ baslik: item.querySelector('title')?.textContent?.trim() || '', link: item.querySelector('link')?.textContent?.trim() || '#', tarih: item.querySelector('pubDate')?.textContent || '', kaynak: feed.kaynak });
+      });
+    } catch(e) { console.log(feed.kaynak + ' hatası', e); }
+  }
+  tumHaberler.sort((a, b) => new Date(b.tarih) - new Date(a.tarih));
+  if (!tumHaberler.length) el.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Haberler yüklenemedi. İnternet bağlantını kontrol et.</div>';
+  else {
+    el.innerHTML = tumHaberler.slice(0, 25).map(h => {
+      const zaman = h.tarih ? new Date(h.tarih).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}) : '';
+      const kaynakRenk = h.kaynak.includes('TR') ? 'text-cyan-400' : 'text-purple-400';
+      return `<a href="${h.link}" target="_blank" class="block rounded-xl p-3 transition hover:brightness-125 border" style="background:var(--surface);border-color:var(--border)"><div class="font-medium text-sm mb-1 leading-snug" style="color:var(--text)">${h.baslik}</div><div class="flex justify-between text-[10px]"><span class="${kaynakRenk} font-bold uppercase tracking-wider">${h.kaynak}</span><span style="color:var(--text-mute)">${zaman}</span></div></a>`;
+    }).join('');
+  }
+  updEl.textContent = new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+  btn.disabled = false; btn.textContent = '📰 Haberleri Getir';
+}
+
+/* PANEL DOLDUR */
 function panelDoldur(a) {
   const kart = document.getElementById('kararKart');
   const cls = { 'guclu-long': 'karar-guclu-long pulse-glow rounded-2xl p-6 text-center', 'long': 'karar-long rounded-2xl p-6 text-center', 'zayif-long': 'karar-zayif-long rounded-2xl p-6 text-center', 'guclu-short': 'karar-guclu-short pulse-glow-red rounded-2xl p-6 text-center', 'short': 'karar-short rounded-2xl p-6 text-center', 'zayif-short': 'karar-zayif-short rounded-2xl p-6 text-center', 'bekle': 'karar-bekle rounded-2xl p-6 text-center' };
@@ -1532,8 +1518,7 @@ function panelDoldur(a) {
     <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">EMA 50</span><span class="font-bold text-amber-400 mono">$${fmt(a.ema50)}</span></div>
     <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">EMA 200</span><span class="font-bold text-red-400 mono">$${fmt(a.ema200)}</span></div>
     <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">+DI/-DI</span><span class="font-bold mono" style="color:var(--text)">${a.pdi.toFixed(0)} / ${a.mdi.toFixed(0)}</span></div>
-    <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">ATR</span><span class="font-bold mono" style="color:var(--text)">${fmt(a.atr)}</span></div>
-  `;
+    <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">ATR</span><span class="font-bold mono" style="color:var(--text)">${fmt(a.atr)}</span></div>`;
   document.getElementById('statYuksek').textContent = '$' + fmt(a.son50Yuk);
   document.getElementById('statDusuk').textContent = '$' + fmt(a.son50Dus);
   document.getElementById('statHacim').textContent = a.hO.toFixed(2) + 'x';
@@ -1607,7 +1592,7 @@ function tfDegistir(tf) {
 }
 function saatGuncelle() { document.getElementById('saat').textContent = new Date().toLocaleTimeString('tr-TR'); }
 
-/* ============ BAŞLAT ============ */
+/* BAŞLAT */
 temaUygula(tema);
 document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
 if (localStorage.getItem('welcomeGorundu') === 'true') document.getElementById('welcomeScreen').classList.add('gizli');
@@ -1621,10 +1606,10 @@ coinYukle('BTCUSDT');
 hizliYukle();
 pozisyonPaneliDoldur();
 setInterval(saatGuncelle, 1000); saatGuncelle();
-fiyatGuncellemeIntervalId = setInterval(() => coinYukle(aktifCoin), 60000);
-hizliIntervalId = setInterval(hizliYukle, 120000);
-tickerIntervalId = setInterval(tickerYukle, 30000);
-testIntervalId = setInterval(() => testleriKontrolEt(false), 60000);
+setInterval(() => coinYukle(aktifCoin), 60000);
+setInterval(hizliYukle, 120000);
+setInterval(tickerYukle, 30000);
+setInterval(() => testleriKontrolEt(false), 60000);
 pozGuncellemeIntervalId = setInterval(pozisyonlariGuncelle, (AYARLAR.pozGuncelleme || 30) * 1000);
 setTimeout(() => { if (typeof testPaneliniGuncelle === 'function') testPaneliniGuncelle(); }, 2000);
 document.getElementById('aramaCoin').addEventListener('keypress', e => { if (e.key === 'Enter') coinYukle(); });
@@ -1634,4 +1619,4 @@ document.addEventListener('click', e => { if (!e.target.closest('#aramaCoin') &&
 window.addEventListener('resize', () => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); });
 </script>
 </body>
-</html>                 
+</html><!-- PARÇA 2 BAŞLANGICI — <script> etiketi -->
