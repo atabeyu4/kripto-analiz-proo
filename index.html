@@ -8,89 +8,83 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#070a12; --cyan:#22d3ee; --emerald:#10b981; --red:#ef4444; --purple:#a78bfa; --amber:#f59e0b; }
-  * { -webkit-tap-highlight-color: transparent; }
-  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,211,238,0.08), transparent), radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167,139,250,0.06), transparent); background-attachment: fixed; min-height: 100vh; }
-  .mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'tnum'; }
-  #chart { width: 100%; height: 520px; }
-  .glass { background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; transition: border-color .2s; }
-  .glass:hover { border-color: rgba(255,255,255,0.12); }
-  .card-glow-cyan { box-shadow: 0 0 40px rgba(34,211,238,0.08), inset 0 1px 0 rgba(255,255,255,0.03); }
-  .ticker-wrap { background: linear-gradient(90deg, #0a0e17, #0e1421, #0a0e17); border-bottom: 1px solid rgba(255,255,255,0.06); overflow: hidden; height: 34px; position: relative; }
-  .ticker-wrap::before, .ticker-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
-  .ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
-  .ticker-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
-  .ticker { display: inline-flex; gap: 32px; padding-left: 100%; animation: ticker-scroll 60s linear infinite; white-space: nowrap; align-items: center; height: 100%; }
-  @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-  .ticker-item { display: inline-flex; gap: 8px; align-items: center; font-size: 12px; }
-  .ticker-sym { color: #94a3b8; font-weight: 600; }
-  .ticker-up { color: var(--emerald); }
-  .ticker-down { color: var(--red); }
-  .ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
-  .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(34,211,238,0.2); border-top-color: var(--cyan); border-radius:50%; animation: spin .6s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .scroll-ince::-webkit-scrollbar { width: 6px; height: 6px; }
-  .scroll-ince::-webkit-scrollbar-track { background: transparent; }
-  .scroll-ince::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.2); border-radius: 3px; }
-  .satir { transition: all .15s; }
-  .satir:hover { background: rgba(255,255,255,0.04); }
-  .karar-guclu-long { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03)); border: 1px solid rgba(16,185,129,0.4); box-shadow: 0 0 60px rgba(16,185,129,0.2); }
-  .karar-long { background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.02)); border: 1px solid rgba(16,185,129,0.3); }
-  .karar-zayif-long { background: linear-gradient(135deg, rgba(16,185,129,0.05), transparent); border: 1px solid rgba(16,185,129,0.15); }
-  .karar-guclu-short { background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.03)); border: 1px solid rgba(239,68,68,0.4); box-shadow: 0 0 60px rgba(239,68,68,0.2); }
-  .karar-short { background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.02)); border: 1px solid rgba(239,68,68,0.3); }
-  .karar-zayif-short { background: linear-gradient(135deg, rgba(239,68,68,0.05), transparent); border: 1px solid rgba(239,68,68,0.15); }
-  .karar-bekle { background: linear-gradient(135deg, rgba(148,163,184,0.05), transparent); border: 1px solid rgba(148,163,184,0.15); }
-  .pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
-  @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 60px rgba(16,185,129,0.2); } 50% { box-shadow: 0 0 80px rgba(16,185,129,0.35); } }
-  .pulse-glow-red { animation: pulse-glow-red 2.5s ease-in-out infinite; }
-  @keyframes pulse-glow-red { 0%, 100% { box-shadow: 0 0 60px rgba(239,68,68,0.2); } 50% { box-shadow: 0 0 80px rgba(239,68,68,0.35); } }
-  .fiyat-up { animation: flash-up .6s ease-out; }
-  .fiyat-down { animation: flash-down .6s ease-out; }
-  @keyframes flash-up { 0% { color: var(--emerald); text-shadow: 0 0 20px rgba(16,185,129,0.6); } 100% { color: inherit; } }
-  @keyframes flash-down { 0% { color: var(--red); text-shadow: 0 0 20px rgba(239,68,68,0.6); } 100% { color: inherit; } }
-  .rtab { transition: all .15s; padding: 6px 4px; font-size: 10.5px; font-weight: 600; }
-  .rtab:hover { color: #cbd5e1; background: rgba(255,255,255,0.03); }
-  .rtab-aktif { background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(34,211,238,0.05)) !important; color: var(--cyan) !important; box-shadow: 0 0 16px rgba(34,211,238,0.2); }
-  .canli-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 12px var(--emerald); animation: pulse-dot 1.5s ease-in-out infinite; }
-  @keyframes pulse-dot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
-  .canli-dot.baglaniyor { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
-  .canli-dot.kopuk { background: var(--red); box-shadow: 0 0 12px var(--red); animation: none; }
-  .stat-kart { background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0)); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 12px; transition: all .2s; }
-  .stat-kart:hover { border-color: rgba(34,211,238,0.2); }
-  .stat-label { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px; }
-  .stat-value { font-size: 15px; font-weight: 700; color: #e2e8f0; }
-  .arama-input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: all .2s; }
-  .arama-input:focus { background: rgba(34,211,238,0.03); border-color: rgba(34,211,238,0.4); box-shadow: 0 0 0 3px rgba(34,211,238,0.1); outline: none; }
-  .btn-cyan { background: linear-gradient(135deg, #22d3ee, #0891b2); box-shadow: 0 4px 20px rgba(34,211,238,0.3); transition: all .2s; }
-  .btn-cyan:hover { box-shadow: 0 6px 28px rgba(34,211,238,0.5); }
-  .tf-btn { transition: all .2s; }
-  .tf-btn:hover { background: rgba(255,255,255,0.06); }
-  .tf-btn.aktif { background: linear-gradient(135deg, #22d3ee, #0891b2); color: #0a0e17; font-weight: 600; }
-  .gradient-text { background: linear-gradient(135deg, #22d3ee, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: skeleton 1.5s infinite; border-radius: 6px; }
-  @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-  .coin-pill { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 6px 12px; cursor: pointer; transition: all .2s; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
-  .coin-pill:hover { background: rgba(34,211,238,0.08); border-color: rgba(34,211,238,0.3); color: var(--cyan); }
-  body.tam-ekran .lg\:col-span-4 { display: none !important; }
-  body.tam-ekran .lg\:col-span-8 { grid-column: span 12 / span 12 !important; }
-  body.tam-ekran #chart { height: calc(100vh - 220px) !important; }
-  body.tam-ekran .main-grid { grid-template-columns: 1fr !important; }
-  .radar-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(7,10,18,0.85); backdrop-filter: blur(8px); }
-  .radar-modal.acik { display: flex; }
-  .radar-icerik { width: 100%; max-width: 720px; max-height: 85vh; overflow-y: auto; background: linear-gradient(135deg, #0e1421, #0a0e17); border: 1px solid rgba(34,211,238,0.2); border-radius: 20px; padding: 20px; }
-  .radar-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; margin-bottom: 8px; transition: all .2s; cursor: pointer; }
-  .radar-item:hover { background: rgba(34,211,238,0.05); border-color: rgba(34,211,238,0.3); }
-  .radar-item.guclu { border-color: rgba(34,211,238,0.4); background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(34,211,238,0.02)); }
-  @keyframes radar-tarama { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  .radar-taraniyor { animation: radar-tarama 1.2s linear infinite; display: inline-block; }
-  @media (max-width: 640px) {
-    #chart { height: 300px !important; }
-    .ticker-wrap { height: 28px; }
-    .ticker-item { font-size: 11px; }
-    .stat-value { font-size: 13px; }
-    .rtab { font-size: 9px; padding: 6px 2px; }
-  }
+:root{--bg:#070a12;--cyan:#22d3ee;--emerald:#10b981;--red:#ef4444;--purple:#a78bfa;--amber:#f59e0b}
+*{-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',sans-serif;background:var(--bg);background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,211,238,.08),transparent),radial-gradient(ellipse 60% 40% at 100% 0%,rgba(167,139,250,.06),transparent);background-attachment:fixed;min-height:100vh}
+.mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
+#chart{width:100%;height:520px}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,.02),rgba(255,255,255,0));backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);border-radius:16px;transition:border-color .2s}
+.glass:hover{border-color:rgba(255,255,255,.12)}
+.card-glow-cyan{box-shadow:0 0 40px rgba(34,211,238,.08),inset 0 1px 0 rgba(255,255,255,.03)}
+.ticker-wrap{background:linear-gradient(90deg,#0a0e17,#0e1421,#0a0e17);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden;height:34px;position:relative}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.ticker{display:inline-flex;gap:32px;padding-left:100%;animation:ticker-scroll 60s linear infinite;white-space:nowrap;align-items:center;height:100%}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.ticker-item{display:inline-flex;gap:8px;align-items:center;font-size:12px}
+.ticker-sym{color:#94a3b8;font-weight:600}
+.ticker-up{color:var(--emerald)}
+.ticker-down{color:var(--red)}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(34,211,238,.2);border-top-color:var(--cyan);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-ince::-webkit-scrollbar{width:6px;height:6px}
+.scroll-ince::-webkit-scrollbar-track{background:transparent}
+.scroll-ince::-webkit-scrollbar-thumb{background:rgba(34,211,238,.2);border-radius:3px}
+.satir{transition:all .15s}
+.satir:hover{background:rgba(255,255,255,.04)}
+.karar-guclu-long{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(16,185,129,.03));border:1px solid rgba(16,185,129,.4);box-shadow:0 0 60px rgba(16,185,129,.2)}
+.karar-long{background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(16,185,129,.02));border:1px solid rgba(16,185,129,.3)}
+.karar-zayif-long{background:linear-gradient(135deg,rgba(16,185,129,.05),transparent);border:1px solid rgba(16,185,129,.15)}
+.karar-guclu-short{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(239,68,68,.03));border:1px solid rgba(239,68,68,.4);box-shadow:0 0 60px rgba(239,68,68,.2)}
+.karar-short{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(239,68,68,.02));border:1px solid rgba(239,68,68,.3)}
+.karar-zayif-short{background:linear-gradient(135deg,rgba(239,68,68,.05),transparent);border:1px solid rgba(239,68,68,.15)}
+.karar-bekle{background:linear-gradient(135deg,rgba(148,163,184,.05),transparent);border:1px solid rgba(148,163,184,.15)}
+.pulse-glow{animation:pulse-glow 2.5s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 60px rgba(16,185,129,.2)}50%{box-shadow:0 0 80px rgba(16,185,129,.35)}}
+.pulse-glow-red{animation:pulse-glow-red 2.5s ease-in-out infinite}
+@keyframes pulse-glow-red{0%,100%{box-shadow:0 0 60px rgba(239,68,68,.2)}50%{box-shadow:0 0 80px rgba(239,68,68,.35)}}
+.fiyat-up{animation:flash-up .6s ease-out}
+.fiyat-down{animation:flash-down .6s ease-out}
+@keyframes flash-up{0%{color:var(--emerald);text-shadow:0 0 20px rgba(16,185,129,.6)}100%{color:inherit}}
+@keyframes flash-down{0%{color:var(--red);text-shadow:0 0 20px rgba(239,68,68,.6)}100%{color:inherit}}
+.rtab{transition:all .15s;padding:6px 4px;font-size:10.5px;font-weight:600}
+.rtab:hover{color:#cbd5e1;background:rgba(255,255,255,.03)}
+.rtab-aktif{background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(34,211,238,.05))!important;color:var(--cyan)!important;box-shadow:0 0 16px rgba(34,211,238,.2)}
+.canli-dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 12px var(--emerald);animation:pulse-dot 1.5s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
+.canli-dot.baglaniyor{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+.canli-dot.kopuk{background:var(--red);box-shadow:0 0 12px var(--red);animation:none}
+.stat-kart{background:linear-gradient(135deg,rgba(255,255,255,.03),rgba(255,255,255,0));border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;transition:all .2s}
+.stat-kart:hover{border-color:rgba(34,211,238,.2)}
+.stat-label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:4px}
+.stat-value{font-size:15px;font-weight:700;color:#e2e8f0}
+.arama-input{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:all .2s}
+.arama-input:focus{background:rgba(34,211,238,.03);border-color:rgba(34,211,238,.4);box-shadow:0 0 0 3px rgba(34,211,238,.1);outline:none}
+.btn-cyan{background:linear-gradient(135deg,#22d3ee,#0891b2);box-shadow:0 4px 20px rgba(34,211,238,.3);transition:all .2s}
+.btn-cyan:hover{box-shadow:0 6px 28px rgba(34,211,238,.5)}
+.tf-btn{transition:all .2s}
+.tf-btn:hover{background:rgba(255,255,255,.06)}
+.tf-btn.aktif{background:linear-gradient(135deg,#22d3ee,#0891b2);color:#0a0e17;font-weight:600}
+.gradient-text{background:linear-gradient(135deg,#22d3ee,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.03) 25%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.03) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite;border-radius:6px}
+@keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.coin-pill{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:6px 12px;cursor:pointer;transition:all .2s;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.coin-pill:hover{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);color:var(--cyan)}
+body.tam-ekran .lg\:col-span-4{display:none!important}
+body.tam-ekran .lg\:col-span-8{grid-column:span 12/span 12!important}
+body.tam-ekran #chart{height:calc(100vh - 220px)!important}
+body.tam-ekran .main-grid{grid-template-columns:1fr!important}
+.radar-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(7,10,18,.85);backdrop-filter:blur(8px)}
+.radar-modal.acik{display:flex}
+.radar-icerik{width:100%;max-width:720px;max-height:85vh;overflow-y:auto;background:linear-gradient(135deg,#0e1421,#0a0e17);border:1px solid rgba(34,211,238,.2);border-radius:20px;padding:20px}
+.radar-item{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px;margin-bottom:8px;transition:all .2s;cursor:pointer}
+.radar-item:hover{background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.3)}
+.radar-item.guclu{border-color:rgba(34,211,238,.4);background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(34,211,238,.02))}
+@keyframes radar-tarama{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.radar-taraniyor{animation:radar-tarama 1.2s linear infinite;display:inline-block}
+@media(max-width:640px){#chart{height:300px!important}.ticker-wrap{height:28px}.ticker-item{font-size:11px}.stat-value{font-size:13px}.rtab{font-size:9px;padding:6px 2px}}
 </style>
 </head>
 <body class="text-slate-100">
@@ -98,208 +92,204 @@
 <div class="ticker-wrap"><div class="ticker" id="ticker"></div></div>
 
 <header class="sticky top-0 z-40 bg-[#0a0e17]/80 backdrop-blur-xl border-b border-white/5">
-  <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-3 flex items-center gap-3">
-    <div class="flex items-center gap-2.5 shrink-0">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📈</span></div>
-      <div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] text-slate-500 mono">PRO TERMINAL v2.3</div></div>
-    </div>
-    <div class="flex-1 flex items-center gap-2 max-w-2xl relative">
-      <input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE..." autocomplete="off" class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
-      <button onclick="coinYukle()" class="btn-cyan px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-900 whitespace-nowrap">Analiz</button>
-      <div id="aramaOneri" class="absolute top-full left-0 right-0 mt-2 bg-[#0e1421] border border-white/10 rounded-xl shadow-2xl z-50 hidden max-h-72 overflow-y-auto scroll-ince"></div>
-    </div>
-    <button onclick="radarAc()" title="Sinyal Radarı" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 hover:from-purple-500/30 hover:to-cyan-500/30 border border-purple-500/30 text-xs font-bold text-purple-300 transition whitespace-nowrap">🎯 RADAR</button>
-    <div id="canliDurum" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-      <span id="canliDot" class="canli-dot baglaniyor"></span>
-      <span id="canliYazi" class="text-amber-400 font-semibold text-xs">Bağlanıyor</span>
-    </div>
-    <button id="bildirimBtn" onclick="bildirimToggle()" title="Bildirim" class="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 flex items-center justify-center text-sm transition">🔔</button>
-    <div class="hidden lg:flex flex-col items-end"><span id="saat" class="mono text-cyan-400 text-sm font-semibold"></span><span class="text-[10px] text-slate-500">Yerel saat</span></div>
-  </div>
-  <div class="border-t border-white/5">
-    <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-2 flex items-center gap-3 overflow-x-auto scroll-ince">
-      <div class="flex items-center gap-1.5 shrink-0">
-        <span class="text-slate-500 text-xs font-medium mr-1">TF:</span>
-        <button onclick="tfDegistir('1')" data-tf="1" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">1dk</button>
-        <button onclick="tfDegistir('5')" data-tf="5" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">5dk</button>
-        <button onclick="tfDegistir('15')" data-tf="15" class="tf-btn aktif px-3 py-1 rounded-lg text-xs">15dk</button>
-        <button onclick="tfDegistir('60')" data-tf="60" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">1sa</button>
-        <button onclick="tfDegistir('240')" data-tf="240" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">4sa</button>
-        <button onclick="tfDegistir('D')" data-tf="D" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">1g</button>
-      </div>
-      <div class="w-px h-4 bg-white/10"></div>
-      <div class="flex items-center gap-1.5 shrink-0">
-        <span class="text-slate-500 text-xs font-medium mr-1">Hızlı:</span>
-        <button onclick="coinYukle('BTCUSDT')" class="coin-pill text-slate-300">₿ BTC</button>
-        <button onclick="coinYukle('ETHUSDT')" class="coin-pill text-slate-300">Ξ ETH</button>
-        <button onclick="coinYukle('XRPUSDT')" class="coin-pill text-slate-300">✕ XRP</button>
-        <button onclick="coinYukle('SOLUSDT')" class="coin-pill text-slate-300">◎ SOL</button>
-        <button onclick="coinYukle('PAXGUSDT')" class="coin-pill text-slate-300">🥇 PAXG</button>
-      </div>
-    </div>
-  </div>
+<div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-3 flex items-center gap-3">
+<div class="flex items-center gap-2.5 shrink-0">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📈</span></div>
+<div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] text-slate-500 mono">PRO TERMINAL v2.4</div></div>
+</div>
+<div class="flex-1 flex items-center gap-2 max-w-2xl relative">
+<input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE..." autocomplete="off" class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
+<button onclick="coinYukle()" class="btn-cyan px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-900 whitespace-nowrap">Analiz</button>
+<div id="aramaOneri" class="absolute top-full left-0 right-0 mt-2 bg-[#0e1421] border border-white/10 rounded-xl shadow-2xl z-50 hidden max-h-72 overflow-y-auto scroll-ince"></div>
+</div>
+<button onclick="radarAc()" title="Sinyal Radarı" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 hover:from-purple-500/30 hover:to-cyan-500/30 border border-purple-500/30 text-xs font-bold text-purple-300 transition whitespace-nowrap">🎯 RADAR</button>
+<div id="canliDurum" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+<span id="canliDot" class="canli-dot baglaniyor"></span>
+<span id="canliYazi" class="text-amber-400 font-semibold text-xs">Bağlanıyor</span>
+</div>
+<button id="bildirimBtn" onclick="bildirimToggle()" title="Bildirim" class="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 flex items-center justify-center text-sm transition">🔔</button>
+<div class="hidden lg:flex flex-col items-end"><span id="saat" class="mono text-cyan-400 text-sm font-semibold"></span><span class="text-[10px] text-slate-500">Yerel saat</span></div>
+</div>
+<div class="border-t border-white/5">
+<div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-2 flex items-center gap-3 overflow-x-auto scroll-ince">
+<div class="flex items-center gap-1.5 shrink-0">
+<span class="text-slate-500 text-xs font-medium mr-1">TF:</span>
+<button onclick="tfDegistir('1')" data-tf="1" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">1dk</button>
+<button onclick="tfDegistir('5')" data-tf="5" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">5dk</button>
+<button onclick="tfDegistir('15')" data-tf="15" class="tf-btn aktif px-3 py-1 rounded-lg text-xs">15dk</button>
+<button onclick="tfDegistir('60')" data-tf="60" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">1sa</button>
+<button onclick="tfDegistir('240')" data-tf="240" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">4sa</button>
+<button onclick="tfDegistir('D')" data-tf="D" class="tf-btn px-3 py-1 rounded-lg text-xs text-slate-400">1g</button>
+</div>
+<div class="w-px h-4 bg-white/10"></div>
+<div class="flex items-center gap-1.5 shrink-0">
+<span class="text-slate-500 text-xs font-medium mr-1">Hızlı:</span>
+<button onclick="coinYukle('BTCUSDT')" class="coin-pill text-slate-300">₿ BTC</button>
+<button onclick="coinYukle('ETHUSDT')" class="coin-pill text-slate-300">Ξ ETH</button>
+<button onclick="coinYukle('XRPUSDT')" class="coin-pill text-slate-300">✕ XRP</button>
+<button onclick="coinYukle('SOLUSDT')" class="coin-pill text-slate-300">◎ SOL</button>
+<button onclick="coinYukle('PAXGUSDT')" class="coin-pill text-slate-300">🥇 PAXG</button>
+</div>
+</div>
+</div>
 </header>
 
 <main class="max-w-[1800px] mx-auto p-3 sm:p-4">
-  <div class="glass p-4 sm:p-5 mb-4 card-glow-cyan">
-    <div class="flex flex-wrap items-start justify-between gap-4">
-      <div>
-        <div class="flex items-center gap-3 mb-2">
-          <h1 id="aktifCoin" class="text-2xl sm:text-3xl font-bold tracking-tight">BTCUSDT</h1>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase tracking-wider">SPOT</span>
-        </div>
-        <div class="flex items-baseline gap-4">
-          <span id="aktifFiyat" class="mono text-3xl sm:text-4xl font-bold tracking-tight">-</span>
-          <span id="aktifDegisim" class="mono text-sm font-semibold">-</span>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full sm:w-auto">
-        <div class="stat-kart"><div class="stat-label">24s Yüksek</div><div id="statYuksek" class="stat-value mono text-red-400">-</div></div>
-        <div class="stat-kart"><div class="stat-label">24s Düşük</div><div id="statDusuk" class="stat-value mono text-emerald-400">-</div></div>
-        <div class="stat-kart"><div class="stat-label">Hacim</div><div id="statHacim" class="stat-value mono">-</div></div>
-        <div class="stat-kart"><div class="stat-label">Volatilite</div><div id="statVol" class="stat-value mono">-</div></div>
-      </div>
-    </div>
-  </div>
+<div class="glass p-4 sm:p-5 mb-4 card-glow-cyan">
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h1 id="aktifCoin" class="text-2xl sm:text-3xl font-bold tracking-tight">BTCUSDT</h1>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase tracking-wider">SPOT</span>
+</div>
+<div class="flex items-baseline gap-4">
+<span id="aktifFiyat" class="mono text-3xl sm:text-4xl font-bold tracking-tight">-</span>
+<span id="aktifDegisim" class="mono text-sm font-semibold">-</span>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full sm:w-auto">
+<div class="stat-kart"><div class="stat-label">24s Yüksek</div><div id="statYuksek" class="stat-value mono text-red-400">-</div></div>
+<div class="stat-kart"><div class="stat-label">24s Düşük</div><div id="statDusuk" class="stat-value mono text-emerald-400">-</div></div>
+<div class="stat-kart"><div class="stat-label">Hacim</div><div id="statHacim" class="stat-value mono">-</div></div>
+<div class="stat-kart"><div class="stat-label">Volatilite</div><div id="statVol" class="stat-value mono">-</div></div>
+</div>
+</div>
+</div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 main-grid">
-    <div class="lg:col-span-8">
-      <div class="glass p-3 relative">
-        <div class="flex items-center justify-between mb-3 px-1">
-          <div class="flex items-center gap-2">
-            <span class="text-xs text-slate-400 font-semibold">📊 CANLI GRAFİK</span>
-            <span class="text-[10px] mono text-slate-600" id="chartInfo">— mum</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div id="legendEma" class="hidden sm:flex items-center gap-3 text-[10px] text-slate-500 mono transition-opacity duration-300" style="opacity:0.3">
-              <span><span class="inline-block w-3 h-0.5 bg-blue-500 align-middle"></span> EMA20</span>
-              <span><span class="inline-block w-3 h-0.5 bg-amber-500 align-middle"></span> EMA50</span>
-              <span><span class="inline-block w-3 h-0.5 bg-red-500 align-middle"></span> EMA200</span>
-              <span><span class="inline-block w-3 h-0.5 bg-purple-400 align-middle"></span> VWAP</span>
-            </div>
-            <button onclick="gostergeleriToggle()" id="gostergeBtn" title="EMA/VWAP Göster/Gizle" class="w-8 h-8 rounded-lg bg-white/[0.03] hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/40 flex items-center justify-center text-sm transition">
-              <span id="gostergeIkon">🙈</span>
-            </button>
-            <button onclick="tamEkranToggle()" title="Tam Ekran" class="w-8 h-8 rounded-lg bg-white/[0.03] hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/40 flex items-center justify-center text-sm transition">
-              <span id="tamEkranIkon">⛶</span>
-            </button>
-          </div>
-        </div>
-        <div id="chart"></div>
-        <div id="chartYukleniyor" class="absolute inset-0 flex items-center justify-center bg-[#0e1421]/90 backdrop-blur rounded-2xl">
-          <div class="text-center"><div class="spinner mx-auto mb-3" style="width:24px;height:24px;border-width:3px;"></div><span class="text-slate-400 text-sm">Grafik yükleniyor...</span></div>
-        </div>
-      </div>
-    </div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4 main-grid">
+<div class="lg:col-span-8">
+<div class="glass p-3 relative">
+<div class="flex items-center justify-between mb-3 px-1">
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400 font-semibold">📊 CANLI GRAFİK</span>
+<span class="text-[10px] mono text-slate-600" id="chartInfo">— mum</span>
+</div>
+<div class="flex items-center gap-2">
+<div id="legendEma" class="hidden sm:flex items-center gap-3 text-[10px] text-slate-500 mono transition-opacity duration-300" style="opacity:.3">
+<span><span class="inline-block w-3 h-0.5 bg-blue-500 align-middle"></span> EMA20</span>
+<span><span class="inline-block w-3 h-0.5 bg-amber-500 align-middle"></span> EMA50</span>
+<span><span class="inline-block w-3 h-0.5 bg-red-500 align-middle"></span> EMA200</span>
+<span><span class="inline-block w-3 h-0.5 bg-purple-400 align-middle"></span> VWAP</span>
+</div>
+<button onclick="gostergeleriToggle()" id="gostergeBtn" title="EMA/VWAP Göster/Gizle" class="w-8 h-8 rounded-lg bg-white/[0.03] hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/40 flex items-center justify-center text-sm transition"><span id="gostergeIkon">🙈</span></button>
+<button onclick="tamEkranToggle()" title="Tam Ekran" class="w-8 h-8 rounded-lg bg-white/[0.03] hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/40 flex items-center justify-center text-sm transition"><span id="tamEkranIkon">⛶</span></button>
+</div>
+</div>
+<div id="chart"></div>
+<div id="chartYukleniyor" class="absolute inset-0 flex items-center justify-center bg-[#0e1421]/90 backdrop-blur rounded-2xl">
+<div class="text-center"><div class="spinner mx-auto mb-3" style="width:24px;height:24px;border-width:3px"></div><span class="text-slate-400 text-sm">Grafik yükleniyor...</span></div>
+</div>
+</div>
+</div>
 
-    <div class="lg:col-span-4">
-      <div class="lg:sticky lg:top-32 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto scroll-ince pr-1 space-y-2.5">
-        <div class="flex gap-0.5 p-1 glass">
-          <button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1 rounded-lg text-slate-300">🎯 Karar</button>
-          <button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1 rounded-lg text-slate-500">📊 Teknik</button>
-          <button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1 rounded-lg text-slate-500">🌍 Piyasa</button>
-          <button onclick="rTabGec('test')" data-rtab="test" class="rtab flex-1 rounded-lg text-slate-500">🧠 S.Test</button>
-        </div>
+<div class="lg:col-span-4">
+<div class="lg:sticky lg:top-32 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto scroll-ince pr-1 space-y-2.5">
+<div class="flex gap-0.5 p-1 glass">
+<button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1 rounded-lg text-slate-300">🎯 Karar</button>
+<button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1 rounded-lg text-slate-500">📊 Teknik</button>
+<button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1 rounded-lg text-slate-500">🌍 Piyasa</button>
+<button onclick="rTabGec('test')" data-rtab="test" class="rtab flex-1 rounded-lg text-slate-500">🧠 S.Test</button>
+</div>
 
-        <div id="rtab-karar" class="space-y-3">
-          <div id="kararKart" class="karar-bekle rounded-2xl p-6 text-center">
-            <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-2 font-bold">SİNYAL MOTORU</div>
-            <div id="kararIkon" class="text-6xl mb-3">⏸️</div>
-            <div id="kararYazi" class="text-3xl font-extrabold mb-3 text-slate-400 tracking-tight">BEKLE</div>
-            <div id="kararGuven" class="inline-block text-xs font-bold mono px-3 py-1.5 rounded-full bg-white/5 text-slate-300 border border-white/10">—</div>
-            <div id="kararAciklama" class="text-xs text-slate-400 mt-4 leading-relaxed">Analiz yapılıyor...</div>
-          </div>
-          <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🕐 Çoklu Zaman Onayı</h3><span id="mtfOnay" class="text-[10px] mono text-slate-500">—</span></div>
-            <div id="mtfListe" class="space-y-2"><div class="skeleton h-12"></div><div class="skeleton h-12"></div><div class="skeleton h-12"></div></div>
-          </div>
-          <div id="planKart" class="glass p-4">
-            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🎯 İşlem Planı</h3><span id="planRR" class="text-[10px] mono text-cyan-400 font-bold">—</span></div>
-            <div id="planIcerik" class="space-y-2 text-sm"><div class="skeleton h-24"></div></div>
-          </div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🧠 Neden Bu Karar?</h3><div id="sebepListe" class="space-y-2"></div></div>
-        </div>
+<div id="rtab-karar" class="space-y-3">
+<div id="kararKart" class="karar-bekle rounded-2xl p-6 text-center">
+<div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-2 font-bold">SİNYAL MOTORU</div>
+<div id="kararIkon" class="text-6xl mb-3">⏸️</div>
+<div id="kararYazi" class="text-3xl font-extrabold mb-3 text-slate-400 tracking-tight">BEKLE</div>
+<div id="kararGuven" class="inline-block text-xs font-bold mono px-3 py-1.5 rounded-full bg-white/5 text-slate-300 border border-white/10">—</div>
+<div id="kararAciklama" class="text-xs text-slate-400 mt-4 leading-relaxed">Analiz yapılıyor...</div>
+</div>
+<div class="glass p-4">
+<div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🕐 Çoklu Zaman Onayı</h3><span id="mtfOnay" class="text-[10px] mono text-slate-500">—</span></div>
+<div id="mtfListe" class="space-y-2"><div class="skeleton h-12"></div><div class="skeleton h-12"></div><div class="skeleton h-12"></div></div>
+</div>
+<div id="planKart" class="glass p-4">
+<div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🎯 İşlem Planı</h3><span id="planRR" class="text-[10px] mono text-cyan-400 font-bold">—</span></div>
+<div id="planIcerik" class="space-y-2 text-sm"><div class="skeleton h-24"></div></div>
+</div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🧠 Neden Bu Karar?</h3><div id="sebepListe" class="space-y-2"></div></div>
+</div>
 
-        <div id="rtab-teknik" class="space-y-3 hidden">
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Göstergeler</h3><div id="gostergeler" class="space-y-2"></div></div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🕯️ Formasyonlar & Divergence</h3><div id="formasyonListe" class="space-y-2"></div></div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🟩🟥 Fair Value Gap</h3><div id="fvgListe" class="space-y-2"></div></div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Piyasa Yapısı</h3><div id="yapiListe" class="space-y-2"></div></div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Fibonacci</h3><div id="fibListe" class="space-y-2"></div></div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Volume Profile</h3><div id="vpListe" class="space-y-2"></div></div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📏 Kritik Seviyeler</h3><div id="seviyeler" class="space-y-2 text-sm"></div></div>
-        </div>
+<div id="rtab-teknik" class="space-y-3 hidden">
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Göstergeler</h3><div id="gostergeler" class="space-y-2"></div></div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🕯️ Formasyonlar & Divergence</h3><div id="formasyonListe" class="space-y-2"></div></div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🟩🟥 Fair Value Gap</h3><div id="fvgListe" class="space-y-2"></div></div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Piyasa Yapısı</h3><div id="yapiListe" class="space-y-2"></div></div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Fibonacci</h3><div id="fibListe" class="space-y-2"></div></div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Volume Profile</h3><div id="vpListe" class="space-y-2"></div></div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📏 Kritik Seviyeler</h3><div id="seviyeler" class="space-y-2 text-sm"></div></div>
+</div>
 
-        <div id="rtab-piyasa" class="space-y-3 hidden">
-          <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">💰 Funding & OI</h3><span class="text-[9px] mono text-purple-400 px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/20 font-bold">VADELİ</span></div>
-            <div id="fundingListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
-          </div>
-          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">😱 Fear & Greed</h3><div id="fngListe"><div class="skeleton h-32"></div></div></div>
-          <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">📖 Order Book</h3><span class="text-[9px] mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 font-bold">SPOT</span></div>
-            <div id="obListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
-          </div>
-        </div>
+<div id="rtab-piyasa" class="space-y-3 hidden">
+<div class="glass p-4">
+<div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">💰 Funding & OI</h3><span class="text-[9px] mono text-purple-400 px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/20 font-bold">VADELİ</span></div>
+<div id="fundingListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
+</div>
+<div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">😱 Fear & Greed</h3><div id="fngListe"><div class="skeleton h-32"></div></div></div>
+<div class="glass p-4">
+<div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">📖 Order Book</h3><span class="text-[9px] mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 font-bold">SPOT</span></div>
+<div id="obListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
+</div>
+</div>
 
-        <div id="rtab-test" class="space-y-3 hidden">
-          <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🧠 Otomatik Test Sistemi</h3>
-              <span class="text-[10px] mono text-cyan-400 font-bold">KENDİNİ TEST EDİYOR</span>
-            </div>
-            <p class="text-xs text-slate-500 mb-3 leading-relaxed">Bot her güçlü sinyalini otomatik kaydeder, belirli süre sonra fiyatı kontrol eder.</p>
-            <div id="testPanel"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🧪 Manuel Backtest</h3>
-            <button onclick="backtestCalistir()" id="btBtn" class="btn-cyan w-full rounded-xl py-2.5 font-bold text-sm text-slate-900 disabled:opacity-50">Backtest Çalıştır</button>
-            <div id="btSonuc" class="mt-3"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">💵 Risk Hesaplayıcı</h3>
-            <div class="space-y-3">
-              <div><label class="text-[10px] text-slate-500 uppercase font-bold">Bakiye</label><input id="riskBakiye" type="number" value="1000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
-              <div><label class="text-[10px] text-slate-500 uppercase font-bold">Risk %</label><input id="riskYuzde" type="number" value="2" step="0.5" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
-              <button onclick="riskHesapla()" class="w-full bg-blue-600 hover:bg-blue-500 rounded-xl py-2.5 font-bold text-sm transition">Hesapla</button>
-              <div id="riskSonuc" class="bg-white/5 rounded-lg p-3 text-xs mono space-y-1 hidden"></div>
-            </div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🔔 Fiyat Alarmı</h3>
-            <div class="space-y-2">
-              <input id="alarmFiyat" type="number" placeholder="Örn: 70000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono">
-              <button onclick="alarmKur()" class="w-full bg-amber-600 hover:bg-amber-500 rounded-xl py-2.5 font-bold text-sm transition">Alarm Kur</button>
-              <div id="alarmDurum" class="text-xs text-center"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="rtab-test" class="space-y-3 hidden">
+<div class="glass p-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🧠 Otomatik Test Sistemi</h3>
+<span class="text-[10px] mono text-cyan-400 font-bold">KENDİNİ TEST EDİYOR</span>
+</div>
+<p class="text-xs text-slate-500 mb-3 leading-relaxed">Bot her güçlü sinyalini otomatik kaydeder, belirli süre sonra fiyatı kontrol eder.</p>
+<div id="testPanel"></div>
+</div>
+<div class="glass p-4">
+<h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🧪 Manuel Backtest</h3>
+<button onclick="backtestCalistir()" id="btBtn" class="btn-cyan w-full rounded-xl py-2.5 font-bold text-sm text-slate-900 disabled:opacity-50">Backtest Çalıştır</button>
+<div id="btSonuc" class="mt-3"></div>
+</div>
+<div class="glass p-4">
+<h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">💵 Risk Hesaplayıcı</h3>
+<div class="space-y-3">
+<div><label class="text-[10px] text-slate-500 uppercase font-bold">Bakiye</label><input id="riskBakiye" type="number" value="1000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+<div><label class="text-[10px] text-slate-500 uppercase font-bold">Risk %</label><input id="riskYuzde" type="number" value="2" step="0.5" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+<button onclick="riskHesapla()" class="w-full bg-blue-600 hover:bg-blue-500 rounded-xl py-2.5 font-bold text-sm transition">Hesapla</button>
+<div id="riskSonuc" class="bg-white/5 rounded-lg p-3 text-xs mono space-y-1 hidden"></div>
+</div>
+</div>
+<div class="glass p-4">
+<h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🔔 Fiyat Alarmı</h3>
+<div class="space-y-2">
+<input id="alarmFiyat" type="number" placeholder="Örn: 70000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono">
+<button onclick="alarmKur()" class="w-full bg-amber-600 hover:bg-amber-500 rounded-xl py-2.5 font-bold text-sm transition">Alarm Kur</button>
+<div id="alarmDurum" class="text-xs text-center"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-  <div class="mt-4 glass p-4">
-    <div class="flex items-center justify-between mb-3">
-      <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">⚡ Hızlı Bakış</h3>
-      <button onclick="hizliYukle()" class="text-cyan-400 text-xs font-semibold hover:text-cyan-300 transition">🔄 Yenile</button>
-    </div>
-    <div id="hizliListe" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
-  </div>
+<div class="mt-4 glass p-4">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">⚡ Hızlı Bakış</h3>
+<button onclick="hizliYukle()" class="text-cyan-400 text-xs font-semibold hover:text-cyan-300 transition">🔄 Yenile</button>
+</div>
+<div id="hizliListe" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+</div>
 
-  <div class="text-center text-slate-600 text-xs py-6 mt-4 mono">⚠️ EĞİTİM AMAÇLIDIR • YATIRIM TAVSİYESİ DEĞİLDİR</div>
+<div class="text-center text-slate-600 text-xs py-6 mt-4 mono">⚠️ EĞİTİM AMAÇLIDIR • YATIRIM TAVSİYESİ DEĞİLDİR</div>
 </main>
 
 <div id="radarModal" class="radar-modal" onclick="if(event.target === this) radarKapat()">
-  <div class="radar-icerik">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <div class="flex items-center gap-2"><span class="text-2xl">🎯</span><h2 class="text-xl font-bold gradient-text">SİNYAL RADARI</h2></div>
-        <p class="text-xs text-slate-500 mt-1">20 popüler coin taranıyor</p>
-      </div>
-      <button onclick="radarKapat()" class="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-red-500/20 border border-white/10 flex items-center justify-center text-lg transition">×</button>
-    </div>
-    <div id="radarSonuc"></div>
-  </div>
+<div class="radar-icerik">
+<div class="flex items-center justify-between mb-4">
+<div>
+<div class="flex items-center gap-2"><span class="text-2xl">🎯</span><h2 class="text-xl font-bold gradient-text">SİNYAL RADARI</h2></div>
+<p class="text-xs text-slate-500 mt-1">Hacimli coinler taranıyor</p>
+</div>
+<button onclick="radarKapat()" class="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-red-500/20 border border-white/10 flex items-center justify-center text-lg transition">×</button>
+</div>
+<div id="radarSonuc"></div>
+</div>
 </div>
 
 <script>
@@ -310,7 +300,6 @@ let tamEkran = false;
 let gostergelerAcik = JSON.parse(localStorage.getItem('gostergelerAcik') || 'false');
 const HIZLI_LISTE = ['BTCUSDT', 'XRPUSDT', 'LITUSDT', 'PAXGUSDT'];
 const TICKER_COINLER = ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'SOLUSDT', 'DOGEUSDT', 'ADAUSDT', 'AVAXUSDT', 'LINKUSDT', 'MATICUSDT', 'DOTUSDT', 'LTCUSDT', 'PAXGUSDT'];
-const RADAR_COINLER = ['BTCUSDT','ETHUSDT','SOLUSDT','XRPUSDT','BNBUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT','LINKUSDT','DOTUSDT','MATICUSDT','LTCUSDT','ATOMUSDT','UNIUSDT','NEARUSDT','APTUSDT','ARBUSDT','OPUSDT','SUIUSDT','INJUSDT'];
 let sonAnaliz = null;
 let alarmFiyat = null;
 const mtfCache = {};
@@ -356,12 +345,25 @@ function radarAc() { document.getElementById('radarModal').classList.add('acik')
 function radarKapat() { document.getElementById('radarModal').classList.remove('acik'); }
 async function radarTaramayaBasla() {
   const el = document.getElementById('radarSonuc');
-  el.innerHTML = `<div class="text-center py-8"><div class="radar-taraniyor text-5xl mb-4">🎯</div><div class="text-sm text-slate-400">20 coin taranıyor...</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-2 mono">0/20</div></div>`;
+  el.innerHTML = `<div class="text-center py-8"><div class="radar-taraniyor text-5xl mb-4">🎯</div><div class="text-sm text-slate-400">Hacimli coinler taranıyor...</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-2 mono">Hazırlanıyor...</div></div>`;
+  let taranacakCoinler = ['BTCUSDT','ETHUSDT','SOLUSDT','XRPUSDT','BNBUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT','LINKUSDT','DOTUSDT','MATICUSDT','LTCUSDT','ATOMUSDT','UNIUSDT','NEARUSDT','APTUSDT','ARBUSDT','OPUSDT','SUIUSDT','INJUSDT'];
+  try {
+    const r = await fetch('https://api.bybit.com/v5/market/tickers?category=spot');
+    const j = await r.json();
+    if (j.retCode === 0 && j.result?.list) {
+      const aktif = j.result.list.filter(t => parseFloat(t.turnover24h || 0) > 1000000 && t.symbol.endsWith('USDT')).sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h)).slice(0, 100).map(t => t.symbol);
+      if (aktif.length > 20) taranacakCoinler = aktif;
+    }
+  } catch(e) {}
+  const toplam = taranacakCoinler.length;
+  el.innerHTML = `<div class="text-center py-6"><div class="radar-taraniyor text-5xl mb-3">🎯</div><div class="text-sm text-slate-300 font-semibold">${toplam} hacimli coin taranıyor</div><div class="text-[10px] text-slate-500 mt-1">24s hacmi >$1M • ~30 saniye sürer</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-3 mono">0/${toplam}</div><div class="mt-3 w-full bg-white/5 rounded-full h-1 max-w-xs mx-auto"><div id="radarBar" class="h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-200" style="width:0%"></div></div></div>`;
   const sonuclar = []; let sayac = 0;
-  for (const coin of RADAR_COINLER) {
+  for (const coin of taranacakCoinler) {
     sayac++;
     const ilerleme = document.getElementById('radarIlerleme');
-    if (ilerleme) ilerleme.textContent = `${sayac}/${RADAR_COINLER.length}`;
+    const bar = document.getElementById('radarBar');
+    if (ilerleme) ilerleme.textContent = `${sayac}/${toplam}`;
+    if (bar) bar.style.width = `${(sayac / toplam) * 100}%`;
     try {
       const mumlar = await klineCek(coin, aktifTF, 300);
       if (!mumlar) continue;
@@ -379,10 +381,11 @@ async function radarTaramayaBasla() {
   };
   let html = '';
   if (guclu.length) { html += `<div class="mb-4"><div class="text-[10px] text-cyan-400 uppercase tracking-wider font-bold mb-2">🔥 GÜÇLÜ SİNYALLER (${guclu.length})</div>`; html += guclu.sort((a,b) => Math.abs(b.masterPuan) - Math.abs(a.masterPuan)).map(s => renderItem(s, true)).join(''); html += `</div>`; }
-  if (orta.length) { html += `<div class="mb-4"><div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-2">📊 NORMAL (${orta.length})</div>`; html += orta.map(s => renderItem(s, false)).join(''); html += `</div>`; }
-  if (digerleri.length) { html += `<details class="mb-2"><summary class="text-[10px] text-slate-500 uppercase font-bold mb-2 cursor-pointer">⏸️ DİĞERLERİ (${digerleri.length})</summary><div class="mt-2">`; html += digerleri.map(s => renderItem(s, false)).join(''); html += `</div></details>`; }
-  if (!guclu.length && !orta.length) { html = `<div class="text-center py-8 text-slate-500"><div class="text-4xl mb-3">😴</div><div class="text-sm">Şu an güçlü sinyal yok</div></div>`; }
-  el.innerHTML = html;
+  if (orta.length) { html += `<div class="mb-4"><div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-2">📊 NORMAL SİNYALLER (${orta.length})</div>`; html += orta.map(s => renderItem(s, false)).join(''); html += `</div>`; }
+  if (digerleri.length) { html += `<details class="mb-2"><summary class="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2 cursor-pointer py-2 px-3 rounded-lg hover:bg-white/5 transition select-none">⏸️ DİĞERLERİ (${digerleri.length})</summary><div class="mt-2">`; html += digerleri.map(s => renderItem(s, false)).join(''); html += `</div></details>`; }
+  if (!guclu.length && !orta.length) html = `<div class="text-center py-8 text-slate-500"><div class="text-4xl mb-3">😴</div><div class="text-sm">Şu an güçlü sinyal yok</div><div class="text-xs mt-2">${toplam} coin tarandı</div></div>`;
+  const ozet = `<div class="grid grid-cols-3 gap-2 mb-4 text-center"><div class="bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-2.5"><div class="text-2xl font-extrabold mono text-cyan-400">${toplam}</div><div class="text-[9px] text-slate-400 uppercase tracking-wider mt-0.5">Taranan</div></div><div class="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-2.5"><div class="text-2xl font-extrabold mono text-emerald-400">${guclu.length}</div><div class="text-[9px] text-slate-400 uppercase tracking-wider mt-0.5">Güçlü</div></div><div class="bg-purple-500/5 border border-purple-500/20 rounded-xl p-2.5"><div class="text-2xl font-extrabold mono text-purple-400">${orta.length}</div><div class="text-[9px] text-slate-400 uppercase tracking-wider mt-0.5">Normal</div></div></div>`;
+  el.innerHTML = ozet + html;
 }
 function radarCoinSec(coin) { radarKapat(); coinYukle(coin); }
 
@@ -449,16 +452,7 @@ function testPaneliniGuncelle() {
   }).join('') || '<div class="text-slate-500 text-xs text-center py-2">Henüz tamamlanan test yok</div>';
   const enIyi = kategoriSirali.filter(([_,v]) => v.toplam >= 3).sort((a,b) => (b[1].dogru/(b[1].dogru+b[1].yanlis||1)) - (a[1].dogru/(a[1].dogru+a[1].yanlis||1)))[0];
   const enIyiHTML = enIyi ? `<div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 mt-2 text-center"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">🏆 En Güvenilir</div><div class="text-emerald-400 font-bold text-sm">${enIyi[0]}</div><div class="text-slate-500 text-[10px] mono">${enIyi[1].toplam} test • %${(enIyi[1].dogru/(enIyi[1].dogru+enIyi[1].yanlis||1)*100).toFixed(1)}</div></div>` : '';
-  el.innerHTML = `
-    <div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 rounded-xl p-4 mb-3">
-      <div class="text-center mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Genel İsabet</div><div class="text-4xl font-extrabold mono ${ist.genelOran >= 65 ? 'text-emerald-400' : ist.genelOran >= 55 ? 'text-yellow-400' : ist.genelOran >= 45 ? 'text-orange-400' : 'text-red-400'}">%${ist.genelOran.toFixed(1)}</div><div class="text-[10px] text-slate-500 mt-1 mono">${ist.toplam} toplam test</div></div>
-      <div class="grid grid-cols-3 gap-2 text-center"><div><div class="text-emerald-400 font-bold mono">${ist.toplamDogru}</div><div class="text-[9px] text-slate-500 uppercase">Doğru</div></div><div><div class="text-red-400 font-bold mono">${ist.toplamYanlis}</div><div class="text-[9px] text-slate-500 uppercase">Yanlış</div></div><div><div class="text-slate-400 font-bold mono">${ist.toplamNotr}</div><div class="text-[9px] text-slate-500 uppercase">Nötr</div></div></div>
-      ${enIyiHTML}
-    </div>
-    <div class="mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">📊 Sinyal Tipi Bazlı</div><div class="space-y-2">${kategoriRows}</div></div>
-    <div class="mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">⏳ Bekleyen (${aktifTestler.length})</div><div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div></div>
-    <div class="flex gap-2"><button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold">🔄 Şimdi Kontrol Et</button><button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold">🗑️</button></div>
-  `;
+  el.innerHTML = `<div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 rounded-xl p-4 mb-3"><div class="text-center mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Genel İsabet</div><div class="text-4xl font-extrabold mono ${ist.genelOran >= 65 ? 'text-emerald-400' : ist.genelOran >= 55 ? 'text-yellow-400' : ist.genelOran >= 45 ? 'text-orange-400' : 'text-red-400'}">%${ist.genelOran.toFixed(1)}</div><div class="text-[10px] text-slate-500 mt-1 mono">${ist.toplam} toplam test</div></div><div class="grid grid-cols-3 gap-2 text-center"><div><div class="text-emerald-400 font-bold mono">${ist.toplamDogru}</div><div class="text-[9px] text-slate-500 uppercase">Doğru</div></div><div><div class="text-red-400 font-bold mono">${ist.toplamYanlis}</div><div class="text-[9px] text-slate-500 uppercase">Yanlış</div></div><div><div class="text-slate-400 font-bold mono">${ist.toplamNotr}</div><div class="text-[9px] text-slate-500 uppercase">Nötr</div></div></div>${enIyiHTML}</div><div class="mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">📊 Sinyal Tipi Bazlı</div><div class="space-y-2">${kategoriRows}</div></div><div class="mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">⏳ Bekleyen (${aktifTestler.length})</div><div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div></div><div class="flex gap-2"><button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold">🔄 Şimdi Kontrol Et</button><button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold">🗑️</button></div>`;
 }
 function testleriTemizle() {
   if (!confirm('Tüm test verilerini silmek istiyor musun?')) return;
@@ -558,10 +552,7 @@ function aramaOneriGoster(q) {
   const base = q.replace('USDT', '').replace('USDC', '');
   const eslesenler = TUM_SEMBOLLER.filter(s => s.startsWith(q) || s.replace('USDT','').replace('USDC','').startsWith(base)).slice(0, 15);
   if (!eslesenler.length) { el.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">"${q}" bulunamadı</div>`; el.classList.remove('hidden'); return; }
-  el.innerHTML = eslesenler.map(s => {
-    const coin = s.replace('USDT', '').replace('USDC', ''), quote = s.replace(coin, '');
-    return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b border-white/5 last:border-0 flex justify-between"><span class="font-semibold text-slate-100">${coin}</span><span class="text-slate-500 text-xs mono">${quote}</span></button>`;
-  }).join('');
+  el.innerHTML = eslesenler.map(s => { const coin = s.replace('USDT', '').replace('USDC', ''), quote = s.replace(coin, ''); return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b border-white/5 last:border-0 flex justify-between"><span class="font-semibold text-slate-100">${coin}</span><span class="text-slate-500 text-xs mono">${quote}</span></button>`; }).join('');
   el.classList.remove('hidden');
 }
 function oneriSec(sym) { document.getElementById('aramaOneri').classList.add('hidden'); document.getElementById('aramaCoin').value = ''; coinYukle(sym); }
@@ -581,11 +572,7 @@ function rsi(d, p = 14) {
 function macd(d, h=12, y=26, s=9) { const eH = ema(d,h), eY = ema(d,y); const line = eH.map((v,i) => v - eY[i]); const sig = ema(line, s); return { line, sig, hist: line.map((v,i) => v - sig[i]) }; }
 function bollinger(d, p=20, sd=2) {
   const orta = sma(d,p); const ust = [], alt = [];
-  for (let i = 0; i < d.length; i++) {
-    if (orta[i] === null) { ust.push(null); alt.push(null); continue; }
-    let t = 0; for (let j = i-p+1; j <= i; j++) t += Math.pow(d[j]-orta[i], 2);
-    const s = Math.sqrt(t/p); ust.push(orta[i] + sd*s); alt.push(orta[i] - sd*s);
-  }
+  for (let i = 0; i < d.length; i++) { if (orta[i] === null) { ust.push(null); alt.push(null); continue; } let t = 0; for (let j = i-p+1; j <= i; j++) t += Math.pow(d[j]-orta[i], 2); const s = Math.sqrt(t/p); ust.push(orta[i] + sd*s); alt.push(orta[i] - sd*s); }
   return { orta, ust, alt };
 }
 function stochastic(y, d, c, p=14, s=3) {
@@ -600,11 +587,7 @@ function adx(y, d, c, p=14) {
   for (let i = 1; i < c.length; i++) { const yF = y[i]-y[i-1], dF = d[i-1]-d[i]; pDM.push(yF > dF && yF > 0 ? yF : 0); mDM.push(dF > yF && dF > 0 ? dF : 0); tr.push(Math.max(y[i]-d[i], Math.abs(y[i]-c[i-1]), Math.abs(d[i]-c[i-1]))); }
   const atrS = sma(tr, p); const pDI = [], mDI = [], dx = [];
   const pDMS = sma(pDM, p), mDMS = sma(mDM, p);
-  for (let i = 0; i < c.length; i++) {
-    if (atrS[i] === null || atrS[i] === 0) { pDI.push(null); mDI.push(null); dx.push(null); continue; }
-    const pv = 100*pDMS[i]/atrS[i], mv = 100*mDMS[i]/atrS[i];
-    pDI.push(pv); mDI.push(mv); const t = pv + mv; dx.push(t === 0 ? 0 : 100*Math.abs(pv-mv)/t);
-  }
+  for (let i = 0; i < c.length; i++) { if (atrS[i] === null || atrS[i] === 0) { pDI.push(null); mDI.push(null); dx.push(null); continue; } const pv = 100*pDMS[i]/atrS[i], mv = 100*mDMS[i]/atrS[i]; pDI.push(pv); mDI.push(mv); const t = pv + mv; dx.push(t === 0 ? 0 : 100*Math.abs(pv-mv)/t); }
   return { adx: sma(dx.map(v => v === null ? 0 : v), p), plusDI: pDI, minusDI: mDI };
 }
 function vwapHesaplaSon100(mumlar) {
@@ -815,20 +798,7 @@ function analizEt(mumlar) {
   const aV = a[son] || fiyat * 0.02;
   const guvenYuzde = Math.min(100, Math.max(5, (Math.abs(masterPuan) + maxPuan) / (2*maxPuan) * 100));
 
-  return {
-    karar, kararRenk, kararIkon, kararAciklama, masterPuan,
-    toplam, maxPuan, guvenYuzde: guvenYuzde.toFixed(0),
-    skorlar, filtreler, onayliSayi, filtreYon,
-    fiyat, rsi: r, macd: mL, macdSig: mS, macdHist: mH,
-    ema20: f20, ema50: f50, ema200: f200,
-    bUst: bU, bAlt: bA, stK: sK, stD: sD,
-    adx: adxV, pdi, mdi, atr: aV,
-    son50Yuk: son50Y, son50Dus: son50D,
-    stopLong: fiyat - 2*aV, hedefLong: fiyat + 3*aV,
-    stopShort: fiyat + 2*aV, hedefShort: fiyat - 3*aV,
-    fvgler, formasyonlar, yapi, divs, vwap: vwapV, fib, vp,
-    formPuan, hO
-  };
+  return { karar, kararRenk, kararIkon, kararAciklama, masterPuan, toplam, maxPuan, guvenYuzde: guvenYuzde.toFixed(0), skorlar, filtreler, onayliSayi, filtreYon, fiyat, rsi: r, macd: mL, macdSig: mS, macdHist: mH, ema20: f20, ema50: f50, ema200: f200, bUst: bU, bAlt: bA, stK: sK, stD: sD, adx: adxV, pdi, mdi, atr: aV, son50Yuk: son50Y, son50Dus: son50D, stopLong: fiyat - 2*aV, hedefLong: fiyat + 3*aV, stopShort: fiyat + 2*aV, hedefShort: fiyat - 3*aV, fvgler, formasyonlar, yapi, divs, vwap: vwapV, fib, vp, formPuan, hO };
 }
 
 function grafikOlustur() {
@@ -967,13 +937,7 @@ async function piyasaYukle(symbol) {
 
 function panelDoldur(a) {
   const kart = document.getElementById('kararKart');
-  const cls = {
-    'guclu-long': 'karar-guclu-long pulse-glow rounded-2xl p-6 text-center',
-    'long': 'karar-long rounded-2xl p-6 text-center', 'zayif-long': 'karar-zayif-long rounded-2xl p-6 text-center',
-    'guclu-short': 'karar-guclu-short pulse-glow-red rounded-2xl p-6 text-center',
-    'short': 'karar-short rounded-2xl p-6 text-center', 'zayif-short': 'karar-zayif-short rounded-2xl p-6 text-center',
-    'bekle': 'karar-bekle rounded-2xl p-6 text-center'
-  };
+  const cls = { 'guclu-long': 'karar-guclu-long pulse-glow rounded-2xl p-6 text-center', 'long': 'karar-long rounded-2xl p-6 text-center', 'zayif-long': 'karar-zayif-long rounded-2xl p-6 text-center', 'guclu-short': 'karar-guclu-short pulse-glow-red rounded-2xl p-6 text-center', 'short': 'karar-short rounded-2xl p-6 text-center', 'zayif-short': 'karar-zayif-short rounded-2xl p-6 text-center', 'bekle': 'karar-bekle rounded-2xl p-6 text-center' };
   kart.className = cls[a.kararRenk] || cls['bekle'];
   document.getElementById('kararIkon').textContent = a.kararIkon;
   const yazi = document.getElementById('kararYazi');
@@ -981,7 +945,6 @@ function panelDoldur(a) {
   yazi.className = 'text-3xl font-extrabold mb-3 tracking-tight ' + (a.karar.includes('LONG') ? 'text-emerald-400' : a.karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400');
   document.getElementById('kararGuven').textContent = `GÜVEN %${a.guvenYuzde}`;
   document.getElementById('kararAciklama').textContent = a.kararAciklama;
-
   const plan = document.getElementById('planIcerik'), rr = document.getElementById('planRR');
   if (a.karar.includes('LONG')) {
     const k = ((a.hedefLong - a.fiyat) / a.fiyat * 100).toFixed(2), rz = ((a.fiyat - a.stopLong) / a.fiyat * 100).toFixed(2);
@@ -995,20 +958,17 @@ function panelDoldur(a) {
     rr.textContent = '—';
     plan.innerHTML = `<div class="bg-white/[0.02] border border-white/5 rounded-xl p-4 text-center"><div class="text-xs text-slate-400 mb-1">⏸️ İşlem Önerilmez</div><div class="text-xs text-slate-500">Net sinyal gelene kadar bekle.</div></div>`;
   }
-
   document.getElementById('sebepListe').innerHTML = a.filtreler.map(f => {
     const ikon = f.ok ? '✅' : '❌';
     const renkYazi = f.yon === 'LONG' ? 'text-emerald-400' : f.yon === 'SHORT' ? 'text-red-400' : 'text-slate-500';
     const bg = f.ok ? 'bg-white/[0.03] border-white/10' : 'bg-white/[0.01] border-white/5';
     return `<div class="satir border ${bg} rounded-xl p-2.5"><div class="flex items-center justify-between mb-0.5"><span class="text-xs font-semibold ${f.ok ? 'text-slate-200' : 'text-slate-400'}">${ikon} ${f.ad}</span><span class="${renkYazi} text-[10px] font-bold mono">${f.yon}</span></div><div class="text-[11px] text-slate-400 leading-tight">${f.detay}</div></div>`;
   }).join('') + `<div class="bg-white/[0.03] border border-white/10 rounded-xl p-2 text-center"><span class="text-xs text-slate-400">Onay: </span><span class="text-xs font-bold mono ${a.onayliSayi >= 4 ? 'text-emerald-400' : a.onayliSayi === 3 ? 'text-yellow-400' : 'text-slate-400'}">${a.onayliSayi}/5</span></div>`;
-
   document.getElementById('gostergeler').innerHTML = a.skorlar.map(s => {
     const renk = s.puan > 0 ? 'text-emerald-400' : s.puan < 0 ? 'text-red-400' : 'text-slate-500';
     const bg = s.puan > 0 ? 'bg-emerald-500/5 border-emerald-500/15' : s.puan < 0 ? 'bg-red-500/5 border-red-500/15' : 'bg-white/[0.02] border-white/5';
     return `<div class="satir border ${bg} rounded-xl p-2.5"><div class="flex justify-between items-start mb-1"><span class="text-xs text-slate-400 font-semibold">${s.ad}</span><span class="${renk} font-bold text-xs mono">${s.puan > 0 ? '+' : ''}${s.puan}</span></div><div class="text-xs ${renk} leading-tight">${s.aciklama}</div><div class="text-[10px] text-slate-500 mt-0.5 mono">${s.deger}</div></div>`;
   }).join('');
-
   const fEl = document.getElementById('formasyonListe');
   let formasyonHTML = '';
   if (!a.formasyonlar.length) formasyonHTML = '<div class="text-slate-500 text-xs text-center py-3">Belirgin formasyon yok</div>';
@@ -1023,7 +983,6 @@ function panelDoldur(a) {
     return `<div class="${bg} border rounded-xl p-2 text-xs mt-2"><div class="font-semibold ${renk} mb-0.5">⚠️ ${d.ad}</div><div class="text-slate-400 text-[11px]">${d.aciklama}</div></div>`;
   }).join('');
   fEl.innerHTML = formasyonHTML;
-
   const fvgEl = document.getElementById('fvgListe');
   if (!a.fvgler.length) fvgEl.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Yakında FVG yok</div>';
   else fvgEl.innerHTML = a.fvgler.slice().reverse().map(f => {
@@ -1034,7 +993,6 @@ function panelDoldur(a) {
     const z = new Date(f.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
     return `<div class="${bg} border rounded-xl p-2 text-xs"><div class="flex justify-between items-start mb-0.5"><span class="font-semibold ${renk}">${ikon} ${yon}</span><span class="text-slate-500 text-[10px] mono">%${f.boyut.toFixed(2)}</span></div><div class="text-slate-300 text-[11px] mono">$${fmt(f.alt)} — $${fmt(f.ust)}</div><div class="text-slate-500 text-[10px]">${z}</div></div>`;
   }).join('');
-
   const yEl = document.getElementById('yapiListe');
   const y = a.yapi, rk = y.yapi.includes('YUKARI') ? 'text-emerald-400' : y.yapi.includes('AŞAĞI') ? 'text-red-400' : 'text-yellow-400';
   let html = `<div class="bg-white/[0.02] rounded-xl p-2.5 border border-white/5"><div class="${rk} font-bold text-sm">${y.yapi}</div><div class="text-xs text-slate-400 mt-0.5">${y.aciklama}</div></div>`;
@@ -1042,14 +1000,12 @@ function panelDoldur(a) {
   const sonP = y.sonPivotlar.slice(-4).reverse();
   if (sonP.length) { html += `<div class="space-y-1 mt-2">`; sonP.forEach(pp => { const tip = pp.tip === 'H' ? '🔺 Tepe' : '🔻 Dip'; const rk2 = pp.tip === 'H' ? 'text-red-400' : 'text-emerald-400'; html += `<div class="flex justify-between text-[11px] bg-white/[0.02] rounded px-2 py-1 border border-white/5"><span class="${rk2}">${tip}</span><span class="text-slate-300 mono">$${fmt(pp.fiyat)}</span></div>`; }); html += `</div>`; }
   yEl.innerHTML = html;
-
   const fib = a.fib;
   document.getElementById('fibListe').innerHTML = fib.seviyeler.map(s => {
     const yakin = Math.abs(s.fiyat - fib.fiyat) / fib.fiyat < 0.01;
     const bg = yakin ? 'bg-yellow-500/10 border-yellow-500/30' : 'bg-white/[0.02] border-white/5';
     return `<div class="${bg} border rounded-xl p-2 text-xs flex justify-between mono"><span class="text-slate-400">${s.oran}</span><span class="font-bold text-slate-200">$${fmt(s.fiyat)}</span></div>`;
   }).join('') + `<div class="text-[10px] text-slate-500 text-center mt-2">Son 60 mum • ${fib.trend} trend</div>`;
-
   const vp = a.vp;
   document.getElementById('vpListe').innerHTML = vp.ustKovalar.map((k, i) => {
     const orta = (k.alt + k.ust) / 2;
@@ -1057,7 +1013,6 @@ function panelDoldur(a) {
     const etiket = i === 0 ? '🎯 POC' : i === 1 ? 'HVN #2' : 'HVN #3';
     return `<div class="bg-white/[0.02] border border-white/5 rounded-xl p-2 text-xs flex justify-between"><span class="text-slate-400">${etiket}</span><span class="font-bold ${renk} mono">$${fmt(orta)}</span></div>`;
   }).join('') + `<div class="text-[10px] text-slate-500 text-center mt-2">Son 200 mum • POC</div>`;
-
   document.getElementById('seviyeler').innerHTML = `
     <div class="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-2.5"><span class="text-xs text-slate-400">50M Direnç</span><span class="font-bold text-red-400 mono">$${fmt(a.son50Yuk)}</span></div>
     <div class="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-2.5"><span class="text-xs text-slate-400">50M Destek</span><span class="font-bold text-emerald-400 mono">$${fmt(a.son50Dus)}</span></div>
