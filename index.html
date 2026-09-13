@@ -27,6 +27,14 @@
   .fiyat-down { animation: flash-down .5s; }
   @keyframes flash-up { 0% { color: #10b981; transform: scale(1.05); } 100% { color: inherit; transform: scale(1); } }
   @keyframes flash-down { 0% { color: #ef4444; transform: scale(1.05); } 100% { color: inherit; transform: scale(1); } }
+  @media (max-width: 640px) {
+    #chart { height: 320px !important; }
+    #aktifCoin { font-size: 20px; }
+    #aktifFiyat { font-size: 20px; }
+    .rtab { font-size: 11px; padding: 8px 4px; }
+    #kararYazi { font-size: 24px; }
+    #kararIkon { font-size: 40px; }
+  }
 </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
@@ -103,7 +111,6 @@
         </div>
 
         <div id="rtab-karar" class="space-y-4">
-
           <div id="kararKart" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 text-center glow-bekle">
             <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Botun Kararı</div>
             <div id="kararIkon" class="text-5xl mb-2">⏸️</div>
@@ -117,9 +124,7 @@
               <h3 class="font-bold text-sm text-slate-200">🕐 Çoklu Zaman Dilimi Onayı</h3>
               <span id="mtfOnay" class="text-[10px] text-slate-500">-</span>
             </div>
-            <div id="mtfListe" class="space-y-2">
-              <div class="text-slate-500 text-xs text-center py-3">Analiz ediliyor...</div>
-            </div>
+            <div id="mtfListe" class="space-y-2"><div class="text-slate-500 text-xs text-center py-3">Analiz ediliyor...</div></div>
           </div>
 
           <div id="planKart" class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
@@ -127,97 +132,74 @@
               <h3 class="font-bold text-sm text-slate-200">🎯 Otomatik İşlem Planı</h3>
               <span id="planRR" class="text-xs text-slate-500">-</span>
             </div>
-            <div id="planIcerik" class="space-y-2 text-sm">
-              <div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div>
-            </div>
+            <div id="planIcerik" class="space-y-2 text-sm"><div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div></div>
           </div>
 
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">🧠 Neden Bu Karar?</h3>
             <div id="sebepListe" class="space-y-2"></div>
           </div>
-
         </div>
 
         <div id="rtab-teknik" class="space-y-4 hidden">
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">📊 Göstergeler</h3>
             <div id="gostergeler" class="space-y-2"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">🕯️ Mum Formasyonları & Divergence</h3>
             <div id="formasyonListe" class="space-y-2"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">🟩🟥 Fair Value Gap</h3>
             <div id="fvgListe" class="space-y-2"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">📐 Piyasa Yapısı</h3>
             <div id="yapiListe" class="space-y-2"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">📐 Fibonacci</h3>
             <div id="fibListe" class="space-y-2"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">📊 Volume Profile (POC)</h3>
             <div id="vpListe" class="space-y-2"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">📏 Kritik Seviyeler</h3>
             <div id="seviyeler" class="space-y-2 text-sm"></div>
           </div>
-
         </div>
 
         <div id="rtab-piyasa" class="space-y-4 hidden">
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <div class="flex items-center justify-between mb-3">
               <h3 class="font-bold text-sm text-slate-200">💰 Funding Rate + Open Interest</h3>
               <span class="text-[10px] text-slate-500 bg-slate-800 rounded px-2 py-0.5">Vadeli Piyasa</span>
             </div>
-            <div id="fundingListe" class="space-y-2">
-              <div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div>
-            </div>
+            <div id="fundingListe" class="space-y-2"><div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">😱 Fear & Greed Index</h3>
-            <div id="fngListe">
-              <div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div>
-            </div>
+            <div id="fngListe"><div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <div class="flex items-center justify-between mb-3">
               <h3 class="font-bold text-sm text-slate-200">📖 Order Book Duvarları</h3>
               <span class="text-[10px] text-slate-500 bg-slate-800 rounded px-2 py-0.5">Spot Piyasa</span>
             </div>
-            <div id="obListe" class="space-y-2">
-              <div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div>
-            </div>
+            <div id="obListe" class="space-y-2"><div class="text-slate-500 text-xs text-center py-3">Yükleniyor...</div></div>
           </div>
-
         </div>
 
         <div id="rtab-arac" class="space-y-4 hidden">
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">🧪 Backtest</h3>
             <p class="text-xs text-slate-400 mb-3">Son 400 mumda botun isabet oranını test eder (3-5 saniye sürer).</p>
             <button onclick="backtestCalistir()" id="btBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 rounded-lg py-2 font-semibold text-sm disabled:opacity-50">Backtest Çalıştır</button>
             <div id="btSonuc" class="mt-3"></div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">💵 Risk Hesaplayıcı</h3>
             <div class="space-y-3">
@@ -233,10 +215,9 @@
               <div id="riskSonuc" class="bg-slate-800/40 rounded-lg p-3 text-xs space-y-1 hidden"></div>
             </div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">🔔 Bildirimler</h3>
-            <p class="text-xs text-slate-400 mb-3">Tarayıcı bildirimi ile fiyat alarmı (sekme açık kalmalı).</p>
+            <p class="text-xs text-slate-400 mb-3">Tarayıcı bildirimi ile fiyat alarmı.</p>
             <div class="space-y-2">
               <div>
                 <label class="text-xs text-slate-400">Alarm fiyatı</label>
@@ -246,15 +227,13 @@
               <div id="alarmDurum" class="text-xs text-center"></div>
             </div>
           </div>
-
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
             <h3 class="font-bold text-sm text-slate-200 mb-3">ℹ️ Bilgi</h3>
             <p class="text-xs text-slate-400 leading-relaxed">
               Fiyatlar WebSocket ile canlı akar. MTF onayı olmadan sinyallere uymayın.
-              Her zaman stop-loss kullanın. Bu araç <b>karar destek</b> içindir, yatırım tavsiyesi değildir.
+              Her zaman stop-loss kullanın. Bu araç <b>karar destek</b> içindir.
             </p>
           </div>
-
         </div>
 
       </div>
@@ -270,7 +249,7 @@
   </div>
 
   <div class="text-center text-slate-600 text-xs py-6 mt-4">
-    ⚠️ Eğitim amaçlıdır. Analizler %100 doğru değildir. Yatırım tavsiyesi değildir.
+    ⚠️ Eğitim amaçlıdır. Yatırım tavsiyesi değildir.
   </div>
 
 </main>
@@ -286,7 +265,6 @@ const mtfCache = {};
 let TUM_SEMBOLLER = [];
 let sonFiyat = null;
 
-/* ============ YARDIMCILAR ============ */
 function fmt(n, d = 4) {
   if (n === undefined || n === null || isNaN(n)) return '-';
   if (n >= 1000) return n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -296,12 +274,8 @@ function fmt(n, d = 4) {
 }
 function uyku(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-/* ============ WEBSOCKET CANLI VERİ ============ */
-let ws = null;
-let wsAktifCoin = null;
-let wsAktifTF = null;
-let wsPingInterval = null;
-let wsYenidenDeneme = 0;
+/* WEBSOCKET */
+let ws = null, wsAktifCoin = null, wsAktifTF = null, wsPingInterval = null, wsYenidenDeneme = 0;
 
 function wsDurumGuncelle(durum, mesaj) {
   const dot = document.getElementById('canliDot');
@@ -325,121 +299,53 @@ function wsDurumGuncelle(durum, mesaj) {
 function wsBaslat() {
   if (ws && (ws.readyState === 0 || ws.readyState === 1)) return;
   wsDurumGuncelle('baglaniyor');
-  try {
-    ws = new WebSocket('wss://stream.bybit.com/v5/public/spot');
-  } catch (e) {
-    console.error('WS oluşturulamadı', e);
-    setTimeout(wsBaslat, 3000);
-    return;
-  }
-
+  try { ws = new WebSocket('wss://stream.bybit.com/v5/public/spot'); }
+  catch (e) { setTimeout(wsBaslat, 3000); return; }
   ws.onopen = () => {
-    console.log('✅ WebSocket bağlandı');
     wsYenidenDeneme = 0;
     wsDurumGuncelle('canli');
     if (aktifCoin) wsAbone(aktifCoin, aktifTF);
-    // Ping/pong (Bybit 20sn'de bir bekler)
     if (wsPingInterval) clearInterval(wsPingInterval);
-    wsPingInterval = setInterval(() => {
-      if (ws && ws.readyState === 1) {
-        ws.send(JSON.stringify({ op: 'ping' }));
-      }
-    }, 20000);
+    wsPingInterval = setInterval(() => { if (ws && ws.readyState === 1) ws.send(JSON.stringify({ op: 'ping' })); }, 20000);
   };
-
-  ws.onmessage = (e) => {
-    try {
-      const m = JSON.parse(e.data);
-      wsMesajIsle(m);
-    } catch (err) { /* sessiz */ }
-  };
-
+  ws.onmessage = (e) => { try { wsMesajIsle(JSON.parse(e.data)); } catch (err) {} };
   ws.onclose = () => {
-    console.log('⚠️ WebSocket kapandı');
     wsDurumGuncelle('kapandi', 'Yeniden bağlanıyor...');
     if (wsPingInterval) { clearInterval(wsPingInterval); wsPingInterval = null; }
     wsYenidenDeneme++;
-    const gecikme = Math.min(3000 * wsYenidenDeneme, 15000);
-    setTimeout(wsBaslat, gecikme);
+    setTimeout(wsBaslat, Math.min(3000 * wsYenidenDeneme, 15000));
   };
-
-  ws.onerror = (err) => {
-    console.error('WS hata', err);
-  };
+  ws.onerror = () => {};
 }
 
 function wsAbone(symbol, tf) {
   if (!ws || ws.readyState !== 1) return;
-
-  // Eski aboneliği iptal et
   if (wsAktifCoin && (wsAktifCoin !== symbol || wsAktifTF !== tf)) {
-    try {
-      const args = [
-        `kline.${wsAktifTF}.${wsAktifCoin}`,
-        `tickers.${wsAktifCoin}`
-      ];
-      ws.send(JSON.stringify({ op: 'unsubscribe', args }));
-    } catch (e) {}
+    try { ws.send(JSON.stringify({ op: 'unsubscribe', args: [`kline.${wsAktifTF}.${wsAktifCoin}`, `tickers.${wsAktifCoin}`] })); } catch (e) {}
   }
-
-  wsAktifCoin = symbol;
-  wsAktifTF = tf;
-
-  const args = [
-    `kline.${tf}.${symbol}`,
-    `tickers.${symbol}`
-  ];
-  try {
-    ws.send(JSON.stringify({ op: 'subscribe', args }));
-    console.log('📡 Abone olundu:', args);
-  } catch (e) {
-    console.error('Abone hatası', e);
-  }
+  wsAktifCoin = symbol; wsAktifTF = tf;
+  try { ws.send(JSON.stringify({ op: 'subscribe', args: [`kline.${tf}.${symbol}`, `tickers.${symbol}`] })); } catch (e) {}
 }
 
 function wsMesajIsle(m) {
-  // Ping cevabı
   if (m.op === 'pong' || m.ret_msg === 'pong') return;
   if (!m.topic) return;
-
-  // ===== KLINE - MUM CANLI GÜNCELLEME =====
   if (m.topic.startsWith('kline.')) {
     const k = m.data && m.data[0];
     if (!k) return;
-    // Sadece aktif coin + aktif TF için
     if (m.topic !== `kline.${aktifTF}.${aktifCoin}`) return;
-
-    const mum = {
-      time: Math.floor(parseInt(k.start) / 1000),
-      open: parseFloat(k.open),
-      high: parseFloat(k.high),
-      low: parseFloat(k.low),
-      close: parseFloat(k.close),
-      volume: parseFloat(k.volume)
-    };
-
+    const mum = { time: Math.floor(parseInt(k.start) / 1000), open: parseFloat(k.open), high: parseFloat(k.high), low: parseFloat(k.low), close: parseFloat(k.close), volume: parseFloat(k.volume) };
     try {
       candleSeries.update(mum);
-      volumeSeries.update({
-        time: mum.time,
-        value: mum.volume,
-        color: mum.close >= mum.open ? '#10b98133' : '#ef444433'
-      });
+      volumeSeries.update({ time: mum.time, value: mum.volume, color: mum.close >= mum.open ? '#10b98133' : '#ef444433' });
     } catch (e) {}
-
     fiyatGuncelle(mum.close);
   }
-
-  // ===== TICKER - ANLIK FİYAT + 24S DEĞİŞİM =====
   if (m.topic.startsWith('tickers.')) {
     const t = m.data;
-    if (!t) return;
-    if (m.topic !== `tickers.${aktifCoin}`) return;
-
+    if (!t || m.topic !== `tickers.${aktifCoin}`) return;
     const fiyat = parseFloat(t.lastPrice);
     if (!isNaN(fiyat) && fiyat > 0) fiyatGuncelle(fiyat);
-
-    // 24s değişim
     const deg = parseFloat(t.price24hPcnt) * 100;
     if (!isNaN(deg)) {
       const el = document.getElementById('aktifDegisim');
@@ -452,36 +358,27 @@ function wsMesajIsle(m) {
 function fiyatGuncelle(yeniFiyat) {
   const el = document.getElementById('aktifFiyat');
   if (!el) return;
-  const eskiFiyat = sonFiyat;
+  const eski = sonFiyat;
   sonFiyat = yeniFiyat;
-
   el.textContent = '$' + fmt(yeniFiyat);
-
-  // Renk yanıp sönme efekti
-  if (eskiFiyat !== null && eskiFiyat !== yeniFiyat) {
+  if (eski !== null && eski !== yeniFiyat) {
     el.classList.remove('fiyat-up', 'fiyat-down');
-    void el.offsetWidth; // reflow
-    el.classList.add(yeniFiyat > eskiFiyat ? 'fiyat-up' : 'fiyat-down');
+    void el.offsetWidth;
+    el.classList.add(yeniFiyat > eski ? 'fiyat-up' : 'fiyat-down');
     setTimeout(() => el.classList.remove('fiyat-up', 'fiyat-down'), 500);
   }
-
-  // Alarm kontrolü
   if (alarmFiyat) kontrolAlarm(yeniFiyat);
 }
 
-/* ============ SEMBOL LİSTESİ + AKILLI ARAMA ============ */
+/* SEMBOL LİSTESİ */
 async function sembolleriYukle() {
   try {
     const r = await fetch('https://api.bybit.com/v5/market/instruments-info?category=spot&limit=1000');
     const j = await r.json();
     if (j.retCode === 0 && j.result?.list) {
-      TUM_SEMBOLLER = j.result.list
-        .filter(x => x.quoteCoin === 'USDT' && x.status === 'Trading')
-        .map(x => x.symbol)
-        .sort();
-      console.log(`✅ ${TUM_SEMBOLLER.length} sembol yüklendi`);
+      TUM_SEMBOLLER = j.result.list.filter(x => x.quoteCoin === 'USDT' && x.status === 'Trading').map(x => x.symbol).sort();
     }
-  } catch(e) { console.error('Sembol listesi alınamadı', e); }
+  } catch(e) {}
 }
 
 function akilliSembolDuzelt(s) {
@@ -493,7 +390,6 @@ function akilliSembolDuzelt(s) {
   }
   if (TUM_SEMBOLLER.includes(s)) return s;
   if (TUM_SEMBOLLER.includes(s + 'USDT')) return s + 'USDT';
-  if (s.endsWith('USDT') || s.endsWith('USDC') || s.endsWith('BTC') || s.endsWith('ETH')) return null;
   return null;
 }
 
@@ -507,9 +403,7 @@ function aramaOneriGoster(q) {
     return;
   }
   const base = q.replace('USDT', '').replace('USDC', '');
-  const eslesenler = TUM_SEMBOLLER
-    .filter(s => s.startsWith(q) || s.replace('USDT','').replace('USDC','').startsWith(base))
-    .slice(0, 15);
+  const eslesenler = TUM_SEMBOLLER.filter(s => s.startsWith(q) || s.replace('USDT','').replace('USDC','').startsWith(base)).slice(0, 15);
   if (eslesenler.length === 0) {
     el.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">"${q}" için coin bulunamadı</div>`;
     el.classList.remove('hidden');
@@ -519,8 +413,7 @@ function aramaOneriGoster(q) {
     const coin = s.replace('USDT', '').replace('USDC', '');
     const quote = s.replace(coin, '');
     return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2 hover:bg-slate-700 transition text-sm border-b border-slate-700/40 last:border-0">
-      <span class="font-semibold text-slate-100">${coin}</span>
-      <span class="text-slate-500 text-xs ml-2">${quote}</span>
+      <span class="font-semibold text-slate-100">${coin}</span><span class="text-slate-500 text-xs ml-2">${quote}</span>
     </button>`;
   }).join('');
   el.classList.remove('hidden');
@@ -532,7 +425,7 @@ function oneriSec(sym) {
   coinYukle(sym);
 }
 
-/* ============ GÖSTERGE HESAPLARI ============ */
+/* GÖSTERGELER */
 function sma(d, p) {
   const o = [];
   for (let i = 0; i < d.length; i++) {
@@ -632,7 +525,7 @@ function vwapSon(mumlar) {
   return arr[arr.length-1] || mumlar[mumlar.length-1].close;
 }
 
-/* ============ FVG / FORMASYON / YAPI / DIVERGENCE ============ */
+/* FVG / FORMASYON / YAPI / DIVERGENCE */
 function fvgBul(mumlar) {
   const fvgler = [];
   for (let i = 2; i < mumlar.length; i++) {
@@ -771,7 +664,6 @@ function volumeProfileBul(mumlar, bins = 25) {
   return { poc: sirali[0], ustKovalar: sirali.slice(0, 3), kovalar: sirali };
 }
 
-/* ============ BYBIT VERİ ============ */
 async function klineCek(symbol, interval = '15', limit = 500) {
   try {
     const url = `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval}&limit=${limit}`;
@@ -787,7 +679,6 @@ async function klineCek(symbol, interval = '15', limit = 500) {
   } catch (e) { return null; }
 }
 
-/* ============ ANALİZ ============ */
 function analizEt(mumlar) {
   const kapanis = mumlar.map(m => m.close);
   const yuk = mumlar.map(m => m.high);
@@ -795,7 +686,6 @@ function analizEt(mumlar) {
   const hacim = mumlar.map(m => m.volume);
   const son = kapanis.length - 1;
   const fiyat = kapanis[son];
-
   const rsiS = rsi(kapanis, 14);
   const m = macd(kapanis);
   const b = bollinger(kapanis);
@@ -815,7 +705,6 @@ function analizEt(mumlar) {
   const skorlar = [];
   let toplam = 0;
   const maxPuan = 30;
-
   let p, txt;
   if (r < 20) { p = 3; txt = `Çok aşırı satım (${r.toFixed(0)})`; }
   else if (r < 30) { p = 2; txt = `Aşırı satım (${r.toFixed(0)})`; }
@@ -959,38 +848,16 @@ function analizEt(mumlar) {
 
   let karar, kararRenk, kararIkon, kararAciklama;
   const yonCeliski = (masterPuan >= 3 && filtreYon === 'SHORT') || (masterPuan <= -3 && filtreYon === 'LONG');
-
-  if (yonCeliski) {
-    karar = 'BEKLE'; kararRenk = 'slate'; kararIkon = '⚠️';
-    kararAciklama = 'Sinyaller çelişkili — net yön yok. İşlem açmak riskli.';
-  } else if (masterPuan >= 18) {
-    karar = 'ÇOK GÜÇLÜ LONG'; kararRenk = 'emerald-guclu'; kararIkon = '🔥🔥';
-    kararAciklama = 'Tüm sistemler yukarı yönü işaret ediyor. Tam uyumlu.';
-  } else if (masterPuan >= 11) {
-    karar = 'GÜÇLÜ LONG'; kararRenk = 'emerald'; kararIkon = '🔥';
-    kararAciklama = 'Belirgin yukarı baskı. Alıcılar kontrolde.';
-  } else if (masterPuan >= 6) {
-    karar = 'LONG'; kararRenk = 'emerald'; kararIkon = '📈';
-    kararAciklama = 'Yukarı eğilim var. Stop koymak şartıyla.';
-  } else if (masterPuan >= 2) {
-    karar = 'ZAYIF LONG'; kararRenk = 'emerald-zayif'; kararIkon = '➖';
-    kararAciklama = 'Hafif yukarı eğilim. Temkinli ol.';
-  } else if (masterPuan <= -18) {
-    karar = 'ÇOK GÜÇLÜ SHORT'; kararRenk = 'red-guclu'; kararIkon = '🔻🔻';
-    kararAciklama = 'Tüm sistemler aşağı yönü işaret ediyor. Tam uyumlu.';
-  } else if (masterPuan <= -11) {
-    karar = 'GÜÇLÜ SHORT'; kararRenk = 'red'; kararIkon = '🔻';
-    kararAciklama = 'Belirgin aşağı baskı. Satıcılar kontrolde.';
-  } else if (masterPuan <= -6) {
-    karar = 'SHORT'; kararRenk = 'red'; kararIkon = '📉';
-    kararAciklama = 'Aşağı eğilim var. Stop koymak şartıyla.';
-  } else if (masterPuan <= -2) {
-    karar = 'ZAYIF SHORT'; kararRenk = 'red-zayif'; kararIkon = '➖';
-    kararAciklama = 'Hafif aşağı eğilim. Temkinli ol.';
-  } else {
-    karar = 'BEKLE'; kararRenk = 'slate'; kararIkon = '⏸️';
-    kararAciklama = 'Net sinyal yok. Piyasa kararsız.';
-  }
+  if (yonCeliski) { karar = 'BEKLE'; kararRenk = 'slate'; kararIkon = '⚠️'; kararAciklama = 'Sinyaller çelişkili — net yön yok. İşlem açmak riskli.'; }
+  else if (masterPuan >= 18) { karar = 'ÇOK GÜÇLÜ LONG'; kararRenk = 'emerald-guclu'; kararIkon = '🔥🔥'; kararAciklama = 'Tüm sistemler yukarı yönü işaret ediyor. Tam uyumlu.'; }
+  else if (masterPuan >= 11) { karar = 'GÜÇLÜ LONG'; kararRenk = 'emerald'; kararIkon = '🔥'; kararAciklama = 'Belirgin yukarı baskı. Alıcılar kontrolde.'; }
+  else if (masterPuan >= 6) { karar = 'LONG'; kararRenk = 'emerald'; kararIkon = '📈'; kararAciklama = 'Yukarı eğilim var. Stop koymak şartıyla.'; }
+  else if (masterPuan >= 2) { karar = 'ZAYIF LONG'; kararRenk = 'emerald-zayif'; kararIkon = '➖'; kararAciklama = 'Hafif yukarı eğilim. Temkinli ol.'; }
+  else if (masterPuan <= -18) { karar = 'ÇOK GÜÇLÜ SHORT'; kararRenk = 'red-guclu'; kararIkon = '🔻🔻'; kararAciklama = 'Tüm sistemler aşağı yönü işaret ediyor. Tam uyumlu.'; }
+  else if (masterPuan <= -11) { karar = 'GÜÇLÜ SHORT'; kararRenk = 'red'; kararIkon = '🔻'; kararAciklama = 'Belirgin aşağı baskı. Satıcılar kontrolde.'; }
+  else if (masterPuan <= -6) { karar = 'SHORT'; kararRenk = 'red'; kararIkon = '📉'; kararAciklama = 'Aşağı eğilim var. Stop koymak şartıyla.'; }
+  else if (masterPuan <= -2) { karar = 'ZAYIF SHORT'; kararRenk = 'red-zayif'; kararIkon = '➖'; kararAciklama = 'Hafif aşağı eğilim. Temkinli ol.'; }
+  else { karar = 'BEKLE'; kararRenk = 'slate'; kararIkon = '⏸️'; kararAciklama = 'Net sinyal yok. Piyasa kararsız.'; }
 
   const aV = a[son] || fiyat * 0.02;
   const guvenYuzde = Math.min(100, Math.max(5, (Math.abs(masterPuan) + maxPuan) / (2*maxPuan) * 100));
@@ -1011,7 +878,6 @@ function analizEt(mumlar) {
   };
 }
 
-/* ============ GRAFİK ============ */
 function grafikOlustur() {
   const el = document.getElementById('chart');
   if (chart) chart.remove();
@@ -1023,10 +889,7 @@ function grafikOlustur() {
     timeScale: { borderColor: '#334155', timeVisible: true },
     height: 520
   });
-  candleSeries = chart.addCandlestickSeries({
-    upColor: '#10b981', downColor: '#ef4444', borderUpColor: '#10b981',
-    borderDownColor: '#ef4444', wickUpColor: '#10b981', wickDownColor: '#ef4444'
-  });
+  candleSeries = chart.addCandlestickSeries({ upColor: '#10b981', downColor: '#ef4444', borderUpColor: '#10b981', borderDownColor: '#ef4444', wickUpColor: '#10b981', wickDownColor: '#ef4444' });
   volumeSeries = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
   chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } });
   ema20Seri = chart.addLineSeries({ color: '#3b82f6', lineWidth: 1 });
@@ -1043,16 +906,11 @@ async function coinYukle(symbol) {
     if (q) hedef = akilliSembolDuzelt(q);
     else hedef = aktifCoin;
   }
-
   if (!hedef) {
     const q = document.getElementById('aramaCoin').value.toUpperCase().trim();
-    if (q) {
-      document.getElementById('aramaOneri').classList.remove('hidden');
-      aramaOneriGoster(q);
-    }
+    if (q) { document.getElementById('aramaOneri').classList.remove('hidden'); aramaOneriGoster(q); }
     return;
   }
-
   aktifCoin = hedef;
   document.getElementById('aramaCoin').value = '';
   document.getElementById('aramaOneri').classList.add('hidden');
@@ -1060,7 +918,6 @@ async function coinYukle(symbol) {
   document.getElementById('chartYukleniyor').style.display = 'flex';
   alarmFiyat = null;
   sonFiyat = null;
-
   try {
     const mumlar = await klineCek(aktifCoin, aktifTF, 500);
     if (!mumlar) {
@@ -1068,7 +925,7 @@ async function coinYukle(symbol) {
       document.getElementById('aktifFiyat').textContent = '-';
       document.getElementById('aktifDegisim').textContent = '⚠️ Veri alınamadı';
       document.getElementById('aktifDegisim').className = 'text-sm text-yellow-400';
-      alert(`${aktifCoin} için Bybit'te veri bulunamadı.\n\nCoin adını kontrol et veya arama listesinden seç.`);
+      alert(`${aktifCoin} için Bybit'te veri bulunamadı.`);
       return;
     }
     const analiz = analizEt(mumlar);
@@ -1077,27 +934,17 @@ async function coinYukle(symbol) {
     panelDoldur(analiz);
     mtfYukle(aktifCoin);
     piyasaYukle(aktifCoin);
-
     const sonMum = mumlar[mumlar.length-1];
     sonFiyat = sonMum.close;
     document.getElementById('aktifFiyat').textContent = '$' + fmt(sonMum.close);
-
-    // WebSocket aboneliğini güncelle
     if (ws && ws.readyState === 1) wsAbone(aktifCoin, aktifTF);
-
     document.getElementById('chartYukleniyor').style.display = 'none';
-  } catch (e) {
-    console.error(e); alert('Hata: ' + e.message);
-    document.getElementById('chartYukleniyor').style.display = 'none';
-  }
+  } catch (e) { console.error(e); alert('Hata: ' + e.message); document.getElementById('chartYukleniyor').style.display = 'none'; }
 }
 
 function cizGrafik(mumlar, a) {
   candleSeries.setData(mumlar.map(m => ({ time: m.time, open: m.open, high: m.high, low: m.low, close: m.close })));
-  volumeSeries.setData(mumlar.map(m => ({
-    time: m.time, value: m.volume,
-    color: m.close >= m.open ? '#10b98133' : '#ef444433'
-  })));
+  volumeSeries.setData(mumlar.map(m => ({ time: m.time, value: m.volume, color: m.close >= m.open ? '#10b98133' : '#ef444433' })));
   const kapanis = mumlar.map(m => m.close);
   const e20 = ema(kapanis, 20), e50 = ema(kapanis, 50), e200 = ema(kapanis, 200);
   const vw = vwapHesaplaSon100(mumlar);
@@ -1105,35 +952,21 @@ function cizGrafik(mumlar, a) {
   ema50Seri.setData(mumlar.map((m,i) => ({ time: m.time, value: e50[i] })));
   ema200Seri.setData(mumlar.map((m,i) => ({ time: m.time, value: e200[i] })));
   const vwapData = [];
-  for (let i = 0; i < mumlar.length; i++) {
-    if (vw[i] !== null) vwapData.push({ time: mumlar[i].time, value: vw[i] });
-  }
+  for (let i = 0; i < mumlar.length; i++) if (vw[i] !== null) vwapData.push({ time: mumlar[i].time, value: vw[i] });
   vwapSeri.setData(vwapData);
   chart.timeScale().fitContent();
 }
 
-/* ============ MTF ============ */
 async function mtfYukle(symbol) {
   const el = document.getElementById('mtfListe');
   const cacheKey = symbol + '_' + Math.floor(Date.now() / 60000);
-  if (mtfCache[cacheKey]) {
-    renderMtf(mtfCache[cacheKey]);
-    return;
-  }
+  if (mtfCache[cacheKey]) { renderMtf(mtfCache[cacheKey]); return; }
   el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3"><span class="spinner"></span> Analiz ediliyor...</div>';
-
-  const tfList = [
-    { k: 'D', fallback: '240', ad: '1 Gün' },
-    { k: '60', fallback: '60', ad: '1 Saat' },
-    { k: '15', fallback: '15', ad: '15 Dk' }
-  ];
+  const tfList = [{ k: 'D', fallback: '240', ad: '1 Gün' }, { k: '60', fallback: '60', ad: '1 Saat' }, { k: '15', fallback: '15', ad: '15 Dk' }];
   const sonuclar = await Promise.all(tfList.map(async t => {
     let mumlar = await klineCek(symbol, t.k, 300);
     let ad = t.ad;
-    if (!mumlar && t.fallback !== t.k) {
-      mumlar = await klineCek(symbol, t.fallback, 300);
-      ad = t.ad + ' (4sa)';
-    }
+    if (!mumlar && t.fallback !== t.k) { mumlar = await klineCek(symbol, t.fallback, 300); ad = t.ad + ' (4sa)'; }
     if (!mumlar) return { ad, yon: 'YOK', rsi: '-' };
     const kapanis = mumlar.map(m => m.close);
     const fiyat = kapanis[kapanis.length-1];
@@ -1145,7 +978,6 @@ async function mtfYukle(symbol) {
     else if (fiyat < e20[son] && e20[son] < e50[son]) yon = 'SHORT';
     return { ad, yon, rsi: r[son].toFixed(0) };
   }));
-
   mtfCache[cacheKey] = sonuclar;
   renderMtf(sonuclar);
 }
@@ -1160,21 +992,13 @@ function renderMtf(sonuclar) {
   else if (longSay >= 2) onay = '📈 LONG AĞIRLIKLI';
   else if (shortSay >= 2) onay = '📉 SHORT AĞIRLIKLI';
   document.getElementById('mtfOnay').textContent = onay;
-
   el.innerHTML = sonuclar.map(s => {
     const renk = s.yon === 'LONG' ? 'text-emerald-400' : s.yon === 'SHORT' ? 'text-red-400' : 'text-slate-400';
     const bg = s.yon === 'LONG' ? 'bg-emerald-950/40 border-emerald-800' : s.yon === 'SHORT' ? 'bg-red-950/40 border-red-800' : 'bg-slate-800/40 border-slate-700';
-    return `<div class="${bg} border rounded-lg p-2.5 flex justify-between items-center">
-      <div>
-        <div class="text-xs font-semibold text-slate-200">${s.ad}</div>
-        <div class="text-[10px] text-slate-500">RSI ${s.rsi}</div>
-      </div>
-      <div class="${renk} text-xs font-bold">${s.yon}</div>
-    </div>`;
+    return `<div class="${bg} border rounded-lg p-2.5 flex justify-between items-center"><div><div class="text-xs font-semibold text-slate-200">${s.ad}</div><div class="text-[10px] text-slate-500">RSI ${s.rsi}</div></div><div class="${renk} text-xs font-bold">${s.yon}</div></div>`;
   }).join('');
 }
 
-/* ============ PİYASA ============ */
 async function piyasaYukle(symbol) {
   (async () => {
     const el = document.getElementById('fundingListe');
@@ -1182,81 +1006,36 @@ async function piyasaYukle(symbol) {
       const denemeler = [symbol, symbol.replace('USDT', '-USDT'), symbol.replace('USDT', 'PERP')];
       let t = null;
       for (const s of denemeler) {
-        try {
-          const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=linear&symbol=${s}`);
-          const j = await r.json();
-          if (j.retCode === 0 && j.result?.list?.[0]) { t = j.result.list[0]; break; }
-        } catch(e) {}
+        try { const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=linear&symbol=${s}`); const j = await r.json(); if (j.retCode === 0 && j.result?.list?.[0]) { t = j.result.list[0]; break; } } catch(e) {}
       }
       if (!t) { el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Bu coin için vadeli veri yok</div>'; return; }
-
       let oiList = [];
       for (const s of denemeler) {
-        try {
-          const oiR = await fetch(`https://api.bybit.com/v5/market/open-interest?category=linear&symbol=${s}&intervalTime=5min&limit=2`);
-          const oi = await oiR.json();
-          if (oi.retCode === 0 && oi.result?.list?.length) { oiList = oi.result.list; break; }
-        } catch(e) {}
+        try { const oiR = await fetch(`https://api.bybit.com/v5/market/open-interest?category=linear&symbol=${s}&intervalTime=5min&limit=2`); const oi = await oiR.json(); if (oi.retCode === 0 && oi.result?.list?.length) { oiList = oi.result.list; break; } } catch(e) {}
       }
-
       const fr = parseFloat(t.fundingRate || 0) * 100;
       const oiSimdi = parseFloat(oiList[0]?.openInterest || 0);
       const oiOnce = parseFloat(oiList[1]?.openInterest || oiSimdi);
       const oiDeg = oiOnce > 0 ? ((oiSimdi - oiOnce) / oiOnce * 100) : 0;
       const frYon = fr > 0.02 ? 'Aşırı Long (ters dönüş riski)' : fr < -0.02 ? 'Aşırı Short (sıkışma)' : 'Nötr';
       const frRenk = fr > 0.02 ? 'text-red-400' : fr < -0.02 ? 'text-emerald-400' : 'text-slate-300';
-
-      el.innerHTML = `
-        <div class="bg-slate-800/40 rounded-lg p-2.5">
-          <div class="flex justify-between items-center">
-            <span class="text-xs text-slate-400">Funding Rate</span>
-            <span class="${frRenk} font-bold text-sm">${fr.toFixed(4)}%</span>
-          </div>
-          <div class="text-[10px] text-slate-500 mt-1">${frYon}</div>
-        </div>
-        <div class="bg-slate-800/40 rounded-lg p-2.5">
-          <div class="flex justify-between items-center">
-            <span class="text-xs text-slate-400">Open Interest</span>
-            <span class="font-bold text-sm">${(oiSimdi/1000000).toFixed(2)}M</span>
-          </div>
-          <div class="text-[10px] text-slate-500 mt-1">${oiDeg >= 0 ? '📈' : '📉'} Son 5dk: ${oiDeg.toFixed(2)}%</div>
-        </div>`;
-    } catch (e) {
-      el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Vadeli veri alınamadı</div>';
-    }
+      el.innerHTML = `<div class="bg-slate-800/40 rounded-lg p-2.5"><div class="flex justify-between items-center"><span class="text-xs text-slate-400">Funding Rate</span><span class="${frRenk} font-bold text-sm">${fr.toFixed(4)}%</span></div><div class="text-[10px] text-slate-500 mt-1">${frYon}</div></div><div class="bg-slate-800/40 rounded-lg p-2.5"><div class="flex justify-between items-center"><span class="text-xs text-slate-400">Open Interest</span><span class="font-bold text-sm">${(oiSimdi/1000000).toFixed(2)}M</span></div><div class="text-[10px] text-slate-500 mt-1">${oiDeg >= 0 ? '📈' : '📉'} Son 5dk: ${oiDeg.toFixed(2)}%</div></div>`;
+    } catch (e) { el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Vadeli veri alınamadı</div>'; }
   })();
-
   (async () => {
     const el = document.getElementById('fngListe');
     try {
       const target = 'https://api.alternative.me/fng/?limit=1';
       let j = null;
-      try {
-        const r = await fetch(target);
-        j = await r.json();
-      } catch (e) {
-        const r2 = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(target));
-        j = await r2.json();
-      }
+      try { const r = await fetch(target); j = await r.json(); } catch (e) { const r2 = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(target)); j = await r2.json(); }
       const d = j.data[0];
       const v = parseInt(d.value);
       const renk = v < 25 ? 'red' : v < 45 ? 'orange' : v < 55 ? 'yellow' : v < 75 ? 'emerald' : 'red';
       const renkMap = { red: 'text-red-400', orange: 'text-orange-400', yellow: 'text-yellow-400', emerald: 'text-emerald-400' };
       const bgMap = { red: 'bg-red-950/40 border-red-800', orange: 'bg-orange-950/40 border-orange-800', yellow: 'bg-yellow-950/40 border-yellow-800', emerald: 'bg-emerald-950/40 border-emerald-800' };
-      el.innerHTML = `
-        <div class="${bgMap[renk]} border rounded-lg p-4 text-center">
-          <div class="${renkMap[renk]} text-4xl font-bold mb-1">${v}</div>
-          <div class="text-xs font-semibold ${renkMap[renk]} mb-2">${d.value_classification}</div>
-          <div class="text-[10px] text-slate-400">Korku/Açgözlülük (0-100)</div>
-        </div>
-        <div class="text-[10px] text-slate-500 text-center mt-2">
-          ${v < 25 ? '🟢 Aşırı korku → Alım fırsatı' : v > 75 ? '🔴 Aşırı açgözlülük → Dikkat' : '⚪ Normal seviye'}
-        </div>`;
-    } catch (e) {
-      el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Fear & Greed alınamadı</div>';
-    }
+      el.innerHTML = `<div class="${bgMap[renk]} border rounded-lg p-4 text-center"><div class="${renkMap[renk]} text-4xl font-bold mb-1">${v}</div><div class="text-xs font-semibold ${renkMap[renk]} mb-2">${d.value_classification}</div><div class="text-[10px] text-slate-400">Korku/Açgözlülük (0-100)</div></div><div class="text-[10px] text-slate-500 text-center mt-2">${v < 25 ? '🟢 Aşırı korku → Alım fırsatı' : v > 75 ? '🔴 Aşırı açgözlülük → Dikkat' : '⚪ Normal seviye'}</div>`;
+    } catch (e) { el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Fear & Greed alınamadı</div>'; }
   })();
-
   (async () => {
     const el = document.getElementById('obListe');
     try {
@@ -1271,29 +1050,11 @@ async function piyasaYukle(symbol) {
       const enBuyukAsk = asks.reduce((max, a) => parseFloat(a[1]) > parseFloat(max[1]) ? a : max, asks[0]);
       const yon = oran > 1.2 ? 'ALICI BASKIN' : oran < 0.8 ? 'SATICI BASKIN' : 'DENGELİ';
       const renk = oran > 1.2 ? 'text-emerald-400' : oran < 0.8 ? 'text-red-400' : 'text-slate-300';
-      el.innerHTML = `
-        <div class="bg-slate-800/40 rounded-lg p-2.5">
-          <div class="flex justify-between text-xs mb-1">
-            <span class="text-slate-400">Alış / Satış oranı</span>
-            <span class="${renk} font-bold">${oran.toFixed(2)}</span>
-          </div>
-          <div class="${renk} text-[11px] font-semibold">${yon}</div>
-        </div>
-        <div class="bg-emerald-950/30 border border-emerald-800 rounded-lg p-2 text-xs">
-          <div class="text-emerald-400 font-semibold mb-0.5">🟢 En büyük alım duvarı</div>
-          <div class="flex justify-between"><span>$${fmt(enBuyukBid[0])}</span><span class="text-slate-400">${parseFloat(enBuyukBid[1]).toFixed(2)} adet</span></div>
-        </div>
-        <div class="bg-red-950/30 border border-red-800 rounded-lg p-2 text-xs">
-          <div class="text-red-400 font-semibold mb-0.5">🔴 En büyük satış duvarı</div>
-          <div class="flex justify-between"><span>$${fmt(enBuyukAsk[0])}</span><span class="text-slate-400">${parseFloat(enBuyukAsk[1]).toFixed(2)} adet</span></div>
-        </div>`;
-    } catch (e) {
-      el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Order book alınamadı</div>';
-    }
+      el.innerHTML = `<div class="bg-slate-800/40 rounded-lg p-2.5"><div class="flex justify-between text-xs mb-1"><span class="text-slate-400">Alış / Satış oranı</span><span class="${renk} font-bold">${oran.toFixed(2)}</span></div><div class="${renk} text-[11px] font-semibold">${yon}</div></div><div class="bg-emerald-950/30 border border-emerald-800 rounded-lg p-2 text-xs"><div class="text-emerald-400 font-semibold mb-0.5">🟢 En büyük alım duvarı</div><div class="flex justify-between"><span>$${fmt(enBuyukBid[0])}</span><span class="text-slate-400">${parseFloat(enBuyukBid[1]).toFixed(2)} adet</span></div></div><div class="bg-red-950/30 border border-red-800 rounded-lg p-2 text-xs"><div class="text-red-400 font-semibold mb-0.5">🔴 En büyük satış duvarı</div><div class="flex justify-between"><span>$${fmt(enBuyukAsk[0])}</span><span class="text-slate-400">${parseFloat(enBuyukAsk[1]).toFixed(2)} adet</span></div></div>`;
+    } catch (e) { el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Order book alınamadı</div>'; }
   })();
 }
 
-/* ============ PANEL DOLDUR ============ */
 function panelDoldur(a) {
   const kart = document.getElementById('kararKart');
   const cls = {
@@ -1319,58 +1080,28 @@ function panelDoldur(a) {
     const k = ((a.hedefLong - a.fiyat) / a.fiyat * 100).toFixed(2);
     const rz = ((a.fiyat - a.stopLong) / a.fiyat * 100).toFixed(2);
     rr.textContent = 'R:R ≈ 1:1.5';
-    plan.innerHTML = `<div class="bg-emerald-950/40 border border-emerald-800 rounded-lg p-3">
-      <div class="text-xs text-emerald-400 font-bold mb-2">📈 LONG Planı</div>
-      <div class="space-y-1.5 text-xs">
-        <div class="flex justify-between"><span class="text-slate-400">Giriş</span><span class="font-bold text-emerald-400">$${fmt(a.fiyat)}</span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Stop-Loss</span><span class="font-bold text-red-400">$${fmt(a.stopLong)} (-${rz}%)</span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Hedef</span><span class="font-bold text-emerald-400">$${fmt(a.hedefLong)} (+${k}%)</span></div>
-      </div></div>`;
+    plan.innerHTML = `<div class="bg-emerald-950/40 border border-emerald-800 rounded-lg p-3"><div class="text-xs text-emerald-400 font-bold mb-2">📈 LONG Planı</div><div class="space-y-1.5 text-xs"><div class="flex justify-between"><span class="text-slate-400">Giriş</span><span class="font-bold text-emerald-400">$${fmt(a.fiyat)}</span></div><div class="flex justify-between"><span class="text-slate-400">Stop-Loss</span><span class="font-bold text-red-400">$${fmt(a.stopLong)} (-${rz}%)</span></div><div class="flex justify-between"><span class="text-slate-400">Hedef</span><span class="font-bold text-emerald-400">$${fmt(a.hedefLong)} (+${k}%)</span></div></div></div>`;
   } else if (a.karar.includes('SHORT')) {
     const k = ((a.fiyat - a.hedefShort) / a.fiyat * 100).toFixed(2);
     const rz = ((a.stopShort - a.fiyat) / a.fiyat * 100).toFixed(2);
     rr.textContent = 'R:R ≈ 1:1.5';
-    plan.innerHTML = `<div class="bg-red-950/40 border border-red-800 rounded-lg p-3">
-      <div class="text-xs text-red-400 font-bold mb-2">📉 SHORT Planı</div>
-      <div class="space-y-1.5 text-xs">
-        <div class="flex justify-between"><span class="text-slate-400">Giriş</span><span class="font-bold text-red-400">$${fmt(a.fiyat)}</span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Stop-Loss</span><span class="font-bold text-red-400">$${fmt(a.stopShort)} (+${rz}%)</span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Hedef</span><span class="font-bold text-emerald-400">$${fmt(a.hedefShort)} (-${k}%)</span></div>
-      </div></div>`;
+    plan.innerHTML = `<div class="bg-red-950/40 border border-red-800 rounded-lg p-3"><div class="text-xs text-red-400 font-bold mb-2">📉 SHORT Planı</div><div class="space-y-1.5 text-xs"><div class="flex justify-between"><span class="text-slate-400">Giriş</span><span class="font-bold text-red-400">$${fmt(a.fiyat)}</span></div><div class="flex justify-between"><span class="text-slate-400">Stop-Loss</span><span class="font-bold text-red-400">$${fmt(a.stopShort)} (+${rz}%)</span></div><div class="flex justify-between"><span class="text-slate-400">Hedef</span><span class="font-bold text-emerald-400">$${fmt(a.hedefShort)} (-${k}%)</span></div></div></div>`;
   } else {
     rr.textContent = '-';
-    plan.innerHTML = `<div class="bg-slate-800/40 border border-slate-700 rounded-lg p-3 text-center">
-      <div class="text-xs text-slate-400 mb-2">⏸️ İşlem Önerilmez</div>
-      <div class="text-xs text-slate-500">Net sinyal gelene kadar bekle.</div></div>`;
+    plan.innerHTML = `<div class="bg-slate-800/40 border border-slate-700 rounded-lg p-3 text-center"><div class="text-xs text-slate-400 mb-2">⏸️ İşlem Önerilmez</div><div class="text-xs text-slate-500">Net sinyal gelene kadar bekle.</div></div>`;
   }
 
   document.getElementById('sebepListe').innerHTML = a.filtreler.map(f => {
     const ikon = f.ok ? '✅' : '❌';
     const renkYazi = f.yon === 'LONG' ? 'text-emerald-400' : f.yon === 'SHORT' ? 'text-red-400' : 'text-slate-500';
     const bg = f.ok ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-900/40 border-slate-800';
-    return `<div class="satir border ${bg} rounded-lg p-2.5">
-      <div class="flex items-center justify-between mb-0.5">
-        <span class="text-xs font-semibold ${f.ok ? 'text-slate-200' : 'text-slate-400'}">${ikon} ${f.ad}</span>
-        <span class="${renkYazi} text-[10px] font-bold">${f.yon}</span>
-      </div>
-      <div class="text-[11px] text-slate-400 leading-tight">${f.detay}</div>
-    </div>`;
-  }).join('') + `<div class="bg-slate-800/40 border border-slate-700 rounded-lg p-2 text-center">
-    <span class="text-xs text-slate-400">Filtre onayı: </span>
-    <span class="text-xs font-bold ${a.onayliSayi >= 4 ? 'text-emerald-400' : a.onayliSayi === 3 ? 'text-yellow-400' : 'text-slate-400'}">${a.onayliSayi}/5</span>
-  </div>`;
+    return `<div class="satir border ${bg} rounded-lg p-2.5"><div class="flex items-center justify-between mb-0.5"><span class="text-xs font-semibold ${f.ok ? 'text-slate-200' : 'text-slate-400'}">${ikon} ${f.ad}</span><span class="${renkYazi} text-[10px] font-bold">${f.yon}</span></div><div class="text-[11px] text-slate-400 leading-tight">${f.detay}</div></div>`;
+  }).join('') + `<div class="bg-slate-800/40 border border-slate-700 rounded-lg p-2 text-center"><span class="text-xs text-slate-400">Filtre onayı: </span><span class="text-xs font-bold ${a.onayliSayi >= 4 ? 'text-emerald-400' : a.onayliSayi === 3 ? 'text-yellow-400' : 'text-slate-400'}">${a.onayliSayi}/5</span></div>`;
 
   document.getElementById('gostergeler').innerHTML = a.skorlar.map(s => {
     const renk = s.puan > 0 ? 'text-emerald-400' : s.puan < 0 ? 'text-red-400' : 'text-slate-500';
     const bg = s.puan > 0 ? 'bg-emerald-950/30 border-emerald-900' : s.puan < 0 ? 'bg-red-950/30 border-red-900' : 'bg-slate-800/40 border-slate-800';
-    return `<div class="satir border ${bg} rounded-lg p-2.5">
-      <div class="flex justify-between items-start mb-1">
-        <span class="text-xs text-slate-400 font-medium">${s.ad}</span>
-        <span class="${renk} font-bold text-xs">${s.puan > 0 ? '+' : ''}${s.puan}</span>
-      </div>
-      <div class="text-xs ${renk} leading-tight">${s.aciklama}</div>
-      <div class="text-[10px] text-slate-500 mt-0.5">${s.deger}</div>
-    </div>`;
+    return `<div class="satir border ${bg} rounded-lg p-2.5"><div class="flex justify-between items-start mb-1"><span class="text-xs text-slate-400 font-medium">${s.ad}</span><span class="${renk} font-bold text-xs">${s.puan > 0 ? '+' : ''}${s.puan}</span></div><div class="text-xs ${renk} leading-tight">${s.aciklama}</div><div class="text-[10px] text-slate-500 mt-0.5">${s.deger}</div></div>`;
   }).join('');
 
   const fEl = document.getElementById('formasyonListe');
@@ -1379,20 +1110,13 @@ function panelDoldur(a) {
   else formasyonHTML = a.formasyonlar.map(f => {
     const bg = f.tip === 'AL' ? 'bg-emerald-950/40 border-emerald-800' : f.tip === 'SAT' ? 'bg-red-950/40 border-red-800' : 'bg-slate-800/40 border-slate-700';
     const renk = f.tip === 'AL' ? 'text-emerald-400' : f.tip === 'SAT' ? 'text-red-400' : 'text-slate-400';
-    return `<div class="${bg} border rounded-lg p-2 text-xs">
-      <div class="flex justify-between items-start mb-0.5"><span class="font-semibold ${renk}">${f.ad}</span><span class="${renk} font-bold text-[10px]">${f.tip}</span></div>
-      <div class="text-slate-400 text-[11px]">${f.aciklama}</div>
-    </div>`;
+    return `<div class="${bg} border rounded-lg p-2 text-xs"><div class="flex justify-between items-start mb-0.5"><span class="font-semibold ${renk}">${f.ad}</span><span class="${renk} font-bold text-[10px]">${f.tip}</span></div><div class="text-slate-400 text-[11px]">${f.aciklama}</div></div>`;
   }).join('');
-
   if (a.divs.length) {
     formasyonHTML += a.divs.map(d => {
       const bg = d.tip === 'bullish' ? 'bg-emerald-950/40 border-emerald-800' : 'bg-red-950/40 border-red-800';
       const renk = d.tip === 'bullish' ? 'text-emerald-400' : 'text-red-400';
-      return `<div class="${bg} border rounded-lg p-2 text-xs mt-2">
-        <div class="font-semibold ${renk} mb-0.5">⚠️ ${d.ad}</div>
-        <div class="text-slate-400 text-[11px]">${d.aciklama}</div>
-      </div>`;
+      return `<div class="${bg} border rounded-lg p-2 text-xs mt-2"><div class="font-semibold ${renk} mb-0.5">⚠️ ${d.ad}</div><div class="text-slate-400 text-[11px]">${d.aciklama}</div></div>`;
     }).join('');
   }
   fEl.innerHTML = formasyonHTML;
@@ -1405,20 +1129,13 @@ function panelDoldur(a) {
     const ikon = f.tip === 'bullish' ? '🟢' : '🔴';
     const yon = f.tip === 'bullish' ? 'Bullish (destek)' : 'Bearish (direnç)';
     const z = new Date(f.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
-    return `<div class="${bg} border rounded-lg p-2 text-xs">
-      <div class="flex justify-between items-start mb-0.5"><span class="font-semibold ${renk}">${ikon} ${yon}</span><span class="text-slate-500 text-[10px]">%${f.boyut.toFixed(2)}</span></div>
-      <div class="text-slate-300 text-[11px]">$${fmt(f.alt)} — $${fmt(f.ust)}</div>
-      <div class="text-slate-500 text-[10px]">${z}</div>
-    </div>`;
+    return `<div class="${bg} border rounded-lg p-2 text-xs"><div class="flex justify-between items-start mb-0.5"><span class="font-semibold ${renk}">${ikon} ${yon}</span><span class="text-slate-500 text-[10px]">%${f.boyut.toFixed(2)}</span></div><div class="text-slate-300 text-[11px]">$${fmt(f.alt)} — $${fmt(f.ust)}</div><div class="text-slate-500 text-[10px]">${z}</div></div>`;
   }).join('');
 
   const yEl = document.getElementById('yapiListe');
   const y = a.yapi;
   const rk = y.yapi.includes('YUKARI') ? 'text-emerald-400' : y.yapi.includes('AŞAĞI') ? 'text-red-400' : 'text-yellow-400';
-  let html = `<div class="bg-slate-800/40 rounded-lg p-2.5">
-    <div class="${rk} font-bold text-sm">${y.yapi}</div>
-    <div class="text-xs text-slate-400 mt-0.5">${y.aciklama}</div>
-  </div>`;
+  let html = `<div class="bg-slate-800/40 rounded-lg p-2.5"><div class="${rk} font-bold text-sm">${y.yapi}</div><div class="text-xs text-slate-400 mt-0.5">${y.aciklama}</div></div>`;
   if (y.ekstra.length) html += y.ekstra.map(e => `<div class="bg-yellow-950/40 border border-yellow-800 rounded-lg p-2 text-xs text-yellow-300">${e}</div>`).join('');
   const sonP = y.sonPivotlar.slice(-4).reverse();
   if (sonP.length) {
@@ -1436,9 +1153,7 @@ function panelDoldur(a) {
   document.getElementById('fibListe').innerHTML = fib.seviyeler.map(s => {
     const yakin = Math.abs(s.fiyat - fib.fiyat) / fib.fiyat < 0.01;
     const bg = yakin ? 'bg-yellow-950/40 border-yellow-700' : 'bg-slate-800/40 border-slate-800';
-    return `<div class="${bg} border rounded-lg p-2 text-xs flex justify-between">
-      <span class="text-slate-400">${s.oran}</span><span class="font-bold text-slate-200">$${fmt(s.fiyat)}</span>
-    </div>`;
+    return `<div class="${bg} border rounded-lg p-2 text-xs flex justify-between"><span class="text-slate-400">${s.oran}</span><span class="font-bold text-slate-200">$${fmt(s.fiyat)}</span></div>`;
   }).join('') + `<div class="text-[10px] text-slate-500 text-center mt-1">Son 60 mum • ${fib.trend} trend</div>`;
 
   const vp = a.vp;
@@ -1446,9 +1161,7 @@ function panelDoldur(a) {
     const orta = (k.alt + k.ust) / 2;
     const renk = i === 0 ? 'text-yellow-400' : 'text-slate-300';
     const etiket = i === 0 ? '🎯 POC (En çok hacim)' : i === 1 ? 'HVN #2' : 'HVN #3';
-    return `<div class="bg-slate-800/40 rounded-lg p-2 text-xs flex justify-between">
-      <span class="text-slate-400">${etiket}</span><span class="font-bold ${renk}">$${fmt(orta)}</span>
-    </div>`;
+    return `<div class="bg-slate-800/40 rounded-lg p-2 text-xs flex justify-between"><span class="text-slate-400">${etiket}</span><span class="font-bold ${renk}">$${fmt(orta)}</span></div>`;
   }).join('') + `<div class="text-[10px] text-slate-500 text-center mt-1">Son 200 mum • POC = kurumsal destek/direnç</div>`;
 
   document.getElementById('seviyeler').innerHTML = `
@@ -1465,23 +1178,18 @@ function panelDoldur(a) {
   `;
 }
 
-/* ============ BACKTEST ============ */
 async function backtestCalistir() {
   const btn = document.getElementById('btBtn');
   const el = document.getElementById('btSonuc');
   btn.disabled = true; btn.textContent = 'Test ediliyor...';
   el.innerHTML = '<div class="text-xs text-slate-400 text-center"><span class="spinner"></span> Hazırlanıyor...</div>';
-
   try {
     const mumlar = await klineCek(aktifCoin, aktifTF, 400);
     if (!mumlar || mumlar.length < 150) throw new Error('Yetersiz veri');
-
     let dogru = 0, yanlis = 0, notr = 0;
-    const atla = 5;
-    const baslangic = 100;
+    const atla = 5, baslangic = 100;
     const toplamAdim = Math.floor((mumlar.length - atla - baslangic) / 5);
     let adimSayaci = 0;
-
     for (let i = baslangic; i < mumlar.length - atla; i += 5) {
       adimSayaci++;
       if (adimSayaci % 10 === 0) {
@@ -1489,82 +1197,41 @@ async function backtestCalistir() {
         el.innerHTML = `<div class="text-xs text-slate-400 text-center py-2"><span class="spinner"></span> İlerleme: %${yuzde} (${adimSayaci}/${toplamAdim})</div>`;
         await uyku(0);
       }
-
       const pencere = mumlar.slice(0, i);
       const a = analizEt(pencere);
       if (a.karar === 'BEKLE' || a.karar.includes('ZAYIF')) { notr++; continue; }
-      const girisF = mumlar[i].close;
-      const cikisF = mumlar[i + atla].close;
+      const girisF = mumlar[i].close, cikisF = mumlar[i + atla].close;
       const gercekYon = cikisF > girisF ? 'LONG' : 'SHORT';
       const botYon = a.karar.includes('LONG') ? 'LONG' : 'SHORT';
       if (gercekYon === botYon) dogru++; else yanlis++;
     }
-
     const toplam = dogru + yanlis;
     const oran = toplam > 0 ? (dogru / toplam * 100).toFixed(1) : '0';
     const renk = oran >= 60 ? 'text-emerald-400' : oran >= 50 ? 'text-yellow-400' : 'text-red-400';
-
-    el.innerHTML = `
-      <div class="bg-slate-800/40 rounded-lg p-3 space-y-2 text-xs">
-        <div class="text-center">
-          <div class="text-3xl font-bold ${renk} mb-1">%${oran}</div>
-          <div class="text-slate-400">İsabet oranı</div>
-        </div>
-        <div class="grid grid-cols-3 gap-2 mt-3">
-          <div class="bg-emerald-950/40 rounded p-2 text-center">
-            <div class="text-emerald-400 font-bold text-lg">${dogru}</div>
-            <div class="text-[10px] text-slate-400">Doğru</div>
-          </div>
-          <div class="bg-red-950/40 rounded p-2 text-center">
-            <div class="text-red-400 font-bold text-lg">${yanlis}</div>
-            <div class="text-[10px] text-slate-400">Yanlış</div>
-          </div>
-          <div class="bg-slate-800/60 rounded p-2 text-center">
-            <div class="text-slate-400 font-bold text-lg">${notr}</div>
-            <div class="text-[10px] text-slate-400">Bekle</div>
-          </div>
-        </div>
-        <div class="text-[10px] text-slate-500 text-center mt-2">
-          ${atla} mum sonrası kâr/zarar kontrolü • ${mumlar.length} mum test edildi
-        </div>
-      </div>`;
-  } catch (e) {
-    el.innerHTML = `<div class="text-red-400 text-xs text-center py-3">Hata: ${e.message}</div>`;
-  }
+    el.innerHTML = `<div class="bg-slate-800/40 rounded-lg p-3 space-y-2 text-xs"><div class="text-center"><div class="text-3xl font-bold ${renk} mb-1">%${oran}</div><div class="text-slate-400">İsabet oranı</div></div><div class="grid grid-cols-3 gap-2 mt-3"><div class="bg-emerald-950/40 rounded p-2 text-center"><div class="text-emerald-400 font-bold text-lg">${dogru}</div><div class="text-[10px] text-slate-400">Doğru</div></div><div class="bg-red-950/40 rounded p-2 text-center"><div class="text-red-400 font-bold text-lg">${yanlis}</div><div class="text-[10px] text-slate-400">Yanlış</div></div><div class="bg-slate-800/60 rounded p-2 text-center"><div class="text-slate-400 font-bold text-lg">${notr}</div><div class="text-[10px] text-slate-400">Bekle</div></div></div><div class="text-[10px] text-slate-500 text-center mt-2">${atla} mum sonrası kâr/zarar kontrolü • ${mumlar.length} mum test edildi</div></div>`;
+  } catch (e) { el.innerHTML = `<div class="text-red-400 text-xs text-center py-3">Hata: ${e.message}</div>`; }
   btn.disabled = false; btn.textContent = 'Backtest Çalıştır';
 }
 
-/* ============ RİSK ============ */
 function riskHesapla() {
   if (!sonAnaliz) return;
   const bakiye = parseFloat(document.getElementById('riskBakiye').value);
   const yuzde = parseFloat(document.getElementById('riskYuzde').value);
   const a = sonAnaliz;
   const el = document.getElementById('riskSonuc');
-
   if (!bakiye || !yuzde || !a.fiyat) { el.classList.add('hidden'); return; }
   const riskUSDT = bakiye * yuzde / 100;
   const stopMesafe = Math.abs(a.fiyat - (a.karar.includes('SHORT') ? a.stopShort : a.stopLong));
   const miktar = stopMesafe > 0 ? riskUSDT / stopMesafe : 0;
   const pozisyon = miktar * a.fiyat;
-
   el.classList.remove('hidden');
-  el.innerHTML = `
-    <div class="flex justify-between"><span class="text-slate-400">Riske atılan:</span><span class="font-bold text-red-400">$${riskUSDT.toFixed(2)}</span></div>
-    <div class="flex justify-between"><span class="text-slate-400">Pozisyon:</span><span class="font-bold text-emerald-400">$${pozisyon.toFixed(2)}</span></div>
-    <div class="flex justify-between"><span class="text-slate-400">Miktar:</span><span class="font-bold">${miktar.toFixed(6)}</span></div>
-    <div class="text-[10px] text-slate-500 mt-1">Stop mesafesi: ${fmt(stopMesafe)}</div>
-  `;
+  el.innerHTML = `<div class="flex justify-between"><span class="text-slate-400">Riske atılan:</span><span class="font-bold text-red-400">$${riskUSDT.toFixed(2)}</span></div><div class="flex justify-between"><span class="text-slate-400">Pozisyon:</span><span class="font-bold text-emerald-400">$${pozisyon.toFixed(2)}</span></div><div class="flex justify-between"><span class="text-slate-400">Miktar:</span><span class="font-bold">${miktar.toFixed(6)}</span></div><div class="text-[10px] text-slate-500 mt-1">Stop mesafesi: ${fmt(stopMesafe)}</div>`;
 }
 
-/* ============ BİLDİRİM ============ */
 function bildirimToggle() {
   if (!('Notification' in window)) { alert('Tarayıcı desteklemiyor'); return; }
   if (Notification.permission === 'granted') { alert('Bildirim zaten açık'); return; }
-  Notification.requestPermission().then(p => {
-    const btn = document.getElementById('bildirimBtn');
-    if (p === 'granted') { btn.textContent = '🔔✅'; btn.classList.add('bg-emerald-900'); }
-  });
+  Notification.requestPermission().then(p => { const btn = document.getElementById('bildirimBtn'); if (p === 'granted') { btn.textContent = '🔔✅'; btn.classList.add('bg-emerald-900'); } });
 }
 function alarmKur() {
   const f = parseFloat(document.getElementById('alarmFiyat').value);
@@ -1577,16 +1244,13 @@ function alarmKur() {
 function kontrolAlarm(fiyat) {
   if (!alarmFiyat) return;
   if (Math.abs(fiyat - alarmFiyat) / alarmFiyat < 0.005) {
-    if (Notification.permission === 'granted') {
-      new Notification(`⚡ ${aktifCoin}`, { body: `Fiyat hedefe ulaştı: $${fmt(fiyat)}` });
-    }
+    if (Notification.permission === 'granted') new Notification(`⚡ ${aktifCoin}`, { body: `Fiyat hedefe ulaştı: $${fmt(fiyat)}` });
     alarmFiyat = null;
     const el = document.getElementById('alarmDurum');
     if (el) { el.textContent = '✅ Alarm tetiklendi!'; el.className = 'text-xs text-center text-emerald-400'; }
   }
 }
 
-/* ============ SEKMELER ============ */
 function rTabGec(ad) {
   document.querySelectorAll('[id^="rtab-"]').forEach(e => e.classList.add('hidden'));
   document.getElementById('rtab-' + ad).classList.remove('hidden');
@@ -1596,7 +1260,6 @@ function rTabGec(ad) {
   });
 }
 
-/* ============ HIZLI BAKIŞ ============ */
 async function hizliYukle() {
   const el = document.getElementById('hizliListe');
   el.innerHTML = '<div class="col-span-full text-center py-6 text-slate-500 text-sm"><span class="spinner"></span> Yükleniyor...</div>';
@@ -1607,25 +1270,15 @@ async function hizliYukle() {
       return { symbol: s, a: analizEt(mumlar), son: mumlar[mumlar.length-1].close };
     } catch (e) { return { symbol: s, hata: e.message }; }
   }));
-
   el.innerHTML = sonuclar.map(r => {
-    if (r.hata) return `<div class="bg-red-950/30 border border-red-900 rounded-xl p-3">
-      <div class="font-bold text-sm">${r.symbol}</div><div class="text-xs text-red-300">${r.hata}</div></div>`;
+    if (r.hata) return `<div class="bg-red-950/30 border border-red-900 rounded-xl p-3"><div class="font-bold text-sm">${r.symbol}</div><div class="text-xs text-red-300">${r.hata}</div></div>`;
     const a = r.a;
-    const bg = a.karar.includes('LONG') ? (a.karar.includes('ÇOK GÜÇLÜ') ? 'border-emerald-500/60 bg-emerald-950/40' : 'border-emerald-800 bg-emerald-950/30') :
-               a.karar.includes('SHORT') ? (a.karar.includes('ÇOK GÜÇLÜ') ? 'border-red-500/60 bg-red-950/40' : 'border-red-800 bg-red-950/30') :
-               'border-slate-800 bg-slate-900/40';
+    const bg = a.karar.includes('LONG') ? (a.karar.includes('ÇOK GÜÇLÜ') ? 'border-emerald-500/60 bg-emerald-950/40' : 'border-emerald-800 bg-emerald-950/30') : a.karar.includes('SHORT') ? (a.karar.includes('ÇOK GÜÇLÜ') ? 'border-red-500/60 bg-red-950/40' : 'border-red-800 bg-red-950/30') : 'border-slate-800 bg-slate-900/40';
     const renk = a.karar.includes('LONG') ? 'text-emerald-400' : a.karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
-    return `<div class="border ${bg} rounded-xl p-3 cursor-pointer hover:brightness-110 transition" onclick="coinYukle('${r.symbol}')">
-      <div class="flex justify-between items-center mb-1"><div class="font-bold text-sm">${r.symbol.replace('USDT','')}</div><div class="text-[10px] text-slate-500">${a.onayliSayi}/5</div></div>
-      <div class="text-base font-bold mb-1">$${fmt(r.son)}</div>
-      <div class="${renk} font-semibold text-xs">${a.kararIkon} ${a.karar}</div>
-      <div class="text-[10px] text-slate-500 mt-1">RSI ${a.rsi.toFixed(0)} • ADX ${a.adx.toFixed(0)}</div>
-    </div>`;
+    return `<div class="border ${bg} rounded-xl p-3 cursor-pointer hover:brightness-110 transition" onclick="coinYukle('${r.symbol}')"><div class="flex justify-between items-center mb-1"><div class="font-bold text-sm">${r.symbol.replace('USDT','')}</div><div class="text-[10px] text-slate-500">${a.onayliSayi}/5</div></div><div class="text-base font-bold mb-1">$${fmt(r.son)}</div><div class="${renk} font-semibold text-xs">${a.kararIkon} ${a.karar}</div><div class="text-[10px] text-slate-500 mt-1">RSI ${a.rsi.toFixed(0)} • ADX ${a.adx.toFixed(0)}</div></div>`;
   }).join('');
 }
 
-/* ============ OLAYLAR ============ */
 function tfDegistir(tf) {
   aktifTF = tf;
   document.querySelectorAll('.tf-btn').forEach(b => {
