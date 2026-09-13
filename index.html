@@ -391,7 +391,7 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 </div>
 <div class="glass p-3.5">
 <div class="kart-baslik mb-2"><span class="kart-ikon">💰</span>Ciddi Backtest</div>
-<p class="text-[11px] mb-2.5" style="color:var(--text-mute)">1000$ ile simülasyon. Stop/hedef/komisyon dahil.</p>
+<p class="text-[11px] mb-2.5" style="color:var(--text-mute)">1000$ ile simülasyon. Stop/hedef/komisyon dahil. (Look-ahead bias düzeltildi)</p>
 <button onclick="ciddiBacktestCalistir()" id="btBtn" class="btn-cyan w-full rounded-lg py-2 font-bold text-[12.5px] text-white disabled:opacity-50">Simülasyonu Çalıştır</button>
 <div id="btSonuc" class="mt-2.5"></div>
 </div>
@@ -434,7 +434,10 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="flex items-center gap-2"><span class="text-xl">🎯</span><h2 class="text-[17px] font-bold gradient-text">SİNYAL RADARI</h2></div>
 <p class="text-[11px] mt-1" style="color:var(--text-mute)">Hacimli coinler taranıyor</p>
 </div>
+<div class="flex items-center gap-2">
+<button id="radarIptalBtn" onclick="radarIptal()" class="hidden text-[11px] bg-red-500/10 border border-red-500/30 text-red-400 px-3 py-1 rounded-lg font-bold hover:bg-red-500/20 transition">⏹ İPTAL</button>
 <button onclick="radarKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg transition" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
+</div>
 </div>
 <div id="radarSonuc"></div>
 </div>
@@ -469,11 +472,12 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <button onclick="ayarlarKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
 </div>
 <div class="ayar-satir"><div><div class="ayar-label">Tema</div><div class="ayar-aciklama">Koyu veya açık tema seç</div></div><select id="ayarTema" class="ayar-select" onchange="ayarKaydet('tema', this.value)"><option value="dark">🌙 Koyu</option><option value="light">☀️ Açık</option></select></div>
-<div class="ayar-satir"><div><div class="ayar-label">Radar Coin Sayısı</div><div class="ayar-aciklama">Taramada kaç coin kontrol edilsin</div></div><select id="ayarRadarSayi" class="ayar-select" onchange="ayarKaydet('radarSayi', parseInt(this.value))"><option value="50">50 coin (~15sn)</option><option value="100">100 coin (~30sn)</option><option value="200">200 coin (~60sn)</option><option value="500">500 coin (~3dk)</option></select></div>
+<div class="ayar-satir"><div><div class="ayar-label">Radar Coin Sayısı</div><div class="ayar-aciklama">Taramada kaç coin kontrol edilsin</div></div><select id="ayarRadarSayi" class="ayar-select" onchange="ayarKaydet('radarSayi', parseInt(this.value))"><option value="50">50 coin (~8sn)</option><option value="100">100 coin (~15sn)</option><option value="200">200 coin (~35sn)</option><option value="500">500 coin (~90sn)</option></select></div>
 <div class="ayar-satir"><div><div class="ayar-label">Varsayılan Zaman Dilimi</div><div class="ayar-aciklama">Site açılınca hangi TF</div></div><select id="ayarTF" class="ayar-select" onchange="ayarKaydet('varsayilanTF', this.value)"><option value="1">1 dakika</option><option value="5">5 dakika</option><option value="15">15 dakika</option><option value="60">1 saat</option><option value="240">4 saat</option><option value="D">1 gün</option></select></div>
 <div class="ayar-satir"><div><div class="ayar-label">Ses Uyarıları</div><div class="ayar-aciklama">Güçlü sinyal / alarm sesi</div></div><div id="ayarSes" class="toggle-switch" onclick="ayarToggle('ses')"></div></div>
 <div class="ayar-satir"><div><div class="ayar-label">Pozisyon Güncelleme</div><div class="ayar-aciklama">Kaç saniyede bir kontrol</div></div><select id="ayarPozGuncelleme" class="ayar-select" onchange="ayarKaydet('pozGuncelleme', parseInt(this.value))"><option value="15">15 saniye</option><option value="30">30 saniye</option><option value="60">1 dakika</option></select></div>
-<div class="ayar-satir"><div><div class="ayar-label">Whale Alert API Key</div><div class="ayar-aciklama">İsteğe bağlı — whale-alert.io</div></div><input id="ayarWhaleKey" type="text" placeholder="Boş" class="ayar-select" style="width:120px" onchange="ayarKaydet('whaleAlertKey', this.value)"></div>
+<div class="ayar-satir"><div><div class="ayar-label">Whale Alert API Key</div><div class="ayar-aciklama">İsteğe bağlı — whale-alert.io. ⚠️ Sadece bu cihazda saklanır, paylaşma.</div></div><input id="ayarWhaleKey" type="text" placeholder="Boş" class="ayar-select" style="width:120px" onchange="ayarKaydet('whaleAlertKey', this.value)"></div>
+<div class="text-[10.5px] p-2 rounded-lg mt-2" style="background:rgba(234,179,8,.05);border:1px solid rgba(234,179,8,.2);color:#fbbf24">⚠️ <b>Güvenlik:</b> Bu API key tarayıcının localStorage'ında saklanır. Bilgisayarını paylaşıyorsan veya tarayıcı eklentileri şüpheliyse boş bırak.</div>
 <button onclick="ayarlariSifirla()" class="w-full mt-3 border border-red-500/30 text-red-400 rounded-lg py-2 font-bold text-[12.5px] hover:bg-red-500/10 transition">🔄 Ayarları Sıfırla</button>
 </div>
 </div>
@@ -500,13 +504,14 @@ body.light .hamburger-baslik{border-top-color:rgba(15,23,42,.08)}
 <div class="text-[12px] leading-relaxed space-y-1.5 mb-3" style="color:var(--text-dim)">
 <div>• Karar mum kapanana kadar <b>sabit kalır</b> (15dk → 15 dakika)</div>
 <div>• Mum içi %1.5 ters → <b>otomatik yeniden analiz</b> 🚨</div>
+<div>• BEKLE'de %1.5 hareket → <b>otomatik yeniden analiz</b> 🚨</div>
 <div>• Mum içi %0.4+ hareket → <b>piyasa hareketleniyor</b> uyarısı 🔄</div>
 <div>• RSI/MACD/hacim dönüşü → <b>dönüş sinyali</b> 🔥</div>
 </div>
 <div class="text-[10.5px] uppercase font-extrabold tracking-wider mb-2 pt-3" style="color:var(--text-mute);border-top:1px solid var(--border)">💡 İpuçları</div>
 <div class="text-[12px] leading-relaxed space-y-1.5" style="color:var(--text-dim)">
 <div>• <b>En iyi sinyal:</b> MTF "TAM LONG" ve Karar %70+ ise en güvenilir.</div>
-<div>• <b>Radar:</b> Güçlü sinyalleri tek tıkla bul, üstüne tıkla → direkt o coine git.</div>
+<div>• <b>Radar:</b> Güçlü sinyalleri tek tıkla bul, üstüne tıkla → direkt o coine git. İptal butonuyla taramayı durdurabilirsin.</div>
 <div>• <b>Whale:</b> 500K$ üzeri transferler mor ile işaretlenir — dikkat.</div>
 </div>
 </div>
@@ -691,7 +696,7 @@ function tamEkranToggle() {
 
 function hakkindaAc() {
   document.getElementById('bilgiBaslik').textContent = '📖 Hakkında';
-  document.getElementById('bilgiIcerik').innerHTML = `<p class="mb-3"><b>Kripto Analiz Pro Terminal v3.6</b>, kripto piyasasında karar vermeni kolaylaştıran profesyonel bir analiz aracıdır.</p><p class="mb-3"><b>Neler yapabilir?</b></p><ul class="list-disc pl-5 mb-3 space-y-1"><li>10+ teknik gösterge (RSI, MACD, EMA, Bollinger, ADX)</li><li>12 mum formasyonu + Divergence tespiti</li><li>Fair Value Gap, Fibonacci, Volume Profile</li><li>Çoklu zaman dilimi onayı (MTF)</li><li>500 coine kadar sinyal radarı</li><li>Whale takibi (Bybit + Whale Alert)</li><li>Haber akışı (CoinDesk, Cointelegraph TR)</li><li>Otomatik test + ciddi backtest</li><li>Pozisyon takibi (canlı kâr/zarar)</li><li>Mum kilidi + acil durum + <b>Dönüş Radarı</b></li></ul><p class="text-xs italic" style="color:var(--text-mute)">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<p class="mb-3"><b>Kripto Analiz Pro Terminal v3.6</b>, kripto piyasasında karar vermeni kolaylaştıran profesyonel bir analiz aracıdır.</p><p class="mb-3"><b>Neler yapabilir?</b></p><ul class="list-disc pl-5 mb-3 space-y-1"><li>10+ teknik gösterge (RSI, MACD, EMA, Bollinger, ADX)</li><li>12 mum formasyonu + Divergence tespiti</li><li>Fair Value Gap, Fibonacci, Volume Profile</li><li>Çoklu zaman dilimi onayı (MTF)</li><li>500 coine kadar sinyal radarı (iptal edilebilir)</li><li>Whale takibi (Bybit + Whale Alert)</li><li>Haber akışı (CoinDesk, Cointelegraph TR) + 1 saat önbellek</li><li>Otomatik test + ciddi backtest (look-ahead düzeltildi)</li><li>Pozisyon takibi (canlı kâr/zarar)</li><li>Mum kilidi + acil durum + <b>Dönüş Radarı</b></li></ul><p class="text-xs italic" style="color:var(--text-mute)">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function sssAc() {
@@ -701,7 +706,7 @@ function sssAc() {
 }
 function yeniliklerAc() {
   document.getElementById('bilgiBaslik').textContent = '🆕 Yenilikler';
-  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><div class="font-bold text-emerald-400">v3.6 — Bu Sürüm</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🔄 Dönüş Radarı — BEKLE'de piyasa hareketlenme uyarısı</li><li>🔄 5 sinyal kontrolü (fitil, mum içi, RSI, toparlanma, hacim)</li><li>🚨 3 seviye dönüş alarmı (ACİL / YÜKSEK / ORTA)</li><li>📊 BEKLE'de %0.4+ hareket + hacim 2x → bilgi uyarısı</li><li>🚨 BEKLE'de %1.5+ hareket → otomatik yeniden analiz</li></ul></div><div class="mb-3"><div class="font-bold">v3.5</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🔒 Mum kilidi motoru (TF'ye göre sabit karar)</li><li>🚨 Acil durum kontrolü (%1.5 ters hareket)</li><li>📊 Karar geçmişi timeline</li><li>🕐 Mum bitiş sayacı (canlı)</li></ul></div><div class="mb-3"><div class="font-bold">v3.4</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🎨 Profesyonel layout</li><li>🐋 Whale 10K eşik</li><li>📰 Haberler 3 proxy + 4 kaynak</li></ul></div>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><div class="font-bold text-emerald-400">v3.6.1 — Düzeltmeler</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🐛 Backtest look-ahead bias düzeltildi (gerçekçi sonuç)</li><li>⏹ Radar iptal butonu eklendi</li><li>⚡ Radar ve backtest hızlandırıldı (hafif mod)</li><li>🌐 Haber proxy listesi 6'ya çıkarıldı</li><li>📦 Haber önbelleği (1 saat)</li><li>🔐 API key güvenlik uyarısı</li></ul></div><div class="mb-3"><div class="font-bold">v3.6</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🔄 Dönüş Radarı — BEKLE'de piyasa hareketlenme uyarısı</li><li>🔄 5 sinyal kontrolü (fitil, mum içi, RSI, toparlanma, hacim)</li><li>🚨 3 seviye dönüş alarmı (ACİL / YÜKSEK / ORTA)</li><li>🚨 BEKLE'de %1.5+ hareket → otomatik yeniden analiz</li></ul></div><div class="mb-3"><div class="font-bold">v3.5</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>🔒 Mum kilidi motoru (TF'ye göre sabit karar)</li><li>🚨 Acil durum kontrolü (%1.5 ters hareket)</li><li>📊 Karar geçmişi timeline</li><li>🕐 Mum bitiş sayacı (canlı)</li></ul></div>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function bilgiKapat() { document.getElementById('bilgiModal').classList.remove('acik'); }
@@ -727,9 +732,20 @@ document.addEventListener('keydown', e => {
 });
 
 /* RADAR */
+let radarIptalEdildi = false;
+function radarIptal() {
+  radarIptalEdildi = true;
+  const btn = document.getElementById('radarIptalBtn');
+  if (btn) btn.classList.add('hidden');
+  const el = document.getElementById('radarSonuc');
+  if (el) el.innerHTML = '<div class="text-center py-8" style="color:var(--text-dim)"><div class="text-4xl mb-2">⏹</div><div class="text-sm">Tarama iptal edildi</div></div>';
+}
 function radarAc() { document.getElementById('radarModal').classList.add('acik'); radarTaramayaBasla(); }
-function radarKapat() { document.getElementById('radarModal').classList.remove('acik'); }
+function radarKapat() { radarIptalEdildi = true; document.getElementById('radarModal').classList.remove('acik'); const btn = document.getElementById('radarIptalBtn'); if (btn) btn.classList.add('hidden'); }
 async function radarTaramayaBasla() {
+  radarIptalEdildi = false;
+  const iptalBtn = document.getElementById('radarIptalBtn');
+  if (iptalBtn) iptalBtn.classList.remove('hidden');
   const el = document.getElementById('radarSonuc');
   el.innerHTML = `<div class="text-center py-8"><div class="radar-taraniyor text-5xl mb-4">🎯</div><div class="text-sm" style="color:var(--text-dim)">Hacimli coinler taranıyor...</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-2 mono">Hazırlanıyor...</div></div>`;
   let taranacakCoinler = ['BTCUSDT','ETHUSDT','SOLUSDT','XRPUSDT','BNBUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT','LINKUSDT','DOTUSDT','MATICUSDT','LTCUSDT','ATOMUSDT','UNIUSDT','NEARUSDT','APTUSDT','ARBUSDT','OPUSDT','SUIUSDT','INJUSDT'];
@@ -743,9 +759,10 @@ async function radarTaramayaBasla() {
     }
   } catch(e) {}
   const toplam = taranacakCoinler.length;
-  el.innerHTML = `<div class="text-center py-6"><div class="radar-taraniyor text-5xl mb-3">🎯</div><div class="text-sm font-semibold">${toplam} hacimli coin taranıyor</div><div class="text-[10px] mt-1" style="color:var(--text-mute)">24s hacmi >$1M • ~${Math.round(toplam/3.3)} saniye</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-3 mono">0/${toplam}</div><div class="mt-3 w-full rounded-full h-1 max-w-xs mx-auto" style="background:var(--surface-2)"><div id="radarBar" class="h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-200" style="width:0%"></div></div></div>`;
+  el.innerHTML = `<div class="text-center py-6"><div class="radar-taraniyor text-5xl mb-3">🎯</div><div class="text-sm font-semibold">${toplam} hacimli coin taranıyor</div><div class="text-[10px] mt-1" style="color:var(--text-mute)">24s hacmi >$1M • iptal butonuyla durdurabilirsin</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-3 mono">0/${toplam}</div><div class="mt-3 w-full rounded-full h-1 max-w-xs mx-auto" style="background:var(--surface-2)"><div id="radarBar" class="h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-200" style="width:0%"></div></div></div>`;
   const sonuclar = []; let sayac = 0;
   for (const coin of taranacakCoinler) {
+    if (radarIptalEdildi) return;
     sayac++;
     const ilerleme = document.getElementById('radarIlerleme');
     const bar = document.getElementById('radarBar');
@@ -754,7 +771,7 @@ async function radarTaramayaBasla() {
     try {
       const mumlar = await klineCek(coin, aktifTF, 300);
       if (!mumlar) continue;
-      const analiz = analizEt(mumlar);
+      const analiz = analizEt(mumlar, true);
       const fiyat = mumlar[mumlar.length-1].close;
       sonuclar.push({ coin, karar: analiz.karar, kararIkon: analiz.kararIkon, guven: parseInt(analiz.guvenYuzde), onayli: analiz.onayliSayi, fiyat, rsi: analiz.rsi, adx: analiz.adx, masterPuan: analiz.masterPuan });
     } catch(e) {}
@@ -773,6 +790,8 @@ async function radarTaramayaBasla() {
   if (!guclu.length && !orta.length) html = `<div class="text-center py-8" style="color:var(--text-dim)"><div class="text-4xl mb-3">😴</div><div class="text-sm">Şu an güçlü sinyal yok</div><div class="text-xs mt-2">${toplam} coin tarandı</div></div>`;
   const ozet = `<div class="grid grid-cols-3 gap-2 mb-3 text-center"><div class="rounded-xl p-2.5" style="background:rgba(34,211,238,.05);border:1px solid rgba(34,211,238,.2)"><div class="text-2xl font-extrabold mono text-cyan-400">${toplam}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:var(--text-dim)">Taranan</div></div><div class="rounded-xl p-2.5" style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.2)"><div class="text-2xl font-extrabold mono text-emerald-400">${guclu.length}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:var(--text-dim)">Güçlü</div></div><div class="rounded-xl p-2.5" style="background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.2)"><div class="text-2xl font-extrabold mono text-purple-400">${orta.length}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:var(--text-dim)">Normal</div></div></div>`;
   el.innerHTML = ozet + html;
+  const iptalB = document.getElementById('radarIptalBtn');
+  if (iptalB) iptalB.classList.add('hidden');
   if (guclu.length && sesAcik) sesCal(1200, 0.3);
 }
 function radarCoinSec(coin) { radarKapat(); coinYukle(coin, true); }
@@ -965,8 +984,9 @@ async function ciddiBacktestCalistir() {
         }
       }
       if (!acikPoz) {
-        const pencere = mumlar.slice(0, i + 1);
-        const analiz = analizEt(pencere);
+        // ✅ DÜZELTME: Look-ahead bias — sadece geçmiş kapanmış mumları kullan
+        const pencere = mumlar.slice(0, i);
+        const analiz = analizEt(pencere, true);
         if (analiz.karar.includes('GÜÇLÜ LONG') || analiz.karar === 'LONG') {
           const miktar = bakiye * POZ_ORANI;
           acikPoz = { zaman: mum.time, yon: 'LONG', giris: mum.close, miktar, stop: analiz.stopLong, hedef: analiz.hedefLong, karar: analiz.karar };
@@ -998,7 +1018,7 @@ async function ciddiBacktestCalistir() {
     const getiriYuzde = ((bakiye - BASLANGIC) / BASLANGIC) * 100;
     const renk = bakiye > BASLANGIC ? 'text-emerald-400' : 'text-red-400';
     const canvasId = 'eqChart_' + Date.now();
-    el.innerHTML = `<div class="space-y-3 text-xs"><div class="text-center"><div class="text-[10px] uppercase tracking-wider font-bold" style="color:var(--text-mute)">Final Bakiye</div><div class="text-3xl font-extrabold mono ${renk}">$${bakiye.toFixed(2)}</div><div class="${renk} mono text-[12.5px]">${getiriYuzde >= 0 ? '+' : ''}${getiriYuzde.toFixed(2)}%</div></div><div style="background:var(--surface);border-radius:12px;padding:8px"><canvas id="${canvasId}" class="grafik-mini"></canvas></div><div class="grid grid-cols-2 gap-2"><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">İşlem</div><div class="font-bold mono text-[13px]">${islemler.length}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Win Rate</div><div class="font-bold mono text-[13px] ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(1)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Profit Factor</div><div class="font-bold mono text-[13px] ${pf >= 1 ? 'text-emerald-400' : 'text-red-400'}">${pf.toFixed(2)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Max DD</div><div class="font-bold mono text-[13px] text-red-400">-%${maxDD.toFixed(1)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Kazanç</div><div class="font-bold mono text-[13px] text-emerald-400">${kazanan}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Kayıp</div><div class="font-bold mono text-[13px] text-red-400">${kaybeden}</div></div></div><div class="text-[10px] text-center" style="color:var(--text-mute)">${mumlar.length} mum • ${POZ_ORANI*100}% poz • %${KOMISYON*100} komisyon</div><details class="mt-2"><summary class="cursor-pointer text-[10px] uppercase tracking-wider font-bold py-2" style="color:var(--text-mute)">📋 Son 10 İşlem</summary><div class="space-y-1 mt-2">${islemler.slice(-10).reverse().map(i => { const r = i.kar > 0 ? 'text-emerald-400' : 'text-red-400'; const z = new Date(i.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}); return `<div class="rounded p-2 text-[10px] flex justify-between" style="background:var(--surface)"><div><span class="font-bold">${i.yon}</span> ${z}<div style="color:var(--text-mute)">$${fmt(i.giris)} → $${fmt(i.cikis)} (${i.sebep})</div></div><div class="${r} font-bold mono text-right">${i.kar >= 0 ? '+' : ''}$${i.kar.toFixed(2)}<div>${i.karYuzde >= 0 ? '+' : ''}${i.karYuzde.toFixed(2)}%</div></div></div>`; }).join('')}</div></details></div>`;
+    el.innerHTML = `<div class="space-y-3 text-xs"><div class="text-center"><div class="text-[10px] uppercase tracking-wider font-bold" style="color:var(--text-mute)">Final Bakiye</div><div class="text-3xl font-extrabold mono ${renk}">$${bakiye.toFixed(2)}</div><div class="${renk} mono text-[12.5px]">${getiriYuzde >= 0 ? '+' : ''}${getiriYuzde.toFixed(2)}%</div></div><div style="background:var(--surface);border-radius:12px;padding:8px"><canvas id="${canvasId}" class="grafik-mini"></canvas></div><div class="grid grid-cols-2 gap-2"><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">İşlem</div><div class="font-bold mono text-[13px]">${islemler.length}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Win Rate</div><div class="font-bold mono text-[13px] ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(1)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Profit Factor</div><div class="font-bold mono text-[13px] ${pf >= 1 ? 'text-emerald-400' : 'text-red-400'}">${pf.toFixed(2)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Max DD</div><div class="font-bold mono text-[13px] text-red-400">-%${maxDD.toFixed(1)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Kazanç</div><div class="font-bold mono text-[13px] text-emerald-400">${kazanan}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase font-bold" style="color:var(--text-mute)">Kayıp</div><div class="font-bold mono text-[13px] text-red-400">${kaybeden}</div></div></div><div class="text-[10px] text-center" style="color:var(--text-mute)">${mumlar.length} mum • ${POZ_ORANI*100}% poz • %${KOMISYON*100} komisyon • ✅ look-ahead yok</div><details class="mt-2"><summary class="cursor-pointer text-[10px] uppercase tracking-wider font-bold py-2" style="color:var(--text-mute)">📋 Son 10 İşlem</summary><div class="space-y-1 mt-2">${islemler.slice(-10).reverse().map(i => { const r = i.kar > 0 ? 'text-emerald-400' : 'text-red-400'; const z = new Date(i.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}); return `<div class="rounded p-2 text-[10px] flex justify-between" style="background:var(--surface)"><div><span class="font-bold">${i.yon}</span> ${z}<div style="color:var(--text-mute)">$${fmt(i.giris)} → $${fmt(i.cikis)} (${i.sebep})</div></div><div class="${r} font-bold mono text-right">${i.kar >= 0 ? '+' : ''}$${i.kar.toFixed(2)}<div>${i.karYuzde >= 0 ? '+' : ''}${i.karYuzde.toFixed(2)}%</div></div></div>`; }).join('')}</div></details></div>`;
     const canvas = document.getElementById(canvasId);
     if (canvas && equity.length > 1) {
       const ctx = canvas.getContext('2d');
@@ -1158,15 +1178,21 @@ function divergenceBul(mumlar) { const kapanis = mumlar.map(m => m.close), r = r
 function fibonacciBul(mumlar) { const yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low); const son60Y = Math.max(...yuk.slice(-60)), son60D = Math.min(...dus.slice(-60)); const sonF = mumlar[mumlar.length-1].close, fark = son60Y - son60D; const oranlar = [0.236, 0.382, 0.5, 0.618, 0.786]; const seviyeler = oranlar.map(o => ({ oran: (o*100).toFixed(1) + '%', fiyat: son60D + fark * o })); const trend = sonF > (son60Y + son60D) / 2 ? 'yukarı' : 'aşağı'; return { ust: son60Y, alt: son60D, seviyeler, trend, fiyat: sonF }; }
 function volumeProfileBul(mumlar, bins = 25) { const son = mumlar.slice(-200); const yuk = Math.max(...son.map(m => m.high)), dus = Math.min(...son.map(m => m.low)); const adim = (yuk - dus) / bins; const kovalar = Array(bins).fill(0).map((_, i) => ({ hacim: 0, alt: dus + i*adim, ust: dus + (i+1)*adim })); son.forEach(m => { const tp = (m.high + m.low + m.close) / 3; const idx = Math.min(bins - 1, Math.max(0, Math.floor((tp - dus) / adim))); kovalar[idx].hacim += m.volume; }); const sirali = [...kovalar].sort((a,b) => b.hacim - a.hacim); return { poc: sirali[0], ustKovalar: sirali.slice(0, 3), kovalar: sirali }; }
 
-/* ANALİZ MOTORU */
-function analizEt(mumlar) {
+/* ANALİZ MOTORU (v3.6.1 — hafifMod desteği) */
+function analizEt(mumlar, hafifMod = false) {
   const kapanis = mumlar.map(m => m.close), yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low), hacim = mumlar.map(m => m.volume);
   const son = kapanis.length - 1, fiyat = kapanis[son];
   const rsiS = rsi(kapanis, 14), m = macd(kapanis), b = bollinger(kapanis), st = stochastic(yuk, dus, kapanis);
   const e20 = ema(kapanis, 20), e50 = ema(kapanis, 50), e200 = ema(kapanis, 200);
   const a = atr(yuk, dus, kapanis), ad = adx(yuk, dus, kapanis);
-  const fvgler = fvgBul(mumlar), formasyonlar = mumFormasyonlari(mumlar), yapi = piyasaYapisi(mumlar);
-  const divs = divergenceBul(mumlar), vwapV = vwapSon(mumlar), fib = fibonacciBul(mumlar), vp = volumeProfileBul(mumlar);
+  // ✅ Hafif mod: fvgBul ve volumeProfileBul atlanır (en ağır iki fonksiyon)
+  const fvgler = hafifMod ? [] : fvgBul(mumlar);
+  const formasyonlar = mumFormasyonlari(mumlar);
+  const yapi = piyasaYapisi(mumlar);
+  const divs = divergenceBul(mumlar);
+  const vwapV = vwapSon(mumlar);
+  const fib = fibonacciBul(mumlar);
+  const vp = hafifMod ? { ustKovalar: [], poc: null } : volumeProfileBul(mumlar);
   const r = rsiS[son]; const skorlar = []; let toplam = 0; const maxPuan = 30; let p, txt;
   if (r < 20) { p = 3; txt = `Çok aşırı satım (${r.toFixed(0)})`; } else if (r < 30) { p = 2; txt = `Aşırı satım (${r.toFixed(0)})`; } else if (r < 45) { p = 1; txt = `Zayıf bölge (${r.toFixed(0)})`; } else if (r < 55) { p = 0; txt = `Nötr (${r.toFixed(0)})`; } else if (r < 70) { p = -1; txt = `Pozitif bölge (${r.toFixed(0)})`; } else if (r < 80) { p = -2; txt = `Aşırı alım (${r.toFixed(0)})`; } else { p = -3; txt = `Çok aşırı alım (${r.toFixed(0)})`; }
   skorlar.push({ ad: 'RSI', puan: p, aciklama: txt, deger: r.toFixed(1) }); toplam += p;
@@ -1415,12 +1441,11 @@ function donusAlarmGizle() {
   el.classList.remove('donus-pulse', 'donus-acil', 'donus-yuksek', 'donus-orta');
 }
 
-/* ACİL DURUM + DÖNÜŞ RADAR KONTROLÜ (v3.6 — BEKLE'de %1.5 yeniden analiz) */
+/* ACİL DURUM + DÖNÜŞ RADAR KONTROLÜ */
 async function acilDurumKontrol() {
   if (!kilitliAnaliz || !kilitSnapshot || !kilitCoin) return;
   if (kilitCoin !== aktifCoin) return;
 
-  // ===== BEKLE DURUMU =====
   if (kilitSnapshot.yon === 'NÖTR') {
     try {
       const mumlar = await klineCek(aktifCoin, aktifTF, 100);
@@ -1429,7 +1454,6 @@ async function acilDurumKontrol() {
       const sonMum = mumlar[mumlar.length - 1];
       const kilitFiyatDegisim = ((sonMum.close - kilitSnapshot.fiyat) / kilitSnapshot.fiyat) * 100;
 
-      // 🔥 BÜYÜK HAREKET (%1.5+) → yeniden analiz (LONG/SHORT/BEKLE taze karar)
       if (Math.abs(kilitFiyatDegisim) >= ACIL_ESIK_PCT) {
         const yonStr = kilitFiyatDegisim > 0 ? 'YUKARI' : 'AŞAĞI';
         donusAlarmGoster('ACIL', `🚨 BEKLE'de %${Math.abs(kilitFiyatDegisim).toFixed(2)} ${yonStr} hareket — yeniden analiz...`);
@@ -1439,7 +1463,6 @@ async function acilDurumKontrol() {
         return;
       }
 
-      // 📊 KÜÇÜK HAREKET → bilgi uyarısı (0.4%+ ve hacim 2x)
       const bekle = bekleHareketKontrol(mumlar, kilitliAnaliz);
       if (bekle) {
         if (Date.now() - donusSonUyari > 30000) {
@@ -1458,7 +1481,6 @@ async function acilDurumKontrol() {
     return;
   }
 
-  // ===== LONG / SHORT DURUMU =====
   try {
     const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=spot&symbol=${aktifCoin}`);
     const j = await r.json();
@@ -1713,11 +1735,23 @@ async function whaleYukle() {
   btn.disabled = false; btn.textContent = '🐋 Whale Tara';
 }
 
-/* HABERLER */
+/* HABERLER (v3.6.1 — 6 proxy + 1 saat cache) */
 async function haberleriYukle() {
   const el = document.getElementById('haberListe');
   const btn = document.getElementById('haberBtn');
   const updEl = document.getElementById('haberUpdate');
+  const cacheKey = 'haberCache_' + new Date().toISOString().slice(0, 13);
+  const cache = localStorage.getItem(cacheKey);
+  if (cache) {
+    try {
+      const c = JSON.parse(cache);
+      if (c.length > 5) {
+        el.innerHTML = c.map(h => `<a href="${h.link}" target="_blank" class="block rounded-lg p-2.5 transition hover:brightness-125 border" style="background:var(--surface);border-color:var(--border)"><div class="font-medium text-[12.5px] mb-1 leading-snug" style="color:var(--text)">${h.baslik}</div><div class="flex justify-between text-[10px]"><span class="${h.kaynak.includes('TR') ? 'text-cyan-400' : 'text-purple-400'} font-bold uppercase tracking-wider">${h.kaynak}</span><span style="color:var(--text-mute)">${h.zaman}</span></div></a>`).join('');
+        updEl.textContent = '📦 önbellek (' + new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'}) + ')';
+        return;
+      }
+    } catch(e) {}
+  }
   btn.disabled = true; btn.textContent = '📰 Yükleniyor...';
   el.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)"><span class="spinner"></span> Haberler çekiliyor...</div>';
   const feeds = [
@@ -1729,7 +1763,10 @@ async function haberleriYukle() {
   const proxyler = [
     (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
     (u) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
-    (u) => 'https://corsproxy.io/?' + encodeURIComponent(u)
+    (u) => 'https://corsproxy.io/?' + encodeURIComponent(u),
+    (u) => 'https://cors.eu.org/' + u,
+    (u) => 'https://thingproxy.freeboard.io/fetch/' + u,
+    (u) => 'https://proxy.cors.sh/' + u
   ];
   const tumHaberler = [];
   for (const feed of feeds) {
@@ -1759,6 +1796,14 @@ async function haberleriYukle() {
       const kaynakRenk = h.kaynak.includes('TR') ? 'text-cyan-400' : 'text-purple-400';
       return `<a href="${h.link}" target="_blank" class="block rounded-lg p-2.5 transition hover:brightness-125 border" style="background:var(--surface);border-color:var(--border)"><div class="font-medium text-[12.5px] mb-1 leading-snug" style="color:var(--text)">${h.baslik}</div><div class="flex justify-between text-[10px]"><span class="${kaynakRenk} font-bold uppercase tracking-wider">${h.kaynak}</span><span style="color:var(--text-mute)">${zaman}</span></div></a>`;
     }).join('');
+    try {
+      localStorage.setItem(cacheKey, JSON.stringify(tumHaberler.slice(0, 30).map(h => ({
+        baslik: h.baslik,
+        link: h.link,
+        kaynak: h.kaynak,
+        zaman: h.tarih ? new Date(h.tarih).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}) : ''
+      }))));
+    } catch(e) {}
   }
   updEl.textContent = new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
   btn.disabled = false; btn.textContent = '📰 Haberleri Getir';
@@ -1912,7 +1957,7 @@ async function hizliYukle() {
   const el = document.getElementById('hizliListe');
   el.innerHTML = '<div class="col-span-full text-center py-6 text-sm" style="color:var(--text-mute)"><span class="spinner"></span> Yükleniyor...</div>';
   const sonuclar = await Promise.all(HIZLI_LISTE.map(async s => {
-    try { const mumlar = await klineCek(s, '15', 300); if (!mumlar) return { symbol: s, hata: 'Veri yok' }; return { symbol: s, a: analizEt(mumlar), son: mumlar[mumlar.length-1].close }; }
+    try { const mumlar = await klineCek(s, '15', 300); if (!mumlar) return { symbol: s, hata: 'Veri yok' }; return { symbol: s, a: analizEt(mumlar, true), son: mumlar[mumlar.length-1].close }; }
     catch (e) { return { symbol: s, hata: e.message }; }
   }));
   el.innerHTML = sonuclar.map(r => {
