@@ -1598,4 +1598,112 @@ async function backtestCalistir() {
       const girisF = mumlar[i].close, cikisF = mumlar[i + atla].close;
       const gercekYon = cikisF > girisF ? 'LONG' : 'SHORT';
       const botYon = a.karar.includes('LONG') ? 'LONG' : 'SHORT';
-      if (gercekYon === bot
+      if (gercekYon === botYon) dogru++; else yanlis++;
+    }
+    const toplam = dogru + yanlis;
+    const oran = toplam > 0 ? (dogru / toplam * 100).toFixed(1) : '0';
+    const renk = oran >= 60 ? 'text-emerald-400' : oran >= 50 ? 'text-yellow-400' : 'text-red-400';
+    el.innerHTML = `<div class="bg-white/[0.02] border border-white/5 rounded-xl p-4 space-y-3 text-xs"><div class="text-center"><div class="text-4xl font-extrabold ${renk} mb-1 mono">%${oran}</div><div class="text-slate-400 text-[10px] uppercase tracking-wider">İsabet Oranı</div></div><div class="grid grid-cols-3 gap-2"><div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2 text-center"><div class="text-emerald-400 font-bold text-lg mono">${dogru}</div><div class="text-[10px] text-slate-400">Doğru</div></div><div class="bg-red-500/5 border border-red-500/20 rounded-lg p-2 text-center"><div class="text-red-400 font-bold text-lg mono">${yanlis}</div><div class="text-[10px] text-slate-400">Yanlış</div></div><div class="bg-white/[0.03] border border-white/5 rounded-lg p-2 text-center"><div class="text-slate-400 font-bold text-lg mono">${notr}</div><div class="text-[10px] text-slate-400">Bekle</div></div></div><div class="text-[10px] text-slate-500 text-center">${atla} mum sonrası • ${mumlar.length} mum</div></div>`;
+  } catch (e) { el.innerHTML = `<div class="text-red-400 text-xs text-center py-3">Hata: ${e.message}</div>`; }
+  btn.disabled = false; btn.textContent = 'Backtest Çalıştır';
+}
+
+function riskHesapla() {
+  if (!sonAnaliz) return;
+  const bakiye = parseFloat(document.getElementById('riskBakiye').value);
+  const yuzde = parseFloat(document.getElementById('riskYuzde').value);
+  const a = sonAnaliz;
+  const el = document.getElementById('riskSonuc');
+  if (!bakiye || !yuzde || !a.fiyat) { el.classList.add('hidden'); return; }
+  const riskUSDT = bakiye * yuzde / 100;
+  const stopMesafe = Math.abs(a.fiyat - (a.karar.includes('SHORT') ? a.stopShort : a.stopLong));
+  const miktar = stopMesafe > 0 ? riskUSDT / stopMesafe : 0;
+  const pozisyon = miktar * a.fiyat;
+  el.classList.remove('hidden');
+  el.innerHTML = `<div class="flex justify-between"><span class="text-slate-400">Risk:</span><span class="font-bold text-red-400">$${riskUSDT.toFixed(2)}</span></div><div class="flex justify-between"><span class="text-slate-400">Pozisyon:</span><span class="font-bold text-emerald-400">$${pozisyon.toFixed(2)}</span></div><div class="flex justify-between"><span class="text-slate-400">Miktar:</span><span class="font-bold">${miktar.toFixed(6)}</span></div><div class="text-[10px] text-slate-500 mt-1">Stop: ${fmt(stopMesafe)}</div>`;
+}
+
+function bildirimToggle() {
+  if (!('Notification' in window)) { alert('Tarayıcı desteklemiyor'); return; }
+  if (Notification.permission === 'granted') { alert('Bildirim açık'); return; }
+  Notification.requestPermission().then(p => { const btn = document.getElementById('bildirimBtn'); if (p === 'granted') { btn.textContent = '🔔'; btn.style.background = 'rgba(16,185,129,0.2)'; btn.style.borderColor = 'rgba(16,185,129,0.4)'; } });
+}
+function alarmKur() {
+  const f = parseFloat(document.getElementById('alarmFiyat').value);
+  const el = document.getElementById('alarmDurum');
+  if (!f) { el.textContent = '⚠️ Fiyat gir'; el.className = 'text-xs text-center text-yellow-400 mt-2'; return; }
+  alarmFiyat = f;
+  el.textContent = `✅ $${fmt(f)}`;
+  el.className = 'text-xs text-center text-emerald-400 mt-2 mono';
+}
+function kontrolAlarm(fiyat) {
+  if (!alarmFiyat) return;
+  if (Math.abs(fiyat - alarmFiyat) / alarmFiyat < 0.005) {
+    if (Notification.permission === 'granted') new Notification(`⚡ ${aktifCoin}`, { body: `$${fmt(fiyat)}` });
+    alarmFiyat = null;
+    const el = document.getElementById('alarmDurum');
+    if (el) { el.textContent = '✅ Tetiklendi!'; el.className = 'text-xs text-center text-emerald-400 mt-2'; }
+  }
+}
+
+function rTabGec(ad) {
+  document.querySelectorAll('[id^="rtab-"]').forEach(e => e.classList.add('hidden'));
+  document.getElementById('rtab-' + ad).classList.remove('hidden');
+  document.querySelectorAll('.rtab').forEach(b => {
+    if (b.dataset.rtab === ad) { b.classList.add('rtab-aktif'); b.classList.remove('text-slate-400'); }
+    else { b.classList.remove('rtab-aktif'); b.classList.add('text-slate-400'); }
+  });
+}
+
+async function hizliYukle() {
+  const el = document.getElementById('hizliListe');
+  el.innerHTML = '<div class="col-span-full text-center py-6 text-slate-500 text-sm"><span class="spinner"></span> Yükleniyor...</div>';
+  const sonuclar = await Promise.all(HIZLI_LISTE.map(async s => {
+    try {
+      const mumlar = await klineCek(s, '15', 300);
+      if (!mumlar) return { symbol: s, hata: 'Veri yok' };
+      return { symbol: s, a: analizEt(mumlar), son: mumlar[mumlar.length-1].close };
+    } catch (e) { return { symbol: s, hata: e.message }; }
+  }));
+  el.innerHTML = sonuclar.map(r => {
+    if (r.hata) return `<div class="bg-red-500/5 border border-red-500/20 rounded-xl p-3"><div class="font-bold text-sm">${r.symbol}</div><div class="text-xs text-red-300">${r.hata}</div></div>`;
+    const a = r.a;
+    const bg = a.karar.includes('LONG') ? (a.karar.includes('ÇOK GÜÇLÜ') ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-emerald-500/20 bg-emerald-500/5') : a.karar.includes('SHORT') ? (a.karar.includes('ÇOK GÜÇLÜ') ? 'border-red-500/40 bg-red-500/10' : 'border-red-500/20 bg-red-500/5') : 'border-white/5 bg-white/[0.02]';
+    const renk = a.karar.includes('LONG') ? 'text-emerald-400' : a.karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
+    return `<div class="border ${bg} rounded-xl p-3 cursor-pointer hover:brightness-125 transition" onclick="coinYukle('${r.symbol}')"><div class="flex justify-between items-center mb-1"><div class="font-bold text-sm">${r.symbol.replace('USDT','')}</div><div class="text-[10px] text-slate-500 mono">${a.onayliSayi}/5</div></div><div class="text-base font-bold mb-1 mono">$${fmt(r.son)}</div><div class="${renk} font-semibold text-xs">${a.kararIkon} ${a.karar}</div><div class="text-[10px] text-slate-500 mt-1 mono">RSI ${a.rsi.toFixed(0)} • ADX ${a.adx.toFixed(0)}</div></div>`;
+  }).join('');
+}
+
+function tfDegistir(tf) {
+  aktifTF = tf;
+  document.querySelectorAll('.tf-btn').forEach(b => {
+    if (b.dataset.tf === tf) { b.classList.add('aktif'); b.classList.remove('text-slate-400'); }
+    else { b.classList.remove('aktif'); b.classList.add('text-slate-400'); }
+  });
+  coinYukle(aktifCoin);
+}
+function saatGuncelle() { document.getElementById('saat').textContent = new Date().toLocaleTimeString('tr-TR'); }
+
+grafikOlustur();
+wsBaslat();
+sembolleriYukle();
+tickerYukle();
+coinYukle('BTCUSDT');
+hizliYukle();
+setInterval(saatGuncelle, 1000);
+saatGuncelle();
+setInterval(() => coinYukle(aktifCoin), 60000);
+setInterval(hizliYukle, 120000);
+setInterval(tickerYukle, 30000);
+document.getElementById('aramaCoin').addEventListener('keypress', e => { if (e.key === 'Enter') coinYukle(); });
+document.getElementById('aramaCoin').addEventListener('input', e => { aramaOneriGoster(e.target.value); });
+document.getElementById('aramaCoin').addEventListener('focus', e => { if (e.target.value.trim()) aramaOneriGoster(e.target.value); });
+document.addEventListener('click', e => {
+  if (!e.target.closest('#aramaCoin') && !e.target.closest('#aramaOneri')) {
+    document.getElementById('aramaOneri').classList.add('hidden');
+  }
+});
+window.addEventListener('resize', () => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); });
+</script>
+</body>
+</html>
