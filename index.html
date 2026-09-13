@@ -8,17 +8,17 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070a12;--cyan:#22d3ee;--emerald:#10b981;--red:#ef4444;--purple:#a78bfa;--amber:#f59e0b;--surface:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--text:#e2e8f0;--text-dim:#94a3b8;--text-mute:#64748b}
-body.light{--bg:#f5f7fb;--text:#0f172a;--text-dim:#475569;--text-mute:#94a3b8;--surface:rgba(0,0,0,.03);--border:rgba(0,0,0,.08)}
-*{-webkit-tap-highlight-color:transparent}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,211,238,.08),transparent),radial-gradient(ellipse 60% 40% at 100% 0%,rgba(167,139,250,.06),transparent);background-attachment:fixed;min-height:100vh;transition:background .3s,color .3s}
-body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,211,238,.12),transparent),radial-gradient(ellipse 60% 40% at 100% 0%,rgba(167,139,250,.08),transparent)}
+:root{--bg:#070a12;--surface:rgba(255,255,255,.03);--surface-2:rgba(255,255,255,.05);--border:rgba(255,255,255,.06);--border-2:rgba(255,255,255,.1);--text:#e2e8f0;--text-dim:#94a3b8;--text-mute:#64748b;--cyan:#22d3ee;--emerald:#10b981;--red:#ef4444;--purple:#a78bfa;--amber:#f59e0b}
+body.light{--bg:#f0f4f8;--surface:rgba(255,255,255,.7);--surface-2:rgba(255,255,255,.9);--border:rgba(15,23,42,.08);--border-2:rgba(15,23,42,.15);--text:#0f172a;--text-dim:#475569;--text-mute:#94a3b8}
+*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,211,238,.08),transparent),radial-gradient(ellipse 60% 40% at 100% 0%,rgba(167,139,250,.06),transparent);background-attachment:fixed;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
+body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,211,238,.15),transparent),radial-gradient(ellipse 60% 40% at 100% 0%,rgba(167,139,250,.1),transparent)}
 .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
 #chart{width:100%;height:520px}
 .glass{background:linear-gradient(135deg,var(--surface),transparent);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:16px;transition:border-color .2s}
-.glass:hover{border-color:var(--border)}
+.glass:hover{border-color:var(--border-2)}
 .card-glow-cyan{box-shadow:0 0 40px rgba(34,211,238,.08),inset 0 1px 0 rgba(255,255,255,.03)}
-.ticker-wrap{background:linear-gradient(90deg,var(--bg),var(--surface),var(--bg));border-bottom:1px solid var(--border);overflow:hidden;height:34px;position:relative}
+.ticker-wrap{background:var(--surface);border-bottom:1px solid var(--border);overflow:hidden;height:34px;position:relative}
 .ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
 .ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
 .ticker-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
@@ -32,14 +32,14 @@ body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,
 @keyframes spin{to{transform:rotate(360deg)}}
 .scroll-ince::-webkit-scrollbar{width:6px;height:6px}
 .scroll-ince::-webkit-scrollbar-thumb{background:rgba(34,211,238,.2);border-radius:3px}
-.satir{transition:all .15s}.satir:hover{background:var(--surface)}
+.satir{transition:all .15s}.satir:hover{background:var(--surface-2)}
 .karar-guclu-long{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(16,185,129,.03));border:1px solid rgba(16,185,129,.4);box-shadow:0 0 60px rgba(16,185,129,.2)}
 .karar-long{background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(16,185,129,.02));border:1px solid rgba(16,185,129,.3)}
 .karar-zayif-long{background:linear-gradient(135deg,rgba(16,185,129,.05),transparent);border:1px solid rgba(16,185,129,.15)}
 .karar-guclu-short{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(239,68,68,.03));border:1px solid rgba(239,68,68,.4);box-shadow:0 0 60px rgba(239,68,68,.2)}
 .karar-short{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(239,68,68,.02));border:1px solid rgba(239,68,68,.3)}
 .karar-zayif-short{background:linear-gradient(135deg,rgba(239,68,68,.05),transparent);border:1px solid rgba(239,68,68,.15)}
-.karar-bekle{background:linear-gradient(135deg,rgba(148,163,184,.05),transparent);border:1px solid rgba(148,163,184,.15)}
+.karar-bekle{background:linear-gradient(135deg,var(--surface),transparent);border:1px solid var(--border)}
 .pulse-glow{animation:pulse-glow 2.5s ease-in-out infinite}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 60px rgba(16,185,129,.2)}50%{box-shadow:0 0 80px rgba(16,185,129,.35)}}
 .pulse-glow-red{animation:pulse-glow-red 2.5s ease-in-out infinite}
@@ -47,50 +47,114 @@ body.light{background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(34,
 .fiyat-up{animation:flash-up .6s ease-out}.fiyat-down{animation:flash-down .6s ease-out}
 @keyframes flash-up{0%{color:var(--emerald);text-shadow:0 0 20px rgba(16,185,129,.6)}100%{color:inherit}}
 @keyframes flash-down{0%{color:var(--red);text-shadow:0 0 20px rgba(239,68,68,.6)}100%{color:inherit}}
-.rtab{transition:all .15s;padding:6px 4px;font-size:10.5px;font-weight:600}
-.rtab:hover{color:var(--text);background:var(--surface)}
-.rtab-aktif{background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(34,211,238,.05))!important;color:var(--cyan)!important;box-shadow:0 0 16px rgba(34,211,238,.2)}
+.rtab{transition:all .2s;padding:8px 4px;font-size:10.5px;font-weight:600;border-radius:10px;color:var(--text-mute);border:1px solid transparent}
+.rtab:hover{color:var(--text);background:var(--surface-2)}
+.rtab-aktif[data-rtab="karar"]{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(16,185,129,.05))!important;color:#10b981!important;border-color:rgba(16,185,129,.3)!important;box-shadow:0 0 16px rgba(16,185,129,.15)}
+.rtab-aktif[data-rtab="teknik"]{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.05))!important;color:#3b82f6!important;border-color:rgba(59,130,246,.3)!important;box-shadow:0 0 16px rgba(59,130,246,.15)}
+.rtab-aktif[data-rtab="piyasa"]{background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(167,139,250,.05))!important;color:#a78bfa!important;border-color:rgba(167,139,250,.3)!important;box-shadow:0 0 16px rgba(167,139,250,.15)}
+.rtab-aktif[data-rtab="pozisyon"]{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.05))!important;color:#f59e0b!important;border-color:rgba(245,158,11,.3)!important;box-shadow:0 0 16px rgba(245,158,11,.15)}
+.rtab-aktif[data-rtab="test"]{background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(34,211,238,.05))!important;color:#22d3ee!important;border-color:rgba(34,211,238,.3)!important;box-shadow:0 0 16px rgba(34,211,238,.15)}
 .canli-dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 12px var(--emerald);animation:pulse-dot 1.5s ease-in-out infinite}
 @keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
 .canli-dot.baglaniyor{background:var(--amber);box-shadow:0 0 12px var(--amber)}
 .canli-dot.kopuk{background:var(--red);box-shadow:0 0 12px var(--red);animation:none}
-.stat-kart{background:linear-gradient(135deg,var(--surface),transparent);border:1px solid var(--border);border-radius:12px;padding:10px 12px;transition:all .2s}
+.stat-kart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;transition:all .2s}
 .stat-kart:hover{border-color:rgba(34,211,238,.2)}
 .stat-label{font-size:10px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:4px}
 .stat-value{font-size:15px;font-weight:700;color:var(--text)}
 .arama-input{background:var(--surface);border:1px solid var(--border);transition:all .2s;color:var(--text)}
-.arama-input:focus{background:rgba(34,211,238,.03);border-color:rgba(34,211,238,.4);box-shadow:0 0 0 3px rgba(34,211,238,.1);outline:none}
+.arama-input:focus{background:var(--surface-2);border-color:rgba(34,211,238,.4);box-shadow:0 0 0 3px rgba(34,211,238,.1);outline:none}
+.arama-input::placeholder{color:var(--text-mute)}
 .btn-cyan{background:linear-gradient(135deg,#22d3ee,#0891b2);box-shadow:0 4px 20px rgba(34,211,238,.3);transition:all .2s}
 .btn-cyan:hover{box-shadow:0 6px 28px rgba(34,211,238,.5)}
-.tf-btn{transition:all .2s}.tf-btn:hover{background:var(--surface)}
+.tf-btn{transition:all .2s;color:var(--text-dim)}
+.tf-btn:hover{background:var(--surface-2);color:var(--text)}
 .tf-btn.aktif{background:linear-gradient(135deg,#22d3ee,#0891b2);color:#0a0e17;font-weight:600}
-.gradient-text{background:linear-gradient(135deg,#22d3ee,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.skeleton{background:linear-gradient(90deg,var(--surface) 25%,rgba(255,255,255,.06) 50%,var(--surface) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite;border-radius:6px}
+.gradient-text{background:linear-gradient(135deg,#22d3ee,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--surface-2) 50%,var(--surface) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite;border-radius:6px}
 @keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.coin-pill{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 12px;cursor:pointer;transition:all .2s;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.coin-pill{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 12px;cursor:pointer;transition:all .2s;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px;color:var(--text-dim)}
 .coin-pill:hover{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);color:var(--cyan)}
 body.tam-ekran .lg\:col-span-4{display:none!important}
 body.tam-ekran .lg\:col-span-8{grid-column:span 12/span 12!important}
 body.tam-ekran #chart{height:calc(100vh - 220px)!important}
 body.tam-ekran .main-grid{grid-template-columns:1fr!important}
-.radar-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(7,10,18,.85);backdrop-filter:blur(8px)}
-.radar-modal.acik{display:flex}
+.modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(7,10,18,.75);backdrop-filter:blur(8px)}
+.modal-overlay.acik{display:flex}
+.modal-kutu{width:100%;max-width:560px;max-height:85vh;overflow-y:auto;background:linear-gradient(135deg,#0e1421,#0a0e17);border:1px solid var(--border-2);border-radius:20px;padding:24px;color:#e2e8f0}
+body.light .modal-kutu{background:#ffffff;color:#0f172a;border-color:rgba(15,23,42,.1);box-shadow:0 20px 60px rgba(15,23,42,.2)}
 .radar-icerik{width:100%;max-width:720px;max-height:85vh;overflow-y:auto;background:linear-gradient(135deg,#0e1421,#0a0e17);border:1px solid rgba(34,211,238,.2);border-radius:20px;padding:20px;color:#e2e8f0}
-.radar-item{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px;margin-bottom:8px;transition:all .2s;cursor:pointer}
+body.light .radar-icerik{background:#ffffff;color:#0f172a;border-color:rgba(34,211,238,.3);box-shadow:0 20px 60px rgba(15,23,42,.2)}
+.radar-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;transition:all .2s;cursor:pointer}
 .radar-item:hover{background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.3)}
 .radar-item.guclu{border-color:rgba(34,211,238,.4);background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(34,211,238,.02))}
 @keyframes radar-tarama{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
 .radar-taraniyor{animation:radar-tarama 1.2s linear infinite;display:inline-block}
-.modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(7,10,18,.85);backdrop-filter:blur(8px)}
-.modal-overlay.acik{display:flex}
-.modal-kutu{width:100%;max-width:500px;background:linear-gradient(135deg,#0e1421,#0a0e17);border:1px solid rgba(34,211,238,.2);border-radius:20px;padding:20px;color:#e2e8f0}
-input[type="number"],input[type="text"],select{color:var(--text)}
 .pozisyon-kart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px}
 .grafik-mini{height:120px;width:100%}
-@media(max-width:640px){#chart{height:300px!important}.ticker-wrap{height:28px}.ticker-item{font-size:11px}.stat-value{font-size:13px}.rtab{font-size:9px;padding:6px 2px}}
+/* KARŞILAMA EKRANI */
+#welcomeScreen{position:fixed;inset:0;z-index:200;overflow-y:auto;background:radial-gradient(ellipse at top,rgba(34,211,238,.15),transparent 50%),radial-gradient(ellipse at bottom right,rgba(167,139,250,.15),transparent 50%),var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn .5s ease}
+#welcomeScreen.gizli{display:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.welcome-kutu{max-width:880px;width:100%;text-align:center}
+.welcome-logo{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#22d3ee,#a78bfa);display:inline-flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 20px 60px rgba(34,211,238,.3);margin-bottom:24px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.welcome-baslik{font-size:38px;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;line-height:1.1}
+.welcome-alt{font-size:16px;color:var(--text-dim);margin-bottom:36px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto}
+.welcome-ozellikler{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:36px;text-align:left}
+.welcome-ozellik{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;transition:all .2s}
+.welcome-ozellik:hover{border-color:rgba(34,211,238,.3);transform:translateY(-2px)}
+.welcome-ozellik-ikon{font-size:24px;margin-bottom:8px;display:block}
+.welcome-ozellik-baslik{font-weight:700;font-size:14px;margin-bottom:4px}
+.welcome-ozellik-aciklama{font-size:12px;color:var(--text-dim);line-height:1.5}
+.welcome-basla{background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#fff;font-weight:700;font-size:16px;padding:16px 48px;border-radius:16px;border:none;cursor:pointer;box-shadow:0 10px 40px rgba(34,211,238,.3);transition:all .2s}
+.welcome-basla:hover{transform:translateY(-2px);box-shadow:0 15px 50px rgba(34,211,238,.4)}
+.welcome-note{font-size:11px;color:var(--text-mute);margin-top:16px}
+/* HAMBURGER */
+.hamburger-panel{position:fixed;top:0;right:0;width:320px;max-width:85vw;height:100vh;background:linear-gradient(135deg,#0e1421,#0a0e17);border-left:1px solid var(--border-2);z-index:150;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);padding:24px;overflow-y:auto;box-shadow:-20px 0 60px rgba(0,0,0,.5)}
+body.light .hamburger-panel{background:#ffffff;color:#0f172a;border-left-color:rgba(15,23,42,.1);box-shadow:-20px 0 60px rgba(15,23,42,.15)}
+.hamburger-panel.acik{transform:translateX(0)}
+.hamburger-overlay{position:fixed;inset:0;z-index:140;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none}
+.hamburger-overlay.acik{display:block}
+.hamburger-item{display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:12px;cursor:pointer;transition:all .15s;font-size:14px;font-weight:600;color:#e2e8f0}
+body.light .hamburger-item{color:#0f172a}
+.hamburger-item:hover{background:rgba(34,211,238,.1);color:#22d3ee}
+.hamburger-ikon{font-size:18px;width:24px;text-align:center}
+.hamburger-baslik{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin:20px 12px 8px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+body.light .hamburger-baslik{color:#94a3b8;border-top-color:rgba(15,23,42,.08)}
+.ayar-satir{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+.ayar-satir:last-child{border-bottom:none}
+.ayar-label{font-size:13px;font-weight:600}
+.ayar-aciklama{font-size:11px;color:var(--text-mute);margin-top:2px}
+.ayar-select{background:var(--surface-2);border:1px solid var(--border-2);color:var(--text);padding:6px 10px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit}
+.ayar-select:focus{outline:none;border-color:rgba(34,211,238,.5)}
+.toggle-switch{position:relative;width:44px;height:24px;background:var(--surface-2);border-radius:12px;cursor:pointer;transition:background .2s;border:1px solid var(--border-2)}
+.toggle-switch.acik{background:linear-gradient(135deg,#22d3ee,#0891b2)}
+.toggle-switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.toggle-switch.acik::after{transform:translateX(20px)}
+@media(max-width:640px){#chart{height:300px!important}.ticker-wrap{height:28px}.ticker-item{font-size:11px}.stat-value{font-size:13px}.rtab{font-size:9px;padding:6px 2px}.welcome-baslik{font-size:26px}.welcome-alt{font-size:14px}}
 </style>
 </head>
-<body class="text-slate-100">
+<body>
+
+<!-- KARŞILAMA EKRANI -->
+<div id="welcomeScreen">
+<div class="welcome-kutu">
+<div class="welcome-logo">📈</div>
+<h1 class="welcome-baslik">Kripto Analiz <span class="gradient-text">Pro Terminal</span></h1>
+<p class="welcome-alt">Gerçek zamanlı veriler, 10+ teknik gösterge, yapay zeka destekli sinyal motoru ve otomatik test sistemi ile akıllı kripto analizi.</p>
+<div class="welcome-ozellikler">
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">⚡</span><div class="welcome-ozellik-baslik">Canlı WebSocket</div><div class="welcome-ozellik-aciklama">Fiyatlar saniye saniye Bybit'ten akar. Gecikme yok.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🧠</span><div class="welcome-ozellik-baslik">Akıllı Sinyal Motoru</div><div class="welcome-ozellik-aciklama">10+ gösterge birleşir, tek karar verir: LONG / SHORT.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🎯</span><div class="welcome-ozellik-baslik">Sinyal Radarı</div><div class="welcome-ozellik-aciklama">200 hacimli coini saniyeler içinde tara, fırsatları yakala.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🧪</span><div class="welcome-ozellik-baslik">Otomatik Test</div><div class="welcome-ozellik-aciklama">Bot kendi sinyallerini test eder, isabet oranını gösterir.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">💼</span><div class="welcome-ozellik-baslik">Pozisyon Takibi</div><div class="welcome-ozellik-aciklama">Açtığın işlemleri kaydet, kâr/zararını canlı takip et.</div></div>
+<div class="welcome-ozellik"><span class="welcome-ozellik-ikon">🎨</span><div class="welcome-ozellik-baslik">Koyu & Açık Tema</div><div class="welcome-ozellik-aciklama">Gündüz için açık, gece için koyu tema. Tercih sende.</div></div>
+</div>
+<button class="welcome-basla" onclick="welcomeKapat()">🚀 Başla →</button>
+<p class="welcome-note">Bu bot <b>karar destek</b> aracıdır. Yatırım tavsiyesi değildir. Her işlemde stop-loss kullanın.</p>
+</div>
+</div>
 
 <div class="ticker-wrap"><div class="ticker" id="ticker"></div></div>
 
@@ -98,35 +162,36 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-3 flex items-center gap-3">
 <div class="flex items-center gap-2.5 shrink-0">
 <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📈</span></div>
-<div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] mono" style="color:var(--text-mute)">PRO TERMINAL v3.0</div></div>
+<div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] mono" style="color:var(--text-mute)">PRO TERMINAL v3.1</div></div>
 </div>
 <div class="flex-1 flex items-center gap-2 max-w-2xl relative">
 <input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE..." autocomplete="off" class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm">
-<button onclick="coinYukle()" class="btn-cyan px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-900 whitespace-nowrap">Analiz</button>
-<div id="aramaOneri" class="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-2xl z-50 hidden max-h-72 overflow-y-auto scroll-ince" style="background:var(--bg);border:1px solid var(--border)"></div>
+<button onclick="coinYukle()" class="btn-cyan px-4 py-2.5 rounded-xl font-semibold text-sm text-white whitespace-nowrap">Analiz</button>
+<div id="aramaOneri" class="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-2xl z-50 hidden max-h-72 overflow-y-auto scroll-ince" style="background:var(--bg);border:1px solid var(--border-2)"></div>
 </div>
 <button onclick="radarAc()" title="Sinyal Radarı" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 hover:from-purple-500/30 hover:to-cyan-500/30 border border-purple-500/30 text-xs font-bold text-purple-300 transition whitespace-nowrap">🎯 RADAR</button>
-<button id="sesBtn" onclick="sesToggle()" title="Ses Uyarısı" class="w-9 h-9 rounded-xl border flex items-center justify-center text-sm transition" style="background:var(--surface);border-color:var(--border)">🔇</button>
+<button id="sesBtn" onclick="sesToggle()" title="Ses" class="w-9 h-9 rounded-xl border flex items-center justify-center text-sm transition" style="background:var(--surface);border-color:var(--border)">🔇</button>
 <button id="temaBtn" onclick="temaToggle()" title="Tema" class="w-9 h-9 rounded-xl border flex items-center justify-center text-sm transition" style="background:var(--surface);border-color:var(--border)">🌙</button>
 <div id="canliDurum" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border" style="background:var(--surface);border-color:var(--border)">
 <span id="canliDot" class="canli-dot baglaniyor"></span>
 <span id="canliYazi" class="text-amber-400 font-semibold text-xs">Bağlanıyor</span>
 </div>
 <button id="bildirimBtn" onclick="bildirimToggle()" title="Bildirim" class="w-9 h-9 rounded-xl border flex items-center justify-center text-sm transition" style="background:var(--surface);border-color:var(--border)">🔔</button>
+<button onclick="hamburgerAc()" title="Menü" class="w-9 h-9 rounded-xl border flex items-center justify-center text-sm transition" style="background:var(--surface);border-color:var(--border)"><span style="font-size:16px">☰</span></button>
 <div class="hidden lg:flex flex-col items-end"><span id="saat" class="mono text-cyan-400 text-sm font-semibold"></span><span class="text-[10px]" style="color:var(--text-mute)">Yerel saat</span></div>
 </div>
 <div class="border-t" style="border-color:var(--border)">
 <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-2 flex items-center gap-3 overflow-x-auto scroll-ince">
 <div class="flex items-center gap-1.5 shrink-0">
 <span class="text-xs font-medium mr-1" style="color:var(--text-mute)">TF:</span>
-<button onclick="tfDegistir('1')" data-tf="1" class="tf-btn px-3 py-1 rounded-lg text-xs" style="color:var(--text-dim)">1dk</button>
-<button onclick="tfDegistir('5')" data-tf="5" class="tf-btn px-3 py-1 rounded-lg text-xs" style="color:var(--text-dim)">5dk</button>
+<button onclick="tfDegistir('1')" data-tf="1" class="tf-btn px-3 py-1 rounded-lg text-xs">1dk</button>
+<button onclick="tfDegistir('5')" data-tf="5" class="tf-btn px-3 py-1 rounded-lg text-xs">5dk</button>
 <button onclick="tfDegistir('15')" data-tf="15" class="tf-btn aktif px-3 py-1 rounded-lg text-xs">15dk</button>
-<button onclick="tfDegistir('60')" data-tf="60" class="tf-btn px-3 py-1 rounded-lg text-xs" style="color:var(--text-dim)">1sa</button>
-<button onclick="tfDegistir('240')" data-tf="240" class="tf-btn px-3 py-1 rounded-lg text-xs" style="color:var(--text-dim)">4sa</button>
-<button onclick="tfDegistir('D')" data-tf="D" class="tf-btn px-3 py-1 rounded-lg text-xs" style="color:var(--text-dim)">1g</button>
+<button onclick="tfDegistir('60')" data-tf="60" class="tf-btn px-3 py-1 rounded-lg text-xs">1sa</button>
+<button onclick="tfDegistir('240')" data-tf="240" class="tf-btn px-3 py-1 rounded-lg text-xs">4sa</button>
+<button onclick="tfDegistir('D')" data-tf="D" class="tf-btn px-3 py-1 rounded-lg text-xs">1g</button>
 </div>
-<div class="w-px h-4" style="background:var(--border)"></div>
+<div class="w-px h-4" style="background:var(--border-2)"></div>
 <div class="flex items-center gap-1.5 shrink-0">
 <span class="text-xs font-medium mr-1" style="color:var(--text-mute)">Hızlı:</span>
 <button onclick="coinYukle('BTCUSDT')" class="coin-pill">₿ BTC</button>
@@ -144,12 +209,12 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div class="flex flex-wrap items-start justify-between gap-4">
 <div>
 <div class="flex items-center gap-3 mb-2">
-<h1 id="aktifCoin" class="text-2xl sm:text-3xl font-bold tracking-tight">BTCUSDT</h1>
+<h1 id="aktifCoin" class="text-2xl sm:text-3xl font-bold tracking-tight" style="color:var(--text)">BTCUSDT</h1>
 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase tracking-wider">SPOT</span>
 </div>
 <div class="flex items-baseline gap-4">
-<span id="aktifFiyat" class="mono text-3xl sm:text-4xl font-bold tracking-tight">-</span>
-<span id="aktifDegisim" class="mono text-sm font-semibold">-</span>
+<span id="aktifFiyat" class="mono text-3xl sm:text-4xl font-bold tracking-tight" style="color:var(--text)">-</span>
+<span id="aktifDegisim" class="mono text-sm font-semibold" style="color:var(--text-dim)">-</span>
 </div>
 </div>
 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full sm:w-auto">
@@ -190,11 +255,11 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div class="lg:col-span-4">
 <div class="lg:sticky lg:top-32 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto scroll-ince pr-1 space-y-2.5">
 <div class="flex gap-0.5 p-1 glass">
-<button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1 rounded-lg">🎯 Karar</button>
-<button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1 rounded-lg" style="color:var(--text-mute)">📊 Teknik</button>
-<button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1 rounded-lg" style="color:var(--text-mute)">🌍 Piyasa</button>
-<button onclick="rTabGec('pozisyon')" data-rtab="pozisyon" class="rtab flex-1 rounded-lg" style="color:var(--text-mute)">💼 Pozisyon</button>
-<button onclick="rTabGec('test')" data-rtab="test" class="rtab flex-1 rounded-lg" style="color:var(--text-mute)">🧠 S.Test</button>
+<button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1">🎯 Karar</button>
+<button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1">📊 Teknik</button>
+<button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1">🌍 Piyasa</button>
+<button onclick="rTabGec('pozisyon')" data-rtab="pozisyon" class="rtab flex-1">💼 Pozisyon</button>
+<button onclick="rTabGec('test')" data-rtab="test" class="rtab flex-1">🧠 Test</button>
 </div>
 
 <div id="rtab-karar" class="space-y-3">
@@ -204,7 +269,7 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div id="kararYazi" class="text-3xl font-extrabold mb-3 tracking-tight" style="color:var(--text-dim)">BEKLE</div>
 <div id="kararGuven" class="inline-block text-xs font-bold mono px-3 py-1.5 rounded-full border" style="background:var(--surface);color:var(--text-dim);border-color:var(--border)">—</div>
 <div id="kararAciklama" class="text-xs mt-4 leading-relaxed" style="color:var(--text-dim)">Analiz yapılıyor...</div>
-<button onclick="pozisyonHizliEkle()" id="hizliPozBtn" class="hidden mt-4 w-full bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl py-2.5 font-bold text-sm text-slate-900 transition">💼 Bu Sinyale Pozisyon Aç</button>
+<button onclick="pozisyonHizliEkle()" id="hizliPozBtn" class="hidden mt-4 w-full bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl py-2.5 font-bold text-sm text-white transition">💼 Bu Sinyale Pozisyon Aç</button>
 </div>
 <div class="glass p-4">
 <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs uppercase tracking-wider" style="color:var(--text-dim)">🕐 Çoklu Zaman Onayı</h3><span id="mtfOnay" class="text-[10px] mono" style="color:var(--text-mute)">—</span></div>
@@ -266,7 +331,7 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div class="glass p-4">
 <h3 class="font-bold text-xs uppercase tracking-wider mb-2" style="color:var(--text-dim)">💰 Ciddi Backtest</h3>
 <p class="text-xs mb-3" style="color:var(--text-mute)">1000$ ile simülasyon. Stop/hedef/komisyon dahil.</p>
-<button onclick="ciddiBacktestCalistir()" id="btBtn" class="btn-cyan w-full rounded-xl py-2.5 font-bold text-sm text-slate-900 disabled:opacity-50">Simülasyonu Çalıştır</button>
+<button onclick="ciddiBacktestCalistir()" id="btBtn" class="btn-cyan w-full rounded-xl py-2.5 font-bold text-sm text-white disabled:opacity-50">Simülasyonu Çalıştır</button>
 <div id="btSonuc" class="mt-3"></div>
 </div>
 <div class="glass p-4">
@@ -274,7 +339,7 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div class="space-y-3">
 <div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Bakiye</label><input id="riskBakiye" type="number" value="1000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
 <div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Risk %</label><input id="riskYuzde" type="number" value="2" step="0.5" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
-<button onclick="riskHesapla()" class="w-full bg-blue-600 hover:bg-blue-500 rounded-xl py-2.5 font-bold text-sm transition">Hesapla</button>
+<button onclick="riskHesapla()" class="w-full bg-blue-600 hover:bg-blue-500 rounded-xl py-2.5 font-bold text-sm text-white transition">Hesapla</button>
 <div id="riskSonuc" class="rounded-lg p-3 text-xs mono space-y-1 hidden" style="background:var(--surface)"></div>
 </div>
 </div>
@@ -282,7 +347,7 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <h3 class="font-bold text-xs uppercase tracking-wider mb-2" style="color:var(--text-dim)">🔔 Fiyat Alarmı</h3>
 <div class="space-y-2">
 <input id="alarmFiyat" type="number" placeholder="Örn: 70000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono">
-<button onclick="alarmKur()" class="w-full bg-amber-600 hover:bg-amber-500 rounded-xl py-2.5 font-bold text-sm transition">Alarm Kur</button>
+<button onclick="alarmKur()" class="w-full bg-amber-600 hover:bg-amber-500 rounded-xl py-2.5 font-bold text-sm text-white transition">Alarm Kur</button>
 <div id="alarmDurum" class="text-xs text-center"></div>
 </div>
 </div>
@@ -302,59 +367,121 @@ input[type="number"],input[type="text"],select{color:var(--text)}
 <div class="text-center text-xs py-6 mt-4 mono" style="color:var(--text-mute)">⚠️ EĞİTİM AMAÇLIDIR • YATIRIM TAVSİYESİ DEĞİLDİR</div>
 </main>
 
-<div id="radarModal" class="radar-modal" onclick="if(event.target === this) radarKapat()">
+<!-- RADAR MODAL -->
+<div id="radarModal" class="modal-overlay" onclick="if(event.target === this) radarKapat()">
 <div class="radar-icerik">
 <div class="flex items-center justify-between mb-4">
 <div>
 <div class="flex items-center gap-2"><span class="text-2xl">🎯</span><h2 class="text-xl font-bold gradient-text">SİNYAL RADARI</h2></div>
-<p class="text-xs mt-1" style="color:#94a3b8">Hacimli coinler taranıyor</p>
+<p class="text-xs mt-1" style="color:var(--text-mute)">Hacimli coinler taranıyor</p>
 </div>
-<button onclick="radarKapat()" class="w-9 h-9 rounded-xl border flex items-center justify-center text-lg transition" style="background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.1)">×</button>
+<button onclick="radarKapat()" class="w-9 h-9 rounded-xl border flex items-center justify-center text-lg transition" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
 </div>
 <div id="radarSonuc"></div>
 </div>
 </div>
 
+<!-- POZİSYON MODAL -->
 <div id="pozisyonModal" class="modal-overlay" onclick="if(event.target === this) pozisyonModalKapat()">
 <div class="modal-kutu">
 <div class="flex items-center justify-between mb-4">
 <h2 class="text-lg font-bold gradient-text">💼 Yeni Pozisyon</h2>
-<button onclick="pozisyonModalKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.1)">×</button>
+<button onclick="pozisyonModalKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
 </div>
 <div class="space-y-3">
-<div>
-<label class="text-[10px] uppercase font-bold" style="color:#94a3b8">Coin</label>
-<input id="pzCoin" type="text" placeholder="BTCUSDT" value="BTCUSDT" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1" style="color:#e2e8f0">
-</div>
+<div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Coin</label><input id="pzCoin" type="text" placeholder="BTCUSDT" value="BTCUSDT" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
 <div class="grid grid-cols-2 gap-2">
-<div>
-<label class="text-[10px] uppercase font-bold" style="color:#94a3b8">Yön</label>
-<select id="pzYon" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1" style="color:#e2e8f0">
-<option value="LONG">LONG</option>
-<option value="SHORT">SHORT</option>
+<div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Yön</label><select id="pzYon" class="ayar-select w-full mt-1"><option value="LONG">LONG</option><option value="SHORT">SHORT</option></select></div>
+<div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Miktar (USDT)</label><input id="pzMiktar" type="number" placeholder="100" value="100" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+</div>
+<div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Giriş Fiyatı</label><input id="pzGiris" type="number" step="any" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+<div class="grid grid-cols-2 gap-2">
+<div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Stop</label><input id="pzStop" type="number" step="any" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+<div><label class="text-[10px] uppercase font-bold" style="color:var(--text-mute)">Hedef</label><input id="pzHedef" type="number" step="any" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+</div>
+<button onclick="pozisyonKaydet()" class="w-full btn-cyan rounded-xl py-2.5 font-bold text-sm text-white">💼 Pozisyon Aç</button>
+</div>
+</div>
+</div>
+
+<!-- AYARLAR MODAL -->
+<div id="ayarlarModal" class="modal-overlay" onclick="if(event.target === this) ayarlarKapat()">
+<div class="modal-kutu">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold gradient-text">⚙️ Ayarlar</h2>
+<button onclick="ayarlarKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
+</div>
+<div class="ayar-satir">
+<div><div class="ayar-label">Tema</div><div class="ayar-aciklama">Koyu veya açık tema seç</div></div>
+<select id="ayarTema" class="ayar-select" onchange="ayarKaydet('tema', this.value)">
+<option value="dark">🌙 Koyu</option>
+<option value="light">☀️ Açık</option>
 </select>
 </div>
-<div>
-<label class="text-[10px] uppercase font-bold" style="color:#94a3b8">Miktar (USDT)</label>
-<input id="pzMiktar" type="number" placeholder="100" value="100" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1" style="color:#e2e8f0">
+<div class="ayar-satir">
+<div><div class="ayar-label">Radar Coin Sayısı</div><div class="ayar-aciklama">Taramada kaç coin kontrol edilsin</div></div>
+<select id="ayarRadarSayi" class="ayar-select" onchange="ayarKaydet('radarSayi', parseInt(this.value))">
+<option value="50">50 coin (~15sn)</option>
+<option value="100">100 coin (~30sn)</option>
+<option value="200">200 coin (~60sn)</option>
+<option value="500">500 coin (~3dk)</option>
+</select>
+</div>
+<div class="ayar-satir">
+<div><div class="ayar-label">Varsayılan Zaman Dilimi</div><div class="ayar-aciklama">Site açılınca hangi TF ile başlasın</div></div>
+<select id="ayarTF" class="ayar-select" onchange="ayarKaydet('varsayilanTF', this.value)">
+<option value="1">1 dakika</option>
+<option value="5">5 dakika</option>
+<option value="15">15 dakika</option>
+<option value="60">1 saat</option>
+<option value="240">4 saat</option>
+<option value="D">1 gün</option>
+</select>
+</div>
+<div class="ayar-satir">
+<div><div class="ayar-label">Ses Uyarıları</div><div class="ayar-aciklama">Güçlü sinyal / alarm sesi</div></div>
+<div id="ayarSes" class="toggle-switch" onclick="ayarToggle('ses')"></div>
+</div>
+<div class="ayar-satir">
+<div><div class="ayar-label">Pozisyon Güncelleme</div><div class="ayar-aciklama">Kaç saniyede bir kontrol</div></div>
+<select id="ayarPozGuncelleme" class="ayar-select" onchange="ayarKaydet('pozGuncelleme', parseInt(this.value))">
+<option value="15">15 saniye</option>
+<option value="30">30 saniye</option>
+<option value="60">1 dakika</option>
+</select>
+</div>
+<button onclick="ayarlariSifirla()" class="w-full mt-4 border border-red-500/30 text-red-400 rounded-xl py-2.5 font-bold text-sm hover:bg-red-500/10 transition">🔄 Ayarları Sıfırla</button>
 </div>
 </div>
-<div>
-<label class="text-[10px] uppercase font-bold" style="color:#94a3b8">Giriş Fiyatı</label>
-<input id="pzGiris" type="number" step="any" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1" style="color:#e2e8f0">
+
+<!-- HAMBURGER PANEL -->
+<div id="hamburgerOverlay" class="hamburger-overlay" onclick="hamburgerKapat()"></div>
+<div id="hamburgerPanel" class="hamburger-panel">
+<div class="flex items-center justify-between mb-6">
+<div><div class="font-bold gradient-text text-lg">MENÜ</div><div class="text-[10px]" style="color:var(--text-mute)">PRO TERMINAL v3.1</div></div>
+<button onclick="hamburgerKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
 </div>
-<div class="grid grid-cols-2 gap-2">
-<div>
-<label class="text-[10px] uppercase font-bold" style="color:#94a3b8">Stop</label>
-<input id="pzStop" type="number" step="any" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1" style="color:#e2e8f0">
+<div class="hamburger-item" onclick="ayarlarAc(); hamburgerKapat()"><span class="hamburger-ikon">⚙️</span>Ayarlar</div>
+<div class="hamburger-item" onclick="welcomeGoster(); hamburgerKapat()"><span class="hamburger-ikon">🏠</span>Karşılama Ekranı</div>
+<div class="hamburger-item" onclick="hakkindaAc(); hamburgerKapat()"><span class="hamburger-ikon">📖</span>Hakkında</div>
+<div class="hamburger-item" onclick="sssAc(); hamburgerKapat()"><span class="hamburger-ikon">❓</span>Sıkça Sorulan Sorular</div>
+<div class="hamburger-item" onclick="yeniliklerAc(); hamburgerKapat()"><span class="hamburger-ikon">🆕</span>Yenilikler</div>
+<div class="hamburger-baslik">Bağlantılar</div>
+<div class="hamburger-item" onclick="window.open('https://github.com/atabeyu4/kripto-analiz-proo','_blank')"><span class="hamburger-ikon">⭐</span>GitHub Projesi</div>
+<div class="hamburger-item" onclick="window.open('https://github.com/atabeyu4/kripto-analiz-proo/issues/new','_blank')"><span class="hamburger-ikon">💬</span>Öneri / Hata Bildir</div>
+<div class="hamburger-item" onclick="window.open('https://www.bybit.com','_blank')"><span class="hamburger-ikon">🏦</span>Bybit Borsası</div>
+<div class="hamburger-baslik">Uyarı</div>
+<div class="text-[11px] leading-relaxed px-3" style="color:var(--text-mute)">Bu bot <b>karar destek</b> aracıdır. Yatırım tavsiyesi değildir. Her işlemde stop-loss kullanın. Kaybını göze alamayacağın parayla işlem açma.</div>
 </div>
-<div>
-<label class="text-[10px] uppercase font-bold" style="color:#94a3b8">Hedef</label>
-<input id="pzHedef" type="number" step="any" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1" style="color:#e2e8f0">
+
+<!-- HAKKINDA / SSS / YENİLİKLER MODALLARI -->
+<div id="bilgiModal" class="modal-overlay" onclick="if(event.target === this) bilgiKapat()">
+<div class="modal-kutu">
+<div class="flex items-center justify-between mb-4">
+<h2 id="bilgiBaslik" class="text-lg font-bold gradient-text">Hakkında</h2>
+<button onclick="bilgiKapat()" class="w-8 h-8 rounded-lg border flex items-center justify-center text-lg" style="background:var(--surface);border-color:var(--border);color:var(--text)">×</button>
 </div>
-</div>
-<button onclick="pozisyonKaydet()" class="w-full btn-cyan rounded-xl py-2.5 font-bold text-sm text-slate-900">💼 Pozisyon Aç</button>
-</div>
+<div id="bilgiIcerik" class="text-sm leading-relaxed" style="color:var(--text-dim)"></div>
 </div>
 </div>
 
@@ -364,9 +491,18 @@ let aktifCoin = 'BTCUSDT';
 let aktifTF = '15';
 let tamEkran = false;
 let gostergelerAcik = JSON.parse(localStorage.getItem('gostergelerAcik') || 'false');
-let sesAcik = JSON.parse(localStorage.getItem('sesAcik') || 'false');
-let tema = localStorage.getItem('tema') || 'dark';
-const HIZLI_LISTE = ['BTCUSDT', 'XRPUSDT', 'LITUSDT', 'PAXGUSDT'];
+let pozGuncellemeIntervalId = null;
+let fiyatGuncellemeIntervalId = null;
+let hizliIntervalId = null;
+let tickerIntervalId = null;
+let testIntervalId = null;
+
+const AYARLAR_DEFAULT = { tema: 'dark', radarSayi: 100, varsayilanTF: '15', ses: false, pozGuncelleme: 30 };
+let AYARLAR = { ...AYARLAR_DEFAULT, ...JSON.parse(localStorage.getItem('ayarlar') || '{}') };
+let sesAcik = AYARLAR.ses;
+let tema = AYARLAR.tema;
+
+const HIZLI_LISTE = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'BNBUSDT', 'DOGEUSDT', 'AVAXUSDT', 'LINKUSDT'];
 const TICKER_COINLER = ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'SOLUSDT', 'DOGEUSDT', 'ADAUSDT', 'AVAXUSDT', 'LINKUSDT', 'MATICUSDT', 'DOTUSDT', 'LTCUSDT', 'PAXGUSDT'];
 let sonAnaliz = null;
 let alarmFiyat = null;
@@ -386,16 +522,71 @@ function fmt(n, d = 4) {
 }
 function uyku(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* KARŞILAMA */
+function welcomeKapat() {
+  document.getElementById('welcomeScreen').classList.add('gizli');
+  localStorage.setItem('welcomeGorundu', 'true');
+}
+function welcomeGoster() {
+  document.getElementById('welcomeScreen').classList.remove('gizli');
+}
+
+/* HAMBURGER */
+function hamburgerAc() {
+  document.getElementById('hamburgerPanel').classList.add('acik');
+  document.getElementById('hamburgerOverlay').classList.add('acik');
+}
+function hamburgerKapat() {
+  document.getElementById('hamburgerPanel').classList.remove('acik');
+  document.getElementById('hamburgerOverlay').classList.remove('acik');
+}
+
+/* AYARLAR */
+function ayarKaydet(key, deger) {
+  AYARLAR[key] = deger;
+  localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
+  if (key === 'tema') temaUygula(deger);
+  if (key === 'ses') { sesAcik = deger; document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇'; }
+  if (key === 'varsayilanTF') { aktifTF = deger; tfDegistir(deger); }
+  if (key === 'pozGuncelleme') { if (pozGuncellemeIntervalId) clearInterval(pozGuncellemeIntervalId); pozGuncellemeIntervalId = setInterval(pozisyonlariGuncelle, deger * 1000); }
+}
+function ayarToggle(key) {
+  AYARLAR[key] = !AYARLAR[key];
+  localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
+  if (key === 'ses') { sesAcik = AYARLAR.ses; document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇'; document.getElementById('ayarSes').classList.toggle('acik', AYARLAR.ses); }
+}
+function ayarlariSifirla() {
+  if (!confirm('Tüm ayarlar sıfırlanacak. Emin misin?')) return;
+  localStorage.removeItem('ayarlar');
+  AYARLAR = { ...AYARLAR_DEFAULT };
+  ayarlariYukle();
+}
+function ayarlariYukle() {
+  document.getElementById('ayarTema').value = AYARLAR.tema;
+  document.getElementById('ayarRadarSayi').value = AYARLAR.radarSayi;
+  document.getElementById('ayarTF').value = AYARLAR.varsayilanTF;
+  document.getElementById('ayarPozGuncelleme').value = AYARLAR.pozGuncelleme;
+  document.getElementById('ayarSes').classList.toggle('acik', AYARLAR.ses);
+}
+function ayarlarAc() { ayarlariYukle(); document.getElementById('ayarlarModal').classList.add('acik'); }
+function ayarlarKapat() { document.getElementById('ayarlarModal').classList.remove('acik'); }
+
 /* TEMA */
 function temaToggle() {
   tema = tema === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('tema', tema);
-  document.body.classList.toggle('light', tema === 'light');
-  document.getElementById('temaBtn').textContent = tema === 'dark' ? '🌙' : '☀️';
+  AYARLAR.tema = tema;
+  localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
+  temaUygula(tema);
+}
+function temaUygula(t) {
+  document.body.classList.toggle('light', t === 'light');
+  document.getElementById('temaBtn').textContent = t === 'dark' ? '🌙' : '☀️';
   if (chart) {
     chart.applyOptions({
-      layout: { background: { color: 'transparent' }, textColor: tema === 'light' ? '#475569' : '#94a3b8' },
-      grid: { vertLines: { color: tema === 'light' ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.03)' }, horzLines: { color: tema === 'light' ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.03)' } }
+      layout: { background: { color: 'transparent' }, textColor: t === 'light' ? '#475569' : '#94a3b8' },
+      grid: { vertLines: { color: t === 'light' ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' }, horzLines: { color: t === 'light' ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' } },
+      rightPriceScale: { borderColor: t === 'light' ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)' },
+      timeScale: { borderColor: t === 'light' ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)' }
     });
   }
 }
@@ -403,8 +594,10 @@ function temaToggle() {
 /* SES */
 function sesToggle() {
   sesAcik = !sesAcik;
-  localStorage.setItem('sesAcik', JSON.stringify(sesAcik));
+  AYARLAR.ses = sesAcik;
+  localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
   document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
+  document.getElementById('ayarSes').classList.toggle('acik', sesAcik);
   if (sesAcik) sesCal(800, 0.1);
 }
 function sesCal(freq, sure) {
@@ -413,14 +606,11 @@ function sesCal(freq, sure) {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = freq;
-    osc.type = 'sine';
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = freq; osc.type = 'sine';
     gain.gain.setValueAtTime(0.1, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + sure);
-    osc.start();
-    osc.stop(ctx.currentTime + sure);
+    osc.start(); osc.stop(ctx.currentTime + sure);
   } catch(e) {}
 }
 
@@ -434,10 +624,8 @@ function uygulaGostergeDurumu() {
   if (!ema20Seri) return;
   const v = gostergelerAcik;
   try {
-    ema20Seri.applyOptions({ visible: v });
-    ema50Seri.applyOptions({ visible: v });
-    ema200Seri.applyOptions({ visible: v });
-    vwapSeri.applyOptions({ visible: v });
+    ema20Seri.applyOptions({ visible: v }); ema50Seri.applyOptions({ visible: v });
+    ema200Seri.applyOptions({ visible: v }); vwapSeri.applyOptions({ visible: v });
   } catch(e) {}
   const legend = document.getElementById('legendEma');
   const ikon = document.getElementById('gostergeIkon');
@@ -450,23 +638,98 @@ function tamEkranToggle() {
   setTimeout(() => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); }, 100);
 }
 
+/* BİLGİ MODALLARI */
+function hakkindaAc() {
+  document.getElementById('bilgiBaslik').textContent = '📖 Hakkında';
+  document.getElementById('bilgiIcerik').innerHTML = `
+    <p class="mb-3"><b>Kripto Analiz Pro Terminal</b>, kripto para piyasalarında karar vermeni kolaylaştıran bir analiz aracıdır.</p>
+    <p class="mb-3"><b>Neler yapabilir?</b></p>
+    <ul class="list-disc pl-5 mb-3 space-y-1">
+      <li>10+ teknik gösterge (RSI, MACD, EMA, Bollinger, ADX...)</li>
+      <li>12 mum formasyonu + Divergence tespiti</li>
+      <li>Fair Value Gap (FVG), Fibonacci, Volume Profile</li>
+      <li>Çoklu zaman dilimi onayı (MTF)</li>
+      <li>200 coin sinyal radarı</li>
+      <li>Otomatik test sistemi + ciddi backtest</li>
+      <li>Pozisyon takibi (kâr/zarar canlı)</li>
+    </ul>
+    <p class="mb-3"><b>Nasıl kullanılır?</b></p>
+    <ol class="list-decimal pl-5 mb-3 space-y-1">
+      <li>Yukarıdan coin ara (örn: BTCUSDT)</li>
+      <li>Zaman dilimi seç (15dk tavsiye edilir)</li>
+      <li>Sağ panelde kararı gör: LONG / SHORT / BEKLE</li>
+      <li>"En Güvenilir Sinyal" %70+ ise işlem düşün</li>
+      <li>Radar butonu ile fırsatları tara</li>
+    </ol>
+    <p class="text-xs italic" style="color:var(--text-mute)">Bu bot karar destek aracıdır. Yatırım tavsiyesi değildir.</p>
+  `;
+  document.getElementById('bilgiModal').classList.add('acik');
+}
+function sssAc() {
+  document.getElementById('bilgiBaslik').textContent = '❓ Sıkça Sorulan Sorular';
+  document.getElementById('bilgiIcerik').innerHTML = `
+    <div class="mb-3"><b>❓ Nasıl LONG/SHORT yorumlarım?</b><div class="mt-1 text-xs">%70+ güven = güçlü sinyal. %50-70 = normal. Altı = bekle.</div></div>
+    <div class="mb-3"><b>❓ Veriler nereden geliyor?</b><div class="mt-1 text-xs">Bybit spot API'den WebSocket ile canlı.</div></div>
+    <div class="mb-3"><b>❓ Otomatik al/sat yapıyor mu?</b><div class="mt-1 text-xs">Hayır. Sadece sinyal verir. İşlemi sen açarsın.</div></div>
+    <div class="mb-3"><b>❓ Backtest ne kadar güvenilir?</b><div class="mt-1 text-xs">Geçmiş performans gelecek garantisi değildir. Yön doğruluğunu ölçer.</div></div>
+    <div class="mb-3"><b>❓ Açık tema neden yok?</b><div class="mt-1 text-xs">Sağ üstteki 🌙 butonundan değiştirebilirsin. Ayarlardan da seçilir.</div></div>
+    <div class="mb-3"><b>❓ Hangi zaman dilimi daha iyi?</b><div class="mt-1 text-xs">15dk ve 1sa dengeli. 5dk gürültülü, 4sa/1g pozisyon için.</div></div>
+    <div class="mb-3"><b>❓ Stop-loss koymak zorunlu mu?</b><div class="mt-1 text-xs">Evet. Bot stop önerir, kullanman şart.</div></div>
+  `;
+  document.getElementById('bilgiModal').classList.add('acik');
+}
+function yeniliklerAc() {
+  document.getElementById('bilgiBaslik').textContent = '🆕 Yenilikler';
+  document.getElementById('bilgiIcerik').innerHTML = `
+    <div class="mb-3"><div class="font-bold text-emerald-400">v3.1 — Bu Sürüm</div>
+      <ul class="list-disc pl-5 mt-1 text-xs space-y-0.5">
+        <li>Karşılama ekranı eklendi</li>
+        <li>Hamburger menü (☰) eklendi</li>
+        <li>Ayarlar modalı eklendi</li>
+        <li>Beyaz tema tamamen onarıldı</li>
+        <li>Radar coin sayısı ayarlanabilir (50-500)</li>
+        <li>Hızlı bakış 4 → 8 coin</li>
+        <li>Sekme renk kodlaması</li>
+      </ul>
+    </div>
+    <div class="mb-3"><div class="font-bold">v3.0</div>
+      <ul class="list-disc pl-5 mt-1 text-xs space-y-0.5">
+        <li>Ciddi backtest (K/Z + Equity + komisyon)</li>
+        <li>Pozisyon takibi modülü</li>
+        <li>Tema toggle, ses uyarıları</li>
+      </ul>
+    </div>
+    <div class="mb-3"><div class="font-bold">v2.4</div>
+      <ul class="list-disc pl-5 mt-1 text-xs space-y-0.5">
+        <li>EMA/VWAP toggle</li>
+        <li>Fullscreen grafik</li>
+        <li>Sinyal Radar (100 coin)</li>
+      </ul>
+    </div>
+    <div class="text-xs italic mt-3" style="color:var(--text-mute)">Her sürümde daha iyi oluyoruz. Önerin için: GitHub → Issues.</div>
+  `;
+  document.getElementById('bilgiModal').classList.add('acik');
+}
+function bilgiKapat() { document.getElementById('bilgiModal').classList.remove('acik'); }
+
 /* RADAR */
 function radarAc() { document.getElementById('radarModal').classList.add('acik'); radarTaramayaBasla(); }
 function radarKapat() { document.getElementById('radarModal').classList.remove('acik'); }
 async function radarTaramayaBasla() {
   const el = document.getElementById('radarSonuc');
-  el.innerHTML = `<div class="text-center py-8"><div class="radar-taraniyor text-5xl mb-4">🎯</div><div class="text-sm" style="color:#94a3b8">Hacimli coinler taranıyor...</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-2 mono">Hazırlanıyor...</div></div>`;
+  el.innerHTML = `<div class="text-center py-8"><div class="radar-taraniyor text-5xl mb-4">🎯</div><div class="text-sm" style="color:var(--text-dim)">Hacimli coinler taranıyor...</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-2 mono">Hazırlanıyor...</div></div>`;
   let taranacakCoinler = ['BTCUSDT','ETHUSDT','SOLUSDT','XRPUSDT','BNBUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT','LINKUSDT','DOTUSDT','MATICUSDT','LTCUSDT','ATOMUSDT','UNIUSDT','NEARUSDT','APTUSDT','ARBUSDT','OPUSDT','SUIUSDT','INJUSDT'];
   try {
     const r = await fetch('https://api.bybit.com/v5/market/tickers?category=spot');
     const j = await r.json();
     if (j.retCode === 0 && j.result?.list) {
-      const aktif = j.result.list.filter(t => parseFloat(t.turnover24h || 0) > 1000000 && t.symbol.endsWith('USDT')).sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h)).slice(0, 100).map(t => t.symbol);
+      const limit = AYARLAR.radarSayi || 100;
+      const aktif = j.result.list.filter(t => parseFloat(t.turnover24h || 0) > 1000000 && t.symbol.endsWith('USDT')).sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h)).slice(0, limit).map(t => t.symbol);
       if (aktif.length > 20) taranacakCoinler = aktif;
     }
   } catch(e) {}
   const toplam = taranacakCoinler.length;
-  el.innerHTML = `<div class="text-center py-6"><div class="radar-taraniyor text-5xl mb-3">🎯</div><div class="text-sm font-semibold" style="color:#cbd5e1">${toplam} hacimli coin taranıyor</div><div class="text-[10px] mt-1" style="color:#64748b">24s hacmi >$1M • ~30 saniye</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-3 mono">0/${toplam}</div><div class="mt-3 w-full rounded-full h-1 max-w-xs mx-auto" style="background:rgba(255,255,255,.05)"><div id="radarBar" class="h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-200" style="width:0%"></div></div></div>`;
+  el.innerHTML = `<div class="text-center py-6"><div class="radar-taraniyor text-5xl mb-3">🎯</div><div class="text-sm font-semibold">${toplam} hacimli coin taranıyor</div><div class="text-[10px] mt-1" style="color:var(--text-mute)">24s hacmi >$1M • ~${Math.round(toplam/3.3)} saniye</div><div id="radarIlerleme" class="text-xs text-cyan-400 mt-3 mono">0/${toplam}</div><div class="mt-3 w-full rounded-full h-1 max-w-xs mx-auto" style="background:var(--surface-2)"><div id="radarBar" class="h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-200" style="width:0%"></div></div></div>`;
   const sonuclar = []; let sayac = 0;
   for (const coin of taranacakCoinler) {
     sayac++;
@@ -486,21 +749,21 @@ async function radarTaramayaBasla() {
   const orta = sonuclar.filter(s => s.karar === 'LONG' || s.karar === 'SHORT');
   const digerleri = sonuclar.filter(s => !guclu.includes(s) && !orta.includes(s));
   const renderItem = (s, gucluMu) => {
-    const renk = s.karar.includes('LONG') ? 'text-emerald-400' : s.karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
-    return `<div class="radar-item ${gucluMu ? 'guclu' : ''}" onclick="radarCoinSec('${s.coin}')"><div class="flex items-center justify-between mb-1"><div class="flex items-center gap-2"><span class="font-bold text-sm">${s.coin.replace('USDT','')}</span><span class="${renk} font-bold text-xs">${s.kararIkon} ${s.karar}</span></div><span class="text-[10px] mono" style="color:#94a3b8">${s.onayli}/5 • %${s.guven}</span></div><div class="flex items-center justify-between text-[10px] mono" style="color:#94a3b8"><span>Fiyat: <span style="color:#cbd5e1">$${fmt(s.fiyat)}</span></span><span>RSI ${s.rsi.toFixed(0)} • ADX ${s.adx.toFixed(0)}</span></div></div>`;
+    const renk = s.karar.includes('LONG') ? 'text-emerald-400' : s.karar.includes('SHORT') ? 'text-red-400' : '';
+    return `<div class="radar-item ${gucluMu ? 'guclu' : ''}" onclick="radarCoinSec('${s.coin}')"><div class="flex items-center justify-between mb-1"><div class="flex items-center gap-2"><span class="font-bold text-sm">${s.coin.replace('USDT','')}</span><span class="${renk} font-bold text-xs" style="${!renk ? 'color:var(--text-dim)' : ''}">${s.kararIkon} ${s.karar}</span></div><span class="text-[10px] mono" style="color:var(--text-mute)">${s.onayli}/5 • %${s.guven}</span></div><div class="flex items-center justify-between text-[10px] mono" style="color:var(--text-mute)"><span>$${fmt(s.fiyat)}</span><span>RSI ${s.rsi.toFixed(0)} • ADX ${s.adx.toFixed(0)}</span></div></div>`;
   };
   let html = '';
   if (guclu.length) { html += `<div class="mb-4"><div class="text-[10px] text-cyan-400 uppercase tracking-wider font-bold mb-2">🔥 GÜÇLÜ SİNYALLER (${guclu.length})</div>`; html += guclu.sort((a,b) => Math.abs(b.masterPuan) - Math.abs(a.masterPuan)).map(s => renderItem(s, true)).join(''); html += `</div>`; }
-  if (orta.length) { html += `<div class="mb-4"><div class="text-[10px] uppercase tracking-wider font-bold mb-2" style="color:#94a3b8">📊 NORMAL SİNYALLER (${orta.length})</div>`; html += orta.map(s => renderItem(s, false)).join(''); html += `</div>`; }
-  if (digerleri.length) { html += `<details class="mb-2"><summary class="text-[10px] uppercase tracking-wider font-bold mb-2 cursor-pointer py-2 px-3 rounded-lg" style="color:#64748b">⏸️ DİĞERLERİ (${digerleri.length})</summary><div class="mt-2">`; html += digerleri.map(s => renderItem(s, false)).join(''); html += `</div></details>`; }
-  if (!guclu.length && !orta.length) html = `<div class="text-center py-8" style="color:#94a3b8"><div class="text-4xl mb-3">😴</div><div class="text-sm">Şu an güçlü sinyal yok</div><div class="text-xs mt-2">${toplam} coin tarandı</div></div>`;
-  const ozet = `<div class="grid grid-cols-3 gap-2 mb-4 text-center"><div class="rounded-xl p-2.5" style="background:rgba(34,211,238,.05);border:1px solid rgba(34,211,238,.2)"><div class="text-2xl font-extrabold mono text-cyan-400">${toplam}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:#94a3b8">Taranan</div></div><div class="rounded-xl p-2.5" style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.2)"><div class="text-2xl font-extrabold mono text-emerald-400">${guclu.length}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:#94a3b8">Güçlü</div></div><div class="rounded-xl p-2.5" style="background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.2)"><div class="text-2xl font-extrabold mono text-purple-400">${orta.length}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:#94a3b8">Normal</div></div></div>`;
+  if (orta.length) { html += `<div class="mb-4"><div class="text-[10px] uppercase tracking-wider font-bold mb-2" style="color:var(--text-dim)">📊 NORMAL SİNYALLER (${orta.length})</div>`; html += orta.map(s => renderItem(s, false)).join(''); html += `</div>`; }
+  if (digerleri.length) { html += `<details class="mb-2"><summary class="text-[10px] uppercase tracking-wider font-bold mb-2 cursor-pointer py-2 px-3 rounded-lg" style="color:var(--text-mute)">⏸️ DİĞERLERİ (${digerleri.length})</summary><div class="mt-2">`; html += digerleri.map(s => renderItem(s, false)).join(''); html += `</div></details>`; }
+  if (!guclu.length && !orta.length) html = `<div class="text-center py-8" style="color:var(--text-dim)"><div class="text-4xl mb-3">😴</div><div class="text-sm">Şu an güçlü sinyal yok</div><div class="text-xs mt-2">${toplam} coin tarandı</div></div>`;
+  const ozet = `<div class="grid grid-cols-3 gap-2 mb-4 text-center"><div class="rounded-xl p-2.5" style="background:rgba(34,211,238,.05);border:1px solid rgba(34,211,238,.2)"><div class="text-2xl font-extrabold mono text-cyan-400">${toplam}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:var(--text-dim)">Taranan</div></div><div class="rounded-xl p-2.5" style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.2)"><div class="text-2xl font-extrabold mono text-emerald-400">${guclu.length}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:var(--text-dim)">Güçlü</div></div><div class="rounded-xl p-2.5" style="background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.2)"><div class="text-2xl font-extrabold mono text-purple-400">${orta.length}</div><div class="text-[9px] uppercase tracking-wider mt-0.5" style="color:var(--text-dim)">Normal</div></div></div>`;
   el.innerHTML = ozet + html;
   if (guclu.length && sesAcik) sesCal(1200, 0.3);
 }
 function radarCoinSec(coin) { radarKapat(); coinYukle(coin); }
 
-/* POZİSYON TAKİBİ */
+/* POZİSYON */
 function pozisyonModalAc() {
   document.getElementById('pzCoin').value = aktifCoin;
   document.getElementById('pzGiris').value = sonAnaliz ? fmt(sonAnaliz.fiyat) : '';
@@ -511,7 +774,6 @@ function pozisyonModalAc() {
 }
 function pozisyonModalKapat() { document.getElementById('pozisyonModal').classList.remove('acik'); }
 function pozisyonHizliEkle() { pozisyonModalAc(); }
-
 function pozisyonKaydet() {
   const coin = document.getElementById('pzCoin').value.toUpperCase().trim();
   const yon = document.getElementById('pzYon').value;
@@ -520,22 +782,12 @@ function pozisyonKaydet() {
   const stop = parseFloat(document.getElementById('pzStop').value);
   const hedef = parseFloat(document.getElementById('pzHedef').value);
   if (!coin || !miktar || !giris) { alert('Coin, miktar ve giriş zorunlu!'); return; }
-  if (!coin.endsWith('USDT')) { alert('Coin USDT ile bitmeli (örn: BTCUSDT)'); return; }
-  pozisyonlar.push({
-    id: Date.now() + '_' + Math.random().toString(36).slice(2,6),
-    coin, yon, miktar, giris, stop: stop || 0, hedef: hedef || 0,
-    acilisZamani: Date.now(),
-    durum: 'ACIK',
-    guncelFiyat: giris,
-    karZarar: 0
-  });
+  if (!coin.endsWith('USDT')) { alert('Coin USDT ile bitmeli'); return; }
+  pozisyonlar.push({ id: Date.now() + '_' + Math.random().toString(36).slice(2,6), coin, yon, miktar, giris, stop: stop || 0, hedef: hedef || 0, acilisZamani: Date.now(), durum: 'ACIK', guncelFiyat: giris, karZarar: 0 });
   localStorage.setItem('pozisyonlar', JSON.stringify(pozisyonlar));
-  pozisyonModalKapat();
-  pozisyonlariGuncelle();
-  pozisyonPaneliDoldur();
+  pozisyonModalKapat(); pozisyonlariGuncelle(); pozisyonPaneliDoldur();
   if (sesAcik) sesCal(1000, 0.15);
 }
-
 async function pozisyonlariGuncelle() {
   const acik = pozisyonlar.filter(p => p.durum === 'ACIK');
   if (!acik.length) return;
@@ -543,7 +795,6 @@ async function pozisyonlariGuncelle() {
   const fiyatlar = {};
   await Promise.all(coinler.map(async c => {
     try {
-      const r = await fetch(`https://api.bybit.com/v5/exchange/history/trade?category=spot&symbol=${c}`);
       const rr = await fetch(`https://api.bybit.com/v5/market/tickers?category=spot&symbol=${c}`);
       const j = await rr.json();
       if (j.retCode === 0 && j.result?.list?.[0]) fiyatlar[c] = parseFloat(j.result.list[0].lastPrice);
@@ -567,21 +818,19 @@ async function pozisyonlariGuncelle() {
   localStorage.setItem('pozisyonlar', JSON.stringify(pozisyonlar));
   pozisyonPaneliDoldur();
 }
-
 function pozisyonPaneliDoldur() {
   const acik = pozisyonlar.filter(p => p.durum === 'ACIK');
   const kapali = pozisyonlar.filter(p => p.durum !== 'ACIK').sort((a,b) => (b.kapanisZamani||0) - (a.kapanisZamani||0));
   const toplamKarZarar = acik.reduce((t, p) => t + (p.usdKarZarar || 0), 0);
-  const kapaliKarZarar = kapali.reduce((t, p) => t + (p.usdKarZarar || 0), 0);
   const kazananlar = kapali.filter(p => p.karZarar > 0).length;
   const winRate = kapali.length > 0 ? (kazananlar / kapali.length * 100) : 0;
   document.getElementById('portfoyOzet').innerHTML = `
     <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase" style="color:var(--text-mute)">Açık</div><div class="text-lg font-bold mono text-cyan-400">${acik.length}</div></div>
-    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase" style="color:var(--text-mute)">Açık K/Z</div><div class="text-lg font-bold mono ${toplamKarZarar >= 0 ? 'text-emerald-400' : 'text-red-400'}">${toplamKarZarar >= 0 ? '+' : ''}$${toplamKarZarar.toFixed(2)}</div></div>
-    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase" style="color:var(--text-mute)">Win Rate</div><div class="text-lg font-bold mono ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(0)}</div></div>
+    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase" style="color:var(--text-mute)">K/Z</div><div class="text-lg font-bold mono ${toplamKarZarar >= 0 ? 'text-emerald-400' : 'text-red-400'}">${toplamKarZarar >= 0 ? '+' : ''}$${toplamKarZarar.toFixed(2)}</div></div>
+    <div class="rounded-lg p-2 text-center" style="background:var(--surface)"><div class="text-[10px] uppercase" style="color:var(--text-mute)">Win</div><div class="text-lg font-bold mono ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(0)}</div></div>
   `;
   const liste = document.getElementById('pozisyonListesi');
-  if (!acik.length) liste.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Açık pozisyon yok. Yukarıdan "EKLE" ile başla.</div>';
+  if (!acik.length) liste.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Açık pozisyon yok. Yukarıdan EKLE ile başla.</div>';
   else liste.innerHTML = acik.map(p => {
     const renk = p.karZarar >= 0 ? 'text-emerald-400' : 'text-red-400';
     return `<div class="pozisyon-kart">
@@ -596,7 +845,7 @@ function pozisyonPaneliDoldur() {
         <div><span style="color:var(--text-mute)">Hedef:</span> $${p.hedef ? fmt(p.hedef) : '—'}</div>
       </div>
       <div class="flex justify-between items-center pt-2 border-t" style="border-color:var(--border)">
-        <div class="text-xs" style="color:var(--text-mute)">${p.miktar.toFixed(0)}$ pozisyon</div>
+        <div class="text-xs" style="color:var(--text-mute)">${p.miktar.toFixed(0)}$ poz.</div>
         <div class="${renk} font-bold mono">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% (${p.usdKarZarar >= 0 ? '+' : ''}$${(p.usdKarZarar || 0).toFixed(2)})</div>
       </div>
     </div>`;
@@ -605,39 +854,19 @@ function pozisyonPaneliDoldur() {
   if (!kapali.length) kEl.innerHTML = '<div class="text-xs text-center py-4" style="color:var(--text-mute)">Henüz kapanmış işlem yok.</div>';
   else kEl.innerHTML = kapali.slice(0, 20).map(p => {
     const renk = p.karZarar >= 0 ? 'text-emerald-400' : 'text-red-400';
-    const durumRenk = p.durum === 'HEDEF' ? 'text-emerald-400' : p.durum === 'STOP' ? 'text-red-400' : 'text-slate-400';
-    return `<div class="satir rounded-lg p-2 text-xs" style="background:var(--surface)">
-      <div class="flex justify-between items-center mb-1">
-        <div><span class="font-bold">${p.coin.replace('USDT','')}</span> <span class="${p.yon === 'LONG' ? 'text-emerald-400' : 'text-red-400'} text-[10px]">${p.yon}</span></div>
-        <span class="${durumRenk} text-[10px] font-bold">${p.durum}</span>
-      </div>
-      <div class="flex justify-between">
-        <span style="color:var(--text-mute)">$${fmt(p.giris)} → $${fmt(p.kapanisFiyat || p.guncelFiyat)}</span>
-        <span class="${renk} font-bold mono">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}%</span>
-      </div>
-    </div>`;
+    const durumRenk = p.durum === 'HEDEF' ? 'text-emerald-400' : p.durum === 'STOP' ? 'text-red-400' : '';
+    return `<div class="satir rounded-lg p-2 text-xs" style="background:var(--surface)"><div class="flex justify-between items-center mb-1"><div><span class="font-bold">${p.coin.replace('USDT','')}</span> <span class="${p.yon === 'LONG' ? 'text-emerald-400' : 'text-red-400'} text-[10px]">${p.yon}</span></div><span class="${durumRenk} text-[10px] font-bold" style="${!durumRenk ? 'color:var(--text-mute)' : ''}">${p.durum}</span></div><div class="flex justify-between"><span style="color:var(--text-mute)">$${fmt(p.giris)} → $${fmt(p.kapanisFiyat || p.guncelFiyat)}</span><span class="${renk} font-bold mono">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}%</span></div></div>`;
   }).join('');
 }
-
 function pozisyonKapat(id) {
   const p = pozisyonlar.find(x => x.id === id);
-  if (!p) return;
-  if (!confirm(`${p.coin} pozisyonunu kapatmak istiyor musun?`)) return;
-  p.durum = 'MANUEL';
-  p.kapanisZamani = Date.now();
-  p.kapanisFiyat = p.guncelFiyat;
+  if (!p || !confirm(`${p.coin} pozisyonu kapatılsın mı?`)) return;
+  p.durum = 'MANUEL'; p.kapanisZamani = Date.now(); p.kapanisFiyat = p.guncelFiyat;
   localStorage.setItem('pozisyonlar', JSON.stringify(pozisyonlar));
   pozisyonPaneliDoldur();
 }
 
-function pozisyonTemizle() {
-  if (!confirm('Tüm kapanmış işlemleri silmek istiyor musun?')) return;
-  pozisyonlar = pozisyonlar.filter(p => p.durum === 'ACIK');
-  localStorage.setItem('pozisyonlar', JSON.stringify(pozisyonlar));
-  pozisyonPaneliDoldur();
-}
-
-/* OTOMATİK TEST */
+/* TEST SİSTEMİ */
 function sinyalTestKaydet(analiz, coin, tf) {
   if (analiz.karar === 'BEKLE' || analiz.karar.includes('ZAYIF') || analiz.karar.includes('⚠️')) return;
   const sureMap = { '1': 10, '5': 30, '15': 75, '60': 240, '240': 720, 'D': 1440 };
@@ -695,20 +924,20 @@ function testPaneliniGuncelle() {
   const kategoriSirali = Object.entries(ist.kategoriler).sort((a,b) => b[1].toplam - a[1].toplam);
   const kategoriRows = kategoriSirali.map(([karar, veri]) => {
     const oran = (veri.dogru + veri.yanlis) > 0 ? (veri.dogru / (veri.dogru + veri.yanlis) * 100) : 0;
-    const renk = karar.includes('LONG') ? 'text-emerald-400' : karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
+    const renk = karar.includes('LONG') ? 'text-emerald-400' : karar.includes('SHORT') ? 'text-red-400' : '';
     const oranRenk = oran >= 65 ? 'text-emerald-400' : oran >= 55 ? 'text-yellow-400' : oran >= 45 ? 'text-orange-400' : 'text-red-400';
-    return `<div class="rounded-lg p-2.5" style="background:var(--surface)"><div class="flex justify-between items-center mb-1"><span class="${renk} font-bold text-xs">${karar}</span><span class="${oranRenk} font-bold text-sm mono">%${oran.toFixed(1)}</span></div><div class="flex gap-2 text-[10px] mono" style="color:var(--text-mute)"><span>Top: ${veri.toplam}</span><span class="text-emerald-400">✓${veri.dogru}</span><span class="text-red-400">✗${veri.yanlis}</span><span>—${veri.notr}</span></div></div>`;
+    return `<div class="rounded-lg p-2.5" style="background:var(--surface)"><div class="flex justify-between items-center mb-1"><span class="${renk} font-bold text-xs" style="${!renk ? 'color:var(--text-dim)' : ''}">${karar}</span><span class="${oranRenk} font-bold text-sm mono">%${oran.toFixed(1)}</span></div><div class="flex gap-2 text-[10px] mono" style="color:var(--text-mute)"><span>Top: ${veri.toplam}</span><span class="text-emerald-400">✓${veri.dogru}</span><span class="text-red-400">✗${veri.yanlis}</span><span>—${veri.notr}</span></div></div>`;
   }).join('') || '<div class="text-xs text-center py-2" style="color:var(--text-mute)">Henüz tamamlanan test yok</div>';
-  el.innerHTML = `<div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-xl p-4 mb-3" style="border:1px solid rgba(34,211,238,.2)"><div class="text-center mb-3"><div class="text-[10px] uppercase tracking-wider mb-1" style="color:var(--text-mute)">Genel İsabet</div><div class="text-4xl font-extrabold mono ${ist.genelOran >= 65 ? 'text-emerald-400' : ist.genelOran >= 55 ? 'text-yellow-400' : 'text-red-400'}">%${ist.genelOran.toFixed(1)}</div><div class="text-[10px] mt-1 mono" style="color:var(--text-mute)">${ist.toplam} test</div></div><div class="grid grid-cols-3 gap-2 text-center"><div><div class="text-emerald-400 font-bold mono">${ist.toplamDogru}</div><div class="text-[9px] uppercase" style="color:var(--text-mute)">Doğru</div></div><div><div class="text-red-400 font-bold mono">${ist.toplamYanlis}</div><div class="text-[9px] uppercase" style="color:var(--text-mute)">Yanlış</div></div><div><div class="text-slate-400 font-bold mono">${ist.toplamNotr}</div><div class="text-[9px] uppercase" style="color:var(--text-mute)">Nötr</div></div></div></div><div class="mb-3"><div class="text-[10px] uppercase tracking-wider mb-2" style="color:var(--text-mute)">📊 Tip Bazlı</div><div class="space-y-2">${kategoriRows}</div></div><div class="mb-3"><div class="text-[10px] uppercase tracking-wider mb-2" style="color:var(--text-mute)">⏳ Bekleyen (${aktifTestler.length})</div><div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div></div><div class="flex gap-2"><button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold">🔄 Kontrol Et</button><button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold">🗑️</button></div>`;
+  el.innerHTML = `<div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-xl p-4 mb-3" style="border:1px solid rgba(34,211,238,.2)"><div class="text-center mb-3"><div class="text-[10px] uppercase tracking-wider mb-1" style="color:var(--text-mute)">Genel İsabet</div><div class="text-4xl font-extrabold mono ${ist.genelOran >= 65 ? 'text-emerald-400' : ist.genelOran >= 55 ? 'text-yellow-400' : 'text-red-400'}">%${ist.genelOran.toFixed(1)}</div><div class="text-[10px] mt-1 mono" style="color:var(--text-mute)">${ist.toplam} test</div></div><div class="grid grid-cols-3 gap-2 text-center"><div><div class="text-emerald-400 font-bold mono">${ist.toplamDogru}</div><div class="text-[9px] uppercase" style="color:var(--text-mute)">Doğru</div></div><div><div class="text-red-400 font-bold mono">${ist.toplamYanlis}</div><div class="text-[9px] uppercase" style="color:var(--text-mute)">Yanlış</div></div><div><div class="font-bold mono" style="color:var(--text-dim)">${ist.toplamNotr}</div><div class="text-[9px] uppercase" style="color:var(--text-mute)">Nötr</div></div></div></div><div class="mb-3"><div class="text-[10px] uppercase tracking-wider mb-2" style="color:var(--text-mute)">📊 Tip Bazlı</div><div class="space-y-2">${kategoriRows}</div></div><div class="mb-3"><div class="text-[10px] uppercase tracking-wider mb-2" style="color:var(--text-mute)">⏳ Bekleyen (${aktifTestler.length})</div><div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div></div><div class="flex gap-2"><button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold">🔄 Kontrol Et</button><button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold">🗑️</button></div>`;
 }
 function testleriTemizle() {
-  if (!confirm('Tüm test verilerini sil?')) return;
+  if (!confirm('Test verileri silinsin mi?')) return;
   aktifTestler = []; tamamlananTestler = [];
   localStorage.removeItem('aktifTestler'); localStorage.removeItem('tamamlananTestler');
   testPaneliniGuncelle();
 }
 
-/* CİDDİ BACKTEST */
+/* BACKTEST */
 async function ciddiBacktestCalistir() {
   const btn = document.getElementById('btBtn'), el = document.getElementById('btSonuc');
   btn.disabled = true; btn.textContent = 'Simüle ediliyor...';
@@ -716,38 +945,23 @@ async function ciddiBacktestCalistir() {
   try {
     const mumlar = await klineCek(aktifCoin, aktifTF, 1000);
     if (!mumlar || mumlar.length < 300) throw new Error('Yetersiz veri (min 300 mum)');
-    const BASLANGIC_BAKIYE = 1000;
-    const POZISYON_ORANI = 0.1;
-    const KOMISYON = 0.001;
-    let bakiye = BASLANGIC_BAKIYE;
-    let acikPoz = null;
-    const islemler = [];
-    const equity = [{ time: mumlar[200].time, value: BASLANGIC_BAKIYE }];
-    let maxBakiye = BASLANGIC_BAKIYE, maxDrawdown = 0;
-    const TOPLAM_ADIM = Math.floor((mumlar.length - 250) / 3);
+    const BASLANGIC = 1000, POZ_ORANI = 0.1, KOMISYON = 0.001;
+    let bakiye = BASLANGIC, acikPoz = null;
+    const islemler = [], equity = [{ time: mumlar[200].time, value: BASLANGIC }];
+    let maxBakiye = BASLANGIC, maxDD = 0;
+    const TOPLAM = Math.floor((mumlar.length - 250) / 3);
     let adim = 0;
     for (let i = 200; i < mumlar.length - 5; i += 3) {
       adim++;
-      if (adim % 10 === 0) {
-        el.innerHTML = `<div class="text-xs text-center py-2" style="color:var(--text-dim)"><span class="spinner"></span> %${Math.round(adim / TOPLAM_ADIM * 100)} — Bakiye: $${bakiye.toFixed(2)}</div>`;
-        await uyku(0);
-      }
+      if (adim % 10 === 0) { el.innerHTML = `<div class="text-xs text-center py-2" style="color:var(--text-dim)"><span class="spinner"></span> %${Math.round(adim/TOPLAM*100)} — $${bakiye.toFixed(2)}</div>`; await uyku(0); }
       const mum = mumlar[i];
-      // Açık pozisyon kontrolü
       if (acikPoz) {
         let cikis = null, sebep = null;
-        if (acikPoz.yon === 'LONG') {
-          if (mum.low <= acikPoz.stop) { cikis = acikPoz.stop; sebep = 'STOP'; }
-          else if (mum.high >= acikPoz.hedef) { cikis = acikPoz.hedef; sebep = 'HEDEF'; }
-        } else {
-          if (mum.high >= acikPoz.stop) { cikis = acikPoz.stop; sebep = 'STOP'; }
-          else if (mum.low <= acikPoz.hedef) { cikis = acikPoz.hedef; sebep = 'HEDEF'; }
-        }
+        if (acikPoz.yon === 'LONG') { if (mum.low <= acikPoz.stop) { cikis = acikPoz.stop; sebep = 'STOP'; } else if (mum.high >= acikPoz.hedef) { cikis = acikPoz.hedef; sebep = 'HEDEF'; } }
+        else { if (mum.high >= acikPoz.stop) { cikis = acikPoz.stop; sebep = 'STOP'; } else if (mum.low <= acikPoz.hedef) { cikis = acikPoz.hedef; sebep = 'HEDEF'; } }
         if (cikis) {
           const miktar = acikPoz.miktar / acikPoz.giris;
-          let brutKar;
-          if (acikPoz.yon === 'LONG') brutKar = (cikis - acikPoz.giris) * miktar;
-          else brutKar = (acikPoz.giris - cikis) * miktar;
+          let brutKar = acikPoz.yon === 'LONG' ? (cikis - acikPoz.giris) * miktar : (acikPoz.giris - cikis) * miktar;
           const komisyon = acikPoz.miktar * KOMISYON * 2;
           const netKar = brutKar - komisyon;
           bakiye += netKar;
@@ -755,24 +969,22 @@ async function ciddiBacktestCalistir() {
           acikPoz = null;
         }
       }
-      // Yeni sinyal
       if (!acikPoz) {
         const pencere = mumlar.slice(0, i + 1);
         const analiz = analizEt(pencere);
         if (analiz.karar.includes('GÜÇLÜ LONG') || analiz.karar === 'LONG') {
-          const miktar = bakiye * POZISYON_ORANI;
+          const miktar = bakiye * POZ_ORANI;
           acikPoz = { zaman: mum.time, yon: 'LONG', giris: mum.close, miktar, stop: analiz.stopLong, hedef: analiz.hedefLong, karar: analiz.karar };
         } else if (analiz.karar.includes('GÜÇLÜ SHORT') || analiz.karar === 'SHORT') {
-          const miktar = bakiye * POZISYON_ORANI;
+          const miktar = bakiye * POZ_ORANI;
           acikPoz = { zaman: mum.time, yon: 'SHORT', giris: mum.close, miktar, stop: analiz.stopShort, hedef: analiz.hedefShort, karar: analiz.karar };
         }
       }
       if (bakiye > maxBakiye) maxBakiye = bakiye;
       const dd = ((maxBakiye - bakiye) / maxBakiye) * 100;
-      if (dd > maxDrawdown) maxDrawdown = dd;
+      if (dd > maxDD) maxDD = dd;
       if (adim % 5 === 0) equity.push({ time: mum.time, value: bakiye });
     }
-    // Açık pozisyonu son fiyattan kapat
     if (acikPoz) {
       const sonFiyat = mumlar[mumlar.length-1].close;
       const miktar = acikPoz.miktar / acikPoz.giris;
@@ -782,100 +994,51 @@ async function ciddiBacktestCalistir() {
       islemler.push({ ...acikPoz, cikis: sonFiyat, sebep: 'AÇIK', kar: brutKar - komisyon, karYuzde: ((brutKar - komisyon) / acikPoz.miktar) * 100 });
       equity.push({ time: mumlar[mumlar.length-1].time, value: bakiye });
     }
-    // İstatistikler
     const kazanan = islemler.filter(i => i.kar > 0).length;
     const kaybeden = islemler.filter(i => i.kar < 0).length;
     const winRate = islemler.length > 0 ? (kazanan / islemler.length * 100) : 0;
     const toplamKar = islemler.filter(i => i.kar > 0).reduce((t, i) => t + i.kar, 0);
     const toplamZarar = Math.abs(islemler.filter(i => i.kar < 0).reduce((t, i) => t + i.kar, 0));
-    const profitFactor = toplamZarar > 0 ? (toplamKar / toplamZarar) : 0;
-    const getiriYuzde = ((bakiye - BASLANGIC_BAKIYE) / BASLANGIC_BAKIYE) * 100;
-    const renk = bakiye > BASLANGIC_BAKIYE ? 'text-emerald-400' : 'text-red-400';
-    // Equity curve çiz
-    const canvasId = 'equityChart';
-    el.innerHTML = `
-      <div class="space-y-3 text-xs">
-        <div class="text-center">
-          <div class="text-[10px] uppercase tracking-wider" style="color:var(--text-mute)">Final Bakiye</div>
-          <div class="text-4xl font-extrabold mono ${renk}">$${bakiye.toFixed(2)}</div>
-          <div class="${renk} mono text-sm">${getiriYuzde >= 0 ? '+' : ''}${getiriYuzde.toFixed(2)}%</div>
-        </div>
-        <div style="background:var(--surface);border-radius:12px;padding:8px">
-          <canvas id="${canvasId}" class="grafik-mini"></canvas>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">İşlem</div><div class="font-bold mono">${islemler.length}</div></div>
-          <div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Win Rate</div><div class="font-bold mono ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(1)}</div></div>
-          <div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Profit Factor</div><div class="font-bold mono ${profitFactor >= 1 ? 'text-emerald-400' : 'text-red-400'}">${profitFactor.toFixed(2)}</div></div>
-          <div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Max DD</div><div class="font-bold mono text-red-400">-%${maxDrawdown.toFixed(1)}</div></div>
-          <div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Kazanç</div><div class="font-bold mono text-emerald-400">${kazanan}</div></div>
-          <div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Kayıp</div><div class="font-bold mono text-red-400">${kaybeden}</div></div>
-        </div>
-        <div class="text-[10px] text-center" style="color:var(--text-mute)">${mumlar.length} mum test edildi • ${POZISYON_ORANI*100}% pozisyon • %${KOMISYON*100} komisyon</div>
-        <details class="mt-2"><summary class="cursor-pointer text-[10px] uppercase tracking-wider font-bold py-2" style="color:var(--text-mute)">📋 Son 10 İşlem</summary>
-          <div class="space-y-1 mt-2">
-            ${islemler.slice(-10).reverse().map(i => {
-              const r = i.kar > 0 ? 'text-emerald-400' : 'text-red-400';
-              const z = new Date(i.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
-              return `<div class="rounded p-2 text-[10px] flex justify-between" style="background:var(--surface)"><div><span class="font-bold">${i.yon}</span> ${z}<div style="color:var(--text-mute)">$${fmt(i.giris)} → $${fmt(i.cikis)} (${i.sebep})</div></div><div class="${r} font-bold mono text-right">${i.kar >= 0 ? '+' : ''}$${i.kar.toFixed(2)}<div>${i.karYuzde >= 0 ? '+' : ''}${i.karYuzde.toFixed(2)}%</div></div></div>`;
-            }).join('')}
-          </div>
-        </details>
-      </div>
-    `;
-    // Canvas equity curve
+    const pf = toplamZarar > 0 ? (toplamKar / toplamZarar) : 0;
+    const getiriYuzde = ((bakiye - BASLANGIC) / BASLANGIC) * 100;
+    const renk = bakiye > BASLANGIC ? 'text-emerald-400' : 'text-red-400';
+    const canvasId = 'eqChart_' + Date.now();
+    el.innerHTML = `<div class="space-y-3 text-xs"><div class="text-center"><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-mute)">Final Bakiye</div><div class="text-4xl font-extrabold mono ${renk}">$${bakiye.toFixed(2)}</div><div class="${renk} mono text-sm">${getiriYuzde >= 0 ? '+' : ''}${getiriYuzde.toFixed(2)}%</div></div><div style="background:var(--surface);border-radius:12px;padding:8px"><canvas id="${canvasId}" class="grafik-mini"></canvas></div><div class="grid grid-cols-2 gap-2"><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">İşlem</div><div class="font-bold mono">${islemler.length}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Win Rate</div><div class="font-bold mono ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}">%${winRate.toFixed(1)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Profit Factor</div><div class="font-bold mono ${pf >= 1 ? 'text-emerald-400' : 'text-red-400'}">${pf.toFixed(2)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Max DD</div><div class="font-bold mono text-red-400">-%${maxDD.toFixed(1)}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Kazanç</div><div class="font-bold mono text-emerald-400">${kazanan}</div></div><div style="background:var(--surface);padding:8px;border-radius:8px"><div class="text-[9px] uppercase" style="color:var(--text-mute)">Kayıp</div><div class="font-bold mono text-red-400">${kaybeden}</div></div></div><div class="text-[10px] text-center" style="color:var(--text-mute)">${mumlar.length} mum test edildi • ${POZ_ORANI*100}% poz • %${KOMISYON*100} komisyon</div><details class="mt-2"><summary class="cursor-pointer text-[10px] uppercase tracking-wider font-bold py-2" style="color:var(--text-mute)">📋 Son 10 İşlem</summary><div class="space-y-1 mt-2">${islemler.slice(-10).reverse().map(i => { const r = i.kar > 0 ? 'text-emerald-400' : 'text-red-400'; const z = new Date(i.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}); return `<div class="rounded p-2 text-[10px] flex justify-between" style="background:var(--surface)"><div><span class="font-bold">${i.yon}</span> ${z}<div style="color:var(--text-mute)">$${fmt(i.giris)} → $${fmt(i.cikis)} (${i.sebep})</div></div><div class="${r} font-bold mono text-right">${i.kar >= 0 ? '+' : ''}$${i.kar.toFixed(2)}<div>${i.karYuzde >= 0 ? '+' : ''}${i.karYuzde.toFixed(2)}%</div></div></div>`; }).join('')}</div></details></div>`;
     const canvas = document.getElementById(canvasId);
     if (canvas && equity.length > 1) {
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+      canvas.width = canvas.offsetWidth * dpr; canvas.height = canvas.offsetHeight * dpr;
       ctx.scale(dpr, dpr);
       const w = canvas.offsetWidth, h = canvas.offsetHeight;
-      const minV = Math.min(...equity.map(e => e.value));
-      const maxV = Math.max(...equity.map(e => e.value));
+      const minV = Math.min(...equity.map(e => e.value)), maxV = Math.max(...equity.map(e => e.value));
       const minT = equity[0].time, maxT = equity[equity.length-1].time;
       ctx.clearRect(0, 0, w, h);
-      // Grid
-      ctx.strokeStyle = 'rgba(148,163,184,.1)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(0, h - 20); ctx.lineTo(w, h - 20);
-      ctx.stroke();
-      // Başlangıç çizgisi
-      const startY = h - 20 - ((BASLANGIC_BAKIYE - minV) / (maxV - minV)) * (h - 30);
-      ctx.strokeStyle = 'rgba(148,163,184,.3)';
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      ctx.moveTo(0, startY); ctx.lineTo(w, startY);
-      ctx.stroke();
+      ctx.strokeStyle = 'rgba(148,163,184,.1)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, h - 20); ctx.lineTo(w, h - 20); ctx.stroke();
+      const startY = h - 20 - ((BASLANGIC - minV) / (maxV - minV)) * (h - 30);
+      ctx.strokeStyle = 'rgba(148,163,184,.3)'; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(0, startY); ctx.lineTo(w, startY); ctx.stroke();
       ctx.setLineDash([]);
-      // Equity line
-      ctx.strokeStyle = bakiye > BASLANGIC_BAKIYE ? '#10b981' : '#ef4444';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = bakiye > BASLANGIC ? '#10b981' : '#ef4444'; ctx.lineWidth = 2;
       ctx.beginPath();
       equity.forEach((e, i) => {
         const x = ((e.time - minT) / (maxT - minT)) * w;
         const y = h - 20 - ((e.value - minV) / (maxV - minV)) * (h - 30);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       });
       ctx.stroke();
-      // Dolgu
       const grad = ctx.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, bakiye > BASLANGIC_BAKIYE ? 'rgba(16,185,129,.2)' : 'rgba(239,68,68,.2)');
+      grad.addColorStop(0, bakiye > BASLANGIC ? 'rgba(16,185,129,.2)' : 'rgba(239,68,68,.2)');
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = grad;
-      ctx.lineTo(w, h - 20);
-      ctx.lineTo(0, h - 20);
-      ctx.closePath();
-      ctx.fill();
+      ctx.lineTo(w, h - 20); ctx.lineTo(0, h - 20); ctx.closePath(); ctx.fill();
     }
   } catch (e) { el.innerHTML = `<div class="text-red-400 text-xs text-center py-3">Hata: ${e.message}</div>`; }
   btn.disabled = false; btn.textContent = 'Simülasyonu Çalıştır';
 }
 
-/* KLINE */
+/* KLINE + TICKER + WS */
 async function klineCek(symbol, interval = '15', limit = 500) {
   try {
     const url = `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval}&limit=${limit}`;
@@ -899,8 +1062,6 @@ async function tickerYukle() {
     el.innerHTML = html + html;
   } catch(e) {}
 }
-
-/* WEBSOCKET */
 let ws = null, wsAktifCoin = null, wsAktifTF = null, wsPingInterval = null, wsYenidenDeneme = 0;
 function wsDurumGuncelle(durum, mesaj) {
   const dot = document.getElementById('canliDot'), yazi = document.getElementById('canliYazi');
@@ -963,7 +1124,7 @@ async function sembolleriYukle() {
 function akilliSembolDuzelt(s) {
   s = (s || '').toUpperCase().trim().replace(/\s/g, '').replace('/', '');
   if (!s) return null;
-  if (TUM_SEMBOLLER.length === 0) { if (s.endsWith('USDT') || s.endsWith('USDC')) return s; return s + 'USDT'; }
+  if (TUM_SEMBOLLER.length === 0) { if (s.endsWith('USDT')) return s; return s + 'USDT'; }
   if (TUM_SEMBOLLER.includes(s)) return s;
   if (TUM_SEMBOLLER.includes(s + 'USDT')) return s + 'USDT';
   return null;
@@ -976,12 +1137,12 @@ function aramaOneriGoster(q) {
   const base = q.replace('USDT', '');
   const eslesenler = TUM_SEMBOLLER.filter(s => s.startsWith(q) || s.replace('USDT','').startsWith(base)).slice(0, 15);
   if (!eslesenler.length) { el.innerHTML = `<div class="p-3 text-xs text-center" style="color:var(--text-mute)">"${q}" bulunamadı</div>`; el.classList.remove('hidden'); return; }
-  el.innerHTML = eslesenler.map(s => { const coin = s.replace('USDT', ''); return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b flex justify-between" style="border-color:var(--border)"><span class="font-semibold">${coin}</span><span class="text-xs mono" style="color:var(--text-mute)">USDT</span></button>`; }).join('');
+  el.innerHTML = eslesenler.map(s => { const coin = s.replace('USDT', ''); return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b flex justify-between" style="border-color:var(--border);color:var(--text)"><span class="font-semibold">${coin}</span><span class="text-xs mono" style="color:var(--text-mute)">USDT</span></button>`; }).join('');
   el.classList.remove('hidden');
 }
 function oneriSec(sym) { document.getElementById('aramaOneri').classList.add('hidden'); document.getElementById('aramaCoin').value = ''; coinYukle(sym); }
 
-/* GÖSTERGE HESAPLARI */
+/* GÖSTERGELER */
 function sma(d, p) { const o = []; for (let i = 0; i < d.length; i++) { if (i < p - 1) { o.push(null); continue; } let s = 0; for (let j = i-p+1; j <= i; j++) s += d[j]; o.push(s / p); } return o; }
 function ema(d, p) { const k = 2/(p+1); const o = [d[0]]; for (let i = 1; i < d.length; i++) o.push(d[i]*k + o[i-1]*(1-k)); return o; }
 function rsi(d, p = 14) {
@@ -1001,8 +1162,6 @@ function atr(y, d, c, p=14) { const tr = [y[0]-d[0]]; for (let i = 1; i < c.leng
 function adx(y, d, c, p=14) { const pDM = [0], mDM = [0], tr = [y[0]-d[0]]; for (let i = 1; i < c.length; i++) { const yF = y[i]-y[i-1], dF = d[i-1]-d[i]; pDM.push(yF > dF && yF > 0 ? yF : 0); mDM.push(dF > yF && dF > 0 ? dF : 0); tr.push(Math.max(y[i]-d[i], Math.abs(y[i]-c[i-1]), Math.abs(d[i]-c[i-1]))); } const atrS = sma(tr, p); const pDI = [], mDI = [], dx = []; const pDMS = sma(pDM, p), mDMS = sma(mDM, p); for (let i = 0; i < c.length; i++) { if (atrS[i] === null || atrS[i] === 0) { pDI.push(null); mDI.push(null); dx.push(null); continue; } const pv = 100*pDMS[i]/atrS[i], mv = 100*mDMS[i]/atrS[i]; pDI.push(pv); mDI.push(mv); const t = pv + mv; dx.push(t === 0 ? 0 : 100*Math.abs(pv-mv)/t); } return { adx: sma(dx.map(v => v === null ? 0 : v), p), plusDI: pDI, minusDI: mDI }; }
 function vwapHesaplaSon100(mumlar) { const n = mumlar.length; const baslangic = Math.max(0, n - 100); const vwapDegerleri = new Array(n).fill(null); let kumTop = 0, kumHac = 0; for (let i = baslangic; i < n; i++) { const m = mumlar[i]; const tp = (m.high + m.low + m.close) / 3; kumTop += tp * m.volume; kumHac += m.volume; vwapDegerleri[i] = kumHac > 0 ? kumTop / kumHac : m.close; } return vwapDegerleri; }
 function vwapSon(mumlar) { const arr = vwapHesaplaSon100(mumlar); return arr[arr.length-1] || mumlar[mumlar.length-1].close; }
-
-/* FVG/FORMASYON/YAPI/DIVERGENCE */
 function fvgBul(mumlar) { const fvgler = []; for (let i = 2; i < mumlar.length; i++) { const m1 = mumlar[i-2], m3 = mumlar[i]; if (m1.high < m3.low) fvgler.push({ tip: 'bullish', ust: m3.low, alt: m1.high, orta: (m3.low+m1.high)/2, zaman: m3.time, boyut: ((m3.low-m1.high)/m1.high)*100, dolduruldu: false }); if (m1.low > m3.high) fvgler.push({ tip: 'bearish', ust: m1.low, alt: m3.high, orta: (m1.low+m3.high)/2, zaman: m3.time, boyut: ((m1.low-m3.high)/m1.low)*100, dolduruldu: false }); } for (const f of fvgler) { const sonrasi = mumlar.filter(m => m.time > f.zaman); if (f.tip === 'bullish' && sonrasi.some(m => m.low <= f.orta)) f.dolduruldu = true; if (f.tip === 'bearish' && sonrasi.some(m => m.high >= f.orta)) f.dolduruldu = true; } return fvgler.filter(f => !f.dolduruldu).slice(-8); }
 function mumFormasyonlari(mumlar) { const n = mumlar.length, son = n - 1; if (son < 5) return []; const F = []; const m0 = mumlar[son], m1 = mumlar[son-1], m2 = mumlar[son-2]; const govde = (m) => Math.abs(m.close - m.open), ustFitil = (m) => m.high - Math.max(m.open, m.close), altFitil = (m) => Math.min(m.open, m.close) - m.low, yon = (m) => m.close >= m.open ? 'bull' : 'bear'; let ortG = 0; for (let i = son-14; i < son; i++) ortG += govde(mumlar[i]); ortG /= 14; if (yon(m1) === 'bear' && yon(m0) === 'bull' && m0.close > m1.open && m0.open < m1.close && govde(m0) > govde(m1) * 1.1) F.push({ ad: 'Bullish Engulfing', tip: 'AL', guc: 3, aciklama: 'Yutan boğa' }); if (yon(m1) === 'bull' && yon(m0) === 'bear' && m0.open > m1.close && m0.close < m1.open && govde(m0) > govde(m1) * 1.1) F.push({ ad: 'Bearish Engulfing', tip: 'SAT', guc: -3, aciklama: 'Yutan ayı' }); if (govde(m0) > 0 && altFitil(m0) > govde(m0) * 2 && ustFitil(m0) < govde(m0) * 0.3 && yon(m0) === 'bull' && m0.low < m1.low) F.push({ ad: 'Hammer', tip: 'AL', guc: 2, aciklama: 'Çekiç' }); if (govde(m0) > 0 && ustFitil(m0) > govde(m0) * 2 && altFitil(m0) < govde(m0) * 0.3 && yon(m0) === 'bear' && m0.high > m1.high) F.push({ ad: 'Shooting Star', tip: 'SAT', guc: -2, aciklama: 'Kayan yıldız' }); if (govde(m0) < ortG * 0.1 && altFitil(m0) > ortG * 2 && ustFitil(m0) < ortG * 0.2) F.push({ ad: 'Dragonfly Doji', tip: 'AL', guc: 3, aciklama: 'Güçlü al' }); if (govde(m0) < ortG * 0.1 && ustFitil(m0) > ortG * 2 && altFitil(m0) < ortG * 0.2) F.push({ ad: 'Gravestone Doji', tip: 'SAT', guc: -3, aciklama: 'Güçlü sat' }); if (yon(m2) === 'bear' && govde(m2) > ortG * 1.2 && govde(m1) < ortG * 0.5 && yon(m0) === 'bull' && m0.close > (m2.open+m2.close)/2) F.push({ ad: 'Morning Star', tip: 'AL', guc: 3, aciklama: 'Sabah yıldızı' }); if (yon(m2) === 'bull' && govde(m2) > ortG * 1.2 && govde(m1) < ortG * 0.5 && yon(m0) === 'bear' && m0.close < (m2.open+m2.close)/2) F.push({ ad: 'Evening Star', tip: 'SAT', guc: -3, aciklama: 'Akşam yıldızı' }); if (son >= 3 && yon(mumlar[son-2]) === 'bull' && yon(mumlar[son-1]) === 'bull' && yon(m0) === 'bull' && mumlar[son-2].close < mumlar[son-1].close && mumlar[son-1].close < m0.close) F.push({ ad: 'Three White Soldiers', tip: 'AL', guc: 3, aciklama: '3 beyaz asker' }); if (son >= 3 && yon(mumlar[son-2]) === 'bear' && yon(mumlar[son-1]) === 'bear' && yon(m0) === 'bear' && mumlar[son-2].close > mumlar[son-1].close && mumlar[son-1].close > m0.close) F.push({ ad: 'Three Black Crows', tip: 'SAT', guc: -3, aciklama: '3 kara karga' }); if (yon(m1) === 'bear' && yon(m0) === 'bull' && m0.open < m1.close && m0.close > (m1.open+m1.close)/2 && m0.close < m1.open) F.push({ ad: 'Piercing Line', tip: 'AL', guc: 2, aciklama: 'Delici çizgi' }); if (yon(m1) === 'bull' && yon(m0) === 'bear' && m0.open > m1.close && m0.close < (m1.open+m1.close)/2 && m0.close > m1.open) F.push({ ad: 'Dark Cloud Cover', tip: 'SAT', guc: -2, aciklama: 'Kara bulut' }); return F; }
 function piyasaYapisi(mumlar) { const pivots = [], lb = 5; for (let i = lb; i < mumlar.length - lb; i++) { let yP = true, dP = true; for (let j = 1; j <= lb; j++) { if (mumlar[i].high <= mumlar[i-j].high || mumlar[i].high <= mumlar[i+j].high) yP = false; if (mumlar[i].low >= mumlar[i-j].low || mumlar[i].low >= mumlar[i+j].low) dP = false; } if (yP) pivots.push({ tip: 'H', fiyat: mumlar[i].high, idx: i }); if (dP) pivots.push({ tip: 'L', fiyat: mumlar[i].low, idx: i }); } pivots.sort((a,b) => a.idx - b.idx); const sonP = pivots.slice(-8); const tepeler = sonP.filter(p => p.tip === 'H'), dipler = sonP.filter(p => p.tip === 'L'); let yapi = 'BELİRSİZ', aciklama = 'Yeterli veri yok'; if (tepeler.length >= 2 && dipler.length >= 2) { const t = tepeler.slice(-2), d = dipler.slice(-2); const yT = t[1].fiyat > t[0].fiyat, yD = d[1].fiyat > d[0].fiyat, dT = t[1].fiyat < t[0].fiyat, dD = d[1].fiyat < d[0].fiyat; if (yT && yD) { yapi = 'YUKARI TREND'; aciklama = 'HH + HL'; } else if (dT && dD) { yapi = 'AŞAĞI TREND'; aciklama = 'LH + LL'; } else if (yT && dD) { yapi = 'GENİŞLEYEN'; aciklama = 'Volatilite artıyor'; } else if (dT && yD) { yapi = 'DARALAN'; aciklama = 'Sıkışma'; } } const ekstra = []; if (tepeler.length >= 2) { const t1 = tepeler[tepeler.length-2], t2 = tepeler[tepeler.length-1]; if (Math.abs(t1.fiyat - t2.fiyat) / t1.fiyat < 0.02) ekstra.push('⚠️ Çift Tepe — düşüş sinyali'); } if (dipler.length >= 2) { const d1 = dipler[dipler.length-2], d2 = dipler[dipler.length-1]; if (Math.abs(d1.fiyat - d2.fiyat) / d1.fiyat < 0.02) ekstra.push('✅ Çift Dip — yükseliş sinyali'); } return { yapi, aciklama, ekstra, sonPivotlar: sonP }; }
@@ -1103,10 +1262,10 @@ function grafikOlustur() {
   const isLight = tema === 'light';
   chart = LightweightCharts.createChart(el, {
     layout: { background: { color: 'transparent' }, textColor: isLight ? '#475569' : '#94a3b8' },
-    grid: { vertLines: { color: isLight ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.03)' }, horzLines: { color: isLight ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.03)' } },
+    grid: { vertLines: { color: isLight ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' }, horzLines: { color: isLight ? 'rgba(15,23,42,.05)' : 'rgba(255,255,255,.03)' } },
     crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-    rightPriceScale: { borderColor: 'rgba(148,163,184,.2)' },
-    timeScale: { borderColor: 'rgba(148,163,184,.2)', timeVisible: true },
+    rightPriceScale: { borderColor: isLight ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)' },
+    timeScale: { borderColor: isLight ? 'rgba(15,23,42,.15)' : 'rgba(148,163,184,.2)', timeVisible: true },
     height: 520
   });
   candleSeries = chart.addCandlestickSeries({ upColor: '#10b981', downColor: '#ef4444', borderUpColor: '#10b981', borderDownColor: '#ef4444', wickUpColor: '#10b981', wickDownColor: '#ef4444' });
@@ -1146,7 +1305,6 @@ async function coinYukle(symbol) {
     document.getElementById('chartInfo').textContent = mumlar.length + ' mum';
     if (ws && ws.readyState === 1) wsAbone(aktifCoin, aktifTF);
     document.getElementById('chartYukleniyor').style.display = 'none';
-    // Hızlı pozisyon butonu
     const hb = document.getElementById('hizliPozBtn');
     if (analiz.karar.includes('LONG') || analiz.karar.includes('SHORT')) hb.classList.remove('hidden');
     else hb.classList.add('hidden');
@@ -1193,8 +1351,9 @@ function renderMtf(sonuclar) {
   document.getElementById('mtfOnay').textContent = onay;
   el.innerHTML = sonuclar.map(s => {
     const renk = s.yon === 'LONG' ? 'text-emerald-400' : s.yon === 'SHORT' ? 'text-red-400' : '';
-    const bg = s.yon === 'LONG' ? 'bg-emerald-500/5 border-emerald-500/20' : s.yon === 'SHORT' ? 'bg-red-500/5 border-red-500/20' : '';
-    return `<div class="${bg} border rounded-xl p-2.5 flex justify-between items-center" style="${!bg ? 'background:var(--surface);border-color:var(--border)' : ''}"><div><div class="text-xs font-semibold">${s.ad}</div><div class="text-[10px] mono" style="color:var(--text-mute)">RSI ${s.rsi}</div></div><div class="${renk} text-xs font-bold mono" style="${!renk ? 'color:var(--text-dim)' : ''}">${s.yon}</div></div>`;
+    const bg = s.yon === 'LONG' ? 'rgba(16,185,129,.05)' : s.yon === 'SHORT' ? 'rgba(239,68,68,.05)' : 'var(--surface)';
+    const br = s.yon === 'LONG' ? 'rgba(16,185,129,.2)' : s.yon === 'SHORT' ? 'rgba(239,68,68,.2)' : 'var(--border)';
+    return `<div class="border rounded-xl p-2.5 flex justify-between items-center" style="background:${bg};border-color:${br}"><div><div class="text-xs font-semibold" style="color:var(--text)">${s.ad}</div><div class="text-[10px] mono" style="color:var(--text-mute)">RSI ${s.rsi}</div></div><div class="${renk} text-xs font-bold mono" style="${!renk ? 'color:var(--text-dim)' : ''}">${s.yon}</div></div>`;
   }).join('');
 }
 
@@ -1250,7 +1409,7 @@ function panelDoldur(a) {
   const yazi = document.getElementById('kararYazi');
   yazi.textContent = a.karar;
   yazi.className = 'text-3xl font-extrabold mb-3 tracking-tight ' + (a.karar.includes('LONG') ? 'text-emerald-400' : a.karar.includes('SHORT') ? 'text-red-400' : '');
-  if (!a.karar.includes('LONG') && !a.karar.includes('SHORT')) yazi.style.color = 'var(--text-dim)'; else yazi.style.color = '';
+  yazi.style.color = (!a.karar.includes('LONG') && !a.karar.includes('SHORT')) ? 'var(--text-dim)' : '';
   document.getElementById('kararGuven').textContent = `GÜVEN %${a.guvenYuzde}`;
   document.getElementById('kararAciklama').textContent = a.kararAciklama;
   const plan = document.getElementById('planIcerik'), rr = document.getElementById('planRR');
@@ -1269,7 +1428,7 @@ function panelDoldur(a) {
   document.getElementById('sebepListe').innerHTML = a.filtreler.map(f => {
     const ikon = f.ok ? '✅' : '❌';
     const renkYazi = f.yon === 'LONG' ? 'text-emerald-400' : f.yon === 'SHORT' ? 'text-red-400' : '';
-    return `<div class="satir border rounded-xl p-2.5" style="background:${f.ok ? 'var(--surface)' : 'transparent'};border-color:var(--border)"><div class="flex items-center justify-between mb-0.5"><span class="text-xs font-semibold">${ikon} ${f.ad}</span><span class="${renkYazi} text-[10px] font-bold mono" style="${!renkYazi ? 'color:var(--text-mute)' : ''}">${f.yon}</span></div><div class="text-[11px] leading-tight" style="color:var(--text-dim)">${f.detay}</div></div>`;
+    return `<div class="satir border rounded-xl p-2.5" style="background:${f.ok ? 'var(--surface)' : 'transparent'};border-color:var(--border)"><div class="flex items-center justify-between mb-0.5"><span class="text-xs font-semibold" style="color:var(--text)">${ikon} ${f.ad}</span><span class="${renkYazi} text-[10px] font-bold mono" style="${!renkYazi ? 'color:var(--text-mute)' : ''}">${f.yon}</span></div><div class="text-[11px] leading-tight" style="color:var(--text-dim)">${f.detay}</div></div>`;
   }).join('') + `<div class="rounded-xl p-2 text-center" style="background:var(--surface);border:1px solid var(--border)"><span class="text-xs" style="color:var(--text-dim)">Onay: </span><span class="text-xs font-bold mono ${a.onayliSayi >= 4 ? 'text-emerald-400' : a.onayliSayi === 3 ? 'text-yellow-400' : ''}" style="${a.onayliSayi < 3 ? 'color:var(--text-dim)' : ''}">${a.onayliSayi}/5</span></div>`;
   document.getElementById('gostergeler').innerHTML = a.skorlar.map(s => {
     const renk = s.puan > 0 ? 'text-emerald-400' : s.puan < 0 ? 'text-red-400' : '';
@@ -1334,8 +1493,8 @@ function panelDoldur(a) {
     <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">EMA 20</span><span class="font-bold text-blue-400 mono">$${fmt(a.ema20)}</span></div>
     <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">EMA 50</span><span class="font-bold text-amber-400 mono">$${fmt(a.ema50)}</span></div>
     <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">EMA 200</span><span class="font-bold text-red-400 mono">$${fmt(a.ema200)}</span></div>
-    <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">+DI/-DI</span><span class="font-bold mono">${a.pdi.toFixed(0)} / ${a.mdi.toFixed(0)}</span></div>
-    <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">ATR</span><span class="font-bold mono">${fmt(a.atr)}</span></div>
+    <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">+DI/-DI</span><span class="font-bold mono" style="color:var(--text)">${a.pdi.toFixed(0)} / ${a.mdi.toFixed(0)}</span></div>
+    <div class="flex justify-between items-center rounded-xl p-2.5 border" style="background:var(--surface);border-color:var(--border)"><span class="text-xs" style="color:var(--text-dim)">ATR</span><span class="font-bold mono" style="color:var(--text)">${fmt(a.atr)}</span></div>
   `;
   document.getElementById('statYuksek').textContent = '$' + fmt(a.son50Yuk);
   document.getElementById('statDusuk').textContent = '$' + fmt(a.son50Dus);
@@ -1380,8 +1539,8 @@ function rTabGec(ad) {
   document.querySelectorAll('[id^="rtab-"]').forEach(e => e.classList.add('hidden'));
   document.getElementById('rtab-' + ad).classList.remove('hidden');
   document.querySelectorAll('.rtab').forEach(b => {
-    if (b.dataset.rtab === ad) { b.classList.add('rtab-aktif'); b.style.color = ''; }
-    else { b.classList.remove('rtab-aktif'); b.style.color = 'var(--text-mute)'; }
+    if (b.dataset.rtab === ad) b.classList.add('rtab-aktif');
+    else b.classList.remove('rtab-aktif');
   });
 }
 async function hizliYukle() {
@@ -1403,17 +1562,19 @@ async function hizliYukle() {
 function tfDegistir(tf) {
   aktifTF = tf;
   document.querySelectorAll('.tf-btn').forEach(b => {
-    if (b.dataset.tf === tf) { b.classList.add('aktif'); b.style.color = ''; }
-    else { b.classList.remove('aktif'); b.style.color = 'var(--text-dim)'; }
+    if (b.dataset.tf === tf) b.classList.add('aktif');
+    else b.classList.remove('aktif');
   });
   coinYukle(aktifCoin);
 }
 function saatGuncelle() { document.getElementById('saat').textContent = new Date().toLocaleTimeString('tr-TR'); }
 
 /* BAŞLAT */
-document.body.classList.toggle('light', tema === 'light');
-document.getElementById('temaBtn').textContent = tema === 'dark' ? '🌙' : '☀️';
+temaUygula(tema);
 document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
+if (localStorage.getItem('welcomeGorundu') === 'true') document.getElementById('welcomeScreen').classList.add('gizli');
+aktifTF = AYARLAR.varsayilanTF || '15';
+document.querySelectorAll('.tf-btn').forEach(b => { if (b.dataset.tf === aktifTF) b.classList.add('aktif'); else b.classList.remove('aktif'); });
 grafikOlustur();
 wsBaslat();
 sembolleriYukle();
@@ -1422,16 +1583,20 @@ coinYukle('BTCUSDT');
 hizliYukle();
 pozisyonPaneliDoldur();
 setInterval(saatGuncelle, 1000); saatGuncelle();
-setInterval(() => coinYukle(aktifCoin), 60000);
-setInterval(hizliYukle, 120000);
-setInterval(tickerYukle, 30000);
-setInterval(() => testleriKontrolEt(false), 60000);
-setInterval(() => pozisyonlariGuncelle(), 30000);
+fiyatGuncellemeIntervalId = setInterval(() => coinYukle(aktifCoin), 60000);
+hizliIntervalId = setInterval(hizliYukle, 120000);
+tickerIntervalId = setInterval(tickerYukle, 30000);
+testIntervalId = setInterval(() => testleriKontrolEt(false), 60000);
+pozGuncellemeIntervalId = setInterval(pozisyonlariGuncelle, (AYARLAR.pozGuncelleme || 30) * 1000);
 setTimeout(() => { if (typeof testPaneliniGuncelle === 'function') testPaneliniGuncelle(); }, 2000);
 document.getElementById('aramaCoin').addEventListener('keypress', e => { if (e.key === 'Enter') coinYukle(); });
 document.getElementById('aramaCoin').addEventListener('input', e => { aramaOneriGoster(e.target.value); });
 document.getElementById('aramaCoin').addEventListener('focus', e => { if (e.target.value.trim()) aramaOneriGoster(e.target.value); });
 document.addEventListener('click', e => { if (!e.target.closest('#aramaCoin') && !e.target.closest('#aramaOneri')) document.getElementById('aramaOneri').classList.add('hidden'); });
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  if (e.key === 'Escape') { hamburgerKapat(); radarKapat(); ayarlarKapat(); pozisyonModalKapat(); bilgiKapat(); }
+});
 window.addEventListener('resize', () => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); });
 </script>
 </body>
