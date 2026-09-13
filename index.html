@@ -10,17 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #070a12; --surface: #0e1421; --cyan: #22d3ee; --emerald: #10b981; --red: #ef4444; --purple: #a78bfa; --amber: #f59e0b;
-  }
+  :root { --bg:#070a12; --surface:#0e1421; --cyan:#22d3ee; --emerald:#10b981; --red:#ef4444; --purple:#a78bfa; --amber:#f59e0b; }
   * { -webkit-tap-highlight-color: transparent; }
-  body {
-    font-family: 'Inter', -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,211,238,0.08), transparent), radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167,139,250,0.06), transparent);
-    background-attachment: fixed;
-    min-height: 100vh;
-  }
+  body { font-family: 'Inter', -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,211,238,0.08), transparent), radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167,139,250,0.06), transparent); background-attachment: fixed; min-height: 100vh; }
   .mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'tnum'; }
   #chart { width: 100%; height: 520px; }
   .glass { background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; transition: border-color .2s; }
@@ -60,8 +52,10 @@
   .fiyat-down { animation: flash-down .6s ease-out; }
   @keyframes flash-up { 0% { color: var(--emerald); text-shadow: 0 0 20px rgba(16,185,129,0.6); } 100% { color: inherit; text-shadow: none; } }
   @keyframes flash-down { 0% { color: var(--red); text-shadow: 0 0 20px rgba(239,68,68,0.6); } 100% { color: inherit; text-shadow: none; } }
-  .rtab { transition: all .2s; position: relative; }
-  .rtab-aktif { background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(34,211,238,0.05)) !important; color: var(--cyan) !important; border: 1px solid rgba(34,211,238,0.3) !important; box-shadow: 0 0 20px rgba(34,211,238,0.15); }
+  /* KOMPAKT SEKME */
+  .rtab { transition: all .15s; position: relative; padding: 6px 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em; }
+  .rtab:hover { color: #cbd5e1; background: rgba(255,255,255,0.03); }
+  .rtab-aktif { background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(34,211,238,0.05)) !important; color: var(--cyan) !important; box-shadow: 0 0 16px rgba(34,211,238,0.2), inset 0 1px 0 rgba(34,211,238,0.1); }
   .canli-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 12px var(--emerald), 0 0 24px rgba(16,185,129,0.5); animation: pulse-dot 1.5s ease-in-out infinite; }
   @keyframes pulse-dot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
   .canli-dot.baglaniyor { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
@@ -82,12 +76,27 @@
   @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
   .coin-pill { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 6px 12px; cursor: pointer; transition: all .2s; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
   .coin-pill:hover { background: rgba(34,211,238,0.08); border-color: rgba(34,211,238,0.3); color: var(--cyan); }
+  /* FULLSCREEN */
+  body.tam-ekran .lg\:col-span-4 { display: none !important; }
+  body.tam-ekran .lg\:col-span-8 { grid-column: span 12 / span 12 !important; }
+  body.tam-ekran #chart { height: calc(100vh - 220px) !important; }
+  body.tam-ekran .main-grid { grid-template-columns: 1fr !important; }
+  /* RADAR MODAL */
+  .radar-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(7,10,18,0.85); backdrop-filter: blur(8px); }
+  .radar-modal.acik { display: flex; }
+  .radar-icerik { width: 100%; max-width: 720px; max-height: 85vh; overflow-y: auto; background: linear-gradient(135deg, #0e1421, #0a0e17); border: 1px solid rgba(34,211,238,0.2); border-radius: 20px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(34,211,238,0.1); }
+  .radar-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; margin-bottom: 8px; transition: all .2s; cursor: pointer; }
+  .radar-item:hover { background: rgba(34,211,238,0.05); border-color: rgba(34,211,238,0.3); transform: translateX(4px); }
+  .radar-item.guclu { border-color: rgba(34,211,238,0.4); background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(34,211,238,0.02)); }
+  @keyframes radar-tarama { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .radar-taraniyor { animation: radar-tarama 1.2s linear infinite; display: inline-block; }
   @media (max-width: 640px) {
     #chart { height: 300px !important; }
     .ticker-wrap { height: 28px; }
     .ticker-item { font-size: 11px; }
     .stat-value { font-size: 13px; }
-    .rtab { font-size: 10px; padding: 8px 4px; }
+    .rtab { font-size: 9px; padding: 6px 2px; }
+    body.tam-ekran #chart { height: calc(100vh - 200px) !important; }
   }
 </style>
 </head>
@@ -99,14 +108,15 @@
   <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-3 flex items-center gap-3">
     <div class="flex items-center gap-2.5 shrink-0">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📈</span></div>
-      <div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] text-slate-500 mono">PRO TERMINAL v2.1</div></div>
+      <div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] text-slate-500 mono">PRO TERMINAL v2.2</div></div>
     </div>
     <div class="flex-1 flex items-center gap-2 max-w-2xl relative">
       <input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE..." autocomplete="off" class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
       <button onclick="coinYukle()" class="btn-cyan px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-900 whitespace-nowrap">Analiz</button>
       <div id="aramaOneri" class="absolute top-full left-0 right-0 mt-2 bg-[#0e1421] border border-white/10 rounded-xl shadow-2xl shadow-black/50 z-50 hidden max-h-72 overflow-y-auto scroll-ince"></div>
     </div>
-    <div id="canliDurum" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+    <button onclick="radarAc()" title="Sinyal Radarı" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 hover:from-purple-500/30 hover:to-cyan-500/30 border border-purple-500/30 text-xs font-bold text-purple-300 transition whitespace-nowrap">🎯 RADAR</button>
+    <div id="canliDurum" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
       <span id="canliDot" class="canli-dot baglaniyor"></span>
       <span id="canliYazi" class="text-amber-400 font-semibold text-xs">Bağlanıyor</span>
     </div>
@@ -160,7 +170,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 main-grid">
 
     <div class="lg:col-span-8">
       <div class="glass p-3 relative">
@@ -169,11 +179,16 @@
             <span class="text-xs text-slate-400 font-semibold">📊 CANLI GRAFİK</span>
             <span class="text-[10px] mono text-slate-600" id="chartInfo">— mum</span>
           </div>
-          <div class="flex items-center gap-4 text-[10px] text-slate-500 mono">
-            <span><span class="inline-block w-3 h-0.5 bg-blue-500 align-middle"></span> EMA20</span>
-            <span><span class="inline-block w-3 h-0.5 bg-amber-500 align-middle"></span> EMA50</span>
-            <span><span class="inline-block w-3 h-0.5 bg-red-500 align-middle"></span> EMA200</span>
-            <span><span class="inline-block w-3 h-0.5 bg-purple-400 align-middle"></span> VWAP</span>
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-3 text-[10px] text-slate-500 mono">
+              <span><span class="inline-block w-3 h-0.5 bg-blue-500 align-middle"></span> EMA20</span>
+              <span><span class="inline-block w-3 h-0.5 bg-amber-500 align-middle"></span> EMA50</span>
+              <span><span class="inline-block w-3 h-0.5 bg-red-500 align-middle"></span> EMA200</span>
+              <span><span class="inline-block w-3 h-0.5 bg-purple-400 align-middle"></span> VWAP</span>
+            </div>
+            <button onclick="tamEkranToggle()" title="Tam Ekran" class="w-8 h-8 rounded-lg bg-white/[0.03] hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/40 flex items-center justify-center text-sm transition">
+              <span id="tamEkranIkon">⛶</span>
+            </button>
           </div>
         </div>
         <div id="chart"></div>
@@ -184,13 +199,14 @@
     </div>
 
     <div class="lg:col-span-4">
-      <div class="lg:sticky lg:top-32 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto scroll-ince pr-1 space-y-3">
+      <div class="lg:sticky lg:top-32 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto scroll-ince pr-1 space-y-2.5">
 
-        <div class="flex gap-1 p-1 glass">
-          <button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-300">🎯 Karar</button>
-          <button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-400 hover:text-slate-200">📊 Teknik</button>
-          <button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-400 hover:text-slate-200">🌍 Piyasa</button>
-          <button onclick="rTabGec('arac')" data-rtab="arac" class="rtab flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-400 hover:text-slate-200">🛠️ Araç</button>
+        <!-- KOMPAKT SEKMELER -->
+        <div class="flex gap-0.5 p-1 glass">
+          <button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1 rounded-lg text-slate-300">🎯 Karar</button>
+          <button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1 rounded-lg text-slate-500">📊 Teknik</button>
+          <button onclick="rTabGec('piyasa')" data-rtab="piyasa" class="rtab flex-1 rounded-lg text-slate-500">🌍 Piyasa</button>
+          <button onclick="rTabGec('test')" data-rtab="test" class="rtab flex-1 rounded-lg text-slate-500">🧠 S.Test</button>
         </div>
 
         <div id="rtab-karar" class="space-y-3">
@@ -234,20 +250,15 @@
           </div>
         </div>
 
-        <div id="rtab-arac" class="space-y-3 hidden">
-
-          <!-- OTOMATİK TEST SİSTEMİ -->
+        <div id="rtab-test" class="space-y-3 hidden">
           <div class="glass p-4">
             <div class="flex items-center justify-between mb-3">
               <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🧠 Otomatik Test Sistemi</h3>
               <span class="text-[10px] mono text-cyan-400 font-bold">KENDİNİ TEST EDİYOR</span>
             </div>
-            <p class="text-xs text-slate-500 mb-3 leading-relaxed">
-              Bot her güçlü sinyalini otomatik kaydeder, belirli süre sonra fiyatı kontrol eder ve doğru/yanlış olarak işaretler. Hangi sinyal tipi ne kadar güvenilir, burada görürsün.
-            </p>
+            <p class="text-xs text-slate-500 mb-3 leading-relaxed">Bot her güçlü sinyalini otomatik kaydeder, belirli süre sonra fiyatı kontrol eder ve doğru/yanlış olarak işaretler.</p>
             <div id="testPanel"></div>
           </div>
-
           <div class="glass p-4">
             <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🧪 Manuel Backtest</h3>
             <p class="text-xs text-slate-500 mb-3">Son 400 mumda botun isabet oranını test eder.</p>
@@ -265,16 +276,11 @@
           </div>
           <div class="glass p-4">
             <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🔔 Fiyat Alarmı</h3>
-            <p class="text-xs text-slate-500 mb-3">Tarayıcı bildirimi (sekme açık kalmalı).</p>
             <div class="space-y-2">
               <input id="alarmFiyat" type="number" placeholder="Örn: 70000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono">
               <button onclick="alarmKur()" class="w-full bg-amber-600 hover:bg-amber-500 rounded-xl py-2.5 font-bold text-sm transition">Alarm Kur</button>
               <div id="alarmDurum" class="text-xs text-center"></div>
             </div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">ℹ️ Bilgi</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">WebSocket canlı veri akışı. MTF onayı olmadan sinyallere uymayın. Her zaman stop-loss kullanın. <b class="text-slate-400">Karar destek aracıdır, yatırım tavsiyesi değildir.</b></p>
           </div>
         </div>
 
@@ -294,19 +300,38 @@
 
 </main>
 
+<!-- RADAR MODAL -->
+<div id="radarModal" class="radar-modal" onclick="if(event.target === this) radarKapat()">
+  <div class="radar-icerik">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🎯</span>
+          <h2 class="text-xl font-bold gradient-text">SİNYAL RADARI</h2>
+        </div>
+        <p class="text-xs text-slate-500 mt-1">20 popüler coin taranıyor — güçlü sinyaller filtrelenir</p>
+      </div>
+      <button onclick="radarKapat()" class="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-red-500/20 border border-white/10 flex items-center justify-center text-lg transition">×</button>
+    </div>
+    <div id="radarSonuc"></div>
+  </div>
+</div>
+
 <script>
 let chart, candleSeries, volumeSeries, ema20Seri, ema50Seri, ema200Seri, vwapSeri;
 let aktifCoin = 'BTCUSDT';
 let aktifTF = '15';
+let tamEkran = false;
 const HIZLI_LISTE = ['BTCUSDT', 'XRPUSDT', 'LITUSDT', 'PAXGUSDT'];
 const TICKER_COINLER = ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'SOLUSDT', 'DOGEUSDT', 'ADAUSDT', 'AVAXUSDT', 'LINKUSDT', 'MATICUSDT', 'DOTUSDT', 'LTCUSDT', 'PAXGUSDT'];
+const RADAR_COINLER = ['BTCUSDT','ETHUSDT','SOLUSDT','XRPUSDT','BNBUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT','LINKUSDT','DOTUSDT','MATICUSDT','LTCUSDT','ATOMUSDT','UNIUSDT','NEARUSDT','APTUSDT','ARBUSDT','OPUSDT','SUIUSDT','INJUSDT'];
 let sonAnaliz = null;
 let alarmFiyat = null;
 const mtfCache = {};
 let TUM_SEMBOLLER = [];
 let sonFiyat = null;
 
-/* OTOMATİK TEST SİSTEMİ */
+/* OTOMATİK TEST */
 let aktifTestler = JSON.parse(localStorage.getItem('aktifTestler') || '[]');
 let tamamlananTestler = JSON.parse(localStorage.getItem('tamamlananTestler') || '[]');
 
@@ -319,6 +344,103 @@ function fmt(n, d = 4) {
 }
 function uyku(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* TAM EKRAN */
+function tamEkranToggle() {
+  tamEkran = !tamEkran;
+  document.body.classList.toggle('tam-ekran', tamEkran);
+  document.getElementById('tamEkranIkon').textContent = tamEkran ? '⛶' : '⛶';
+  setTimeout(() => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); }, 100);
+}
+
+/* SİNYAL RADARI */
+function radarAc() {
+  document.getElementById('radarModal').classList.add('acik');
+  radarTaramayaBasla();
+}
+function radarKapat() {
+  document.getElementById('radarModal').classList.remove('acik');
+}
+async function radarTaramayaBasla() {
+  const el = document.getElementById('radarSonuc');
+  el.innerHTML = `<div class="text-center py-8">
+    <div class="radar-taraniyor text-5xl mb-4">🎯</div>
+    <div class="text-sm text-slate-400">20 coin taranıyor...</div>
+    <div id="radarIlerleme" class="text-xs text-cyan-400 mt-2 mono">0/20</div>
+  </div>`;
+
+  const sonuclar = [];
+  let sayac = 0;
+
+  for (const coin of RADAR_COINLER) {
+    sayac++;
+    document.getElementById('radarIlerleme').textContent = `${sayac}/${RADAR_COINLER.length}`;
+    try {
+      const mumlar = await klineCek(coin, aktifTF, 300);
+      if (!mumlar) continue;
+      const analiz = analizEt(mumlar);
+      const fiyat = mumlar[mumlar.length-1].close;
+      sonuclar.push({
+        coin, karar: analiz.karar, kararRenk: analiz.kararRenk, kararIkon: analiz.kararIkon,
+        guven: parseInt(analiz.guvenYuzde), onayli: analiz.onayliSayi,
+        fiyat, rsi: analiz.rsi, adx: analiz.adx, masterPuan: analiz.masterPuan
+      });
+    } catch(e) {}
+  }
+
+  // Sıralama: güçlü sinyaller önce
+  const guclu = sonuclar.filter(s => s.karar.includes('ÇOK GÜÇLÜ') || s.karar.includes('GÜÇLÜ'));
+  const orta = sonuclar.filter(s => s.karar === 'LONG' || s.karar === 'SHORT');
+  const digerleri = sonuclar.filter(s => !guclu.includes(s) && !orta.includes(s));
+
+  const renderItem = (s, gucluMu) => {
+    const renk = s.karar.includes('LONG') ? 'text-emerald-400' : s.karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
+    const bgRenk = gucluMu ? 'guclu' : '';
+    return `<div class="radar-item ${bgRenk}" onclick="radarCoinSec('${s.coin}')">
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-sm">${s.coin.replace('USDT','')}</span>
+          <span class="${renk} font-bold text-xs">${s.kararIkon} ${s.karar}</span>
+        </div>
+        <span class="text-[10px] mono text-slate-500">${s.onayli}/5 • %${s.guven}</span>
+      </div>
+      <div class="flex items-center justify-between text-[10px] mono text-slate-500">
+        <span>Fiyat: <span class="text-slate-300">$${fmt(s.fiyat)}</span></span>
+        <span>RSI ${s.rsi.toFixed(0)} • ADX ${s.adx.toFixed(0)} • Puan ${s.masterPuan > 0 ? '+' : ''}${s.masterPuan}</span>
+      </div>
+    </div>`;
+  };
+
+  let html = '';
+  if (guclu.length) {
+    html += `<div class="mb-4"><div class="text-[10px] text-cyan-400 uppercase tracking-wider font-bold mb-2">🔥 GÜÇLÜ SİNYALLER (${guclu.length})</div>`;
+    html += guclu.sort((a,b) => Math.abs(b.masterPuan) - Math.abs(a.masterPuan)).map(s => renderItem(s, true)).join('');
+    html += `</div>`;
+  }
+  if (orta.length) {
+    html += `<div class="mb-4"><div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-2">📊 NORMAL SİNYALLER (${orta.length})</div>`;
+    html += orta.map(s => renderItem(s, false)).join('');
+    html += `</div>`;
+  }
+  if (digerleri.length) {
+    html += `<details class="mb-2"><summary class="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2 cursor-pointer hover:text-slate-300">⏸️ DİĞERLERİ (${digerleri.length})</summary><div class="mt-2">`;
+    html += digerleri.map(s => renderItem(s, false)).join('');
+    html += `</div></details>`;
+  }
+  if (!guclu.length && !orta.length) {
+    html = `<div class="text-center py-8 text-slate-500">
+      <div class="text-4xl mb-3">😴</div>
+      <div class="text-sm">Şu an güçlü sinyal yok</div>
+      <div class="text-xs mt-2">Piyasa sakin. Birkaç dakika sonra tekrar dene.</div>
+    </div>`;
+  }
+
+  el.innerHTML = html;
+}
+function radarCoinSec(coin) {
+  radarKapat();
+  coinYukle(coin);
+}
+
 /* TEST SİSTEMİ */
 function sinyalTestKaydet(analiz, coin, tf) {
   if (analiz.karar === 'BEKLE' || analiz.karar.includes('ZAYIF') || analiz.karar.includes('⚠️')) return;
@@ -326,13 +448,7 @@ function sinyalTestKaydet(analiz, coin, tf) {
   const testSuresiDk = sureMap[tf] || 60;
   const mevcut = aktifTestler.find(t => t.coin === coin && t.tf === tf && t.karar === analiz.karar && (Date.now() - t.kayitZamani) < 300000);
   if (mevcut) return;
-  const test = {
-    id: Date.now() + '_' + Math.random().toString(36).slice(2,8),
-    coin, tf, karar: analiz.karar, kararIkon: analiz.kararIkon, guven: analiz.guvenYuzde,
-    girisFiyat: analiz.fiyat, kayitZamani: Date.now(),
-    kontrolZamani: Date.now() + testSuresiDk * 60 * 1000,
-    testSuresiDk, durum: 'BEKLIYOR'
-  };
+  const test = { id: Date.now() + '_' + Math.random().toString(36).slice(2,8), coin, tf, karar: analiz.karar, kararIkon: analiz.kararIkon, guven: analiz.guvenYuzde, girisFiyat: analiz.fiyat, kayitZamani: Date.now(), kontrolZamani: Date.now() + testSuresiDk * 60 * 1000, testSuresiDk, durum: 'BEKLIYOR' };
   aktifTestler.push(test);
   if (aktifTestler.length > 100) aktifTestler = aktifTestler.slice(-100);
   localStorage.setItem('aktifTestler', JSON.stringify(aktifTestler));
@@ -351,14 +467,11 @@ async function testleriKontrolEt(manuel = false) {
       const guncelFiyat = parseFloat(j.result.list[0].lastPrice);
       const degisimYuzde = ((guncelFiyat - test.girisFiyat) / test.girisFiyat) * 100;
       let sonuc;
-      if (test.karar.includes('LONG')) {
-        sonuc = degisimYuzde > 0.1 ? 'DOGRU' : degisimYuzde < -0.1 ? 'YANLIS' : 'NOTR';
-      } else {
-        sonuc = degisimYuzde < -0.1 ? 'DOGRU' : degisimYuzde > 0.1 ? 'YANLIS' : 'NOTR';
-      }
+      if (test.karar.includes('LONG')) sonuc = degisimYuzde > 0.1 ? 'DOGRU' : degisimYuzde < -0.1 ? 'YANLIS' : 'NOTR';
+      else sonuc = degisimYuzde < -0.1 ? 'DOGRU' : degisimYuzde > 0.1 ? 'YANLIS' : 'NOTR';
       tamamlananTestler.push({ ...test, cikisFiyat: guncelFiyat, degisimYuzde, sonuc, tamamlanmaZamani: simdi });
       aktifTestler = aktifTestler.filter(t => t.id !== test.id);
-    } catch(e) { console.error(e); }
+    } catch(e) {}
   }
   if (tamamlananTestler.length > 500) tamamlananTestler = tamamlananTestler.slice(-500);
   localStorage.setItem('aktifTestler', JSON.stringify(aktifTestler));
@@ -378,8 +491,7 @@ function testIstatistikleri() {
     else { kategoriler[k].notr++; toplamNotr++; }
   });
   const toplamSonuc = toplamDogru + toplamYanlis;
-  const genelOran = toplamSonuc > 0 ? (toplamDogru / toplamSonuc * 100) : 0;
-  return { kategoriler, toplamDogru, toplamYanlis, toplamNotr, genelOran, toplam: tamamlananTestler.length };
+  return { kategoriler, toplamDogru, toplamYanlis, toplamNotr, genelOran: toplamSonuc > 0 ? (toplamDogru / toplamSonuc * 100) : 0, toplam: tamamlananTestler.length };
 }
 
 function testPaneliniGuncelle() {
@@ -388,13 +500,7 @@ function testPaneliniGuncelle() {
   const ist = testIstatistikleri();
   const bekleyen = aktifTestler.slice().reverse().slice(0, 10).map(t => {
     const kalan = Math.max(0, Math.ceil((t.kontrolZamani - Date.now()) / 60000));
-    return `<div class="bg-white/[0.02] border border-white/5 rounded-lg p-2 text-xs">
-      <div class="flex justify-between items-center">
-        <div><span class="font-bold">${t.coin.replace('USDT','')}</span><span class="${t.karar.includes('LONG') ? 'text-emerald-400' : 'text-red-400'} ml-2 font-semibold">${t.kararIkon} ${t.karar}</span></div>
-        <span class="text-slate-500 text-[10px] mono">${kalan}dk</span>
-      </div>
-      <div class="text-slate-500 text-[10px] mt-1 mono">Giriş: $${fmt(t.girisFiyat)} • TF: ${t.tf}</div>
-    </div>`;
+    return `<div class="bg-white/[0.02] border border-white/5 rounded-lg p-2 text-xs"><div class="flex justify-between items-center"><div><span class="font-bold">${t.coin.replace('USDT','')}</span><span class="${t.karar.includes('LONG') ? 'text-emerald-400' : 'text-red-400'} ml-2 font-semibold">${t.kararIkon} ${t.karar}</span></div><span class="text-slate-500 text-[10px] mono">${kalan}dk</span></div><div class="text-slate-500 text-[10px] mt-1 mono">Giriş: $${fmt(t.girisFiyat)} • TF: ${t.tf}</div></div>`;
   }).join('') || '<div class="text-slate-500 text-xs text-center py-2">Bekleyen test yok</div>';
 
   const kategoriSirali = Object.entries(ist.kategoriler).sort((a,b) => b[1].toplam - a[1].toplam);
@@ -402,18 +508,11 @@ function testPaneliniGuncelle() {
     const oran = (veri.dogru + veri.yanlis) > 0 ? (veri.dogru / (veri.dogru + veri.yanlis) * 100) : 0;
     const renk = karar.includes('LONG') ? 'text-emerald-400' : karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
     const oranRenk = oran >= 65 ? 'text-emerald-400' : oran >= 55 ? 'text-yellow-400' : oran >= 45 ? 'text-orange-400' : 'text-red-400';
-    return `<div class="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-      <div class="flex justify-between items-center mb-1"><span class="${renk} font-bold text-xs">${karar}</span><span class="${oranRenk} font-bold text-sm mono">%${oran.toFixed(1)}</span></div>
-      <div class="flex gap-2 text-[10px] text-slate-500 mono"><span>Top: ${veri.toplam}</span><span class="text-emerald-400">✓${veri.dogru}</span><span class="text-red-400">✗${veri.yanlis}</span><span>—${veri.notr}</span></div>
-    </div>`;
+    return `<div class="bg-white/[0.02] border border-white/5 rounded-lg p-2.5"><div class="flex justify-between items-center mb-1"><span class="${renk} font-bold text-xs">${karar}</span><span class="${oranRenk} font-bold text-sm mono">%${oran.toFixed(1)}</span></div><div class="flex gap-2 text-[10px] text-slate-500 mono"><span>Top: ${veri.toplam}</span><span class="text-emerald-400">✓${veri.dogru}</span><span class="text-red-400">✗${veri.yanlis}</span><span>—${veri.notr}</span></div></div>`;
   }).join('') || '<div class="text-slate-500 text-xs text-center py-2">Henüz tamamlanan test yok</div>';
 
   const enIyi = kategoriSirali.filter(([_,v]) => v.toplam >= 3).sort((a,b) => (b[1].dogru/(b[1].dogru+b[1].yanlis||1)) - (a[1].dogru/(a[1].dogru+a[1].yanlis||1)))[0];
-  const enIyiHTML = enIyi ? `<div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 mt-2 text-center">
-    <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">🏆 En Güvenilir Sinyal</div>
-    <div class="text-emerald-400 font-bold text-sm">${enIyi[0]}</div>
-    <div class="text-slate-500 text-[10px] mono">${enIyi[1].toplam} test • %${(enIyi[1].dogru/(enIyi[1].dogru+enIyi[1].yanlis||1)*100).toFixed(1)}</div>
-  </div>` : '';
+  const enIyiHTML = enIyi ? `<div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 mt-2 text-center"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">🏆 En Güvenilir Sinyal</div><div class="text-emerald-400 font-bold text-sm">${enIyi[0]}</div><div class="text-slate-500 text-[10px] mono">${enIyi[1].toplam} test • %${(enIyi[1].dogru/(enIyi[1].dogru+enIyi[1].yanlis||1)*100).toFixed(1)}</div></div>` : '';
 
   el.innerHTML = `
     <div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 rounded-xl p-4 mb-3">
@@ -429,31 +528,19 @@ function testPaneliniGuncelle() {
       </div>
       ${enIyiHTML}
     </div>
-    <div class="mb-3">
-      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">📊 Sinyal Tipi Bazlı İsabet</div>
-      <div class="space-y-2">${kategoriRows}</div>
-    </div>
-    <div class="mb-3">
-      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">⏳ Bekleyen (${aktifTestler.length})</div>
-      <div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div>
-    </div>
-    <div class="flex gap-2">
-      <button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold hover:bg-cyan-500/20 transition">🔄 Şimdi Kontrol Et</button>
-      <button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold hover:bg-red-500/20 transition">🗑️</button>
-    </div>
+    <div class="mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">📊 Sinyal Tipi Bazlı İsabet</div><div class="space-y-2">${kategoriRows}</div></div>
+    <div class="mb-3"><div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">⏳ Bekleyen (${aktifTestler.length})</div><div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div></div>
+    <div class="flex gap-2"><button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold hover:bg-cyan-500/20 transition">🔄 Şimdi Kontrol Et</button><button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold hover:bg-red-500/20 transition">🗑️</button></div>
   `;
 }
-
 function testleriTemizle() {
   if (!confirm('Tüm test verilerini silmek istiyor musun?')) return;
-  aktifTestler = [];
-  tamamlananTestler = [];
-  localStorage.removeItem('aktifTestler');
-  localStorage.removeItem('tamamlananTestler');
+  aktifTestler = []; tamamlananTestler = [];
+  localStorage.removeItem('aktifTestler'); localStorage.removeItem('tamamlananTestler');
   testPaneliniGuncelle();
 }
 
-/* TICKER TAPE */
+/* TICKER */
 async function tickerYukle() {
   try {
     const r = await fetch('https://api.bybit.com/v5/market/tickers?category=spot');
@@ -463,14 +550,12 @@ async function tickerYukle() {
     j.result.list.forEach(t => { map[t.symbol] = t; });
     const el = document.getElementById('ticker');
     let html = '';
-    const coins = TICKER_COINLER.filter(s => map[s]);
-    coins.forEach(s => {
+    TICKER_COINLER.filter(s => map[s]).forEach(s => {
       const t = map[s];
       const deg = parseFloat(t.price24hPcnt || 0) * 100;
       const renk = deg >= 0 ? 'ticker-up' : 'ticker-down';
       const ok = deg >= 0 ? '▲' : '▼';
-      const coinAd = s.replace('USDT','');
-      html += `<span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-sym">${coinAd}</span><span class="mono text-slate-300">$${parseFloat(t.lastPrice).toLocaleString('tr-TR', {maximumFractionDigits: 6})}</span><span class="${renk} mono font-semibold">${ok} ${Math.abs(deg).toFixed(2)}%</span></span>`;
+      html += `<span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-sym">${s.replace('USDT','')}</span><span class="mono text-slate-300">$${parseFloat(t.lastPrice).toLocaleString('tr-TR', {maximumFractionDigits: 6})}</span><span class="${renk} mono font-semibold">${ok} ${Math.abs(deg).toFixed(2)}%</span></span>`;
     });
     el.innerHTML = html + html;
   } catch(e) {}
@@ -480,8 +565,7 @@ async function tickerYukle() {
 let ws = null, wsAktifCoin = null, wsAktifTF = null, wsPingInterval = null, wsYenidenDeneme = 0;
 
 function wsDurumGuncelle(durum, mesaj) {
-  const dot = document.getElementById('canliDot');
-  const yazi = document.getElementById('canliYazi');
+  const dot = document.getElementById('canliDot'), yazi = document.getElementById('canliYazi');
   if (!dot || !yazi) return;
   if (durum === 'canli') { dot.className = 'canli-dot'; yazi.className = 'text-emerald-400 font-semibold text-xs'; yazi.textContent = 'CANLI'; }
   else if (durum === 'baglaniyor') { dot.className = 'canli-dot baglaniyor'; yazi.className = 'text-amber-400 font-semibold text-xs'; yazi.textContent = mesaj || 'Bağlanıyor'; }
@@ -491,11 +575,9 @@ function wsDurumGuncelle(durum, mesaj) {
 function wsBaslat() {
   if (ws && (ws.readyState === 0 || ws.readyState === 1)) return;
   wsDurumGuncelle('baglaniyor');
-  try { ws = new WebSocket('wss://stream.bybit.com/v5/public/spot'); }
-  catch (e) { setTimeout(wsBaslat, 3000); return; }
+  try { ws = new WebSocket('wss://stream.bybit.com/v5/public/spot'); } catch (e) { setTimeout(wsBaslat, 3000); return; }
   ws.onopen = () => {
-    wsYenidenDeneme = 0;
-    wsDurumGuncelle('canli');
+    wsYenidenDeneme = 0; wsDurumGuncelle('canli');
     if (aktifCoin) wsAbone(aktifCoin, aktifTF);
     if (wsPingInterval) clearInterval(wsPingInterval);
     wsPingInterval = setInterval(() => { if (ws && ws.readyState === 1) ws.send(JSON.stringify({ op: 'ping' })); }, 20000);
@@ -524,13 +606,9 @@ function wsMesajIsle(m) {
   if (!m.topic) return;
   if (m.topic.startsWith('kline.')) {
     const k = m.data && m.data[0];
-    if (!k) return;
-    if (m.topic !== `kline.${aktifTF}.${aktifCoin}`) return;
+    if (!k || m.topic !== `kline.${aktifTF}.${aktifCoin}`) return;
     const mum = { time: Math.floor(parseInt(k.start) / 1000), open: parseFloat(k.open), high: parseFloat(k.high), low: parseFloat(k.low), close: parseFloat(k.close), volume: parseFloat(k.volume) };
-    try {
-      candleSeries.update(mum);
-      volumeSeries.update({ time: mum.time, value: mum.volume, color: mum.close >= mum.open ? '#10b98133' : '#ef444433' });
-    } catch (e) {}
+    try { candleSeries.update(mum); volumeSeries.update({ time: mum.time, value: mum.volume, color: mum.close >= mum.open ? '#10b98133' : '#ef444433' }); } catch (e) {}
     fiyatGuncelle(mum.close);
   }
   if (m.topic.startsWith('tickers.')) {
@@ -539,29 +617,20 @@ function wsMesajIsle(m) {
     const fiyat = parseFloat(t.lastPrice);
     if (!isNaN(fiyat) && fiyat > 0) fiyatGuncelle(fiyat);
     const deg = parseFloat(t.price24hPcnt) * 100;
-    if (!isNaN(deg)) {
-      const el = document.getElementById('aktifDegisim');
-      el.textContent = (deg >= 0 ? '+' : '') + deg.toFixed(2) + '% (24s)';
-      el.className = 'mono text-sm font-semibold ' + (deg >= 0 ? 'text-emerald-400' : 'text-red-400');
-    }
+    if (!isNaN(deg)) { const el = document.getElementById('aktifDegisim'); el.textContent = (deg >= 0 ? '+' : '') + deg.toFixed(2) + '% (24s)'; el.className = 'mono text-sm font-semibold ' + (deg >= 0 ? 'text-emerald-400' : 'text-red-400'); }
     if (t.highPrice24h) document.getElementById('statYuksek').textContent = '$' + fmt(parseFloat(t.highPrice24h));
     if (t.lowPrice24h) document.getElementById('statDusuk').textContent = '$' + fmt(parseFloat(t.lowPrice24h));
-    if (t.volume24h) {
-      const v = parseFloat(t.volume24h);
-      document.getElementById('statHacim').textContent = v > 1000000 ? (v/1000000).toFixed(2) + 'M' : v.toFixed(0);
-    }
+    if (t.volume24h) { const v = parseFloat(t.volume24h); document.getElementById('statHacim').textContent = v > 1000000 ? (v/1000000).toFixed(2) + 'M' : v.toFixed(0); }
   }
 }
 
 function fiyatGuncelle(yeniFiyat) {
   const el = document.getElementById('aktifFiyat');
   if (!el) return;
-  const eski = sonFiyat;
-  sonFiyat = yeniFiyat;
+  const eski = sonFiyat; sonFiyat = yeniFiyat;
   el.textContent = '$' + fmt(yeniFiyat);
   if (eski !== null && eski !== yeniFiyat) {
-    el.classList.remove('fiyat-up', 'fiyat-down');
-    void el.offsetWidth;
+    el.classList.remove('fiyat-up', 'fiyat-down'); void el.offsetWidth;
     el.classList.add(yeniFiyat > eski ? 'fiyat-up' : 'fiyat-down');
     setTimeout(() => el.classList.remove('fiyat-up', 'fiyat-down'), 600);
   }
@@ -572,19 +641,14 @@ async function sembolleriYukle() {
   try {
     const r = await fetch('https://api.bybit.com/v5/market/instruments-info?category=spot&limit=1000');
     const j = await r.json();
-    if (j.retCode === 0 && j.result?.list) {
-      TUM_SEMBOLLER = j.result.list.filter(x => x.quoteCoin === 'USDT' && x.status === 'Trading').map(x => x.symbol).sort();
-    }
+    if (j.retCode === 0 && j.result?.list) TUM_SEMBOLLER = j.result.list.filter(x => x.quoteCoin === 'USDT' && x.status === 'Trading').map(x => x.symbol).sort();
   } catch(e) {}
 }
 
 function akilliSembolDuzelt(s) {
   s = (s || '').toUpperCase().trim().replace(/\s/g, '').replace('/', '');
   if (!s) return null;
-  if (TUM_SEMBOLLER.length === 0) {
-    if (s.endsWith('USDT') || s.endsWith('USDC') || s.endsWith('BTC') || s.endsWith('ETH')) return s;
-    return s + 'USDT';
-  }
+  if (TUM_SEMBOLLER.length === 0) { if (s.endsWith('USDT') || s.endsWith('USDC') || s.endsWith('BTC') || s.endsWith('ETH')) return s; return s + 'USDT'; }
   if (TUM_SEMBOLLER.includes(s)) return s;
   if (TUM_SEMBOLLER.includes(s + 'USDT')) return s + 'USDT';
   return null;
@@ -594,46 +658,21 @@ function aramaOneriGoster(q) {
   const el = document.getElementById('aramaOneri');
   q = (q || '').toUpperCase().trim();
   if (!q) { el.classList.add('hidden'); return; }
-  if (TUM_SEMBOLLER.length === 0) {
-    el.innerHTML = '<div class="p-3 text-xs text-slate-500 text-center"><span class="spinner"></span> Coin listesi yükleniyor...</div>';
-    el.classList.remove('hidden');
-    return;
-  }
+  if (TUM_SEMBOLLER.length === 0) { el.innerHTML = '<div class="p-3 text-xs text-slate-500 text-center"><span class="spinner"></span> Yükleniyor...</div>'; el.classList.remove('hidden'); return; }
   const base = q.replace('USDT', '').replace('USDC', '');
   const eslesenler = TUM_SEMBOLLER.filter(s => s.startsWith(q) || s.replace('USDT','').replace('USDC','').startsWith(base)).slice(0, 15);
-  if (eslesenler.length === 0) {
-    el.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">"${q}" için coin bulunamadı</div>`;
-    el.classList.remove('hidden');
-    return;
-  }
+  if (!eslesenler.length) { el.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">"${q}" bulunamadı</div>`; el.classList.remove('hidden'); return; }
   el.innerHTML = eslesenler.map(s => {
-    const coin = s.replace('USDT', '').replace('USDC', '');
-    const quote = s.replace(coin, '');
+    const coin = s.replace('USDT', '').replace('USDC', ''), quote = s.replace(coin, '');
     return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b border-white/5 last:border-0 flex justify-between"><span class="font-semibold text-slate-100">${coin}</span><span class="text-slate-500 text-xs mono">${quote}</span></button>`;
   }).join('');
   el.classList.remove('hidden');
 }
+function oneriSec(sym) { document.getElementById('aramaOneri').classList.add('hidden'); document.getElementById('aramaCoin').value = ''; coinYukle(sym); }
 
-function oneriSec(sym) {
-  document.getElementById('aramaOneri').classList.add('hidden');
-  document.getElementById('aramaCoin').value = '';
-  coinYukle(sym);
-}
-
-function sma(d, p) {
-  const o = [];
-  for (let i = 0; i < d.length; i++) {
-    if (i < p - 1) { o.push(null); continue; }
-    let s = 0; for (let j = i-p+1; j <= i; j++) s += d[j];
-    o.push(s / p);
-  }
-  return o;
-}
-function ema(d, p) {
-  const k = 2/(p+1); const o = [d[0]];
-  for (let i = 1; i < d.length; i++) o.push(d[i]*k + o[i-1]*(1-k));
-  return o;
-}
+/* GÖSTERGELER */
+function sma(d, p) { const o = []; for (let i = 0; i < d.length; i++) { if (i < p - 1) { o.push(null); continue; } let s = 0; for (let j = i-p+1; j <= i; j++) s += d[j]; o.push(s / p); } return o; }
+function ema(d, p) { const k = 2/(p+1); const o = [d[0]]; for (let i = 1; i < d.length; i++) o.push(d[i]*k + o[i-1]*(1-k)); return o; }
 function rsi(d, p = 14) {
   if (d.length < p+1) return [];
   const o = new Array(p).fill(null);
@@ -641,84 +680,48 @@ function rsi(d, p = 14) {
   for (let i = 1; i <= p; i++) { const f = d[i]-d[i-1]; if (f>=0) k+=f; else y-=f; }
   let ok = k/p, oy = y/p;
   o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy));
-  for (let i = p+1; i < d.length; i++) {
-    const f = d[i]-d[i-1];
-    ok = (ok*(p-1) + (f>0?f:0))/p;
-    oy = (oy*(p-1) + (f<0?-f:0))/p;
-    o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy));
-  }
+  for (let i = p+1; i < d.length; i++) { const f = d[i]-d[i-1]; ok = (ok*(p-1) + (f>0?f:0))/p; oy = (oy*(p-1) + (f<0?-f:0))/p; o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy)); }
   return o;
 }
-function macd(d, h=12, y=26, s=9) {
-  const eH = ema(d,h), eY = ema(d,y);
-  const line = eH.map((v,i) => v - eY[i]);
-  const sig = ema(line, s);
-  return { line, sig, hist: line.map((v,i) => v - sig[i]) };
-}
+function macd(d, h=12, y=26, s=9) { const eH = ema(d,h), eY = ema(d,y); const line = eH.map((v,i) => v - eY[i]); const sig = ema(line, s); return { line, sig, hist: line.map((v,i) => v - sig[i]) }; }
 function bollinger(d, p=20, sd=2) {
   const orta = sma(d,p); const ust = [], alt = [];
   for (let i = 0; i < d.length; i++) {
     if (orta[i] === null) { ust.push(null); alt.push(null); continue; }
     let t = 0; for (let j = i-p+1; j <= i; j++) t += Math.pow(d[j]-orta[i], 2);
-    const s = Math.sqrt(t/p);
-    ust.push(orta[i] + sd*s); alt.push(orta[i] - sd*s);
+    const s = Math.sqrt(t/p); ust.push(orta[i] + sd*s); alt.push(orta[i] - sd*s);
   }
   return { orta, ust, alt };
 }
 function stochastic(y, d, c, p=14, s=3) {
   const K = [];
-  for (let i = 0; i < c.length; i++) {
-    if (i < p-1) { K.push(null); continue; }
-    const yM = Math.max(...y.slice(i-p+1, i+1));
-    const dM = Math.min(...d.slice(i-p+1, i+1));
-    K.push(yM === dM ? 50 : ((c[i]-dM)/(yM-dM))*100);
-  }
+  for (let i = 0; i < c.length; i++) { if (i < p-1) { K.push(null); continue; } const yM = Math.max(...y.slice(i-p+1, i+1)); const dM = Math.min(...d.slice(i-p+1, i+1)); K.push(yM === dM ? 50 : ((c[i]-dM)/(yM-dM))*100); }
   const t = K.map(v => v === null ? 50 : v);
   return { K, D: sma(t, s) };
 }
-function atr(y, d, c, p=14) {
-  const tr = [y[0]-d[0]];
-  for (let i = 1; i < c.length; i++) tr.push(Math.max(y[i]-d[i], Math.abs(y[i]-c[i-1]), Math.abs(d[i]-c[i-1])));
-  return sma(tr, p);
-}
+function atr(y, d, c, p=14) { const tr = [y[0]-d[0]]; for (let i = 1; i < c.length; i++) tr.push(Math.max(y[i]-d[i], Math.abs(y[i]-c[i-1]), Math.abs(d[i]-c[i-1]))); return sma(tr, p); }
 function adx(y, d, c, p=14) {
   const pDM = [0], mDM = [0], tr = [y[0]-d[0]];
-  for (let i = 1; i < c.length; i++) {
-    const yF = y[i]-y[i-1], dF = d[i-1]-d[i];
-    pDM.push(yF > dF && yF > 0 ? yF : 0);
-    mDM.push(dF > yF && dF > 0 ? dF : 0);
-    tr.push(Math.max(y[i]-d[i], Math.abs(y[i]-c[i-1]), Math.abs(d[i]-c[i-1])));
-  }
-  const atrS = sma(tr, p);
-  const pDI = [], mDI = [], dx = [];
+  for (let i = 1; i < c.length; i++) { const yF = y[i]-y[i-1], dF = d[i-1]-d[i]; pDM.push(yF > dF && yF > 0 ? yF : 0); mDM.push(dF > yF && dF > 0 ? dF : 0); tr.push(Math.max(y[i]-d[i], Math.abs(y[i]-c[i-1]), Math.abs(d[i]-c[i-1]))); }
+  const atrS = sma(tr, p); const pDI = [], mDI = [], dx = [];
   const pDMS = sma(pDM, p), mDMS = sma(mDM, p);
   for (let i = 0; i < c.length; i++) {
     if (atrS[i] === null || atrS[i] === 0) { pDI.push(null); mDI.push(null); dx.push(null); continue; }
     const pv = 100*pDMS[i]/atrS[i], mv = 100*mDMS[i]/atrS[i];
-    pDI.push(pv); mDI.push(mv);
-    const t = pv + mv; dx.push(t === 0 ? 0 : 100*Math.abs(pv-mv)/t);
+    pDI.push(pv); mDI.push(mv); const t = pv + mv; dx.push(t === 0 ? 0 : 100*Math.abs(pv-mv)/t);
   }
   return { adx: sma(dx.map(v => v === null ? 0 : v), p), plusDI: pDI, minusDI: mDI };
 }
 function vwapHesaplaSon100(mumlar) {
-  const n = mumlar.length;
-  const baslangic = Math.max(0, n - 100);
+  const n = mumlar.length; const baslangic = Math.max(0, n - 100);
   const vwapDegerleri = new Array(n).fill(null);
   let kumTop = 0, kumHac = 0;
-  for (let i = baslangic; i < n; i++) {
-    const m = mumlar[i];
-    const tp = (m.high + m.low + m.close) / 3;
-    kumTop += tp * m.volume;
-    kumHac += m.volume;
-    vwapDegerleri[i] = kumHac > 0 ? kumTop / kumHac : m.close;
-  }
+  for (let i = baslangic; i < n; i++) { const m = mumlar[i]; const tp = (m.high + m.low + m.close) / 3; kumTop += tp * m.volume; kumHac += m.volume; vwapDegerleri[i] = kumHac > 0 ? kumTop / kumHac : m.close; }
   return vwapDegerleri;
 }
-function vwapSon(mumlar) {
-  const arr = vwapHesaplaSon100(mumlar);
-  return arr[arr.length-1] || mumlar[mumlar.length-1].close;
-}
+function vwapSon(mumlar) { const arr = vwapHesaplaSon100(mumlar); return arr[arr.length-1] || mumlar[mumlar.length-1].close; }
 
+/* FVG / FORMASYON / YAPI / DIVERGENCE */
 function fvgBul(mumlar) {
   const fvgler = [];
   for (let i = 2; i < mumlar.length; i++) {
@@ -726,11 +729,7 @@ function fvgBul(mumlar) {
     if (m1.high < m3.low) fvgler.push({ tip: 'bullish', ust: m3.low, alt: m1.high, orta: (m3.low+m1.high)/2, zaman: m3.time, boyut: ((m3.low-m1.high)/m1.high)*100, dolduruldu: false });
     if (m1.low > m3.high) fvgler.push({ tip: 'bearish', ust: m1.low, alt: m3.high, orta: (m1.low+m3.high)/2, zaman: m3.time, boyut: ((m1.low-m3.high)/m1.low)*100, dolduruldu: false });
   }
-  for (const f of fvgler) {
-    const sonrasi = mumlar.filter(m => m.time > f.zaman);
-    if (f.tip === 'bullish' && sonrasi.some(m => m.low <= f.orta)) f.dolduruldu = true;
-    if (f.tip === 'bearish' && sonrasi.some(m => m.high >= f.orta)) f.dolduruldu = true;
-  }
+  for (const f of fvgler) { const sonrasi = mumlar.filter(m => m.time > f.zaman); if (f.tip === 'bullish' && sonrasi.some(m => m.low <= f.orta)) f.dolduruldu = true; if (f.tip === 'bearish' && sonrasi.some(m => m.high >= f.orta)) f.dolduruldu = true; }
   return fvgler.filter(f => !f.dolduruldu).slice(-8);
 }
 function mumFormasyonlari(mumlar) {
@@ -738,15 +737,11 @@ function mumFormasyonlari(mumlar) {
   if (son < 5) return [];
   const F = [];
   const m0 = mumlar[son], m1 = mumlar[son-1], m2 = mumlar[son-2];
-  const govde = (m) => Math.abs(m.close - m.open);
-  const ustFitil = (m) => m.high - Math.max(m.open, m.close);
-  const altFitil = (m) => Math.min(m.open, m.close) - m.low;
-  const yon = (m) => m.close >= m.open ? 'bull' : 'bear';
-  let ortG = 0; for (let i = son-14; i < son; i++) ortG += govde(mumlar[i]);
-  ortG /= 14;
+  const govde = (m) => Math.abs(m.close - m.open), ustFitil = (m) => m.high - Math.max(m.open, m.close), altFitil = (m) => Math.min(m.open, m.close) - m.low, yon = (m) => m.close >= m.open ? 'bull' : 'bear';
+  let ortG = 0; for (let i = son-14; i < son; i++) ortG += govde(mumlar[i]); ortG /= 14;
   if (yon(m1) === 'bear' && yon(m0) === 'bull' && m0.close > m1.open && m0.open < m1.close && govde(m0) > govde(m1) * 1.1) F.push({ ad: 'Bullish Engulfing', tip: 'AL', guc: 3, aciklama: 'Yutan boğa' });
   if (yon(m1) === 'bull' && yon(m0) === 'bear' && m0.open > m1.close && m0.close < m1.open && govde(m0) > govde(m1) * 1.1) F.push({ ad: 'Bearish Engulfing', tip: 'SAT', guc: -3, aciklama: 'Yutan ayı' });
-  if (govde(m0) > 0 && altFitil(m0) > govde(m0) * 2 && ustFitil(m0) < govde(m0) * 0.3 && yon(m0) === 'bull' && m0.low < m1.low) F.push({ ad: 'Hammer', tip: 'AL', guc: 2, aciklama: 'Çekiç — dip' });
+  if (govde(m0) > 0 && altFitil(m0) > govde(m0) * 2 && ustFitil(m0) < govde(m0) * 0.3 && yon(m0) === 'bull' && m0.low < m1.low) F.push({ ad: 'Hammer', tip: 'AL', guc: 2, aciklama: 'Çekiç' });
   if (govde(m0) > 0 && ustFitil(m0) > govde(m0) * 2 && altFitil(m0) < govde(m0) * 0.3 && yon(m0) === 'bear' && m0.high > m1.high) F.push({ ad: 'Shooting Star', tip: 'SAT', guc: -2, aciklama: 'Kayan yıldız' });
   if (govde(m0) < ortG * 0.1 && altFitil(m0) > ortG * 2 && ustFitil(m0) < ortG * 0.2) F.push({ ad: 'Dragonfly Doji', tip: 'AL', guc: 3, aciklama: 'Güçlü al' });
   if (govde(m0) < ortG * 0.1 && ustFitil(m0) > ortG * 2 && altFitil(m0) < ortG * 0.2) F.push({ ad: 'Gravestone Doji', tip: 'SAT', guc: -3, aciklama: 'Güçlü sat' });
@@ -762,97 +757,54 @@ function piyasaYapisi(mumlar) {
   const pivots = [], lb = 5;
   for (let i = lb; i < mumlar.length - lb; i++) {
     let yP = true, dP = true;
-    for (let j = 1; j <= lb; j++) {
-      if (mumlar[i].high <= mumlar[i-j].high || mumlar[i].high <= mumlar[i+j].high) yP = false;
-      if (mumlar[i].low >= mumlar[i-j].low || mumlar[i].low >= mumlar[i+j].low) dP = false;
-    }
-    if (yP) pivots.push({ tip: 'H', fiyat: mumlar[i].high, idx: i });
-    if (dP) pivots.push({ tip: 'L', fiyat: mumlar[i].low, idx: i });
+    for (let j = 1; j <= lb; j++) { if (mumlar[i].high <= mumlar[i-j].high || mumlar[i].high <= mumlar[i+j].high) yP = false; if (mumlar[i].low >= mumlar[i-j].low || mumlar[i].low >= mumlar[i+j].low) dP = false; }
+    if (yP) pivots.push({ tip: 'H', fiyat: mumlar[i].high, idx: i }); if (dP) pivots.push({ tip: 'L', fiyat: mumlar[i].low, idx: i });
   }
   pivots.sort((a,b) => a.idx - b.idx);
   const sonP = pivots.slice(-8);
-  const tepeler = sonP.filter(p => p.tip === 'H');
-  const dipler = sonP.filter(p => p.tip === 'L');
+  const tepeler = sonP.filter(p => p.tip === 'H'), dipler = sonP.filter(p => p.tip === 'L');
   let yapi = 'BELİRSİZ', aciklama = 'Yeterli veri yok';
   if (tepeler.length >= 2 && dipler.length >= 2) {
     const t = tepeler.slice(-2), d = dipler.slice(-2);
-    const yT = t[1].fiyat > t[0].fiyat, yD = d[1].fiyat > d[0].fiyat;
-    const dT = t[1].fiyat < t[0].fiyat, dD = d[1].fiyat < d[0].fiyat;
-    if (yT && yD) { yapi = 'YUKARI TREND'; aciklama = 'HH + HL'; }
-    else if (dT && dD) { yapi = 'AŞAĞI TREND'; aciklama = 'LH + LL'; }
-    else if (yT && dD) { yapi = 'GENİŞLEYEN'; aciklama = 'Volatilite artıyor'; }
-    else if (dT && yD) { yapi = 'DARALAN'; aciklama = 'Sıkışma'; }
+    const yT = t[1].fiyat > t[0].fiyat, yD = d[1].fiyat > d[0].fiyat, dT = t[1].fiyat < t[0].fiyat, dD = d[1].fiyat < d[0].fiyat;
+    if (yT && yD) { yapi = 'YUKARI TREND'; aciklama = 'HH + HL'; } else if (dT && dD) { yapi = 'AŞAĞI TREND'; aciklama = 'LH + LL'; } else if (yT && dD) { yapi = 'GENİŞLEYEN'; aciklama = 'Volatilite artıyor'; } else if (dT && yD) { yapi = 'DARALAN'; aciklama = 'Sıkışma'; }
   }
   const ekstra = [];
-  if (tepeler.length >= 2) {
-    const t1 = tepeler[tepeler.length-2], t2 = tepeler[tepeler.length-1];
-    if (Math.abs(t1.fiyat - t2.fiyat) / t1.fiyat < 0.02) ekstra.push('⚠️ Çift Tepe — düşüş sinyali');
-  }
-  if (dipler.length >= 2) {
-    const d1 = dipler[dipler.length-2], d2 = dipler[dipler.length-1];
-    if (Math.abs(d1.fiyat - d2.fiyat) / d1.fiyat < 0.02) ekstra.push('✅ Çift Dip — yükseliş sinyali');
-  }
+  if (tepeler.length >= 2) { const t1 = tepeler[tepeler.length-2], t2 = tepeler[tepeler.length-1]; if (Math.abs(t1.fiyat - t2.fiyat) / t1.fiyat < 0.02) ekstra.push('⚠️ Çift Tepe — düşüş sinyali'); }
+  if (dipler.length >= 2) { const d1 = dipler[dipler.length-2], d2 = dipler[dipler.length-1]; if (Math.abs(d1.fiyat - d2.fiyat) / d1.fiyat < 0.02) ekstra.push('✅ Çift Dip — yükseliş sinyali'); }
   return { yapi, aciklama, ekstra, sonPivotlar: sonP };
 }
 function divergenceBul(mumlar) {
-  const kapanis = mumlar.map(m => m.close);
-  const r = rsi(kapanis, 14);
-  const m = macd(kapanis);
+  const kapanis = mumlar.map(m => m.close), r = rsi(kapanis, 14), m = macd(kapanis);
   const n = mumlar.length, lb = 5;
   const highs = [], lows = [];
   for (let i = lb; i < n - lb; i++) {
     let yP = true, dP = true;
-    for (let j = 1; j <= lb; j++) {
-      if (mumlar[i].high <= mumlar[i-j].high || mumlar[i].high <= mumlar[i+j].high) yP = false;
-      if (mumlar[i].low >= mumlar[i-j].low || mumlar[i].low >= mumlar[i+j].low) dP = false;
-    }
-    if (yP) highs.push({ idx: i, fiyat: mumlar[i].high, rsi: r[i] });
-    if (dP) lows.push({ idx: i, fiyat: mumlar[i].low, rsi: r[i] });
+    for (let j = 1; j <= lb; j++) { if (mumlar[i].high <= mumlar[i-j].high || mumlar[i].high <= mumlar[i+j].high) yP = false; if (mumlar[i].low >= mumlar[i-j].low || mumlar[i].low >= mumlar[i+j].low) dP = false; }
+    if (yP) highs.push({ idx: i, fiyat: mumlar[i].high, rsi: r[i] }); if (dP) lows.push({ idx: i, fiyat: mumlar[i].low, rsi: r[i] });
   }
   const sonuclar = [];
-  if (highs.length >= 2) {
-    const h1 = highs[highs.length-2], h2 = highs[highs.length-1];
-    if (h2.fiyat > h1.fiyat && h2.rsi < h1.rsi - 3) sonuclar.push({ tip: 'bearish', ad: 'RSI Bearish Divergence', aciklama: 'Fiyat yeni tepe ama RSI yapamadı', guc: -3 });
-  }
-  if (lows.length >= 2) {
-    const l1 = lows[lows.length-2], l2 = lows[lows.length-1];
-    if (l2.fiyat < l1.fiyat && l2.rsi > l1.rsi + 3) sonuclar.push({ tip: 'bullish', ad: 'RSI Bullish Divergence', aciklama: 'Fiyat yeni dip ama RSI yapamadı', guc: 3 });
-  }
-  if (highs.length >= 2) {
-    const h1 = highs[highs.length-2], h2 = highs[highs.length-1];
-    const m1 = m.hist[h1.idx], m2 = m.hist[h2.idx];
-    if (h2.fiyat > h1.fiyat && m2 < m1) sonuclar.push({ tip: 'bearish', ad: 'MACD Bearish Divergence', aciklama: 'Fiyat tepe, MACD düşüyor', guc: -2 });
-  }
-  if (lows.length >= 2) {
-    const l1 = lows[lows.length-2], l2 = lows[lows.length-1];
-    const m1 = m.hist[l1.idx], m2 = m.hist[l2.idx];
-    if (l2.fiyat < l1.fiyat && m2 > m1) sonuclar.push({ tip: 'bullish', ad: 'MACD Bullish Divergence', aciklama: 'Fiyat dip, MACD yükseliyor', guc: 2 });
-  }
+  if (highs.length >= 2) { const h1 = highs[highs.length-2], h2 = highs[highs.length-1]; if (h2.fiyat > h1.fiyat && h2.rsi < h1.rsi - 3) sonuclar.push({ tip: 'bearish', ad: 'RSI Bearish Divergence', aciklama: 'Fiyat tepe, RSI yapamadı', guc: -3 }); }
+  if (lows.length >= 2) { const l1 = lows[lows.length-2], l2 = lows[lows.length-1]; if (l2.fiyat < l1.fiyat && l2.rsi > l1.rsi + 3) sonuclar.push({ tip: 'bullish', ad: 'RSI Bullish Divergence', aciklama: 'Fiyat dip, RSI yapamadı', guc: 3 }); }
+  if (highs.length >= 2) { const h1 = highs[highs.length-2], h2 = highs[highs.length-1]; const m1 = m.hist[h1.idx], m2 = m.hist[h2.idx]; if (h2.fiyat > h1.fiyat && m2 < m1) sonuclar.push({ tip: 'bearish', ad: 'MACD Bearish Divergence', aciklama: 'Fiyat tepe, MACD düşüyor', guc: -2 }); }
+  if (lows.length >= 2) { const l1 = lows[lows.length-2], l2 = lows[lows.length-1]; const m1 = m.hist[l1.idx], m2 = m.hist[l2.idx]; if (l2.fiyat < l1.fiyat && m2 > m1) sonuclar.push({ tip: 'bullish', ad: 'MACD Bullish Divergence', aciklama: 'Fiyat dip, MACD yükseliyor', guc: 2 }); }
   return sonuclar;
 }
 function fibonacciBul(mumlar) {
   const yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low);
-  const son60Y = Math.max(...yuk.slice(-60));
-  const son60D = Math.min(...dus.slice(-60));
-  const sonF = mumlar[mumlar.length-1].close;
-  const fark = son60Y - son60D;
+  const son60Y = Math.max(...yuk.slice(-60)), son60D = Math.min(...dus.slice(-60));
+  const sonF = mumlar[mumlar.length-1].close, fark = son60Y - son60D;
   const oranlar = [0.236, 0.382, 0.5, 0.618, 0.786];
   const seviyeler = oranlar.map(o => ({ oran: (o*100).toFixed(1) + '%', fiyat: son60D + fark * o }));
-  const ort = (son60Y + son60D) / 2;
-  const trend = sonF > ort ? 'yukarı' : 'aşağı';
+  const trend = sonF > (son60Y + son60D) / 2 ? 'yukarı' : 'aşağı';
   return { ust: son60Y, alt: son60D, seviyeler, trend, fiyat: sonF };
 }
 function volumeProfileBul(mumlar, bins = 25) {
   const son = mumlar.slice(-200);
-  const yuk = Math.max(...son.map(m => m.high));
-  const dus = Math.min(...son.map(m => m.low));
+  const yuk = Math.max(...son.map(m => m.high)), dus = Math.min(...son.map(m => m.low));
   const adim = (yuk - dus) / bins;
   const kovalar = Array(bins).fill(0).map((_, i) => ({ hacim: 0, alt: dus + i*adim, ust: dus + (i+1)*adim }));
-  son.forEach(m => {
-    const tp = (m.high + m.low + m.close) / 3;
-    const idx = Math.min(bins - 1, Math.max(0, Math.floor((tp - dus) / adim)));
-    kovalar[idx].hacim += m.volume;
-  });
+  son.forEach(m => { const tp = (m.high + m.low + m.close) / 3; const idx = Math.min(bins - 1, Math.max(0, Math.floor((tp - dus) / adim))); kovalar[idx].hacim += m.volume; });
   const sirali = [...kovalar].sort((a,b) => b.hacim - a.hacim);
   return { poc: sirali[0], ustKovalar: sirali.slice(0, 3), kovalar: sirali };
 }
@@ -860,197 +812,111 @@ function volumeProfileBul(mumlar, bins = 25) {
 async function klineCek(symbol, interval = '15', limit = 500) {
   try {
     const url = `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval}&limit=${limit}`;
-    const r = await fetch(url);
-    const j = await r.json();
+    const r = await fetch(url), j = await r.json();
     if (j.retCode !== 0 || !j.result?.list?.length) return null;
-    return j.result.list.reverse().map(k => ({
-      time: Math.floor(parseInt(k[0]) / 1000),
-      open: parseFloat(k[1]), high: parseFloat(k[2]),
-      low: parseFloat(k[3]), close: parseFloat(k[4]),
-      volume: parseFloat(k[5])
-    }));
+    return j.result.list.reverse().map(k => ({ time: Math.floor(parseInt(k[0]) / 1000), open: parseFloat(k[1]), high: parseFloat(k[2]), low: parseFloat(k[3]), close: parseFloat(k[4]), volume: parseFloat(k[5]) }));
   } catch (e) { return null; }
 }
 
 function analizEt(mumlar) {
-  const kapanis = mumlar.map(m => m.close);
-  const yuk = mumlar.map(m => m.high);
-  const dus = mumlar.map(m => m.low);
-  const hacim = mumlar.map(m => m.volume);
-  const son = kapanis.length - 1;
-  const fiyat = kapanis[son];
-  const rsiS = rsi(kapanis, 14);
-  const m = macd(kapanis);
-  const b = bollinger(kapanis);
-  const st = stochastic(yuk, dus, kapanis);
+  const kapanis = mumlar.map(m => m.close), yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low), hacim = mumlar.map(m => m.volume);
+  const son = kapanis.length - 1, fiyat = kapanis[son];
+  const rsiS = rsi(kapanis, 14), m = macd(kapanis), b = bollinger(kapanis), st = stochastic(yuk, dus, kapanis);
   const e20 = ema(kapanis, 20), e50 = ema(kapanis, 50), e200 = ema(kapanis, 200);
-  const a = atr(yuk, dus, kapanis);
-  const ad = adx(yuk, dus, kapanis);
-  const fvgler = fvgBul(mumlar);
-  const formasyonlar = mumFormasyonlari(mumlar);
-  const yapi = piyasaYapisi(mumlar);
-  const divs = divergenceBul(mumlar);
-  const vwapV = vwapSon(mumlar);
-  const fib = fibonacciBul(mumlar);
-  const vp = volumeProfileBul(mumlar);
+  const a = atr(yuk, dus, kapanis), ad = adx(yuk, dus, kapanis);
+  const fvgler = fvgBul(mumlar), formasyonlar = mumFormasyonlari(mumlar), yapi = piyasaYapisi(mumlar);
+  const divs = divergenceBul(mumlar), vwapV = vwapSon(mumlar), fib = fibonacciBul(mumlar), vp = volumeProfileBul(mumlar);
 
-  const r = rsiS[son];
-  const skorlar = [];
-  let toplam = 0;
-  const maxPuan = 30;
-  let p, txt;
-  if (r < 20) { p = 3; txt = `Çok aşırı satım (${r.toFixed(0)})`; }
-  else if (r < 30) { p = 2; txt = `Aşırı satım (${r.toFixed(0)})`; }
-  else if (r < 45) { p = 1; txt = `Zayıf bölge (${r.toFixed(0)})`; }
-  else if (r < 55) { p = 0; txt = `Nötr (${r.toFixed(0)})`; }
-  else if (r < 70) { p = -1; txt = `Pozitif bölge (${r.toFixed(0)})`; }
-  else if (r < 80) { p = -2; txt = `Aşırı alım (${r.toFixed(0)})`; }
-  else { p = -3; txt = `Çok aşırı alım (${r.toFixed(0)})`; }
+  const r = rsiS[son]; const skorlar = []; let toplam = 0; const maxPuan = 30; let p, txt;
+  if (r < 20) { p = 3; txt = `Çok aşırı satım (${r.toFixed(0)})`; } else if (r < 30) { p = 2; txt = `Aşırı satım (${r.toFixed(0)})`; } else if (r < 45) { p = 1; txt = `Zayıf bölge (${r.toFixed(0)})`; } else if (r < 55) { p = 0; txt = `Nötr (${r.toFixed(0)})`; } else if (r < 70) { p = -1; txt = `Pozitif bölge (${r.toFixed(0)})`; } else if (r < 80) { p = -2; txt = `Aşırı alım (${r.toFixed(0)})`; } else { p = -3; txt = `Çok aşırı alım (${r.toFixed(0)})`; }
   skorlar.push({ ad: 'RSI', puan: p, aciklama: txt, deger: r.toFixed(1) }); toplam += p;
 
   const mH = m.hist[son], mHp = m.hist[son-1], mL = m.line[son], mS = m.sig[son];
-  if (mHp < 0 && mH > 0) { p = 3; txt = 'Yukarı kesişim'; }
-  else if (mHp > 0 && mH < 0) { p = -3; txt = 'Aşağı kesişim'; }
-  else if (mL > mS && mH > mHp) { p = 2; txt = 'Pozitif, güçleniyor'; }
-  else if (mL > mS) { p = 1; txt = 'Sinyal üstü'; }
-  else if (mL < mS && mH < mHp) { p = -2; txt = 'Negatif, zayıflıyor'; }
-  else { p = -1; txt = 'Sinyal altı'; }
+  if (mHp < 0 && mH > 0) { p = 3; txt = 'Yukarı kesişim'; } else if (mHp > 0 && mH < 0) { p = -3; txt = 'Aşağı kesişim'; } else if (mL > mS && mH > mHp) { p = 2; txt = 'Pozitif, güçleniyor'; } else if (mL > mS) { p = 1; txt = 'Sinyal üstü'; } else if (mL < mS && mH < mHp) { p = -2; txt = 'Negatif, zayıflıyor'; } else { p = -1; txt = 'Sinyal altı'; }
   skorlar.push({ ad: 'MACD', puan: p, aciklama: txt, deger: mL.toFixed(4) }); toplam += p;
 
   const f20 = e20[son], f50 = e50[son], f200 = e200[son];
-  if (fiyat > f20 && f20 > f50 && f50 > f200) { p = 4; txt = 'Mükemmel yukarı trend'; }
-  else if (fiyat > f50 && f50 > f200) { p = 3; txt = 'Güçlü yukarı trend'; }
-  else if (fiyat > f20 && fiyat > f50) { p = 2; txt = 'Kısa vade yukarı'; }
-  else if (fiyat > f20) { p = 1; txt = 'EMA20 üstü'; }
-  else if (fiyat < f20 && f20 < f50 && f50 < f200) { p = -4; txt = 'Mükemmel aşağı trend'; }
-  else if (fiyat < f50 && f50 < f200) { p = -3; txt = 'Güçlü aşağı trend'; }
-  else if (fiyat < f20 && fiyat < f50) { p = -2; txt = 'Kısa vade aşağı'; }
-  else { p = -1; txt = 'EMA20 altı'; }
+  if (fiyat > f20 && f20 > f50 && f50 > f200) { p = 4; txt = 'Mükemmel yukarı trend'; } else if (fiyat > f50 && f50 > f200) { p = 3; txt = 'Güçlü yukarı trend'; } else if (fiyat > f20 && fiyat > f50) { p = 2; txt = 'Kısa vade yukarı'; } else if (fiyat > f20) { p = 1; txt = 'EMA20 üstü'; } else if (fiyat < f20 && f20 < f50 && f50 < f200) { p = -4; txt = 'Mükemmel aşağı trend'; } else if (fiyat < f50 && f50 < f200) { p = -3; txt = 'Güçlü aşağı trend'; } else if (fiyat < f20 && fiyat < f50) { p = -2; txt = 'Kısa vade aşağı'; } else { p = -1; txt = 'EMA20 altı'; }
   skorlar.push({ ad: 'EMA Trend', puan: p, aciklama: txt, deger: `20:${fmt(f20)} 50:${fmt(f50)}` }); toplam += p;
 
   const bU = b.ust[son], bA = b.alt[son];
-  if (bU && bA) {
-    const k = (fiyat - bA) / (bU - bA);
-    if (k <= 0.05) { p = 2; txt = 'Alt banda değdi'; }
-    else if (k <= 0.25) { p = 1; txt = 'Alt banda yakın'; }
-    else if (k >= 0.95) { p = -2; txt = 'Üst banda değdi'; }
-    else if (k >= 0.75) { p = -1; txt = 'Üst banda yakın'; }
-    else { p = 0; txt = 'Orta bant'; }
-  } else { p = 0; txt = '-'; }
+  if (bU && bA) { const k = (fiyat - bA) / (bU - bA); if (k <= 0.05) { p = 2; txt = 'Alt banda değdi'; } else if (k <= 0.25) { p = 1; txt = 'Alt banda yakın'; } else if (k >= 0.95) { p = -2; txt = 'Üst banda değdi'; } else if (k >= 0.75) { p = -1; txt = 'Üst banda yakın'; } else { p = 0; txt = 'Orta bant'; } } else { p = 0; txt = '-'; }
   skorlar.push({ ad: 'Bollinger', puan: p, aciklama: txt, deger: bU ? `Ü:${fmt(bU)} A:${fmt(bA)}` : '-' }); toplam += p;
 
   const sK = st.K[son] || 50, sD = st.D[son] || 50, sKp = st.K[son-1] || 50;
-  if (sK < 20 && sK > sD && sKp <= sD) { p = 2; txt = 'Aşırı satımda yukarı kesişim'; }
-  else if (sK < 20) { p = 1; txt = 'Aşırı satım'; }
-  else if (sK > 80 && sK < sD && sKp >= sD) { p = -2; txt = 'Aşırı alımda aşağı kesişim'; }
-  else if (sK > 80) { p = -1; txt = 'Aşırı alım'; }
-  else { p = 0; txt = 'Nötr'; }
+  if (sK < 20 && sK > sD && sKp <= sD) { p = 2; txt = 'Aşırı satımda yukarı kesişim'; } else if (sK < 20) { p = 1; txt = 'Aşırı satım'; } else if (sK > 80 && sK < sD && sKp >= sD) { p = -2; txt = 'Aşırı alımda aşağı kesişim'; } else if (sK > 80) { p = -1; txt = 'Aşırı alım'; } else { p = 0; txt = 'Nötr'; }
   skorlar.push({ ad: 'Stochastic', puan: p, aciklama: txt, deger: `K:${sK.toFixed(0)} D:${sD.toFixed(0)}` }); toplam += p;
 
   const adxV = ad.adx[son] || 0, pdi = ad.plusDI[son] || 0, mdi = ad.minusDI[son] || 0;
-  if (adxV > 25 && pdi > mdi) { p = 3; txt = `Güçlü yukarı (ADX ${adxV.toFixed(0)})`; }
-  else if (adxV > 25 && mdi > pdi) { p = -3; txt = `Güçlü aşağı (ADX ${adxV.toFixed(0)})`; }
-  else if (adxV > 20 && pdi > mdi) { p = 1; txt = `Zayıf yukarı (ADX ${adxV.toFixed(0)})`; }
-  else if (adxV > 20 && mdi > pdi) { p = -1; txt = `Zayıf aşağı (ADX ${adxV.toFixed(0)})`; }
-  else { p = 0; txt = `Trendsiz (ADX ${adxV.toFixed(0)})`; }
+  if (adxV > 25 && pdi > mdi) { p = 3; txt = `Güçlü yukarı (ADX ${adxV.toFixed(0)})`; } else if (adxV > 25 && mdi > pdi) { p = -3; txt = `Güçlü aşağı (ADX ${adxV.toFixed(0)})`; } else if (adxV > 20 && pdi > mdi) { p = 1; txt = `Zayıf yukarı (ADX ${adxV.toFixed(0)})`; } else if (adxV > 20 && mdi > pdi) { p = -1; txt = `Zayıf aşağı (ADX ${adxV.toFixed(0)})`; } else { p = 0; txt = `Trendsiz (ADX ${adxV.toFixed(0)})`; }
   skorlar.push({ ad: 'ADX Trend', puan: p, aciklama: txt, deger: adxV.toFixed(0) }); toplam += p;
 
-  const sH = hacim.slice(-5).reduce((x,y) => x+y, 0)/5;
-  const oH = hacim.slice(-20, -5).reduce((x,y) => x+y, 0)/15;
-  const hO = oH > 0 ? sH/oH : 1;
-  const s5D = (kapanis[son] - kapanis[son-5]) / kapanis[son-5] * 100;
-  if (hO > 1.5 && s5D > 0) { p = 2; txt = 'Hacimli yükseliş'; }
-  else if (hO > 1.5 && s5D < 0) { p = -2; txt = 'Hacimli düşüş'; }
-  else { p = 0; txt = 'Normal hacim'; }
+  const sH = hacim.slice(-5).reduce((x,y) => x+y, 0)/5, oH = hacim.slice(-20, -5).reduce((x,y) => x+y, 0)/15;
+  const hO = oH > 0 ? sH/oH : 1, s5D = (kapanis[son] - kapanis[son-5]) / kapanis[son-5] * 100;
+  if (hO > 1.5 && s5D > 0) { p = 2; txt = 'Hacimli yükseliş'; } else if (hO > 1.5 && s5D < 0) { p = -2; txt = 'Hacimli düşüş'; } else { p = 0; txt = 'Normal hacim'; }
   skorlar.push({ ad: 'Hacim', puan: p, aciklama: txt, deger: `x${hO.toFixed(2)}` }); toplam += p;
 
   const yakinFvg = fvgler.filter(f => Math.abs(f.orta - fiyat) / fiyat < 0.02);
-  const bullFvg = yakinFvg.filter(f => f.tip === 'bullish').length;
-  const bearFvg = yakinFvg.filter(f => f.tip === 'bearish').length;
-  if (bullFvg > bearFvg) { p = 2; txt = `${bullFvg} bullish FVG yakında`; }
-  else if (bearFvg > bullFvg) { p = -2; txt = `${bearFvg} bearish FVG yakında`; }
-  else { p = 0; txt = yakinFvg.length ? 'FVG dengeli' : 'Yakında FVG yok'; }
+  const bullFvg = yakinFvg.filter(f => f.tip === 'bullish').length, bearFvg = yakinFvg.filter(f => f.tip === 'bearish').length;
+  if (bullFvg > bearFvg) { p = 2; txt = `${bullFvg} bullish FVG`; } else if (bearFvg > bullFvg) { p = -2; txt = `${bearFvg} bearish FVG`; } else { p = 0; txt = yakinFvg.length ? 'FVG dengeli' : 'Yakında FVG yok'; }
   skorlar.push({ ad: 'FVG', puan: p, aciklama: txt, deger: `${fvgler.length} adet` }); toplam += p;
 
-  const formPuan = formasyonlar.reduce((t, f) => t + (f.guc||0), 0);
-  const formSinir = Math.max(-3, Math.min(3, formPuan));
-  skorlar.push({ ad: 'Mum Formasyonu', puan: formSinir, aciklama: formasyonlar.length ? formasyonlar.map(f => f.ad).join(', ') : 'Belirgin yok', deger: `${formasyonlar.length} adet` });
-  toplam += formSinir;
+  const formPuan = formasyonlar.reduce((t, f) => t + (f.guc||0), 0), formSinir = Math.max(-3, Math.min(3, formPuan));
+  skorlar.push({ ad: 'Mum Formasyonu', puan: formSinir, aciklama: formasyonlar.length ? formasyonlar.map(f => f.ad).join(', ') : 'Belirgin yok', deger: `${formasyonlar.length} adet` }); toplam += formSinir;
 
-  let yapiPuan = 0;
-  if (yapi.yapi.includes('YUKARI')) yapiPuan = 2;
-  else if (yapi.yapi.includes('AŞAĞI')) yapiPuan = -2;
-  skorlar.push({ ad: 'Piyasa Yapısı', puan: yapiPuan, aciklama: yapi.yapi, deger: yapi.aciklama });
-  toplam += yapiPuan;
+  let yapiPuan = 0; if (yapi.yapi.includes('YUKARI')) yapiPuan = 2; else if (yapi.yapi.includes('AŞAĞI')) yapiPuan = -2;
+  skorlar.push({ ad: 'Piyasa Yapısı', puan: yapiPuan, aciklama: yapi.yapi, deger: yapi.aciklama }); toplam += yapiPuan;
 
-  if (fiyat > vwapV) { p = 1; txt = 'Fiyat VWAP üstünde'; }
-  else { p = -1; txt = 'Fiyat VWAP altında'; }
+  if (fiyat > vwapV) { p = 1; txt = 'VWAP üstünde'; } else { p = -1; txt = 'VWAP altında'; }
   skorlar.push({ ad: 'VWAP', puan: p, aciklama: txt, deger: fmt(vwapV) }); toplam += p;
 
-  const divPuan = divs.reduce((t, d) => t + d.guc, 0);
-  const divSinir = Math.max(-3, Math.min(3, divPuan));
+  const divPuan = divs.reduce((t, d) => t + d.guc, 0), divSinir = Math.max(-3, Math.min(3, divPuan));
   if (divs.length) skorlar.push({ ad: 'Divergence', puan: divSinir, aciklama: divs.map(d => d.ad).join(', '), deger: `${divs.length} adet` });
   else skorlar.push({ ad: 'Divergence', puan: 0, aciklama: 'Uyumsuzluk yok', deger: '-' });
   toplam += divSinir;
 
-  const son50Y = Math.max(...yuk.slice(-50));
-  const son50D = Math.min(...dus.slice(-50));
+  const son50Y = Math.max(...yuk.slice(-50)), son50D = Math.min(...dus.slice(-50));
   const konum = (fiyat - son50D) / (son50Y - son50D);
-  if (konum < 0.15) { p = 1; txt = 'Desteğe yakın'; }
-  else if (konum > 0.85) { p = -1; txt = 'Dirençe yakın'; }
-  else { p = 0; txt = 'Orta bölge'; }
-  skorlar.push({ ad: 'Destek/Direnç', puan: p, aciklama: txt, deger: `%${(konum*100).toFixed(0)}` });
-  toplam += p;
+  if (konum < 0.15) { p = 1; txt = 'Desteğe yakın'; } else if (konum > 0.85) { p = -1; txt = 'Dirençe yakın'; } else { p = 0; txt = 'Orta bölge'; }
+  skorlar.push({ ad: 'Destek/Direnç', puan: p, aciklama: txt, deger: `%${(konum*100).toFixed(0)}` }); toplam += p;
 
-  const trendYuk = f20 > f50 && f50 > f200;
-  const trendAs = f20 < f50 && f50 < f200;
-  const trendOk = (trendYuk || trendAs) && adxV > 25;
-  const trendYon = trendYuk ? 'LONG' : trendAs ? 'SHORT' : 'NÖTR';
-  const hacimOk = hO > 1.3;
-  const hacimYon = s5D > 0.5 ? 'LONG' : s5D < -0.5 ? 'SHORT' : 'NÖTR';
-  const formasyonOk = formasyonlar.length > 0 && Math.abs(formPuan) >= 2;
-  const formasyonYon = formPuan > 0 ? 'LONG' : formPuan < 0 ? 'SHORT' : 'NÖTR';
-  const rsiOk = r < 35 || r > 65;
-  const rsiYon = r < 35 ? 'LONG' : r > 65 ? 'SHORT' : 'NÖTR';
-  const divOk = divs.length > 0 && Math.abs(divPuan) >= 2;
-  const divYon = divPuan > 0 ? 'LONG' : divPuan < 0 ? 'SHORT' : 'NÖTR';
+  const trendYuk = f20 > f50 && f50 > f200, trendAs = f20 < f50 && f50 < f200;
+  const trendOk = (trendYuk || trendAs) && adxV > 25, trendYon = trendYuk ? 'LONG' : trendAs ? 'SHORT' : 'NÖTR';
+  const hacimOk = hO > 1.3, hacimYon = s5D > 0.5 ? 'LONG' : s5D < -0.5 ? 'SHORT' : 'NÖTR';
+  const formasyonOk = formasyonlar.length > 0 && Math.abs(formPuan) >= 2, formasyonYon = formPuan > 0 ? 'LONG' : formPuan < 0 ? 'SHORT' : 'NÖTR';
+  const rsiOk = r < 35 || r > 65, rsiYon = r < 35 ? 'LONG' : r > 65 ? 'SHORT' : 'NÖTR';
+  const divOk = divs.length > 0 && Math.abs(divPuan) >= 2, divYon = divPuan > 0 ? 'LONG' : divPuan < 0 ? 'SHORT' : 'NÖTR';
 
   const filtreler = [
     { ad: 'Trend Yönü', ok: trendOk, yon: trendYon, detay: trendYuk ? 'EMA20>50>200, ADX güçlü' : trendAs ? 'EMA20<50<200, ADX güçlü' : 'Trend net değil' },
-    { ad: 'Hacim', ok: hacimOk, yon: hacimYon, detay: hacimOk ? `Hacim ${hO.toFixed(1)}x ortalama üstü` : 'Hacim ortalamanın altı' },
+    { ad: 'Hacim', ok: hacimOk, yon: hacimYon, detay: hacimOk ? `Hacim ${hO.toFixed(1)}x üstü` : 'Hacim ortalamanın altı' },
     { ad: 'Formasyon', ok: formasyonOk, yon: formasyonYon, detay: formasyonlar.length ? formasyonlar.map(f => f.ad).join(', ') : 'Belirgin formasyon yok' },
     { ad: 'RSI', ok: rsiOk, yon: rsiYon, detay: r < 35 ? `Satım (${r.toFixed(0)})` : r > 65 ? `Alım (${r.toFixed(0)})` : `Nötr (${r.toFixed(0)})` },
     { ad: 'Divergence', ok: divOk, yon: divYon, detay: divs.length ? divs.map(d => d.ad).join(', ') : 'Uyumsuzluk yok' }
   ];
 
   const onayliSayi = filtreler.filter(f => f.ok).length;
-  const longOy = filtreler.filter(f => f.yon === 'LONG').length;
-  const shortOy = filtreler.filter(f => f.yon === 'SHORT').length;
-  let filtreYon = 'NÖTR';
-  if (longOy > shortOy && longOy >= 2) filtreYon = 'LONG';
-  else if (shortOy > longOy && shortOy >= 2) filtreYon = 'SHORT';
+  const longOy = filtreler.filter(f => f.yon === 'LONG').length, shortOy = filtreler.filter(f => f.yon === 'SHORT').length;
+  let filtreYon = 'NÖTR'; if (longOy > shortOy && longOy >= 2) filtreYon = 'LONG'; else if (shortOy > longOy && shortOy >= 2) filtreYon = 'SHORT';
 
   let masterPuan = toplam;
-  if (onayliSayi === 5 && filtreYon === 'LONG') masterPuan += 5;
-  if (onayliSayi === 5 && filtreYon === 'SHORT') masterPuan -= 5;
-  if (onayliSayi === 4 && filtreYon === 'LONG') masterPuan += 3;
-  if (onayliSayi === 4 && filtreYon === 'SHORT') masterPuan -= 3;
-  if (onayliSayi === 3 && filtreYon === 'LONG') masterPuan += 1;
-  if (onayliSayi === 3 && filtreYon === 'SHORT') masterPuan -= 1;
+  if (onayliSayi === 5 && filtreYon === 'LONG') masterPuan += 5; if (onayliSayi === 5 && filtreYon === 'SHORT') masterPuan -= 5;
+  if (onayliSayi === 4 && filtreYon === 'LONG') masterPuan += 3; if (onayliSayi === 4 && filtreYon === 'SHORT') masterPuan -= 3;
+  if (onayliSayi === 3 && filtreYon === 'LONG') masterPuan += 1; if (onayliSayi === 3 && filtreYon === 'SHORT') masterPuan -= 1;
   if (onayliSayi <= 1) masterPuan = masterPuan * 0.6;
 
   let karar, kararRenk, kararIkon, kararAciklama;
   const yonCeliski = (masterPuan >= 3 && filtreYon === 'SHORT') || (masterPuan <= -3 && filtreYon === 'LONG');
-  if (yonCeliski) { karar = 'BEKLE'; kararRenk = 'bekle'; kararIkon = '⚠️'; kararAciklama = 'Sinyaller çelişkili — net yön yok. İşlem açmak riskli.'; }
-  else if (masterPuan >= 18) { karar = 'ÇOK GÜÇLÜ LONG'; kararRenk = 'guclu-long'; kararIkon = '🔥🔥'; kararAciklama = 'Tüm sistemler yukarı yönü işaret ediyor. Tam uyumlu.'; }
+  if (yonCeliski) { karar = 'BEKLE'; kararRenk = 'bekle'; kararIkon = '⚠️'; kararAciklama = 'Sinyaller çelişkili — net yön yok.'; }
+  else if (masterPuan >= 18) { karar = 'ÇOK GÜÇLÜ LONG'; kararRenk = 'guclu-long'; kararIkon = '🔥🔥'; kararAciklama = 'Tüm sistemler yukarı yönü işaret ediyor.'; }
   else if (masterPuan >= 11) { karar = 'GÜÇLÜ LONG'; kararRenk = 'long'; kararIkon = '🔥'; kararAciklama = 'Belirgin yukarı baskı. Alıcılar kontrolde.'; }
-  else if (masterPuan >= 6) { karar = 'LONG'; kararRenk = 'long'; kararIkon = '📈'; kararAciklama = 'Yukarı eğilim var. Stop koymak şartıyla.'; }
-  else if (masterPuan >= 2) { karar = 'ZAYIF LONG'; kararRenk = 'zayif-long'; kararIkon = '➖'; kararAciklama = 'Hafif yukarı eğilim. Temkinli ol.'; }
-  else if (masterPuan <= -18) { karar = 'ÇOK GÜÇLÜ SHORT'; kararRenk = 'guclu-short'; kararIkon = '🔻🔻'; kararAciklama = 'Tüm sistemler aşağı yönü işaret ediyor. Tam uyumlu.'; }
-  else if (masterPuan <= -11) { karar = 'GÜÇLÜ SHORT'; kararRenk = 'short'; kararIkon = '🔻'; kararAciklama = 'Belirgin aşağı baskı. Satıcılar kontrolde.'; }
-  else if (masterPuan <= -6) { karar = 'SHORT'; kararRenk = 'short'; kararIkon = '📉'; kararAciklama = 'Aşağı eğilim var. Stop koymak şartıyla.'; }
-  else if (masterPuan <= -2) { karar = 'ZAYIF SHORT'; kararRenk = 'zayif-short'; kararIkon = '➖'; kararAciklama = 'Hafif aşağı eğilim. Temkinli ol.'; }
-  else { karar = 'BEKLE'; kararRenk = 'bekle'; kararIkon = '⏸️'; kararAciklama = 'Net sinyal yok. Piyasa kararsız.'; }
+  else if (masterPuan >= 6) { karar = 'LONG'; kararRenk = 'long'; kararIkon = '📈'; kararAciklama = 'Yukarı eğilim var. Stop şartıyla.'; }
+  else if (masterPuan >= 2) { karar = 'ZAYIF LONG'; kararRenk = 'zayif-long'; kararIkon = '➖'; kararAciklama = 'Hafif yukarı eğilim.'; }
+  else if (masterPuan <= -18) { karar = 'ÇOK GÜÇLÜ SHORT'; kararRenk = 'guclu-short'; kararIkon = '🔻🔻'; kararAciklama = 'Tüm sistemler aşağı yönü işaret ediyor.'; }
+  else if (masterPuan <= -11) { karar = 'GÜÇLÜ SHORT'; kararRenk = 'short'; kararIkon = '🔻'; kararAciklama = 'Belirgin aşağı baskı.'; }
+  else if (masterPuan <= -6) { karar = 'SHORT'; kararRenk = 'short'; kararIkon = '📉'; kararAciklama = 'Aşağı eğilim var. Stop şartıyla.'; }
+  else if (masterPuan <= -2) { karar = 'ZAYIF SHORT'; kararRenk = 'zayif-short'; kararIkon = '➖'; kararAciklama = 'Hafif aşağı eğilim.'; }
+  else { karar = 'BEKLE'; kararRenk = 'bekle'; kararIkon = '⏸️'; kararAciklama = 'Net sinyal yok.'; }
 
   const aV = a[son] || fiyat * 0.02;
   const guvenYuzde = Math.min(100, Math.max(5, (Math.abs(masterPuan) + maxPuan) / (2*maxPuan) * 100));
@@ -1074,14 +940,7 @@ function analizEt(mumlar) {
 function grafikOlustur() {
   const el = document.getElementById('chart');
   if (chart) chart.remove();
-  chart = LightweightCharts.createChart(el, {
-    layout: { background: { color: 'transparent' }, textColor: '#94a3b8' },
-    grid: { vertLines: { color: 'rgba(255,255,255,0.03)' }, horzLines: { color: 'rgba(255,255,255,0.03)' } },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-    rightPriceScale: { borderColor: 'rgba(255,255,255,0.06)' },
-    timeScale: { borderColor: 'rgba(255,255,255,0.06)', timeVisible: true },
-    height: 520
-  });
+  chart = LightweightCharts.createChart(el, { layout: { background: { color: 'transparent' }, textColor: '#94a3b8' }, grid: { vertLines: { color: 'rgba(255,255,255,0.03)' }, horzLines: { color: 'rgba(255,255,255,0.03)' } }, crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, rightPriceScale: { borderColor: 'rgba(255,255,255,0.06)' }, timeScale: { borderColor: 'rgba(255,255,255,0.06)', timeVisible: true }, height: 520 });
   candleSeries = chart.addCandlestickSeries({ upColor: '#10b981', downColor: '#ef4444', borderUpColor: '#10b981', borderDownColor: '#ef4444', wickUpColor: '#10b981', wickDownColor: '#ef4444' });
   volumeSeries = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
   chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } });
@@ -1094,37 +953,21 @@ function grafikOlustur() {
 async function coinYukle(symbol) {
   let hedef = null;
   if (symbol) hedef = akilliSembolDuzelt(symbol);
-  else {
-    const q = document.getElementById('aramaCoin').value.trim();
-    if (q) hedef = akilliSembolDuzelt(q);
-    else hedef = aktifCoin;
-  }
-  if (!hedef) {
-    const q = document.getElementById('aramaCoin').value.toUpperCase().trim();
-    if (q) { document.getElementById('aramaOneri').classList.remove('hidden'); aramaOneriGoster(q); }
-    return;
-  }
+  else { const q = document.getElementById('aramaCoin').value.trim(); hedef = q ? akilliSembolDuzelt(q) : aktifCoin; }
+  if (!hedef) { const q = document.getElementById('aramaCoin').value.toUpperCase().trim(); if (q) { document.getElementById('aramaOneri').classList.remove('hidden'); aramaOneriGoster(q); } return; }
   aktifCoin = hedef;
   document.getElementById('aramaCoin').value = '';
   document.getElementById('aramaOneri').classList.add('hidden');
   document.getElementById('aktifCoin').textContent = aktifCoin;
   document.getElementById('chartYukleniyor').style.display = 'flex';
-  alarmFiyat = null;
-  sonFiyat = null;
+  alarmFiyat = null; sonFiyat = null;
   try {
     const mumlar = await klineCek(aktifCoin, aktifTF, 500);
-    if (!mumlar) {
-      document.getElementById('chartYukleniyor').style.display = 'none';
-      document.getElementById('aktifFiyat').textContent = '-';
-      document.getElementById('aktifDegisim').textContent = '⚠️ Veri alınamadı';
-      alert(`${aktifCoin} için veri bulunamadı.`);
-      return;
-    }
+    if (!mumlar) { document.getElementById('chartYukleniyor').style.display = 'none'; document.getElementById('aktifFiyat').textContent = '-'; document.getElementById('aktifDegisim').textContent = '⚠️ Veri alınamadı'; return; }
     const analiz = analizEt(mumlar);
     sonAnaliz = analiz;
     cizGrafik(mumlar, analiz);
     panelDoldur(analiz);
-    // OTOMATİK TEST KAYDI
     sinyalTestKaydet(analiz, aktifCoin, aktifTF);
     mtfYukle(aktifCoin);
     piyasaYukle(aktifCoin);
@@ -1134,7 +977,7 @@ async function coinYukle(symbol) {
     document.getElementById('chartInfo').textContent = mumlar.length + ' mum';
     if (ws && ws.readyState === 1) wsAbone(aktifCoin, aktifTF);
     document.getElementById('chartYukleniyor').style.display = 'none';
-  } catch (e) { console.error(e); alert('Hata: ' + e.message); document.getElementById('chartYukleniyor').style.display = 'none'; }
+  } catch (e) { console.error(e); document.getElementById('chartYukleniyor').style.display = 'none'; }
 }
 
 function cizGrafik(mumlar, a) {
@@ -1146,8 +989,7 @@ function cizGrafik(mumlar, a) {
   ema20Seri.setData(mumlar.map((m,i) => ({ time: m.time, value: e20[i] })));
   ema50Seri.setData(mumlar.map((m,i) => ({ time: m.time, value: e50[i] })));
   ema200Seri.setData(mumlar.map((m,i) => ({ time: m.time, value: e200[i] })));
-  const vwapData = [];
-  for (let i = 0; i < mumlar.length; i++) if (vw[i] !== null) vwapData.push({ time: mumlar[i].time, value: vw[i] });
+  const vwapData = []; for (let i = 0; i < mumlar.length; i++) if (vw[i] !== null) vwapData.push({ time: mumlar[i].time, value: vw[i] });
   vwapSeri.setData(vwapData);
   chart.timeScale().fitContent();
 }
@@ -1159,18 +1001,12 @@ async function mtfYukle(symbol) {
   el.innerHTML = '<div class="skeleton h-12"></div><div class="skeleton h-12"></div><div class="skeleton h-12"></div>';
   const tfList = [{ k: 'D', fallback: '240', ad: '1 Gün' }, { k: '60', fallback: '60', ad: '1 Saat' }, { k: '15', fallback: '15', ad: '15 Dk' }];
   const sonuclar = await Promise.all(tfList.map(async t => {
-    let mumlar = await klineCek(symbol, t.k, 300);
-    let ad = t.ad;
+    let mumlar = await klineCek(symbol, t.k, 300); let ad = t.ad;
     if (!mumlar && t.fallback !== t.k) { mumlar = await klineCek(symbol, t.fallback, 300); ad = t.ad + ' (4sa)'; }
     if (!mumlar) return { ad, yon: 'YOK', rsi: '-' };
-    const kapanis = mumlar.map(m => m.close);
-    const fiyat = kapanis[kapanis.length-1];
-    const e20 = ema(kapanis, 20), e50 = ema(kapanis, 50);
-    const r = rsi(kapanis, 14);
-    const son = kapanis.length-1;
-    let yon = 'NÖTR';
-    if (fiyat > e20[son] && e20[son] > e50[son]) yon = 'LONG';
-    else if (fiyat < e20[son] && e20[son] < e50[son]) yon = 'SHORT';
+    const kapanis = mumlar.map(m => m.close), fiyat = kapanis[kapanis.length-1];
+    const e20 = ema(kapanis, 20), e50 = ema(kapanis, 50), r = rsi(kapanis, 14), son = kapanis.length-1;
+    let yon = 'NÖTR'; if (fiyat > e20[son] && e20[son] > e50[son]) yon = 'LONG'; else if (fiyat < e20[son] && e20[son] < e50[son]) yon = 'SHORT';
     return { ad, yon, rsi: r[son].toFixed(0) };
   }));
   mtfCache[cacheKey] = sonuclar;
@@ -1179,13 +1015,8 @@ async function mtfYukle(symbol) {
 
 function renderMtf(sonuclar) {
   const el = document.getElementById('mtfListe');
-  const longSay = sonuclar.filter(s => s.yon === 'LONG').length;
-  const shortSay = sonuclar.filter(s => s.yon === 'SHORT').length;
-  let onay = 'KARIŞIK';
-  if (longSay === 3) onay = '✅ TAM LONG';
-  else if (shortSay === 3) onay = '✅ TAM SHORT';
-  else if (longSay >= 2) onay = '📈 LONG AĞIRLIKLI';
-  else if (shortSay >= 2) onay = '📉 SHORT AĞIRLIKLI';
+  const longSay = sonuclar.filter(s => s.yon === 'LONG').length, shortSay = sonuclar.filter(s => s.yon === 'SHORT').length;
+  let onay = 'KARIŞIK'; if (longSay === 3) onay = '✅ TAM LONG'; else if (shortSay === 3) onay = '✅ TAM SHORT'; else if (longSay >= 2) onay = '📈 LONG AĞIRLIKLI'; else if (shortSay >= 2) onay = '📉 SHORT AĞIRLIKLI';
   document.getElementById('mtfOnay').textContent = onay;
   el.innerHTML = sonuclar.map(s => {
     const renk = s.yon === 'LONG' ? 'text-emerald-400' : s.yon === 'SHORT' ? 'text-red-400' : 'text-slate-400';
@@ -1199,20 +1030,12 @@ async function piyasaYukle(symbol) {
     const el = document.getElementById('fundingListe');
     try {
       const denemeler = [symbol, symbol.replace('USDT', '-USDT'), symbol.replace('USDT', 'PERP')];
-      let t = null;
-      for (const s of denemeler) {
-        try { const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=linear&symbol=${s}`); const j = await r.json(); if (j.retCode === 0 && j.result?.list?.[0]) { t = j.result.list[0]; break; } } catch(e) {}
-      }
+      let t = null; for (const s of denemeler) { try { const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=linear&symbol=${s}`); const j = await r.json(); if (j.retCode === 0 && j.result?.list?.[0]) { t = j.result.list[0]; break; } } catch(e) {} }
       if (!t) { el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Vadeli veri yok</div>'; return; }
-      let oiList = [];
-      for (const s of denemeler) {
-        try { const oiR = await fetch(`https://api.bybit.com/v5/market/open-interest?category=linear&symbol=${s}&intervalTime=5min&limit=2`); const oi = await oiR.json(); if (oi.retCode === 0 && oi.result?.list?.length) { oiList = oi.result.list; break; } } catch(e) {}
-      }
-      const fr = parseFloat(t.fundingRate || 0) * 100;
-      const oiSimdi = parseFloat(oiList[0]?.openInterest || 0);
-      const oiOnce = parseFloat(oiList[1]?.openInterest || oiSimdi);
+      let oiList = []; for (const s of denemeler) { try { const oiR = await fetch(`https://api.bybit.com/v5/market/open-interest?category=linear&symbol=${s}&intervalTime=5min&limit=2`); const oi = await oiR.json(); if (oi.retCode === 0 && oi.result?.list?.length) { oiList = oi.result.list; break; } } catch(e) {} }
+      const fr = parseFloat(t.fundingRate || 0) * 100, oiSimdi = parseFloat(oiList[0]?.openInterest || 0), oiOnce = parseFloat(oiList[1]?.openInterest || oiSimdi);
       const oiDeg = oiOnce > 0 ? ((oiSimdi - oiOnce) / oiOnce * 100) : 0;
-      const frYon = fr > 0.02 ? 'Aşırı Long (ters dönüş riski)' : fr < -0.02 ? 'Aşırı Short (sıkışma)' : 'Nötr';
+      const frYon = fr > 0.02 ? 'Aşırı Long' : fr < -0.02 ? 'Aşırı Short' : 'Nötr';
       const frRenk = fr > 0.02 ? 'text-red-400' : fr < -0.02 ? 'text-emerald-400' : 'text-slate-300';
       el.innerHTML = `<div class="bg-white/[0.02] rounded-xl p-3 border border-white/5"><div class="flex justify-between items-center"><span class="text-xs text-slate-400">Funding Rate</span><span class="${frRenk} font-bold text-sm mono">${fr.toFixed(4)}%</span></div><div class="text-[10px] text-slate-500 mt-1">${frYon}</div></div><div class="bg-white/[0.02] rounded-xl p-3 border border-white/5 mt-2"><div class="flex justify-between items-center"><span class="text-xs text-slate-400">Open Interest</span><span class="font-bold text-sm mono">${(oiSimdi/1000000).toFixed(2)}M</span></div><div class="text-[10px] text-slate-500 mt-1">${oiDeg >= 0 ? '📈' : '📉'} Son 5dk: ${oiDeg.toFixed(2)}%</div></div>`;
     } catch (e) { el.innerHTML = '<div class="text-slate-500 text-xs text-center py-3">Alınamadı</div>'; }
@@ -1221,10 +1044,8 @@ async function piyasaYukle(symbol) {
     const el = document.getElementById('fngListe');
     try {
       const target = 'https://api.alternative.me/fng/?limit=1';
-      let j = null;
-      try { const r = await fetch(target); j = await r.json(); } catch (e) { const r2 = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(target)); j = await r2.json(); }
-      const d = j.data[0];
-      const v = parseInt(d.value);
+      let j = null; try { const r = await fetch(target); j = await r.json(); } catch (e) { const r2 = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(target)); j = await r2.json(); }
+      const d = j.data[0], v = parseInt(d.value);
       const renk = v < 25 ? 'red' : v < 45 ? 'orange' : v < 55 ? 'yellow' : v < 75 ? 'emerald' : 'red';
       const renkMap = { red: 'text-red-400', orange: 'text-orange-400', yellow: 'text-yellow-400', emerald: 'text-emerald-400' };
       const bgMap = { red: 'bg-red-500/5 border-red-500/20', orange: 'bg-orange-500/5 border-orange-500/20', yellow: 'bg-yellow-500/5 border-yellow-500/20', emerald: 'bg-emerald-500/5 border-emerald-500/20' };
@@ -1235,11 +1056,9 @@ async function piyasaYukle(symbol) {
     const el = document.getElementById('obListe');
     try {
       const r = await fetch(`https://api.bybit.com/v5/market/orderbook?category=spot&symbol=${symbol}&limit=50`);
-      const j = await r.json();
-      if (j.retCode !== 0) throw new Error('OB yok');
+      const j = await r.json(); if (j.retCode !== 0) throw new Error('OB yok');
       const bids = j.result.b, asks = j.result.a;
-      const bidTotal = bids.reduce((t, b) => t + parseFloat(b[1]), 0);
-      const askTotal = asks.reduce((t, a) => t + parseFloat(a[1]), 0);
+      const bidTotal = bids.reduce((t, b) => t + parseFloat(b[1]), 0), askTotal = asks.reduce((t, a) => t + parseFloat(a[1]), 0);
       const oran = askTotal > 0 ? bidTotal / askTotal : 1;
       const enBuyukBid = bids.reduce((max, b) => parseFloat(b[1]) > parseFloat(max[1]) ? b : max, bids[0]);
       const enBuyukAsk = asks.reduce((max, a) => parseFloat(a[1]) > parseFloat(max[1]) ? a : max, asks[0]);
@@ -1254,11 +1073,9 @@ function panelDoldur(a) {
   const kart = document.getElementById('kararKart');
   const cls = {
     'guclu-long': 'karar-guclu-long pulse-glow rounded-2xl p-6 text-center',
-    'long': 'karar-long rounded-2xl p-6 text-center',
-    'zayif-long': 'karar-zayif-long rounded-2xl p-6 text-center',
+    'long': 'karar-long rounded-2xl p-6 text-center', 'zayif-long': 'karar-zayif-long rounded-2xl p-6 text-center',
     'guclu-short': 'karar-guclu-short pulse-glow-red rounded-2xl p-6 text-center',
-    'short': 'karar-short rounded-2xl p-6 text-center',
-    'zayif-short': 'karar-zayif-short rounded-2xl p-6 text-center',
+    'short': 'karar-short rounded-2xl p-6 text-center', 'zayif-short': 'karar-zayif-short rounded-2xl p-6 text-center',
     'bekle': 'karar-bekle rounded-2xl p-6 text-center'
   };
   kart.className = cls[a.kararRenk] || cls['bekle'];
@@ -1269,16 +1086,13 @@ function panelDoldur(a) {
   document.getElementById('kararGuven').textContent = `GÜVEN %${a.guvenYuzde}`;
   document.getElementById('kararAciklama').textContent = a.kararAciklama;
 
-  const plan = document.getElementById('planIcerik');
-  const rr = document.getElementById('planRR');
+  const plan = document.getElementById('planIcerik'), rr = document.getElementById('planRR');
   if (a.karar.includes('LONG')) {
-    const k = ((a.hedefLong - a.fiyat) / a.fiyat * 100).toFixed(2);
-    const rz = ((a.fiyat - a.stopLong) / a.fiyat * 100).toFixed(2);
+    const k = ((a.hedefLong - a.fiyat) / a.fiyat * 100).toFixed(2), rz = ((a.fiyat - a.stopLong) / a.fiyat * 100).toFixed(2);
     rr.textContent = 'R:R 1:1.5';
     plan.innerHTML = `<div class="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3"><div class="text-xs text-emerald-400 font-bold mb-2 uppercase tracking-wider">📈 LONG</div><div class="space-y-1.5 text-xs mono"><div class="flex justify-between"><span class="text-slate-400">Giriş</span><span class="font-bold text-emerald-400">$${fmt(a.fiyat)}</span></div><div class="flex justify-between"><span class="text-slate-400">Stop</span><span class="font-bold text-red-400">$${fmt(a.stopLong)} (-${rz}%)</span></div><div class="flex justify-between"><span class="text-slate-400">Hedef</span><span class="font-bold text-emerald-400">$${fmt(a.hedefLong)} (+${k}%)</span></div></div></div>`;
   } else if (a.karar.includes('SHORT')) {
-    const k = ((a.fiyat - a.hedefShort) / a.fiyat * 100).toFixed(2);
-    const rz = ((a.stopShort - a.fiyat) / a.fiyat * 100).toFixed(2);
+    const k = ((a.fiyat - a.hedefShort) / a.fiyat * 100).toFixed(2), rz = ((a.stopShort - a.fiyat) / a.fiyat * 100).toFixed(2);
     rr.textContent = 'R:R 1:1.5';
     plan.innerHTML = `<div class="bg-red-500/5 border border-red-500/20 rounded-xl p-3"><div class="text-xs text-red-400 font-bold mb-2 uppercase tracking-wider">📉 SHORT</div><div class="space-y-1.5 text-xs mono"><div class="flex justify-between"><span class="text-slate-400">Giriş</span><span class="font-bold text-red-400">$${fmt(a.fiyat)}</span></div><div class="flex justify-between"><span class="text-slate-400">Stop</span><span class="font-bold text-red-400">$${fmt(a.stopShort)} (+${rz}%)</span></div><div class="flex justify-between"><span class="text-slate-400">Hedef</span><span class="font-bold text-emerald-400">$${fmt(a.hedefShort)} (-${k}%)</span></div></div></div>`;
   } else {
@@ -1307,13 +1121,11 @@ function panelDoldur(a) {
     const renk = f.tip === 'AL' ? 'text-emerald-400' : f.tip === 'SAT' ? 'text-red-400' : 'text-slate-400';
     return `<div class="${bg} border rounded-xl p-2 text-xs"><div class="flex justify-between items-start mb-0.5"><span class="font-semibold ${renk}">${f.ad}</span><span class="${renk} font-bold text-[10px] mono">${f.tip}</span></div><div class="text-slate-400 text-[11px]">${f.aciklama}</div></div>`;
   }).join('');
-  if (a.divs.length) {
-    formasyonHTML += a.divs.map(d => {
-      const bg = d.tip === 'bullish' ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-red-500/5 border-red-500/20';
-      const renk = d.tip === 'bullish' ? 'text-emerald-400' : 'text-red-400';
-      return `<div class="${bg} border rounded-xl p-2 text-xs mt-2"><div class="font-semibold ${renk} mb-0.5">⚠️ ${d.ad}</div><div class="text-slate-400 text-[11px]">${d.aciklama}</div></div>`;
-    }).join('');
-  }
+  if (a.divs.length) formasyonHTML += a.divs.map(d => {
+    const bg = d.tip === 'bullish' ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-red-500/5 border-red-500/20';
+    const renk = d.tip === 'bullish' ? 'text-emerald-400' : 'text-red-400';
+    return `<div class="${bg} border rounded-xl p-2 text-xs mt-2"><div class="font-semibold ${renk} mb-0.5">⚠️ ${d.ad}</div><div class="text-slate-400 text-[11px]">${d.aciklama}</div></div>`;
+  }).join('');
   fEl.innerHTML = formasyonHTML;
 
   const fvgEl = document.getElementById('fvgListe');
@@ -1328,20 +1140,11 @@ function panelDoldur(a) {
   }).join('');
 
   const yEl = document.getElementById('yapiListe');
-  const y = a.yapi;
-  const rk = y.yapi.includes('YUKARI') ? 'text-emerald-400' : y.yapi.includes('AŞAĞI') ? 'text-red-400' : 'text-yellow-400';
+  const y = a.yapi, rk = y.yapi.includes('YUKARI') ? 'text-emerald-400' : y.yapi.includes('AŞAĞI') ? 'text-red-400' : 'text-yellow-400';
   let html = `<div class="bg-white/[0.02] rounded-xl p-2.5 border border-white/5"><div class="${rk} font-bold text-sm">${y.yapi}</div><div class="text-xs text-slate-400 mt-0.5">${y.aciklama}</div></div>`;
   if (y.ekstra.length) html += y.ekstra.map(e => `<div class="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-2 text-xs text-yellow-300 mt-2">${e}</div>`).join('');
   const sonP = y.sonPivotlar.slice(-4).reverse();
-  if (sonP.length) {
-    html += `<div class="space-y-1 mt-2">`;
-    sonP.forEach(pp => {
-      const tip = pp.tip === 'H' ? '🔺 Tepe' : '🔻 Dip';
-      const rk2 = pp.tip === 'H' ? 'text-red-400' : 'text-emerald-400';
-      html += `<div class="flex justify-between text-[11px] bg-white/[0.02] rounded px-2 py-1 border border-white/5"><span class="${rk2}">${tip}</span><span class="text-slate-300 mono">$${fmt(pp.fiyat)}</span></div>`;
-    });
-    html += `</div>`;
-  }
+  if (sonP.length) { html += `<div class="space-y-1 mt-2">`; sonP.forEach(pp => { const tip = pp.tip === 'H' ? '🔺 Tepe' : '🔻 Dip'; const rk2 = pp.tip === 'H' ? 'text-red-400' : 'text-emerald-400'; html += `<div class="flex justify-between text-[11px] bg-white/[0.02] rounded px-2 py-1 border border-white/5"><span class="${rk2}">${tip}</span><span class="text-slate-300 mono">$${fmt(pp.fiyat)}</span></div>`; }); html += `</div>`; }
   yEl.innerHTML = html;
 
   const fib = a.fib;
@@ -1371,7 +1174,6 @@ function panelDoldur(a) {
     <div class="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-2.5"><span class="text-xs text-slate-400">+DI/-DI</span><span class="font-bold text-slate-200 mono">${a.pdi.toFixed(0)} / ${a.mdi.toFixed(0)}</span></div>
     <div class="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-2.5"><span class="text-xs text-slate-400">ATR</span><span class="font-bold text-slate-200 mono">${fmt(a.atr)}</span></div>
   `;
-
   document.getElementById('statYuksek').textContent = '$' + fmt(a.son50Yuk);
   document.getElementById('statDusuk').textContent = '$' + fmt(a.son50Dus);
   document.getElementById('statHacim').textContent = a.hO.toFixed(2) + 'x';
@@ -1379,8 +1181,7 @@ function panelDoldur(a) {
 }
 
 async function backtestCalistir() {
-  const btn = document.getElementById('btBtn');
-  const el = document.getElementById('btSonuc');
+  const btn = document.getElementById('btBtn'), el = document.getElementById('btSonuc');
   btn.disabled = true; btn.textContent = 'Test ediliyor...';
   el.innerHTML = '<div class="text-xs text-slate-400 text-center"><span class="spinner"></span> Hazırlanıyor...</div>';
   try {
@@ -1388,25 +1189,17 @@ async function backtestCalistir() {
     if (!mumlar || mumlar.length < 150) throw new Error('Yetersiz veri');
     let dogru = 0, yanlis = 0, notr = 0;
     const atla = 5, baslangic = 100;
-    const toplamAdim = Math.floor((mumlar.length - atla - baslangic) / 5);
-    let adimSayaci = 0;
+    const toplamAdim = Math.floor((mumlar.length - atla - baslangic) / 5); let adimSayaci = 0;
     for (let i = baslangic; i < mumlar.length - atla; i += 5) {
       adimSayaci++;
-      if (adimSayaci % 10 === 0) {
-        const yuzde = Math.round(adimSayaci / toplamAdim * 100);
-        el.innerHTML = `<div class="text-xs text-slate-400 text-center py-2"><span class="spinner"></span> %${yuzde}</div>`;
-        await uyku(0);
-      }
-      const pencere = mumlar.slice(0, i);
-      const a = analizEt(pencere);
+      if (adimSayaci % 10 === 0) { el.innerHTML = `<div class="text-xs text-slate-400 text-center py-2"><span class="spinner"></span> %${Math.round(adimSayaci / toplamAdim * 100)}</div>`; await uyku(0); }
+      const pencere = mumlar.slice(0, i), a = analizEt(pencere);
       if (a.karar === 'BEKLE' || a.karar.includes('ZAYIF')) { notr++; continue; }
       const girisF = mumlar[i].close, cikisF = mumlar[i + atla].close;
-      const gercekYon = cikisF > girisF ? 'LONG' : 'SHORT';
-      const botYon = a.karar.includes('LONG') ? 'LONG' : 'SHORT';
+      const gercekYon = cikisF > girisF ? 'LONG' : 'SHORT', botYon = a.karar.includes('LONG') ? 'LONG' : 'SHORT';
       if (gercekYon === botYon) dogru++; else yanlis++;
     }
-    const toplam = dogru + yanlis;
-    const oran = toplam > 0 ? (dogru / toplam * 100).toFixed(1) : '0';
+    const toplam = dogru + yanlis, oran = toplam > 0 ? (dogru / toplam * 100).toFixed(1) : '0';
     const renk = oran >= 60 ? 'text-emerald-400' : oran >= 50 ? 'text-yellow-400' : 'text-red-400';
     el.innerHTML = `<div class="bg-white/[0.02] border border-white/5 rounded-xl p-4 space-y-3 text-xs"><div class="text-center"><div class="text-4xl font-extrabold ${renk} mb-1 mono">%${oran}</div><div class="text-slate-400 text-[10px] uppercase tracking-wider">İsabet Oranı</div></div><div class="grid grid-cols-3 gap-2"><div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2 text-center"><div class="text-emerald-400 font-bold text-lg mono">${dogru}</div><div class="text-[10px] text-slate-400">Doğru</div></div><div class="bg-red-500/5 border border-red-500/20 rounded-lg p-2 text-center"><div class="text-red-400 font-bold text-lg mono">${yanlis}</div><div class="text-[10px] text-slate-400">Yanlış</div></div><div class="bg-white/[0.03] border border-white/5 rounded-lg p-2 text-center"><div class="text-slate-400 font-bold text-lg mono">${notr}</div><div class="text-[10px] text-slate-400">Bekle</div></div></div><div class="text-[10px] text-slate-500 text-center">${atla} mum sonrası • ${mumlar.length} mum</div></div>`;
   } catch (e) { el.innerHTML = `<div class="text-red-400 text-xs text-center py-3">Hata: ${e.message}</div>`; }
@@ -1415,15 +1208,12 @@ async function backtestCalistir() {
 
 function riskHesapla() {
   if (!sonAnaliz) return;
-  const bakiye = parseFloat(document.getElementById('riskBakiye').value);
-  const yuzde = parseFloat(document.getElementById('riskYuzde').value);
-  const a = sonAnaliz;
-  const el = document.getElementById('riskSonuc');
+  const bakiye = parseFloat(document.getElementById('riskBakiye').value), yuzde = parseFloat(document.getElementById('riskYuzde').value);
+  const a = sonAnaliz, el = document.getElementById('riskSonuc');
   if (!bakiye || !yuzde || !a.fiyat) { el.classList.add('hidden'); return; }
   const riskUSDT = bakiye * yuzde / 100;
   const stopMesafe = Math.abs(a.fiyat - (a.karar.includes('SHORT') ? a.stopShort : a.stopLong));
-  const miktar = stopMesafe > 0 ? riskUSDT / stopMesafe : 0;
-  const pozisyon = miktar * a.fiyat;
+  const miktar = stopMesafe > 0 ? riskUSDT / stopMesafe : 0, pozisyon = miktar * a.fiyat;
   el.classList.remove('hidden');
   el.innerHTML = `<div class="flex justify-between"><span class="text-slate-400">Risk:</span><span class="font-bold text-red-400">$${riskUSDT.toFixed(2)}</span></div><div class="flex justify-between"><span class="text-slate-400">Pozisyon:</span><span class="font-bold text-emerald-400">$${pozisyon.toFixed(2)}</span></div><div class="flex justify-between"><span class="text-slate-400">Miktar:</span><span class="font-bold">${miktar.toFixed(6)}</span></div><div class="text-[10px] text-slate-500 mt-1">Stop: ${fmt(stopMesafe)}</div>`;
 }
@@ -1434,8 +1224,7 @@ function bildirimToggle() {
   Notification.requestPermission().then(p => { const btn = document.getElementById('bildirimBtn'); if (p === 'granted') { btn.textContent = '🔔'; btn.style.background = 'rgba(16,185,129,0.2)'; btn.style.borderColor = 'rgba(16,185,129,0.4)'; } });
 }
 function alarmKur() {
-  const f = parseFloat(document.getElementById('alarmFiyat').value);
-  const el = document.getElementById('alarmDurum');
+  const f = parseFloat(document.getElementById('alarmFiyat').value), el = document.getElementById('alarmDurum');
   if (!f) { el.textContent = '⚠️ Fiyat gir'; el.className = 'text-xs text-center text-yellow-400 mt-2'; return; }
   alarmFiyat = f;
   el.textContent = `✅ $${fmt(f)}`;
@@ -1455,8 +1244,8 @@ function rTabGec(ad) {
   document.querySelectorAll('[id^="rtab-"]').forEach(e => e.classList.add('hidden'));
   document.getElementById('rtab-' + ad).classList.remove('hidden');
   document.querySelectorAll('.rtab').forEach(b => {
-    if (b.dataset.rtab === ad) { b.classList.add('rtab-aktif'); b.classList.remove('text-slate-400'); }
-    else { b.classList.remove('rtab-aktif'); b.classList.add('text-slate-400'); }
+    if (b.dataset.rtab === ad) { b.classList.add('rtab-aktif'); b.classList.remove('text-slate-500'); }
+    else { b.classList.remove('rtab-aktif'); b.classList.add('text-slate-500'); }
   });
 }
 
@@ -1464,11 +1253,8 @@ async function hizliYukle() {
   const el = document.getElementById('hizliListe');
   el.innerHTML = '<div class="col-span-full text-center py-6 text-slate-500 text-sm"><span class="spinner"></span> Yükleniyor...</div>';
   const sonuclar = await Promise.all(HIZLI_LISTE.map(async s => {
-    try {
-      const mumlar = await klineCek(s, '15', 300);
-      if (!mumlar) return { symbol: s, hata: 'Veri yok' };
-      return { symbol: s, a: analizEt(mumlar), son: mumlar[mumlar.length-1].close };
-    } catch (e) { return { symbol: s, hata: e.message }; }
+    try { const mumlar = await klineCek(s, '15', 300); if (!mumlar) return { symbol: s, hata: 'Veri yok' }; return { symbol: s, a: analizEt(mumlar), son: mumlar[mumlar.length-1].close }; }
+    catch (e) { return { symbol: s, hata: e.message }; }
   }));
   el.innerHTML = sonuclar.map(r => {
     if (r.hata) return `<div class="bg-red-500/5 border border-red-500/20 rounded-xl p-3"><div class="font-bold text-sm">${r.symbol}</div><div class="text-xs text-red-300">${r.hata}</div></div>`;
@@ -1495,8 +1281,7 @@ sembolleriYukle();
 tickerYukle();
 coinYukle('BTCUSDT');
 hizliYukle();
-setInterval(saatGuncelle, 1000);
-saatGuncelle();
+setInterval(saatGuncelle, 1000); saatGuncelle();
 setInterval(() => coinYukle(aktifCoin), 60000);
 setInterval(hizliYukle, 120000);
 setInterval(tickerYukle, 30000);
@@ -1505,11 +1290,7 @@ setTimeout(() => { if (typeof testPaneliniGuncelle === 'function') testPaneliniG
 document.getElementById('aramaCoin').addEventListener('keypress', e => { if (e.key === 'Enter') coinYukle(); });
 document.getElementById('aramaCoin').addEventListener('input', e => { aramaOneriGoster(e.target.value); });
 document.getElementById('aramaCoin').addEventListener('focus', e => { if (e.target.value.trim()) aramaOneriGoster(e.target.value); });
-document.addEventListener('click', e => {
-  if (!e.target.closest('#aramaCoin') && !e.target.closest('#aramaOneri')) {
-    document.getElementById('aramaOneri').classList.add('hidden');
-  }
-});
+document.addEventListener('click', e => { if (!e.target.closest('#aramaCoin') && !e.target.closest('#aramaOneri')) document.getElementById('aramaOneri').classList.add('hidden'); });
 window.addEventListener('resize', () => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); });
 </script>
 </body>
