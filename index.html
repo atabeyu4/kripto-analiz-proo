@@ -11,295 +11,77 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #070a12;
-    --surface: #0e1421;
-    --surface-2: #131a2b;
-    --border: rgba(255,255,255,0.06);
-    --border-hover: rgba(255,255,255,0.12);
-    --cyan: #22d3ee;
-    --emerald: #10b981;
-    --red: #ef4444;
-    --purple: #a78bfa;
-    --amber: #f59e0b;
+    --bg: #070a12; --surface: #0e1421; --cyan: #22d3ee; --emerald: #10b981; --red: #ef4444; --purple: #a78bfa; --amber: #f59e0b;
   }
   * { -webkit-tap-highlight-color: transparent; }
   body {
     font-family: 'Inter', -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,211,238,0.08), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167,139,250,0.06), transparent);
+    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,211,238,0.08), transparent), radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167,139,250,0.06), transparent);
     background-attachment: fixed;
     min-height: 100vh;
   }
   .mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'tnum'; }
   #chart { width: 100%; height: 520px; }
-
-  /* Glassmorphism kartlar */
-  .glass {
-    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    transition: border-color .2s;
-  }
-  .glass:hover { border-color: var(--border-hover); }
-
+  .glass { background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; transition: border-color .2s; }
+  .glass:hover { border-color: rgba(255,255,255,0.12); }
   .card-glow-cyan { box-shadow: 0 0 40px rgba(34,211,238,0.08), inset 0 1px 0 rgba(255,255,255,0.03); }
-  .card-glow-emerald { box-shadow: 0 0 40px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.03); }
-  .card-glow-red { box-shadow: 0 0 40px rgba(239,68,68,0.15), inset 0 1px 0 rgba(255,255,255,0.03); }
-
-  /* Ticker tape */
-  .ticker-wrap {
-    background: linear-gradient(90deg, #0a0e17 0%, #0e1421 50%, #0a0e17 100%);
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-    height: 34px;
-    position: relative;
-  }
-  .ticker-wrap::before, .ticker-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 60px;
-    z-index: 2;
-    pointer-events: none;
-  }
+  .ticker-wrap { background: linear-gradient(90deg, #0a0e17 0%, #0e1421 50%, #0a0e17 100%); border-bottom: 1px solid rgba(255,255,255,0.06); overflow: hidden; height: 34px; position: relative; }
+  .ticker-wrap::before, .ticker-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
   .ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
   .ticker-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
-  .ticker {
-    display: inline-flex;
-    gap: 32px;
-    padding-left: 100%;
-    animation: ticker-scroll 60s linear infinite;
-    white-space: nowrap;
-    align-items: center;
-    height: 100%;
-  }
-  @keyframes ticker-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
+  .ticker { display: inline-flex; gap: 32px; padding-left: 100%; animation: ticker-scroll 60s linear infinite; white-space: nowrap; align-items: center; height: 100%; }
+  @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
   .ticker-item { display: inline-flex; gap: 8px; align-items: center; font-size: 12px; }
   .ticker-sym { color: #94a3b8; font-weight: 600; letter-spacing: 0.02em; }
   .ticker-up { color: var(--emerald); }
   .ticker-down { color: var(--red); }
-  .ticker-dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 8px var(--cyan);
-  }
-
-  /* Spinner */
-  .spinner {
-    display:inline-block; width:16px; height:16px;
-    border:2px solid rgba(34,211,238,0.2);
-    border-top-color: var(--cyan);
-    border-radius:50%;
-    animation: spin .6s linear infinite;
-  }
+  .ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(34,211,238,0.2); border-top-color: var(--cyan); border-radius:50%; animation: spin .6s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Scrollbar */
   .scroll-ince::-webkit-scrollbar { width: 6px; height: 6px; }
   .scroll-ince::-webkit-scrollbar-track { background: transparent; }
   .scroll-ince::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.2); border-radius: 3px; }
   .scroll-ince::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.4); }
-
-  /* Satır hover */
   .satir { transition: all .15s; }
   .satir:hover { background: rgba(255,255,255,0.04); }
-
-  /* Karar kartları */
-  .karar-guclu-long {
-    background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03));
-    border: 1px solid rgba(16,185,129,0.4);
-    box-shadow: 0 0 60px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
-  }
-  .karar-long {
-    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.02));
-    border: 1px solid rgba(16,185,129,0.3);
-    box-shadow: 0 0 40px rgba(16,185,129,0.12);
-  }
-  .karar-zayif-long {
-    background: linear-gradient(135deg, rgba(16,185,129,0.05), transparent);
-    border: 1px solid rgba(16,185,129,0.15);
-  }
-  .karar-guclu-short {
-    background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.03));
-    border: 1px solid rgba(239,68,68,0.4);
-    box-shadow: 0 0 60px rgba(239,68,68,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
-  }
-  .karar-short {
-    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.02));
-    border: 1px solid rgba(239,68,68,0.3);
-    box-shadow: 0 0 40px rgba(239,68,68,0.12);
-  }
-  .karar-zayif-short {
-    background: linear-gradient(135deg, rgba(239,68,68,0.05), transparent);
-    border: 1px solid rgba(239,68,68,0.15);
-  }
-  .karar-bekle {
-    background: linear-gradient(135deg, rgba(148,163,184,0.05), transparent);
-    border: 1px solid rgba(148,163,184,0.15);
-  }
+  .karar-guclu-long { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03)); border: 1px solid rgba(16,185,129,0.4); box-shadow: 0 0 60px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }
+  .karar-long { background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.02)); border: 1px solid rgba(16,185,129,0.3); box-shadow: 0 0 40px rgba(16,185,129,0.12); }
+  .karar-zayif-long { background: linear-gradient(135deg, rgba(16,185,129,0.05), transparent); border: 1px solid rgba(16,185,129,0.15); }
+  .karar-guclu-short { background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.03)); border: 1px solid rgba(239,68,68,0.4); box-shadow: 0 0 60px rgba(239,68,68,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }
+  .karar-short { background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.02)); border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 0 40px rgba(239,68,68,0.12); }
+  .karar-zayif-short { background: linear-gradient(135deg, rgba(239,68,68,0.05), transparent); border: 1px solid rgba(239,68,68,0.15); }
+  .karar-bekle { background: linear-gradient(135deg, rgba(148,163,184,0.05), transparent); border: 1px solid rgba(148,163,184,0.15); }
   .pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 60px rgba(16,185,129,0.2); }
-    50% { box-shadow: 0 0 80px rgba(16,185,129,0.35); }
-  }
+  @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 60px rgba(16,185,129,0.2); } 50% { box-shadow: 0 0 80px rgba(16,185,129,0.35); } }
   .pulse-glow-red { animation: pulse-glow-red 2.5s ease-in-out infinite; }
-  @keyframes pulse-glow-red {
-    0%, 100% { box-shadow: 0 0 60px rgba(239,68,68,0.2); }
-    50% { box-shadow: 0 0 80px rgba(239,68,68,0.35); }
-  }
-
-  /* Fiyat flash */
+  @keyframes pulse-glow-red { 0%, 100% { box-shadow: 0 0 60px rgba(239,68,68,0.2); } 50% { box-shadow: 0 0 80px rgba(239,68,68,0.35); } }
   .fiyat-up { animation: flash-up .6s ease-out; }
   .fiyat-down { animation: flash-down .6s ease-out; }
-  @keyframes flash-up {
-    0% { color: var(--emerald); text-shadow: 0 0 20px rgba(16,185,129,0.6); }
-    100% { color: inherit; text-shadow: none; }
-  }
-  @keyframes flash-down {
-    0% { color: var(--red); text-shadow: 0 0 20px rgba(239,68,68,0.6); }
-    100% { color: inherit; text-shadow: none; }
-  }
-
-  /* Sekmeler */
+  @keyframes flash-up { 0% { color: var(--emerald); text-shadow: 0 0 20px rgba(16,185,129,0.6); } 100% { color: inherit; text-shadow: none; } }
+  @keyframes flash-down { 0% { color: var(--red); text-shadow: 0 0 20px rgba(239,68,68,0.6); } 100% { color: inherit; text-shadow: none; } }
   .rtab { transition: all .2s; position: relative; }
-  .rtab-aktif {
-    background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(34,211,238,0.05)) !important;
-    color: var(--cyan) !important;
-    border: 1px solid rgba(34,211,238,0.3) !important;
-    box-shadow: 0 0 20px rgba(34,211,238,0.15);
-  }
-
-  /* Canlı dot */
-  .canli-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--emerald);
-    box-shadow: 0 0 12px var(--emerald), 0 0 24px rgba(16,185,129,0.5);
-    animation: pulse-dot 1.5s ease-in-out infinite;
-  }
-  @keyframes pulse-dot {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
-  }
-  .canli-dot.baglaniyor {
-    background: var(--amber);
-    box-shadow: 0 0 12px var(--amber);
-  }
-  .canli-dot.kopuk {
-    background: var(--red);
-    box-shadow: 0 0 12px var(--red);
-    animation: none;
-  }
-
-  /* İstatistik kartları */
-  .stat-kart {
-    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 12px;
-    transition: all .2s;
-  }
-  .stat-kart:hover {
-    border-color: rgba(34,211,238,0.2);
-    background: linear-gradient(135deg, rgba(34,211,238,0.05), rgba(255,255,255,0));
-  }
-  .stat-label {
-    font-size: 10px;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .stat-value {
-    font-size: 15px;
-    font-weight: 700;
-    color: #e2e8f0;
-  }
-
-  /* Arama input */
-  .arama-input {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    transition: all .2s;
-  }
-  .arama-input:focus {
-    background: rgba(34,211,238,0.03);
-    border-color: rgba(34,211,238,0.4);
-    box-shadow: 0 0 0 3px rgba(34,211,238,0.1);
-    outline: none;
-  }
-
-  /* Butonlar */
-  .btn-cyan {
-    background: linear-gradient(135deg, #22d3ee, #0891b2);
-    box-shadow: 0 4px 20px rgba(34,211,238,0.3);
-    transition: all .2s;
-  }
-  .btn-cyan:hover {
-    box-shadow: 0 6px 28px rgba(34,211,238,0.5);
-    transform: translateY(-1px);
-  }
+  .rtab-aktif { background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(34,211,238,0.05)) !important; color: var(--cyan) !important; border: 1px solid rgba(34,211,238,0.3) !important; box-shadow: 0 0 20px rgba(34,211,238,0.15); }
+  .canli-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 12px var(--emerald), 0 0 24px rgba(16,185,129,0.5); animation: pulse-dot 1.5s ease-in-out infinite; }
+  @keyframes pulse-dot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+  .canli-dot.baglaniyor { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
+  .canli-dot.kopuk { background: var(--red); box-shadow: 0 0 12px var(--red); animation: none; }
+  .stat-kart { background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0)); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 12px; transition: all .2s; }
+  .stat-kart:hover { border-color: rgba(34,211,238,0.2); background: linear-gradient(135deg, rgba(34,211,238,0.05), rgba(255,255,255,0)); }
+  .stat-label { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px; }
+  .stat-value { font-size: 15px; font-weight: 700; color: #e2e8f0; }
+  .arama-input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: all .2s; }
+  .arama-input:focus { background: rgba(34,211,238,0.03); border-color: rgba(34,211,238,0.4); box-shadow: 0 0 0 3px rgba(34,211,238,0.1); outline: none; }
+  .btn-cyan { background: linear-gradient(135deg, #22d3ee, #0891b2); box-shadow: 0 4px 20px rgba(34,211,238,0.3); transition: all .2s; }
+  .btn-cyan:hover { box-shadow: 0 6px 28px rgba(34,211,238,0.5); transform: translateY(-1px); }
   .tf-btn { transition: all .2s; }
   .tf-btn:hover { background: rgba(255,255,255,0.06); }
-  .tf-btn.aktif {
-    background: linear-gradient(135deg, #22d3ee, #0891b2);
-    color: #0a0e17;
-    font-weight: 600;
-    box-shadow: 0 0 16px rgba(34,211,238,0.3);
-  }
-
-  /* Gradient başlık */
-  .gradient-text {
-    background: linear-gradient(135deg, #22d3ee, #a78bfa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Loading skeleton */
-  .skeleton {
-    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
-    background-size: 200% 100%;
-    animation: skeleton 1.5s infinite;
-    border-radius: 6px;
-  }
-  @keyframes skeleton {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  /* Coin pill */
-  .coin-pill {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: all .2s;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .coin-pill:hover {
-    background: rgba(34,211,238,0.08);
-    border-color: rgba(34,211,238,0.3);
-    color: var(--cyan);
-  }
-  .coin-pill.aktif {
-    background: rgba(34,211,238,0.1);
-    border-color: rgba(34,211,238,0.4);
-    color: var(--cyan);
-  }
-
-  /* Mobil */
+  .tf-btn.aktif { background: linear-gradient(135deg, #22d3ee, #0891b2); color: #0a0e17; font-weight: 600; box-shadow: 0 0 16px rgba(34,211,238,0.3); }
+  .gradient-text { background: linear-gradient(135deg, #22d3ee, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: skeleton 1.5s infinite; border-radius: 6px; }
+  @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .coin-pill { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 6px 12px; cursor: pointer; transition: all .2s; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+  .coin-pill:hover { background: rgba(34,211,238,0.08); border-color: rgba(34,211,238,0.3); color: var(--cyan); }
   @media (max-width: 640px) {
     #chart { height: 300px !important; }
     .ticker-wrap { height: 28px; }
@@ -311,45 +93,26 @@
 </head>
 <body class="text-slate-100">
 
-<!-- TICKER TAPE -->
-<div class="ticker-wrap">
-  <div class="ticker" id="ticker"></div>
-</div>
+<div class="ticker-wrap"><div class="ticker" id="ticker"></div></div>
 
-<!-- HEADER -->
 <header class="sticky top-0 z-40 bg-[#0a0e17]/80 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-3 flex items-center gap-3">
     <div class="flex items-center gap-2.5 shrink-0">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-        <span class="text-lg">📈</span>
-      </div>
-      <div class="hidden md:block">
-        <div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div>
-        <div class="text-[10px] text-slate-500 mono">PRO TERMINAL v2.0</div>
-      </div>
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📈</span></div>
+      <div class="hidden md:block"><div class="font-bold text-sm gradient-text">KRİPTO ANALİZ</div><div class="text-[10px] text-slate-500 mono">PRO TERMINAL v2.1</div></div>
     </div>
-
     <div class="flex-1 flex items-center gap-2 max-w-2xl relative">
-      <input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE..." autocomplete="off"
-             class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
+      <input id="aramaCoin" placeholder="🔍 BTC, XRP, LIT, SOL, DOGE..." autocomplete="off" class="arama-input flex-1 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500">
       <button onclick="coinYukle()" class="btn-cyan px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-900 whitespace-nowrap">Analiz</button>
       <div id="aramaOneri" class="absolute top-full left-0 right-0 mt-2 bg-[#0e1421] border border-white/10 rounded-xl shadow-2xl shadow-black/50 z-50 hidden max-h-72 overflow-y-auto scroll-ince"></div>
     </div>
-
     <div id="canliDurum" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
       <span id="canliDot" class="canli-dot baglaniyor"></span>
       <span id="canliYazi" class="text-amber-400 font-semibold text-xs">Bağlanıyor</span>
     </div>
-
     <button id="bildirimBtn" onclick="bildirimToggle()" title="Bildirim" class="w-9 h-9 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 flex items-center justify-center text-sm transition">🔔</button>
-
-    <div class="hidden lg:flex flex-col items-end">
-      <span id="saat" class="mono text-cyan-400 text-sm font-semibold"></span>
-      <span class="text-[10px] text-slate-500">Yerel saat</span>
-    </div>
+    <div class="hidden lg:flex flex-col items-end"><span id="saat" class="mono text-cyan-400 text-sm font-semibold"></span><span class="text-[10px] text-slate-500">Yerel saat</span></div>
   </div>
-
-  <!-- ZAMAN DİLİMİ + HIZLI COİNLER -->
   <div class="border-t border-white/5">
     <div class="max-w-[1800px] mx-auto px-3 sm:px-4 py-2 flex items-center gap-3 overflow-x-auto scroll-ince">
       <div class="flex items-center gap-1.5 shrink-0">
@@ -376,7 +139,6 @@
 
 <main class="max-w-[1800px] mx-auto p-3 sm:p-4">
 
-  <!-- AKTİF COİN BAŞLIK + İSTATİSTİK -->
   <div class="glass p-4 sm:p-5 mb-4 card-glow-cyan">
     <div class="flex flex-wrap items-start justify-between gap-4">
       <div>
@@ -390,29 +152,16 @@
         </div>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full sm:w-auto">
-        <div class="stat-kart">
-          <div class="stat-label">24s Yüksek</div>
-          <div id="statYuksek" class="stat-value mono text-red-400">-</div>
-        </div>
-        <div class="stat-kart">
-          <div class="stat-label">24s Düşük</div>
-          <div id="statDusuk" class="stat-value mono text-emerald-400">-</div>
-        </div>
-        <div class="stat-kart">
-          <div class="stat-label">Hacim</div>
-          <div id="statHacim" class="stat-value mono">-</div>
-        </div>
-        <div class="stat-kart">
-          <div class="stat-label">Volatilite</div>
-          <div id="statVol" class="stat-value mono">-</div>
-        </div>
+        <div class="stat-kart"><div class="stat-label">24s Yüksek</div><div id="statYuksek" class="stat-value mono text-red-400">-</div></div>
+        <div class="stat-kart"><div class="stat-label">24s Düşük</div><div id="statDusuk" class="stat-value mono text-emerald-400">-</div></div>
+        <div class="stat-kart"><div class="stat-label">Hacim</div><div id="statHacim" class="stat-value mono">-</div></div>
+        <div class="stat-kart"><div class="stat-label">Volatilite</div><div id="statVol" class="stat-value mono">-</div></div>
       </div>
     </div>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-    <!-- SOL: GRAFİK -->
     <div class="lg:col-span-8">
       <div class="glass p-3 relative">
         <div class="flex items-center justify-between mb-3 px-1">
@@ -429,19 +178,14 @@
         </div>
         <div id="chart"></div>
         <div id="chartYukleniyor" class="absolute inset-0 flex items-center justify-center bg-[#0e1421]/90 backdrop-blur rounded-2xl">
-          <div class="text-center">
-            <div class="spinner mx-auto mb-3" style="width:24px;height:24px;border-width:3px;"></div>
-            <span class="text-slate-400 text-sm">Grafik yükleniyor...</span>
-          </div>
+          <div class="text-center"><div class="spinner mx-auto mb-3" style="width:24px;height:24px;border-width:3px;"></div><span class="text-slate-400 text-sm">Grafik yükleniyor...</span></div>
         </div>
       </div>
     </div>
 
-    <!-- SAĞ: ANALİZ PANELİ -->
     <div class="lg:col-span-4">
       <div class="lg:sticky lg:top-32 lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto scroll-ince pr-1 space-y-3">
 
-        <!-- SEKMELER -->
         <div class="flex gap-1 p-1 glass">
           <button onclick="rTabGec('karar')" data-rtab="karar" class="rtab rtab-aktif flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-300">🎯 Karar</button>
           <button onclick="rTabGec('teknik')" data-rtab="teknik" class="rtab flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-400 hover:text-slate-200">📊 Teknik</button>
@@ -449,9 +193,7 @@
           <button onclick="rTabGec('arac')" data-rtab="arac" class="rtab flex-1 text-xs py-2.5 rounded-xl font-semibold text-slate-400 hover:text-slate-200">🛠️ Araç</button>
         </div>
 
-        <!-- KARAR -->
         <div id="rtab-karar" class="space-y-3">
-
           <div id="kararKart" class="karar-bekle rounded-2xl p-6 text-center">
             <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-2 font-bold">SİNYAL MOTORU</div>
             <div id="kararIkon" class="text-6xl mb-3">⏸️</div>
@@ -459,102 +201,55 @@
             <div id="kararGuven" class="inline-block text-xs font-bold mono px-3 py-1.5 rounded-full bg-white/5 text-slate-300 border border-white/10">—</div>
             <div id="kararAciklama" class="text-xs text-slate-400 mt-4 leading-relaxed">Analiz yapılıyor...</div>
           </div>
-
           <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🕐 Çoklu Zaman Onayı</h3>
-              <span id="mtfOnay" class="text-[10px] mono text-slate-500">—</span>
-            </div>
-            <div id="mtfListe" class="space-y-2">
-              <div class="skeleton h-12"></div>
-              <div class="skeleton h-12"></div>
-              <div class="skeleton h-12"></div>
-            </div>
+            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🕐 Çoklu Zaman Onayı</h3><span id="mtfOnay" class="text-[10px] mono text-slate-500">—</span></div>
+            <div id="mtfListe" class="space-y-2"><div class="skeleton h-12"></div><div class="skeleton h-12"></div><div class="skeleton h-12"></div></div>
           </div>
-
           <div id="planKart" class="glass p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🎯 İşlem Planı</h3>
-              <span id="planRR" class="text-[10px] mono text-cyan-400 font-bold">—</span>
-            </div>
-            <div id="planIcerik" class="space-y-2 text-sm">
-              <div class="skeleton h-24"></div>
-            </div>
+            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🎯 İşlem Planı</h3><span id="planRR" class="text-[10px] mono text-cyan-400 font-bold">—</span></div>
+            <div id="planIcerik" class="space-y-2 text-sm"><div class="skeleton h-24"></div></div>
           </div>
-
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🧠 Neden Bu Karar?</h3>
-            <div id="sebepListe" class="space-y-2"></div>
-          </div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🧠 Neden Bu Karar?</h3><div id="sebepListe" class="space-y-2"></div></div>
         </div>
 
-        <!-- TEKNİK -->
         <div id="rtab-teknik" class="space-y-3 hidden">
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Göstergeler</h3>
-            <div id="gostergeler" class="space-y-2"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🕯️ Formasyonlar & Divergence</h3>
-            <div id="formasyonListe" class="space-y-2"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🟩🟥 Fair Value Gap</h3>
-            <div id="fvgListe" class="space-y-2"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Piyasa Yapısı</h3>
-            <div id="yapiListe" class="space-y-2"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Fibonacci</h3>
-            <div id="fibListe" class="space-y-2"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Volume Profile</h3>
-            <div id="vpListe" class="space-y-2"></div>
-          </div>
-          <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📏 Kritik Seviyeler</h3>
-            <div id="seviyeler" class="space-y-2 text-sm"></div>
-          </div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Göstergeler</h3><div id="gostergeler" class="space-y-2"></div></div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🕯️ Formasyonlar & Divergence</h3><div id="formasyonListe" class="space-y-2"></div></div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">🟩🟥 Fair Value Gap</h3><div id="fvgListe" class="space-y-2"></div></div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Piyasa Yapısı</h3><div id="yapiListe" class="space-y-2"></div></div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📐 Fibonacci</h3><div id="fibListe" class="space-y-2"></div></div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📊 Volume Profile</h3><div id="vpListe" class="space-y-2"></div></div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">📏 Kritik Seviyeler</h3><div id="seviyeler" class="space-y-2 text-sm"></div></div>
         </div>
 
-        <!-- PİYASA -->
         <div id="rtab-piyasa" class="space-y-3 hidden">
           <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">💰 Funding & OI</h3>
-              <span class="text-[9px] mono text-purple-400 px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/20 font-bold">VADELİ</span>
-            </div>
-            <div id="fundingListe" class="space-y-2">
-              <div class="skeleton h-16"></div>
-              <div class="skeleton h-16"></div>
-            </div>
+            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">💰 Funding & OI</h3><span class="text-[9px] mono text-purple-400 px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/20 font-bold">VADELİ</span></div>
+            <div id="fundingListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
           </div>
+          <div class="glass p-4"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">😱 Fear & Greed</h3><div id="fngListe"><div class="skeleton h-32"></div></div></div>
           <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">😱 Fear & Greed</h3>
-            <div id="fngListe">
-              <div class="skeleton h-32"></div>
-            </div>
-          </div>
-          <div class="glass p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">📖 Order Book</h3>
-              <span class="text-[9px] mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 font-bold">SPOT</span>
-            </div>
-            <div id="obListe" class="space-y-2">
-              <div class="skeleton h-16"></div>
-              <div class="skeleton h-16"></div>
-              <div class="skeleton h-16"></div>
-            </div>
+            <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">📖 Order Book</h3><span class="text-[9px] mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 font-bold">SPOT</span></div>
+            <div id="obListe" class="space-y-2"><div class="skeleton h-16"></div><div class="skeleton h-16"></div><div class="skeleton h-16"></div></div>
           </div>
         </div>
 
-        <!-- ARAÇLAR -->
         <div id="rtab-arac" class="space-y-3 hidden">
+
+          <!-- OTOMATİK TEST SİSTEMİ -->
           <div class="glass p-4">
-            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🧪 Backtest</h3>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">🧠 Otomatik Test Sistemi</h3>
+              <span class="text-[10px] mono text-cyan-400 font-bold">KENDİNİ TEST EDİYOR</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3 leading-relaxed">
+              Bot her güçlü sinyalini otomatik kaydeder, belirli süre sonra fiyatı kontrol eder ve doğru/yanlış olarak işaretler. Hangi sinyal tipi ne kadar güvenilir, burada görürsün.
+            </p>
+            <div id="testPanel"></div>
+          </div>
+
+          <div class="glass p-4">
+            <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">🧪 Manuel Backtest</h3>
             <p class="text-xs text-slate-500 mb-3">Son 400 mumda botun isabet oranını test eder.</p>
             <button onclick="backtestCalistir()" id="btBtn" class="btn-cyan w-full rounded-xl py-2.5 font-bold text-sm text-slate-900 disabled:opacity-50">Backtest Çalıştır</button>
             <div id="btSonuc" class="mt-3"></div>
@@ -562,14 +257,8 @@
           <div class="glass p-4">
             <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-3">💵 Risk Hesaplayıcı</h3>
             <div class="space-y-3">
-              <div>
-                <label class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Bakiye (USDT)</label>
-                <input id="riskBakiye" type="number" value="1000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1">
-              </div>
-              <div>
-                <label class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Risk %</label>
-                <input id="riskYuzde" type="number" value="2" step="0.5" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1">
-              </div>
+              <div><label class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Bakiye (USDT)</label><input id="riskBakiye" type="number" value="1000" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
+              <div><label class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Risk %</label><input id="riskYuzde" type="number" value="2" step="0.5" class="arama-input w-full rounded-lg px-3 py-2 text-sm mono mt-1"></div>
               <button onclick="riskHesapla()" class="w-full bg-blue-600 hover:bg-blue-500 rounded-xl py-2.5 font-bold text-sm transition">Hesapla</button>
               <div id="riskSonuc" class="bg-white/5 rounded-lg p-3 text-xs mono space-y-1 hidden"></div>
             </div>
@@ -585,10 +274,7 @@
           </div>
           <div class="glass p-4">
             <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2">ℹ️ Bilgi</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              WebSocket canlı veri akışı. MTF onayı olmadan sinyallere uymayın. Her zaman stop-loss kullanın.
-              <b class="text-slate-400">Karar destek aracıdır, yatırım tavsiyesi değildir.</b>
-            </p>
+            <p class="text-xs text-slate-500 leading-relaxed">WebSocket canlı veri akışı. MTF onayı olmadan sinyallere uymayın. Her zaman stop-loss kullanın. <b class="text-slate-400">Karar destek aracıdır, yatırım tavsiyesi değildir.</b></p>
           </div>
         </div>
 
@@ -596,7 +282,6 @@
     </div>
   </div>
 
-  <!-- HIZLI BAKIŞ -->
   <div class="mt-4 glass p-4">
     <div class="flex items-center justify-between mb-3">
       <h3 class="font-bold text-xs text-slate-300 uppercase tracking-wider">⚡ Hızlı Bakış</h3>
@@ -605,9 +290,7 @@
     <div id="hizliListe" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
   </div>
 
-  <div class="text-center text-slate-600 text-xs py-6 mt-4 mono">
-    ⚠️ EĞİTİM AMAÇLIDIR • YATIRIM TAVSİYESİ DEĞİLDİR
-  </div>
+  <div class="text-center text-slate-600 text-xs py-6 mt-4 mono">⚠️ EĞİTİM AMAÇLIDIR • YATIRIM TAVSİYESİ DEĞİLDİR</div>
 
 </main>
 
@@ -623,6 +306,10 @@ const mtfCache = {};
 let TUM_SEMBOLLER = [];
 let sonFiyat = null;
 
+/* OTOMATİK TEST SİSTEMİ */
+let aktifTestler = JSON.parse(localStorage.getItem('aktifTestler') || '[]');
+let tamamlananTestler = JSON.parse(localStorage.getItem('tamamlananTestler') || '[]');
+
 function fmt(n, d = 4) {
   if (n === undefined || n === null || isNaN(n)) return '-';
   if (n >= 1000) return n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -631,6 +318,140 @@ function fmt(n, d = 4) {
   return n.toFixed(6);
 }
 function uyku(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* TEST SİSTEMİ */
+function sinyalTestKaydet(analiz, coin, tf) {
+  if (analiz.karar === 'BEKLE' || analiz.karar.includes('ZAYIF') || analiz.karar.includes('⚠️')) return;
+  const sureMap = { '1': 10, '5': 30, '15': 75, '60': 240, '240': 720, 'D': 1440 };
+  const testSuresiDk = sureMap[tf] || 60;
+  const mevcut = aktifTestler.find(t => t.coin === coin && t.tf === tf && t.karar === analiz.karar && (Date.now() - t.kayitZamani) < 300000);
+  if (mevcut) return;
+  const test = {
+    id: Date.now() + '_' + Math.random().toString(36).slice(2,8),
+    coin, tf, karar: analiz.karar, kararIkon: analiz.kararIkon, guven: analiz.guvenYuzde,
+    girisFiyat: analiz.fiyat, kayitZamani: Date.now(),
+    kontrolZamani: Date.now() + testSuresiDk * 60 * 1000,
+    testSuresiDk, durum: 'BEKLIYOR'
+  };
+  aktifTestler.push(test);
+  if (aktifTestler.length > 100) aktifTestler = aktifTestler.slice(-100);
+  localStorage.setItem('aktifTestler', JSON.stringify(aktifTestler));
+  if (typeof testPaneliniGuncelle === 'function') testPaneliniGuncelle();
+}
+
+async function testleriKontrolEt(manuel = false) {
+  const simdi = Date.now();
+  const kontrolEdilecek = aktifTestler.filter(t => t.kontrolZamani <= simdi || manuel);
+  if (kontrolEdilecek.length === 0) return;
+  for (const test of kontrolEdilecek) {
+    try {
+      const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=spot&symbol=${test.coin}`);
+      const j = await r.json();
+      if (j.retCode !== 0 || !j.result?.list?.[0]) continue;
+      const guncelFiyat = parseFloat(j.result.list[0].lastPrice);
+      const degisimYuzde = ((guncelFiyat - test.girisFiyat) / test.girisFiyat) * 100;
+      let sonuc;
+      if (test.karar.includes('LONG')) {
+        sonuc = degisimYuzde > 0.1 ? 'DOGRU' : degisimYuzde < -0.1 ? 'YANLIS' : 'NOTR';
+      } else {
+        sonuc = degisimYuzde < -0.1 ? 'DOGRU' : degisimYuzde > 0.1 ? 'YANLIS' : 'NOTR';
+      }
+      tamamlananTestler.push({ ...test, cikisFiyat: guncelFiyat, degisimYuzde, sonuc, tamamlanmaZamani: simdi });
+      aktifTestler = aktifTestler.filter(t => t.id !== test.id);
+    } catch(e) { console.error(e); }
+  }
+  if (tamamlananTestler.length > 500) tamamlananTestler = tamamlananTestler.slice(-500);
+  localStorage.setItem('aktifTestler', JSON.stringify(aktifTestler));
+  localStorage.setItem('tamamlananTestler', JSON.stringify(tamamlananTestler));
+  testPaneliniGuncelle();
+}
+
+function testIstatistikleri() {
+  const kategoriler = {};
+  let toplamDogru = 0, toplamYanlis = 0, toplamNotr = 0;
+  tamamlananTestler.forEach(t => {
+    const k = t.karar;
+    if (!kategoriler[k]) kategoriler[k] = { toplam: 0, dogru: 0, yanlis: 0, notr: 0 };
+    kategoriler[k].toplam++;
+    if (t.sonuc === 'DOGRU') { kategoriler[k].dogru++; toplamDogru++; }
+    else if (t.sonuc === 'YANLIS') { kategoriler[k].yanlis++; toplamYanlis++; }
+    else { kategoriler[k].notr++; toplamNotr++; }
+  });
+  const toplamSonuc = toplamDogru + toplamYanlis;
+  const genelOran = toplamSonuc > 0 ? (toplamDogru / toplamSonuc * 100) : 0;
+  return { kategoriler, toplamDogru, toplamYanlis, toplamNotr, genelOran, toplam: tamamlananTestler.length };
+}
+
+function testPaneliniGuncelle() {
+  const el = document.getElementById('testPanel');
+  if (!el) return;
+  const ist = testIstatistikleri();
+  const bekleyen = aktifTestler.slice().reverse().slice(0, 10).map(t => {
+    const kalan = Math.max(0, Math.ceil((t.kontrolZamani - Date.now()) / 60000));
+    return `<div class="bg-white/[0.02] border border-white/5 rounded-lg p-2 text-xs">
+      <div class="flex justify-between items-center">
+        <div><span class="font-bold">${t.coin.replace('USDT','')}</span><span class="${t.karar.includes('LONG') ? 'text-emerald-400' : 'text-red-400'} ml-2 font-semibold">${t.kararIkon} ${t.karar}</span></div>
+        <span class="text-slate-500 text-[10px] mono">${kalan}dk</span>
+      </div>
+      <div class="text-slate-500 text-[10px] mt-1 mono">Giriş: $${fmt(t.girisFiyat)} • TF: ${t.tf}</div>
+    </div>`;
+  }).join('') || '<div class="text-slate-500 text-xs text-center py-2">Bekleyen test yok</div>';
+
+  const kategoriSirali = Object.entries(ist.kategoriler).sort((a,b) => b[1].toplam - a[1].toplam);
+  const kategoriRows = kategoriSirali.map(([karar, veri]) => {
+    const oran = (veri.dogru + veri.yanlis) > 0 ? (veri.dogru / (veri.dogru + veri.yanlis) * 100) : 0;
+    const renk = karar.includes('LONG') ? 'text-emerald-400' : karar.includes('SHORT') ? 'text-red-400' : 'text-slate-400';
+    const oranRenk = oran >= 65 ? 'text-emerald-400' : oran >= 55 ? 'text-yellow-400' : oran >= 45 ? 'text-orange-400' : 'text-red-400';
+    return `<div class="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
+      <div class="flex justify-between items-center mb-1"><span class="${renk} font-bold text-xs">${karar}</span><span class="${oranRenk} font-bold text-sm mono">%${oran.toFixed(1)}</span></div>
+      <div class="flex gap-2 text-[10px] text-slate-500 mono"><span>Top: ${veri.toplam}</span><span class="text-emerald-400">✓${veri.dogru}</span><span class="text-red-400">✗${veri.yanlis}</span><span>—${veri.notr}</span></div>
+    </div>`;
+  }).join('') || '<div class="text-slate-500 text-xs text-center py-2">Henüz tamamlanan test yok</div>';
+
+  const enIyi = kategoriSirali.filter(([_,v]) => v.toplam >= 3).sort((a,b) => (b[1].dogru/(b[1].dogru+b[1].yanlis||1)) - (a[1].dogru/(a[1].dogru+a[1].yanlis||1)))[0];
+  const enIyiHTML = enIyi ? `<div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 mt-2 text-center">
+    <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">🏆 En Güvenilir Sinyal</div>
+    <div class="text-emerald-400 font-bold text-sm">${enIyi[0]}</div>
+    <div class="text-slate-500 text-[10px] mono">${enIyi[1].toplam} test • %${(enIyi[1].dogru/(enIyi[1].dogru+enIyi[1].yanlis||1)*100).toFixed(1)}</div>
+  </div>` : '';
+
+  el.innerHTML = `
+    <div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 rounded-xl p-4 mb-3">
+      <div class="text-center mb-3">
+        <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Genel İsabet Oranı</div>
+        <div class="text-4xl font-extrabold mono ${ist.genelOran >= 65 ? 'text-emerald-400' : ist.genelOran >= 55 ? 'text-yellow-400' : ist.genelOran >= 45 ? 'text-orange-400' : 'text-red-400'}">%${ist.genelOran.toFixed(1)}</div>
+        <div class="text-[10px] text-slate-500 mt-1 mono">${ist.toplam} toplam test</div>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div><div class="text-emerald-400 font-bold mono">${ist.toplamDogru}</div><div class="text-[9px] text-slate-500 uppercase tracking-wider">Doğru</div></div>
+        <div><div class="text-red-400 font-bold mono">${ist.toplamYanlis}</div><div class="text-[9px] text-slate-500 uppercase tracking-wider">Yanlış</div></div>
+        <div><div class="text-slate-400 font-bold mono">${ist.toplamNotr}</div><div class="text-[9px] text-slate-500 uppercase tracking-wider">Nötr</div></div>
+      </div>
+      ${enIyiHTML}
+    </div>
+    <div class="mb-3">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">📊 Sinyal Tipi Bazlı İsabet</div>
+      <div class="space-y-2">${kategoriRows}</div>
+    </div>
+    <div class="mb-3">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-2">⏳ Bekleyen (${aktifTestler.length})</div>
+      <div class="space-y-2 max-h-40 overflow-y-auto scroll-ince">${bekleyen}</div>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="testleriKontrolEt(true)" class="flex-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg py-2 text-xs font-bold hover:bg-cyan-500/20 transition">🔄 Şimdi Kontrol Et</button>
+      <button onclick="testleriTemizle()" class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg py-2 px-3 text-xs font-bold hover:bg-red-500/20 transition">🗑️</button>
+    </div>
+  `;
+}
+
+function testleriTemizle() {
+  if (!confirm('Tüm test verilerini silmek istiyor musun?')) return;
+  aktifTestler = [];
+  tamamlananTestler = [];
+  localStorage.removeItem('aktifTestler');
+  localStorage.removeItem('tamamlananTestler');
+  testPaneliniGuncelle();
+}
 
 /* TICKER TAPE */
 async function tickerYukle() {
@@ -651,7 +472,7 @@ async function tickerYukle() {
       const coinAd = s.replace('USDT','');
       html += `<span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-sym">${coinAd}</span><span class="mono text-slate-300">$${parseFloat(t.lastPrice).toLocaleString('tr-TR', {maximumFractionDigits: 6})}</span><span class="${renk} mono font-semibold">${ok} ${Math.abs(deg).toFixed(2)}%</span></span>`;
     });
-    el.innerHTML = html + html; // iki kere yaz, kesintisiz dönsün
+    el.innerHTML = html + html;
   } catch(e) {}
 }
 
@@ -662,19 +483,9 @@ function wsDurumGuncelle(durum, mesaj) {
   const dot = document.getElementById('canliDot');
   const yazi = document.getElementById('canliYazi');
   if (!dot || !yazi) return;
-  if (durum === 'canli') {
-    dot.className = 'canli-dot';
-    yazi.className = 'text-emerald-400 font-semibold text-xs';
-    yazi.textContent = 'CANLI';
-  } else if (durum === 'baglaniyor') {
-    dot.className = 'canli-dot baglaniyor';
-    yazi.className = 'text-amber-400 font-semibold text-xs';
-    yazi.textContent = mesaj || 'Bağlanıyor';
-  } else {
-    dot.className = 'canli-dot kopuk';
-    yazi.className = 'text-red-400 font-semibold text-xs';
-    yazi.textContent = mesaj || 'Bağlantı koptu';
-  }
+  if (durum === 'canli') { dot.className = 'canli-dot'; yazi.className = 'text-emerald-400 font-semibold text-xs'; yazi.textContent = 'CANLI'; }
+  else if (durum === 'baglaniyor') { dot.className = 'canli-dot baglaniyor'; yazi.className = 'text-amber-400 font-semibold text-xs'; yazi.textContent = mesaj || 'Bağlanıyor'; }
+  else { dot.className = 'canli-dot kopuk'; yazi.className = 'text-red-400 font-semibold text-xs'; yazi.textContent = mesaj || 'Bağlantı koptu'; }
 }
 
 function wsBaslat() {
@@ -733,7 +544,6 @@ function wsMesajIsle(m) {
       el.textContent = (deg >= 0 ? '+' : '') + deg.toFixed(2) + '% (24s)';
       el.className = 'mono text-sm font-semibold ' + (deg >= 0 ? 'text-emerald-400' : 'text-red-400');
     }
-    // Ek stat güncellemeleri
     if (t.highPrice24h) document.getElementById('statYuksek').textContent = '$' + fmt(parseFloat(t.highPrice24h));
     if (t.lowPrice24h) document.getElementById('statDusuk').textContent = '$' + fmt(parseFloat(t.lowPrice24h));
     if (t.volume24h) {
@@ -758,7 +568,6 @@ function fiyatGuncelle(yeniFiyat) {
   if (alarmFiyat) kontrolAlarm(yeniFiyat);
 }
 
-/* SEMBOL LİSTESİ */
 async function sembolleriYukle() {
   try {
     const r = await fetch('https://api.bybit.com/v5/market/instruments-info?category=spot&limit=1000');
@@ -800,9 +609,7 @@ function aramaOneriGoster(q) {
   el.innerHTML = eslesenler.map(s => {
     const coin = s.replace('USDT', '').replace('USDC', '');
     const quote = s.replace(coin, '');
-    return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b border-white/5 last:border-0 flex justify-between">
-      <span class="font-semibold text-slate-100">${coin}</span><span class="text-slate-500 text-xs mono">${quote}</span>
-    </button>`;
+    return `<button onclick="oneriSec('${s}')" class="w-full text-left px-3 py-2.5 hover:bg-cyan-500/10 transition text-sm border-b border-white/5 last:border-0 flex justify-between"><span class="font-semibold text-slate-100">${coin}</span><span class="text-slate-500 text-xs mono">${quote}</span></button>`;
   }).join('');
   el.classList.remove('hidden');
 }
@@ -813,7 +620,6 @@ function oneriSec(sym) {
   coinYukle(sym);
 }
 
-/* GÖSTERGELER */
 function sma(d, p) {
   const o = [];
   for (let i = 0; i < d.length; i++) {
@@ -913,7 +719,6 @@ function vwapSon(mumlar) {
   return arr[arr.length-1] || mumlar[mumlar.length-1].close;
 }
 
-/* FVG / FORMASYON / YAPI / DIVERGENCE */
 function fvgBul(mumlar) {
   const fvgler = [];
   for (let i = 2; i < mumlar.length; i++) {
@@ -1319,6 +1124,8 @@ async function coinYukle(symbol) {
     sonAnaliz = analiz;
     cizGrafik(mumlar, analiz);
     panelDoldur(analiz);
+    // OTOMATİK TEST KAYDI
+    sinyalTestKaydet(analiz, aktifCoin, aktifTF);
     mtfYukle(aktifCoin);
     piyasaYukle(aktifCoin);
     const sonMum = mumlar[mumlar.length-1];
@@ -1565,8 +1372,6 @@ function panelDoldur(a) {
     <div class="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-2.5"><span class="text-xs text-slate-400">ATR</span><span class="font-bold text-slate-200 mono">${fmt(a.atr)}</span></div>
   `;
 
-  // Stat kartları
-  const sonMum = { high: a.son50Yuk, low: a.son50Dus };
   document.getElementById('statYuksek').textContent = '$' + fmt(a.son50Yuk);
   document.getElementById('statDusuk').textContent = '$' + fmt(a.son50Dus);
   document.getElementById('statHacim').textContent = a.hO.toFixed(2) + 'x';
@@ -1695,6 +1500,8 @@ saatGuncelle();
 setInterval(() => coinYukle(aktifCoin), 60000);
 setInterval(hizliYukle, 120000);
 setInterval(tickerYukle, 30000);
+setInterval(() => testleriKontrolEt(false), 60000);
+setTimeout(() => { if (typeof testPaneliniGuncelle === 'function') testPaneliniGuncelle(); }, 2000);
 document.getElementById('aramaCoin').addEventListener('keypress', e => { if (e.key === 'Enter') coinYukle(); });
 document.getElementById('aramaCoin').addEventListener('input', e => { aramaOneriGoster(e.target.value); });
 document.getElementById('aramaCoin').addEventListener('focus', e => { if (e.target.value.trim()) aramaOneriGoster(e.target.value); });
