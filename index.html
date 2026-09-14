@@ -2174,12 +2174,13 @@ function panelDoldur(a) {
     const renkYazi = f.yon === 'LONG' ? 'text-emerald-400' : f.yon === 'SHORT' ? 'text-red-400' : '';
     return `<div class="satir border rounded-lg p-2" style="background:${f.ok ? 'var(--surface)' : 'transparent'};border-color:var(--border)"><div class="flex items-center justify-between mb-0.5"><span class="text-[11.5px] font-semibold" style="color:var(--text)">${ikon} ${f.ad}</span><span class="${renkYazi} text-[10px] font-bold mono" style="${!renkYazi ? 'color:var(--text-mute)' : ''}">${f.yon}</span></div><div class="text-[10.5px] leading-tight" style="color:var(--text-dim)">${f.detay}</div></div>`;
   }).join('');
-  if (a.motorBonuslar && a.motorBonuslar.length) {
     sebepHTML += `<div class="text-[10px] uppercase tracking-wider font-bold mt-3 mb-1.5" style="color:var(--text-mute)">⚡ Motor Bonusları</div>`;
+  if (a.motorBonuslar && a.motorBonuslar.length) {
     sebepHTML += a.motorBonuslar.map(b => {
-      const puanRenk = b.puan > 0 ? 'text-emerald-400' : 'text-red-400';
-      const yonOk = b.puan > 0 ? '▲' : '▼';
-      return `<div class="satir border rounded-lg p-2" style="background:var(--surface);border-color:var(--border)"><div class="flex items-center justify-between mb-0.5"><span class="text-[11.5px] font-semibold" style="color:var(--text)">${b.ad}</span><span class="${puanRenk} text-[10px] font-bold mono">${yonOk} ${b.puan > 0 ? '+' : ''}${b.puan}</span></div><div class="text-[10.5px]" style="color:var(--text-dim)">${b.aciklama}</div></div>`;
+      const puan = b.puan || 0;
+      const puanRenk = puan > 0 ? 'text-emerald-400' : puan < 0 ? 'text-red-400' : 'text-gray-400';
+      const yonOk = puan > 0 ? '▲' : puan < 0 ? '▼' : '—';
+      return `<div class="satir border rounded-lg p-2" style="background:var(--surface);border-color:var(--border)"><div class="flex items-center justify-between mb-0.5"><span class="text-[11.5px] font-semibold" style="color:var(--text)">${b.ad}</span><span class="${puanRenk} text-[10px] font-bold mono">${yonOk} ${puan > 0 ? '+' : ''}${puan}</span></div><div class="text-[10.5px]" style="color:var(--text-dim)">${b.aciklama}</div></div>`;
     }).join('');
   }
   if (a.volatiliteUyari) {
