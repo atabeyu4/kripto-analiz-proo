@@ -1607,19 +1607,29 @@ function analizEt(mumlar, hafifMod = false) {
   if (onayliSayi === 4 && filtreYon === 'LONG') masterPuan += 3; if (onayliSayi === 4 && filtreYon === 'SHORT') masterPuan -= 3;
   if (onayliSayi === 3 && filtreYon === 'LONG') masterPuan += 1; if (onayliSayi === 3 && filtreYon === 'SHORT') masterPuan -= 1;
   if (onayliSayi <= 1) masterPuan = masterPuan * 0.6;
+
+  // v3.8.2 — Motor bonusları için geçici yön (masterPuan yönüne göre)
+  const bonusYon = masterPuan > 1 ? 'LONG' : masterPuan < -1 ? 'SHORT' : (filtreYon !== 'NÖTR' ? filtreYon : 'NÖTR');
   const motorBonuslar = [];
-  const mtfBonus = mtfBonusHesapla(filtreYon);
+  const mtfBonus = mtfBonusHesapla(bonusYon);
   if (mtfBonus !== 0) { masterPuan += mtfBonus; motorBonuslar.push({ ad: '📊 MTF Onayı', puan: mtfBonus, aciklama: analizVeriCache.mtfOnay || '-' }); }
-  const ucNokta = ucNoktaCezasi(r, filtreYon);
+  const ucNokta = ucNoktaCezasi(r, bonusYon);
   if (ucNokta !== 0) { masterPuan += ucNokta; motorBonuslar.push({ ad: '⚠️ Uç Nokta', puan: ucNokta, aciklama: ucNokta > 0 ? 'Dipte SHORT riski — ceza' : 'Tepede LONG riski — ceza' }); }
-  const frBonus = fundingPuan(analizVeriCache.fundingRate, filtreYon);
+  const frBonus = fundingPuan(analizVeriCache.fundingRate, bonusYon);
   if (frBonus !== 0) { masterPuan += frBonus; const fr = analizVeriCache.fundingRate; motorBonuslar.push({ ad: '💰 Funding', puan: frBonus, aciklama: `${fr.toFixed(4)}% • ${fr > 0 ? 'Longlar kalabalık' : 'Shortlar kalabalık'}` }); }
-  const oiBonus = oiPuan(analizVeriCache.oiDegisim, s5D, filtreYon);
+  const oiBonus = oiPuan(analizVeriCache.oiDegisim, s5D, bonusYon);
   if (oiBonus !== 0) { masterPuan += oiBonus; motorBonuslar.push({ ad: '📈 Open Interest', puan: oiBonus, aciklama: `5dk: ${(analizVeriCache.oiDegisim || 0).toFixed(2)}% • Fiyat: ${s5D > 0 ? '↑' : '↓'}` }); }
-  const whaleBonus = whalePuan(filtreYon);
+  const whaleBonus = whalePuan(bonusYon);
   if (whaleBonus !== 0) { masterPuan += whaleBonus; const akis = analizVeriCache.whaleNetAkis || 0; motorBonuslar.push({ ad: '🐋 Whale Akış', puan: whaleBonus, aciklama: `${akis > 0 ? '+' : ''}$${(akis/1000).toFixed(0)}K net akış` }); }
-  const obBonus = obPuan(filtreYon);
+  const obBonus = obPuan(bonusYon);
   if (obBonus !== 0) { masterPuan += obBonus; motorBonuslar.push({ ad: '📖 Order Book', puan: obBonus, aciklama: `Alış/Satış oranı: ${(analizVeriCache.obOran || 0).toFixed(2)}` }); }
+
+  // Bilgi amaçlı: hangi veriler henüz yüklenmediyse
+  if (analizVeriCache.mtfOnay) { /* MTF yüklendi */ } else { motorBonuslar.push({ ad: '📊 MTF Onayı', puan: 0, aciklama: 'Henüz yüklenmedi' }); }
+  if (analizVeriCache.fundingRate === null) motorBonuslar.push({ ad: '💰 Funding', puan: 0, aciklama: 'Piyasa sekmesine gir' });
+  if (analizVeriCache.obOran === null) motorBonuslar.push({ ad: '📖 Order Book', puan: 0, aciklama: 'Piyasa sekmesine gir' });
+  if (analizVeriCache.whaleNetAkis === 0) motorBonuslar.push({ ad: '🐋 Whale', puan: 0, aciklama: 'Whale Tara butonuna bas' });
+
   const aV = a[son] || fiyat * 0.02;
   const atrTemiz = a.slice(-20).filter(x => x != null && !isNaN(x));
   const atrOrt = atrTemiz.length ? atrTemiz.reduce((s, v) => s + v, 0) / atrTemiz.length : aV;
