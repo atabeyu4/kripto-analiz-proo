@@ -738,6 +738,47 @@ function obPuan(filtreYon) {
   return 0;
 }
 
+/* v3.8.3 — BTC YÖN FİLTRESİ */
+let btcYonCache = { yon: 'NÖTR', degisim: 0, guncellemeZamani: 0 };
+async function btcYonGuncelle() {
+  const simdi = Date.now();
+  if (simdi - btcYonCache.guncellemeZamani < 60000) return;
+  try {
+    const mumlar = await klineCek('BTCUSDT', '60', 200);
+    if (!mumlar || mumlar.length < 50) return;
+    const kapanis = mumlar.map(m => m.close);
+    const son = kapanis.length - 1;
+    const fiyat = kapanis[son];
+    const e20 = ema(kapanis, 20), e50 = ema(kapanis, 50), e200 = ema(kapanis, 200);
+    const f20 = e20[son], f50 = e50[son], f200 = e200[son];
+    const birSaatOnce = kapanis[son - 1] || fiyat;
+    const degisim = ((fiyat - birSaatOnce) / birSaatOnce) * 100;
+    let yon = 'NÖTR';
+    if (fiyat > f20 && f20 > f50 && f50 > f200) yon = 'LONG';
+    else if (fiyat < f20 && f20 < f50 && f50 < f200) yon = 'SHORT';
+    else if (fiyat > f20 && f20 > f50) yon = 'LONG';
+    else if (fiyat < f20 && f20 < f50) yon = 'SHORT';
+    btcYonCache = { yon, degisim, guncellemeZamani: simdi };
+  } catch(e) {}
+}
+function btcYonFiltrePuan(coin, filtreYon) {
+  if (coin === 'BTCUSDT') return { puan: 0, aciklama: 'BTC kendisi — filtre yok' };
+  if (!btcYonCache.yon || btcYonCache.yon === 'NÖTR') return { puan: 0, aciklama: 'BTC yönü belirsiz' };
+  if (sonAnalizMumlar && sonAnalizMumlar.length > 20 && aktifCoin === coin) {
+    const sonMum = sonAnalizMumlar[sonAnalizMumlar.length - 1];
+    const birSaatOnceki = sonAnalizMumlar[Math.max(0, sonAnalizMumlar.length - 5)];
+    const coinDegisim = ((sonMum.close - birSaatOnceki.close) / birSaatOnceki.close) * 100;
+    if (Math.abs(coinDegisim - btcYonCache.degisim) > 3) {
+      return { puan: 0, aciklama: `Bağımsız hareket (%${coinDegisim.toFixed(1)} vs BTC %${btcYonCache.degisim.toFixed(1)}) — filtre esnedi` };
+    }
+  }
+  if (btcYonCache.yon === 'LONG' && filtreYon === 'LONG') return { puan: 1, aciklama: `BTC yükselişte — uyumlu` };
+  if (btcYonCache.yon === 'SHORT' && filtreYon === 'SHORT') return { puan: 1, aciklama: `BTC düşüşte — uyumlu` };
+  if (btcYonCache.yon === 'SHORT' && filtreYon === 'LONG') return { puan: -2, aciklama: `BTC düşüşte — altcoin LONG riskli` };
+  if (btcYonCache.yon === 'LONG' && filtreYon === 'SHORT') return { puan: -2, aciklama: `BTC yükselişte — altcoin SHORT riskli` };
+  return { puan: 0, aciklama: '-' };
+}
+
 let logKayitlari = JSON.parse(localStorage.getItem('logKayitlari') || '[]');
 let sinyalLoglari = JSON.parse(localStorage.getItem('sinyalLoglari') || '[]');
 let logAktifFiltre = 'hepsi';
@@ -861,17 +902,17 @@ function tamEkranToggle() {
 
 function hakkindaAc() {
   document.getElementById('bilgiBaslik').textContent = '📖 Hakkında';
-  document.getElementById('bilgiIcerik').innerHTML = `<p class="mb-3"><b>Kripto Analiz Pro Terminal v3.8</b>, kripto piyasasında karar vermeni kolaylaştıran profesyonel bir analiz aracıdır.</p><p class="mb-3"><b>Neler yapabilir?</b></p><ul class="list-disc pl-5 mb-3 space-y-1"><li>10+ teknik gösterge</li><li>12 mum formasyonu + Divergence</li><li>FVG, Fibonacci, Volume Profile</li><li>MTF onayı</li><li><b>Motor bonusları:</b> MTF, Funding, OI, Whale, Order Book, Volatilite</li><li>500 coine kadar sinyal radarı</li><li>Whale takibi</li><li>Haber akışı + önbellek</li><li>Backtest + otomatik test</li><li>Pozisyon takibi</li><li>Mum kilidi + Dönüş Radarı</li><li>Sistem Logları + Sinyal Geçmişi</li><li>Telegram bildirim</li></ul><p class="text-xs italic" style="color:var(--text-mute)">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<p class="mb-3"><b>Kripto Analiz Pro Terminal v3.8.3</b>, kripto piyasasında karar vermeni kolaylaştıran profesyonel bir analiz aracıdır.</p><p class="mb-3"><b>Neler yapabilir?</b></p><ul class="list-disc pl-5 mb-3 space-y-1"><li>10+ teknik gösterge</li><li>12 mum formasyonu + Divergence</li><li>FVG, Fibonacci, Volume Profile</li><li>MTF onayı</li><li><b>Motor bonusları:</b> MTF, Funding, OI, Whale, Order Book, Volatilite, BTC Yönü</li><li>500 coine kadar sinyal radarı</li><li>Whale takibi</li><li>Haber akışı + önbellek</li><li>Backtest + otomatik test</li><li>Pozisyon takibi</li><li>Mum kilidi + Dönüş Radarı</li><li>Sistem Logları + Sinyal Geçmişi</li><li>Telegram bildirim</li></ul><p class="text-xs italic" style="color:var(--text-mute)">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function sssAc() {
   document.getElementById('bilgiBaslik').textContent = '💬 SSS';
-  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><b>❓ Nasıl LONG/SHORT yorumlarım?</b><div class="mt-1 text-xs">%70+ güven = güçlü sinyal.</div></div><div class="mb-3"><b>❓ Motor bonusları nedir?</b><div class="mt-1 text-xs">MTF, funding, OI, whale, order book, volatilite bonusları. "Neden Bu Karar?" panelinde görünür.</div></div><div class="mb-3"><b>❓ Mum kilidi nedir?</b><div class="mt-1 text-xs">Karar mum kapanana kadar sabit kalır.</div></div><div class="mb-3"><b>❓ Telegram nasıl bağlarım?</b><div class="mt-1 text-xs">@BotFather'dan bot, @userinfobot'tan Chat ID al.</div></div>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><b>❓ Nasıl LONG/SHORT yorumlarım?</b><div class="mt-1 text-xs">%70+ güven = güçlü sinyal.</div></div><div class="mb-3"><b>❓ Motor bonusları nedir?</b><div class="mt-1 text-xs">MTF, funding, OI, whale, order book, BTC yönü, volatilite bonusları.</div></div><div class="mb-3"><b>❓ BTC yön filtresi nedir?</b><div class="mt-1 text-xs">BTC düşerken altcoin LONG ceza yer. Ama coin bağımsız hareket ediyorsa (%3+), filtre esner.</div></div><div class="mb-3"><b>❓ Telegram nasıl bağlarım?</b><div class="mt-1 text-xs">@BotFather'dan bot, @userinfobot'tan Chat ID al.</div></div>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function yeniliklerAc() {
   document.getElementById('bilgiBaslik').textContent = '🆕 Yenilikler';
-  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><div class="font-bold text-emerald-400">v3.8.1 — Bu Sürüm</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>⚡ Motor bonusları artık otomatik yenileniyor</li><li>🔄 MTF/Piyasa/Whale yüklenince panel güncellenir</li></ul></div><div class="mb-3"><div class="font-bold">v3.8</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>⚖️ Gösterge ağırlıklandırma</li><li>📊 MTF bonusu</li><li>⚠️ Uç nokta koruması</li><li>💰 Funding + OI + Whale + OB</li><li>📉 Volatilite filtresi</li></ul></div><div class="mb-3"><div class="font-bold">v3.7</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>📋 Sistem Logları + Sinyal Geçmişi</li><li>📱 Telegram bildirim</li></ul></div>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<div class="mb-3"><div class="font-bold text-emerald-400">v3.8.3 — BTC Yön Filtresi</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>📉 BTC yükselirken altcoin SHORT ceza yeri</li><li>📉 BTC düşerken altcoin LONG ceza yer</li><li>✅ Uyumlu sinyaller bonus alır (+1)</li><li>🔄 Bağımsız hareket eden coinler filtre esner</li></ul></div><div class="mb-3"><div class="font-bold">v3.8</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>⚖️ Gösterge ağırlıklandırma</li><li>📊 MTF, Funding, OI, Whale, OB bonusları</li><li>📉 Volatilite filtresi</li></ul></div><div class="mb-3"><div class="font-bold">v3.7</div><ul class="list-disc pl-5 mt-1 text-xs space-y-0.5"><li>📋 Sistem Logları + Sinyal Geçmişi</li><li>📱 Telegram bildirim</li></ul></div>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function bilgiKapat() { document.getElementById('bilgiModal').classList.remove('acik'); }
@@ -897,7 +938,6 @@ document.addEventListener('keydown', e => {
   if (tfMap[k]) { e.preventDefault(); tfDegistir(tfMap[k]); return; }
 });
 
-/* v3.8.1 — Motor bonusları yenileme yardımcısı */
 function motorBonuslariYenile(kaynak) {
   if (!sonAnalizMumlar || !sonAnaliz || sonAnaliz.coin !== aktifCoin) return;
   setTimeout(() => {
@@ -948,11 +988,11 @@ function logTabGec(tab) {
   document.querySelectorAll('[data-logtab]').forEach(b => { if (b.dataset.logtab === tab) b.classList.add('rtab-aktif'); else b.classList.remove('rtab-aktif'); });
 }
 function loglariTemizle() {
-  if (!confirm('Tüm olay logları silinsin mi?')) return;
+  if (!confirm('Tüm olay logları silinsin mi? (Sinyal geçmişi korunur)')) return;
   logKayitlari = []; localStorage.removeItem('logKayitlari'); logListeDoldur();
 }
 function loglariIndir() {
-  const data = { olaylar: logKayitlari, sinyaller: sinyalLoglari, indirmeTarihi: new Date().toISOString(), surum: 'v3.8.1' };
+  const data = { olaylar: logKayitlari, sinyaller: sinyalLoglari, indirmeTarihi: new Date().toISOString(), surum: 'v3.8.3' };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1531,7 +1571,7 @@ function divergenceBul(mumlar) { const kapanis = mumlar.map(m => m.close), r = r
 function fibonacciBul(mumlar) { const yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low); const son60Y = Math.max(...yuk.slice(-60)), son60D = Math.min(...dus.slice(-60)); const sonF = mumlar[mumlar.length-1].close, fark = son60Y - son60D; const oranlar = [0.236, 0.382, 0.5, 0.618, 0.786]; const seviyeler = oranlar.map(o => ({ oran: (o*100).toFixed(1) + '%', fiyat: son60D + fark * o })); const trend = sonF > (son60Y + son60D) / 2 ? 'yukarı' : 'aşağı'; return { ust: son60Y, alt: son60D, seviyeler, trend, fiyat: sonF }; }
 function volumeProfileBul(mumlar, bins = 25) { const son = mumlar.slice(-200); const yuk = Math.max(...son.map(m => m.high)), dus = Math.min(...son.map(m => m.low)); const adim = (yuk - dus) / bins; const kovalar = Array(bins).fill(0).map((_, i) => ({ hacim: 0, alt: dus + i*adim, ust: dus + (i+1)*adim })); son.forEach(m => { const tp = (m.high + m.low + m.close) / 3; const idx = Math.min(bins - 1, Math.max(0, Math.floor((tp - dus) / adim))); kovalar[idx].hacim += m.volume; }); const sirali = [...kovalar].sort((a,b) => b.hacim - a.hacim); return { poc: sirali[0], ustKovalar: sirali.slice(0, 3), kovalar: sirali }; }
 
-/* ANALİZ MOTORU v3.8.1 */
+/* ANALİZ MOTORU v3.8.3 */
 function analizEt(mumlar, hafifMod = false) {
   const kapanis = mumlar.map(m => m.close), yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low), hacim = mumlar.map(m => m.volume);
   const son = kapanis.length - 1, fiyat = kapanis[son];
@@ -1607,8 +1647,6 @@ function analizEt(mumlar, hafifMod = false) {
   if (onayliSayi === 4 && filtreYon === 'LONG') masterPuan += 3; if (onayliSayi === 4 && filtreYon === 'SHORT') masterPuan -= 3;
   if (onayliSayi === 3 && filtreYon === 'LONG') masterPuan += 1; if (onayliSayi === 3 && filtreYon === 'SHORT') masterPuan -= 1;
   if (onayliSayi <= 1) masterPuan = masterPuan * 0.6;
-
-  // v3.8.2 — Motor bonusları için geçici yön (masterPuan yönüne göre)
   const bonusYon = masterPuan > 1 ? 'LONG' : masterPuan < -1 ? 'SHORT' : (filtreYon !== 'NÖTR' ? filtreYon : 'NÖTR');
   const motorBonuslar = [];
   const mtfBonus = mtfBonusHesapla(bonusYon);
@@ -1623,13 +1661,13 @@ function analizEt(mumlar, hafifMod = false) {
   if (whaleBonus !== 0) { masterPuan += whaleBonus; const akis = analizVeriCache.whaleNetAkis || 0; motorBonuslar.push({ ad: '🐋 Whale Akış', puan: whaleBonus, aciklama: `${akis > 0 ? '+' : ''}$${(akis/1000).toFixed(0)}K net akış` }); }
   const obBonus = obPuan(bonusYon);
   if (obBonus !== 0) { masterPuan += obBonus; motorBonuslar.push({ ad: '📖 Order Book', puan: obBonus, aciklama: `Alış/Satış oranı: ${(analizVeriCache.obOran || 0).toFixed(2)}` }); }
-
-  // Bilgi amaçlı: hangi veriler henüz yüklenmediyse
-  if (analizVeriCache.mtfOnay) { /* MTF yüklendi */ } else { motorBonuslar.push({ ad: '📊 MTF Onayı', puan: 0, aciklama: 'Henüz yüklenmedi' }); }
+  const btcFiltre = btcYonFiltrePuan(analizVeriCache.coin || aktifCoin, bonusYon);
+  if (btcFiltre.puan !== 0) { masterPuan += btcFiltre.puan; motorBonuslar.push({ ad: '📉 BTC Yönü', puan: btcFiltre.puan, aciklama: btcFiltre.aciklama }); }
+  if (analizVeriCache.mtfOnay) { } else { motorBonuslar.push({ ad: '📊 MTF Onayı', puan: 0, aciklama: 'Henüz yüklenmedi' }); }
   if (analizVeriCache.fundingRate === null) motorBonuslar.push({ ad: '💰 Funding', puan: 0, aciklama: 'Piyasa sekmesine gir' });
   if (analizVeriCache.obOran === null) motorBonuslar.push({ ad: '📖 Order Book', puan: 0, aciklama: 'Piyasa sekmesine gir' });
   if (analizVeriCache.whaleNetAkis === 0) motorBonuslar.push({ ad: '🐋 Whale', puan: 0, aciklama: 'Whale Tara butonuna bas' });
-
+  if (btcYonCache.yon === 'NÖTR') motorBonuslar.push({ ad: '📉 BTC Yönü', puan: 0, aciklama: 'BTC trendi belirsiz' });
   const aV = a[son] || fiyat * 0.02;
   const atrTemiz = a.slice(-20).filter(x => x != null && !isNaN(x));
   const atrOrt = atrTemiz.length ? atrTemiz.reduce((s, v) => s + v, 0) / atrTemiz.length : aV;
@@ -1912,6 +1950,7 @@ async function coinYukle(symbol, forceYeni = false) {
       kullanilacakAnaliz = { ...kilitliAnaliz, kilitli: true, stabilite: 'kararli' };
     }
     sonAnaliz = kullanilacakAnaliz;
+    btcYonGuncelle();
     cizGrafik(mumlar, kullanilacakAnaliz);
     panelDoldur(kullanilacakAnaliz);
     sinyalTestKaydet(kullanilacakAnaliz, aktifCoin, aktifTF);
@@ -2174,7 +2213,7 @@ function panelDoldur(a) {
     const renkYazi = f.yon === 'LONG' ? 'text-emerald-400' : f.yon === 'SHORT' ? 'text-red-400' : '';
     return `<div class="satir border rounded-lg p-2" style="background:${f.ok ? 'var(--surface)' : 'transparent'};border-color:var(--border)"><div class="flex items-center justify-between mb-0.5"><span class="text-[11.5px] font-semibold" style="color:var(--text)">${ikon} ${f.ad}</span><span class="${renkYazi} text-[10px] font-bold mono" style="${!renkYazi ? 'color:var(--text-mute)' : ''}">${f.yon}</span></div><div class="text-[10.5px] leading-tight" style="color:var(--text-dim)">${f.detay}</div></div>`;
   }).join('');
-    sebepHTML += `<div class="text-[10px] uppercase tracking-wider font-bold mt-3 mb-1.5" style="color:var(--text-mute)">⚡ Motor Bonusları</div>`;
+  sebepHTML += `<div class="text-[10px] uppercase tracking-wider font-bold mt-3 mb-1.5" style="color:var(--text-mute)">⚡ Motor Bonusları</div>`;
   if (a.motorBonuslar && a.motorBonuslar.length) {
     sebepHTML += a.motorBonuslar.map(b => {
       const puan = b.puan || 0;
@@ -2326,7 +2365,7 @@ function tfDegistir(tf) {
 function saatGuncelle() { document.getElementById('saat').textContent = new Date().toLocaleTimeString('tr-TR'); }
 
 /* BAŞLAT */
-logEkle('bilgi', '🚀 Sistem başlatıldı', `v3.8.1 • ${new Date().toLocaleString('tr-TR')}`, 'sistem');
+logEkle('bilgi', '🚀 Sistem başlatıldı', `v3.8.3 • ${new Date().toLocaleString('tr-TR')}`, 'sistem');
 temaUygula(tema);
 document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
 if (localStorage.getItem('welcomeGorundu') === 'true') document.getElementById('welcomeScreen').classList.add('gizli');
@@ -2336,6 +2375,7 @@ grafikOlustur();
 wsBaslat();
 sembolleriYukle();
 tickerYukle();
+btcYonGuncelle();
 coinYukle('BTCUSDT', true);
 hizliYukle();
 pozisyonPaneliDoldur();
@@ -2345,6 +2385,7 @@ setInterval(tickerYukle, 30000);
 setInterval(() => testleriKontrolEt(false), 60000);
 setInterval(mumKilitGuncelle, 1000);
 setInterval(sinyalLogKontrolEt, 5 * 60 * 1000);
+setInterval(btcYonGuncelle, 60000);
 setTimeout(sinyalLogKontrolEt, 30000);
 acilKontrolInterval = setInterval(acilDurumKontrol, ACIL_KONTROL_MS);
 pozGuncellemeIntervalId = setInterval(pozisyonlariGuncelle, (AYARLAR.pozGuncelleme || 30) * 1000);
