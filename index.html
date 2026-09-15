@@ -14,6 +14,8 @@ body.light{--bg:#f5f7fa;--bg-soft:#ffffff;--surface:#ffffff;--surface-2:#f0f3f7;
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
 #chart{width:100%;height:520px}
+#chartWrap{position:relative}
+#chartOverlay{position:absolute;top:0;left:0;pointer-events:none;z-index:2}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;transition:border-color .2s,background .2s}
 .card:hover{border-color:var(--border-2)}
 .card-pad{padding:20px}
@@ -100,6 +102,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-warn{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3)}
 .btn-warn:hover{background:rgba(245,158,11,.25)}
 .btn-block{width:100%}
+.btn-toggle{position:relative}
+.btn-toggle.aktif{background:rgba(34,211,238,.15);color:var(--cyan);border-color:rgba(34,211,238,.4)}
 .log-item{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:11px 12px;display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;transition:all .15s}
 .log-item:hover{border-color:var(--border-2)}
 .log-item.basarili{border-left:3px solid var(--emerald)}
@@ -194,6 +198,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .filter-pill{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:var(--surface-2);color:var(--text-mute);font-family:inherit}
 .filter-pill.aktif{background:rgba(34,211,238,.15);color:var(--cyan);border-color:rgba(34,211,238,.4)}
 .ob-filter-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+/* v4.4 Mini Charts */
+.mini-charts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mini-chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px;transition:all .2s;cursor:pointer}
+.mini-chart-card:hover{border-color:var(--border-2);transform:translateY(-2px)}
+.mini-chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:11px;font-weight:700}
+.mini-chart-area{height:80px;position:relative}
+.mini-chart-price{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:800}
 @media(max-width:640px){
   #chart{height:280px!important}
   .signal-text{font-size:24px}
@@ -205,6 +216,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   .ob-info{grid-template-columns:1fr}
   .notif-stack{right:10px;left:10px;top:70px}
   .notif{min-width:auto;max-width:100%}
+  .mini-charts-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -217,10 +229,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <h1 style="font-size:34px;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;line-height:1.15">Kripto Analiz <span style="color:var(--cyan)">Pro Terminal</span></h1>
 <p style="font-size:15px;color:var(--text-dim);margin-bottom:28px;line-height:1.6;max-width:560px;margin-left:auto;margin-right:auto">Order Block, Ichimoku, otomatik veri, paper trading ve fırsat radarı ile profesyonel kripto analizi.</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:28px;text-align:left">
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🎯</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Order Block</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Kurumsal alıcı/satıcı bölgeleri.</div></div>
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">☁️</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Ichimoku</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Trend + destek/direnç tek bakışta.</div></div>
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🔔</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">OB Alarm</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Fırsat yaklaşınca haber verir.</div></div>
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🧪</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Paper Trading</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Sanal işlem, canlı P&L.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🎯</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Order Block</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Grafikte dikdörtgen bölge.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">☁️</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Ichimoku</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Bulut grafikte görünür.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">📐</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">FVG</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Fair Value Gap işaretli.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">📊</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Mini Charts</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">4 coin yan yana.</div></div>
 </div>
 <button onclick="welcomeKapat()" class="btn btn-primary" style="padding:14px 40px;font-size:15px">🚀 Başla</button>
 <p style="font-size:11px;color:var(--text-mute);margin-top:16px">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>
@@ -235,7 +247,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div style="max-width:1600px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px">
 <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
 <div style="width:36px;height:36px;border-radius:10px;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:18px">📈</div>
-<div class="hidden md:block"><div style="font-weight:800;font-size:13px;color:var(--text)">KRİPTO ANALİZ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.3</div></div>
+<div class="hidden md:block"><div style="font-weight:800;font-size:13px;color:var(--text)">KRİPTO ANALİZ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.4</div></div>
 </div>
 <div style="flex:1;max-width:520px;position:relative;display:flex;gap:8px">
 <input id="aramaCoin" placeholder="🔍 BTC, ETH, SOL... ( / )" autocomplete="off" class="input-field" style="flex:1">
@@ -308,15 +320,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div style="display:grid;grid-template-columns:1fr;gap:16px" class="main-grid">
 <div>
 <div class="card" style="padding:16px;position:relative">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
 <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute)">📊 Canlı Grafik</span>
-<div style="display:flex;gap:6px">
-<button onclick="gostergeleriToggle()" id="gostergeBtn" title="EMA/VWAP" class="btn btn-secondary" style="padding:6px 10px;font-size:12px">🙈</button>
-<button onclick="obCizgileriToggle()" id="obCizgiBtn" title="OB Çizgileri" class="btn btn-secondary" style="padding:6px 10px;font-size:12px">🎯</button>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<button onclick="gostergeleriToggle()" id="gostergeBtn" title="EMA/VWAP" class="btn btn-secondary btn-toggle" style="padding:6px 10px;font-size:12px">📈</button>
+<button onclick="obRectToggle()" id="obRectBtn" title="OB Bölgeleri" class="btn btn-secondary btn-toggle aktif" style="padding:6px 10px;font-size:12px">🟩</button>
+<button onclick="fvgToggle()" id="fvgBtn" title="FVG Bölgeleri" class="btn btn-secondary btn-toggle aktif" style="padding:6px 10px;font-size:12px">📐</button>
+<button onclick="ichimokuBulutToggle()" id="ichiBtn" title="Ichimoku Bulutu" class="btn btn-secondary btn-toggle aktif" style="padding:6px 10px;font-size:12px">☁️</button>
 <button onclick="tamEkranToggle()" title="Tam Ekran (F)" class="btn btn-secondary" style="padding:6px 10px;font-size:12px">⛶</button>
 </div>
 </div>
-<div id="chart"></div>
+<div id="chartWrap">
+  <div id="chart"></div>
+  <canvas id="chartOverlay"></canvas>
+</div>
 <div id="chartYukleniyor" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-radius:14px">
 <div style="text-align:center"><div class="spinner" style="width:24px;height:24px;border-width:3px;margin:0 auto 12px"></div><span style="font-size:13px;color:var(--text-dim)">Grafik yükleniyor...</span></div>
 </div>
@@ -459,7 +476,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 <div class="card card-pad">
 <div class="card-title"><span class="card-title-icon">💰</span>Ciddi Backtest</div>
-<p style="font-size:11px;color:var(--text-mute);margin-bottom:10px">v4.3: Order Block + Ichimoku da dahil.</p>
+<p style="font-size:11px;color:var(--text-mute);margin-bottom:10px">v4.4: Order Block + Ichimoku da dahil.</p>
 <button onclick="ciddiBacktestCalistir()" id="btBtn" class="btn btn-primary btn-block" style="margin-bottom:12px">Simülasyonu Çalıştır</button>
 <div id="btSonuc"></div>
 </div>
@@ -479,6 +496,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 </div>
+</div>
+
+<!-- v4.4: MINI CHARTS -->
+<div class="card card-pad" style="margin-top:16px">
+<div class="card-title">
+<span class="card-title-icon">📊</span>Mini Charts — Top 4
+<button onclick="miniChartlariYukle()" style="background:transparent;border:none;cursor:pointer;color:var(--cyan);font-family:inherit;font-size:11px;font-weight:700;margin-left:auto">🔄 Yenile</button>
+</div>
+<div id="miniChartler" class="mini-charts-grid"></div>
 </div>
 
 <div class="card card-pad" style="margin-top:16px">
@@ -615,7 +641,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div id="hamburgerOverlay" class="hamburger-overlay" onclick="hamburgerKapat()"></div>
 <div id="hamburgerPanel" class="hamburger-panel">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
-<div><div style="font-weight:800;font-size:15px;color:var(--cyan)">MENÜ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.3</div></div>
+<div><div style="font-weight:800;font-size:15px;color:var(--cyan)">MENÜ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.4</div></div>
 <button onclick="hamburgerKapat()" class="modal-close">×</button>
 </div>
 <div class="hamburger-item" onclick="obAlarmAc(); hamburgerKapat()"><span class="hamburger-icon">🎯</span>OB Alarmları</div>
@@ -639,17 +665,22 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   v4.3 — Bug fix + MTF paneli + Kline cache + OB çizgi fix
+   v4.4 — Görsel Katman: OB Rect + FVG + Ichimoku Cloud + Mini Charts
    ═══════════════════════════════════════════════════════════ */
 
 let chart, candleSeries, volumeSeries, ema20Seri, ema50Seri, ema200Seri, vwapSeri;
-let obCizgileri = []; // v4.3: OB çizgi referansları (memory leak fix)
-let obCizgiGoster = JSON.parse(localStorage.getItem('obCizgiGoster') || 'true');
+let overlayCtx, overlayCanvas, overlayWrap;
+let obRectGoster = JSON.parse(localStorage.getItem('obRectGoster') ?? 'true');
+let fvgGoster = JSON.parse(localStorage.getItem('fvgGoster') ?? 'true');
+let ichimokuBulutGoster = JSON.parse(localStorage.getItem('ichimokuBulutGoster') ?? 'true');
+let sonGorunumRange = null;
+let overlayRedrawTimeout = null;
+let miniCharts = [];
+const MINI_COINLER = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT'];
 let aktifCoin = 'BTCUSDT';
 let aktifTF = '15';
 let tamEkran = false;
 let gostergelerAcik = JSON.parse(localStorage.getItem('gostergelerAcik') || 'false');
-let pozGuncellemeIntervalId = null;
 
 const AYARLAR_DEFAULT = { tema: 'dark', radarSayi: 100, varsayilanTF: '15', ses: false, pozGuncelleme: 30, telegramToken: '', telegramChatId: '', telegramSinyal: true, telegramAcil: true, telegramDonus: true, telegramAlarm: true, obAlarm: true, notif: true };
 let AYARLAR = { ...AYARLAR_DEFAULT, ...JSON.parse(localStorage.getItem('ayarlar') || '{}') };
@@ -670,7 +701,6 @@ let kararHafiza = JSON.parse(localStorage.getItem('kararHafiza') || '{}');
 let sonMumZamani = null;
 let kilitliAnaliz = null;
 let kilitCoin = null;
-let acilKontrolInterval = null;
 let kilitSnapshot = null;
 const ACIL_ESIK_PCT = 1.5;
 const ACIL_KONTROL_MS = 5000;
@@ -683,7 +713,6 @@ let donusSonSeviye = null;
 let analizVeriCache = { coin: null, mtfOnay: null, mtfSonuclar: null, fundingRate: null, oiDegisim: null, whaleNetAkis: 0, obOran: null, btcYon: 'NÖTR', btcDegisim: 0 };
 let autoLoadDurum = { mtf: false, funding: false, ob: false, whale: false, aktif: false, bitti: false };
 
-/* OB ALARM SİSTEMİ */
 let obAlarmlar = JSON.parse(localStorage.getItem('obAlarmlar') || '[]');
 let obLoglari = JSON.parse(localStorage.getItem('obLoglari') || '[]');
 let obTaramaAktif = false;
@@ -691,16 +720,15 @@ let obTaramaInterval = null;
 let obKontrolInterval = null;
 let obAktifFiltre = 'hepsi';
 
-/* v4.3: KLINE CACHE */
 const klineCache = {};
-const KLINE_CACHE_TTL = 12000; // 12 saniye
+const KLINE_CACHE_TTL = 12000;
 
 const AGIRLIKLAR = {
   'RSI': 0.8, 'MACD': 1.0, 'EMA Trend': 1.3, 'Bollinger': 0.9,
   'Stochastic': 0.8, 'ADX Trend': 1.3, 'Hacim': 1.1, 'FVG': 1.0,
   'Mum Formasyonu': 1.2, 'Piyasa Yapısı': 1.2, 'VWAP': 0.9,
   'Divergence': 1.5, 'Destek/Direnç': 0.8,
-  'Order Block': 0, 'Ichimoku': 0   // ⚡ motorBonuslar'da sayılıyor, çift sayımı önle
+  'Order Block': 0, 'Ichimoku': 0
 };
 
 let logKayitlari = JSON.parse(localStorage.getItem('logKayitlari') || '[]');
@@ -711,7 +739,6 @@ const MAX_LOG = 500;
 const MAX_PAPER_LOG = 500;
 const MAX_OB_LOG = 300;
 
-/* ═══ YARDIMCILAR ═══ */
 function fmt(n, d = 4) {
   if (n === undefined || n === null || isNaN(n)) return '-';
   if (n >= 1000) return n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -774,6 +801,7 @@ function temaUygula(t) {
       timeScale: { borderColor: isLight ? 'rgba(15,23,42,.1)' : 'rgba(255,255,255,.06)' }
     });
   }
+  if (chart) setTimeout(overlayCiz, 50);
 }
 function sesToggle() {
   sesAcik = !sesAcik;
@@ -799,6 +827,8 @@ function gostergeleriToggle() {
   gostergelerAcik = !gostergelerAcik;
   localStorage.setItem('gostergelerAcik', JSON.stringify(gostergelerAcik));
   uygulaGostergeDurumu();
+  const btn = document.getElementById('gostergeBtn');
+  if (btn) btn.classList.toggle('aktif', gostergelerAcik);
 }
 function uygulaGostergeDurumu() {
   if (!ema20Seri) return;
@@ -807,30 +837,36 @@ function uygulaGostergeDurumu() {
     ema20Seri.applyOptions({ visible: v }); ema50Seri.applyOptions({ visible: v });
     ema200Seri.applyOptions({ visible: v }); vwapSeri.applyOptions({ visible: v });
   } catch(e) {}
-  const btn = document.getElementById('gostergeBtn');
-  if (btn) btn.textContent = v ? '👁️' : '🙈';
 }
-// v4.3: OB çizgi göster/gizle
-function obCizgileriToggle() {
-  obCizgiGoster = !obCizgiGoster;
-  localStorage.setItem('obCizgiGoster', JSON.stringify(obCizgiGoster));
-  const btn = document.getElementById('obCizgiBtn');
-  if (btn) btn.style.opacity = obCizgiGoster ? '1' : '0.5';
-  // Mevcut çizgileri temizle ve yeniden çiz
-  obCizgileriTemizle();
-  if (obCizgiGoster && sonAnalizMumlar && sonAnaliz) cizGrafik(sonAnalizMumlar, sonAnaliz);
+// v4.4: Toggle'lar
+function obRectToggle() {
+  obRectGoster = !obRectGoster;
+  localStorage.setItem('obRectGoster', JSON.stringify(obRectGoster));
+  document.getElementById('obRectBtn').classList.toggle('aktif', obRectGoster);
+  overlayCiz();
 }
-function obCizgileriTemizle() {
-  obCizgileri.forEach(line => { try { candleSeries.removePriceLine(line); } catch(e) {} });
-  obCizgileri = [];
+function fvgToggle() {
+  fvgGoster = !fvgGoster;
+  localStorage.setItem('fvgGoster', JSON.stringify(fvgGoster));
+  document.getElementById('fvgBtn').classList.toggle('aktif', fvgGoster);
+  overlayCiz();
+}
+function ichimokuBulutToggle() {
+  ichimokuBulutGoster = !ichimokuBulutGoster;
+  localStorage.setItem('ichimokuBulutGoster', JSON.stringify(ichimokuBulutGoster));
+  document.getElementById('ichiBtn').classList.toggle('aktif', ichimokuBulutGoster);
+  overlayCiz();
 }
 function tamEkranToggle() {
   tamEkran = !tamEkran;
   document.body.classList.toggle('tam-ekran', tamEkran);
-  setTimeout(() => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); }, 100);
+  setTimeout(() => {
+    if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth });
+    overlayBoyutlandir();
+    overlayCiz();
+  }, 100);
 }
 
-/* ═══ TAB ═══ */
 function tabGec(ad) {
   document.querySelectorAll('[id^="tab-"]').forEach(e => e.style.display = 'none');
   const el = document.getElementById('tab-' + ad);
@@ -843,7 +879,6 @@ function tabGec(ad) {
   if (ad === 'teknik' && analizVeriCache.mtfSonuclar) renderMtfCompact(analizVeriCache.mtfSonuclar);
 }
 
-/* ═══ KLAVYE ═══ */
 document.addEventListener('keydown', e => {
   const aktif = document.activeElement;
   const yaziyor = aktif && (aktif.tagName === 'INPUT' || aktif.tagName === 'TEXTAREA' || aktif.tagName === 'SELECT');
@@ -863,7 +898,6 @@ document.addEventListener('keydown', e => {
   if (tfMap[k]) { e.preventDefault(); tfDegistir(tfMap[k]); return; }
 });
 
-/* ═══ LOG ═══ */
 function logEkle(tip, baslik, detay = '', kategori = 'genel') {
   const ikonlar = { 'basarili': '✅', 'hata': '❌', 'uyari': '⚠️', 'bilgi': 'ℹ️' };
   const kayit = { id: Date.now() + '_' + Math.random().toString(36).slice(2, 6), zaman: Date.now(), tip, ikon: ikonlar[tip] || 'ℹ️', baslik, detay, kategori, coin: typeof aktifCoin !== 'undefined' ? aktifCoin : '-' };
@@ -905,7 +939,7 @@ function loglariTemizle() {
   logKayitlari = []; localStorage.removeItem('logKayitlari'); logListeDoldur();
 }
 function loglariIndir() {
-  const data = { olaylar: logKayitlari, paper: paperLoglari, ob: obLoglari, obAlarmlar: obAlarmlar, indirmeTarihi: new Date().toISOString(), surum: 'v4.3' };
+  const data = { olaylar: logKayitlari, paper: paperLoglari, ob: obLoglari, obAlarmlar: obAlarmlar, indirmeTarihi: new Date().toISOString(), surum: 'v4.4' };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = `kripto-log-${new Date().toISOString().slice(0, 10)}.json`; a.click();
@@ -953,7 +987,6 @@ function obLogDoldur() {
   }).join('');
 }
 
-/* ═══ SİNYAL LOG ═══ */
 let sinyalLoglari = JSON.parse(localStorage.getItem('sinyalLoglari') || '[]');
 function sinyalLogEkle(sinyal) {
   const kayit = { id: 'S' + Date.now(), zaman: Date.now(), coin: sinyal.coin, karar: sinyal.karar, kararIkon: sinyal.kararIkon, guven: sinyal.guven, onayli: sinyal.onayli, tf: sinyal.tf, yon: sinyal.yon, girisFiyat: sinyal.fiyat, stop: sinyal.stop, hedef: sinyal.hedef, rsi: sinyal.rsi, adx: sinyal.adx, durum: 'BEKLIYOR', kontrolZamani: Date.now() + 60 * 60 * 1000 };
@@ -981,7 +1014,6 @@ async function sinyalLogKontrolEt() {
   try { localStorage.setItem('sinyalLoglari', JSON.stringify(sinyalLoglari)); } catch(e) {}
 }
 
-/* ═══ TELEGRAM ═══ */
 let tgSonGonderim = {};
 const TG_SPAM_MS = 5 * 60 * 1000;
 async function telegramGonder(mesaj) {
@@ -1028,10 +1060,9 @@ function telegramObGonder(ob) {
   if (AYARLAR.obAlarm === false) return;
   const emoji = ob.yon === 'bullish' ? '🟢' : '🔴';
   const durumEmoji = ob.durum === 'HAZIR' ? '🚨' : ob.durum === 'IZLE' ? '🟡' : '🟠';
-  telegramGonder(`${durumEmoji} <b>Order Block Alarm</b> — ${ob.coin.replace('USDT','')}\n\n${emoji} <b>Tip:</b> ${ob.yon === 'bullish' ? 'Bullish (destek)' : 'Bearish (direnç)'}\n📍 <b>Bölge:</b> $${fmt(ob.alt)} - $${fmt(ob.ust)}\n💰 <b>Şu an:</b> $${fmt(ob.guncelFiyat)}\n📏 <b>Mesafe:</b> %${ob.mesafe.toFixed(2)}\n⚡ <b>Durum:</b> ${ob.durum}\n\n🎯 <b>Hedef Bölge:</b> $${fmt(ob.hedefBolge)}\n🛑 <b>Stop:</b> $${fmt(ob.stopOneri)}\n\n⏰ ${new Date().toLocaleString('tr-TR')}`);
+  telegramGonder(`${durumEmoji} <b>Order Block Alarm</b> — ${ob.coin.replace('USDT','')}\n\n${emoji} <b>Tip:</b> ${ob.yon === 'bullish' ? 'Bullish (destek)' : 'Bearish (direnç)'}\n📍 <b>Bölge:</b> $${fmt(ob.alt)} - $${fmt(ob.ust)}\n💰 <b>Şu an:</b> $${fmt(ob.guncelFiyat)}\n📏 <b>Mesafe:</b> %${ob.uzaklik.toFixed(2)}\n⚡ <b>Durum:</b> ${ob.durum}\n\n🎯 <b>Hedef Bölge:</b> $${fmt(ob.hedefBolge)}\n🛑 <b>Stop:</b> $${fmt(ob.stopOneri)}\n\n⏰ ${new Date().toLocaleString('tr-TR')}`);
 }
 
-/* ═══ SİTE BİLDİRİM ═══ */
 function siteBildirim(title, desc, tip = 'uyari', sure = 8000) {
   if (AYARLAR.notif === false) return;
   const stack = document.getElementById('notifStack');
@@ -1045,7 +1076,6 @@ function siteBildirim(title, desc, tip = 'uyari', sure = 8000) {
   setTimeout(() => { const el = document.getElementById(id); if (el) el.remove(); }, sure);
 }
 
-/* ═══ MOTOR BONUS FONKSİYONLARI ═══ */
 function mtfBonusHesapla(filtreYon) {
   const mtf = analizVeriCache.mtfOnay;
   if (!mtf || filtreYon === 'NÖTR') return 0;
@@ -1111,7 +1141,6 @@ function btcYonFiltrePuan(coin, yon) {
   return { puan: 0, aciklama: '-' };
 }
 
-/* ═══ ORDER BLOCK ═══ */
 function orderBlockBul(mumlar, minBoyutPct = 0.3) {
   if (!mumlar || mumlar.length < 30) return [];
   const oblar = [];
@@ -1187,7 +1216,7 @@ function orderBlockPuanHesapla(oblar, guncelFiyat, yon) {
   return { puan: 0, aciklama: `${oblar.length} OB bölge`, yakinOb: null };
 }
 
-/* ═══ ICHIMOKU (v4.3 FIX) ═══ */
+/* v4.4: Ichimoku full data (bulut çizimi için) */
 function ichimokuHesapla(mumlar) {
   if (!mumlar || mumlar.length < 52) return null;
   const yuk = mumlar.map(m => m.high);
@@ -1216,7 +1245,6 @@ function ichimokuHesapla(mumlar) {
   const fiyat = mumlar[son].close;
   const t = tenkan[son];
   const k = kijun[son];
-  // Bulut = 26 mum önce hesaplanmış senkou değerleri (önümüze kaydırılmış)
   const sA26 = son >= 26 ? senkouA[son - 26] : null;
   const sB26 = son >= 26 ? senkouB[son - 26] : null;
   const bulutUst = sA26 !== null && sB26 !== null ? Math.max(sA26, sB26) : null;
@@ -1231,15 +1259,13 @@ function ichimokuHesapla(mumlar) {
     else if (fiyat < k && t < k) { sinyal = 'ZAYIF SHORT'; aciklama = 'Kijun altı'; puan = -1; }
     else { sinyal = 'NÖTR'; aciklama = 'Bulut içinde'; puan = 0; }
   }
-  return { tenkan: t, kijun: k, senkouA: sA26, senkouB: sB26, bulutUst, bulutAlt, sinyal, aciklama, puan, fiyat };
+  return { tenkan: t, kijun: k, senkouA: sA26, senkouB: sB26, bulutUst, bulutAlt, sinyal, aciklama, puan, fiyat, senkouA_dizi: senkouA, senkouB_dizi: senkouB };
 }
 
-/* ═══ OB ALARM SİSTEMİ ═══ */
 async function obTaramaYap() {
   if (obTaramaAktif) return;
   if (AYARLAR.obAlarm === false) return;
   obTaramaAktif = true;
-  console.log('🎯 OB tarama başladı');
   obLogEkle('🔍 OB tarama başladı', 'Top coinler taranıyor', 'bilgi');
   try {
     const r = await fetch('https://api.bybit.com/v5/market/tickers?category=spot');
@@ -1268,20 +1294,9 @@ async function obTaramaYap() {
           else if (Math.abs(ob.uzaklik) < 2) durum = 'TAKIP';
           bulunanlar.push({
             id: 'OB_' + coin + '_' + ob.zaman,
-            coin,
-            yon: ob.yon,
-            alt: ob.alt,
-            ust: ob.ust,
-            orta: ob.orta,
-            zaman: ob.zaman,
-            boyut: ob.boyut,
-            guc: ob.guc,
-            uzaklik: ob.uzaklik,
-            guncelFiyat,
-            durum,
-            stopOneri,
-            hedefBolge,
-            olusturmaZamani: Date.now()
+            coin, yon: ob.yon, alt: ob.alt, ust: ob.ust, orta: ob.orta,
+            zaman: ob.zaman, boyut: ob.boyut, guc: ob.guc, uzaklik: ob.uzaklik,
+            guncelFiyat, durum, stopOneri, hedefBolge, olusturmaZamani: Date.now()
           });
         }
       } catch(e) {}
@@ -1292,9 +1307,7 @@ async function obTaramaYap() {
     obLogEkle('✅ OB tarama tamamlandı', `${aktifCoinler.length} coin tarandı • ${obAlarmlar.length} OB bulundu`, 'basarili');
     obAlarmPaneliGuncelle();
     obBadgeGuncelle();
-    console.log(`🎯 OB tarama bitti: ${obAlarmlar.length} OB`);
   } catch(e) {
-    console.error('OB tarama hatası:', e);
     obLogEkle('❌ OB tarama hatası', e.message, 'hata');
   }
   obTaramaAktif = false;
@@ -1413,7 +1426,7 @@ function obAlarmPaneliGuncelle() {
   const gosterHepsi = obAktifFiltre === 'hepsi';
   if ((gosterHepsi || obAktifFiltre === 'HAZIR') && hazir.length) html += `<div style="margin-bottom:16px"><div style="font-size:11px;color:#f87171;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">🚨 HAZIR (${hazir.length})</div>${hazir.map(renderItem).join('')}</div>`;
   if ((gosterHepsi || obAktifFiltre === 'IZLE') && izle.length) html += `<div style="margin-bottom:16px"><div style="font-size:11px;color:#fbbf24;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">🟡 İZLE (${izle.length})</div>${izle.map(renderItem).join('')}</div>`;
-  if ((gosterHepsi || obAktifFiltre === 'TAKIP') && takip.length) html += `<details style="margin-bottom:12px" ${gosterHepsi ? 'open' : 'open'}><summary style="cursor:pointer;font-size:11px;color:#fb923c;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:8px;background:var(--surface-2);border-radius:8px">🟠 TAKİP (${takip.length})</summary><div style="margin-top:8px">${takip.map(renderItem).join('')}</div></details>`;
+  if ((gosterHepsi || obAktifFiltre === 'TAKIP') && takip.length) html += `<details style="margin-bottom:12px" open><summary style="cursor:pointer;font-size:11px;color:#fb923c;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:8px;background:var(--surface-2);border-radius:8px">🟠 TAKİP (${takip.length})</summary><div style="margin-top:8px">${takip.map(renderItem).join('')}</div></details>`;
   if ((gosterHepsi || obAktifFiltre === 'BEKLE') && bekle.length) html += `<details style="margin-bottom:12px"><summary style="cursor:pointer;font-size:11px;color:var(--text-mute);font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:8px;background:var(--surface-2);border-radius:8px">⚪ BEKLE (${bekle.length})</summary><div style="margin-top:8px">${bekle.map(renderItem).join('')}</div></details>`;
   if (!html) html = '<div style="text-align:center;padding:30px;color:var(--text-mute);font-size:12.5px">Bu filtrede kayıt yok</div>';
   el.innerHTML = html;
@@ -1438,7 +1451,6 @@ function obOzetGuncelle() {
   }).join('');
 }
 
-/* ═══ OTOMATİK VERİ ÇEKME ═══ */
 function withTimeout(p, ms = 12000) {
   return Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
 }
@@ -1613,47 +1625,39 @@ async function autoLoadBtcYon() {
   } catch(e) {}
 }
 
-/* ═══ BİLGİ MODAL ═══ */
 function hakkindaAc() {
   document.getElementById('bilgiBaslik').textContent = '📖 Hakkında';
-  document.getElementById('bilgiIcerik').innerHTML = `<p style="margin-bottom:12px"><b>Kripto Analiz Pro v4.3</b> — Order Block + Ichimoku + OB Alarm + Paper Trading</p><ul style="padding-left:20px"><li>Order Block (kurumsal bölge)</li><li>Ichimoku (trend analizi)</li><li>OB Alarm (fırsat radarı)</li><li>Paper Trading (sanal işlem)</li><li>Multi-Timeframe paneli</li><li>Kline cache (performans)</li><li>OB grafik çizgileri toggle</li></ul><p style="font-size:11px;font-style:italic;color:var(--text-mute);margin-top:12px">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<p style="margin-bottom:12px"><b>Kripto Analiz Pro v4.4</b> — Görsel Katman</p><ul style="padding-left:20px"><li>Order Block grafikte dikdörtgen olarak</li><li>FVG bölgeleri grafikte</li><li>Ichimoku bulutu grafikte</li><li>Mini Charts — 4 coin</li><li>Toggle'lı görsel katmanlar</li><li>Multi-Timeframe paneli</li><li>Kline cache (performans)</li></ul><p style="font-size:11px;font-style:italic;color:var(--text-mute);margin-top:12px">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 function sssAc() {
   document.getElementById('bilgiBaslik').textContent = '💬 SSS';
   document.getElementById('bilgiIcerik').innerHTML = `
     <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #22d3ee">
-      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🎯 Order Block</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Kurumsal alıcı/satıcının bıraktığı iz. Fiyat ileride oraya gelince tepki verir. Bullish OB = destek, Bearish OB = direnç.</div>
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🎯 Order Block (Grafik)</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Yeşil dikdörtgen = Bullish destek, kırmızı = Bearish direnç. 🟩 butonu ile aç/kapa.</div>
+    </div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #22d3ee">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">📐 FVG</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Fair Value Gap = mum boşluğu. Cyan = bullish, mor = bearish. 📐 butonu ile aç/kapa.</div>
     </div>
     <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #a78bfa">
-      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">☁️ Ichimoku</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Fiyat bulut üstünde → trend yukarı, bulut altında → trend aşağı, bulut içinde → belirsiz.</div>
-    </div>
-    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #fbbf24">
-      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🔔 OB Alarm</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Bot arka planda tarar. Fiyat OB bölgesine yaklaşınca site içi + Telegram bildirim gelir. 🚨 HAZIR = anında gir.</div>
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">☁️ Ichimoku Bulutu</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Fiyat bulutun üstündeyse trend yukarı, altındaysa aşağı. ☁️ butonu ile aç/kapa.</div>
     </div>
     <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #10b981">
       <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">⭐ Yıldız Sistemi</div>
       <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">5 yıldız = mükemmel, 4 = çok iyi (gir), 3 = orta (küçük poz), 2 = zayıf (girme), 1 = kötü (sakın).</div>
     </div>
-    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #ef4444">
-      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🚫 İşleme Girme Filtresi</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Kötü koşullarda otomatik engeller. LONG'da RSI >78, SHORT'ta RSI <22, çok düşük hacim, sıkışma, ADX <15.</div>
-    </div>
     <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #f59e0b">
-      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🧪 Paper Trading</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Gerçek para olmadan sanal işlem. Her 60 sn tarama yapar, en güçlü sinyalleri bulur, otomatik pozisyon açar.</div>
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">📊 Mini Charts</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">4 popüler coinin mini grafiği. Üstüne tıklayınca ana grafik o coine geçer.</div>
     </div>
     <div><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:6px">⚠️ Otomatik al/sat yapar mı?</div><div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Hayır. Karar destek aracıdır. Yatırım tavsiyesi değildir.</div></div>
   `;
   document.getElementById('bilgiModal').classList.add('acik');
 }
 
-/* ═══════════════════════════════════════════════════════════
-   GÖSTERGE FORMÜLLERİ
-   ═══════════════════════════════════════════════════════════ */
 function sma(d, p) { const o = []; for (let i = 0; i < d.length; i++) { if (i < p - 1) { o.push(null); continue; } let s = 0; for (let j = i-p+1; j <= i; j++) s += d[j]; o.push(s / p); } return o; }
 function ema(d, p) { const k = 2/(p+1); const o = [d[0]]; for (let i = 1; i < d.length; i++) o.push(d[i]*k + o[i-1]*(1-k)); return o; }
 function rsi(d, p = 14) { if (d.length < p+1) return []; const o = new Array(p).fill(null); let k = 0, y = 0; for (let i = 1; i <= p; i++) { const f = d[i]-d[i-1]; if (f>=0) k+=f; else y-=f; } let ok = k/p, oy = y/p; o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy)); for (let i = p+1; i < d.length; i++) { const f = d[i]-d[i-1]; ok = (ok*(p-1) + (f>0?f:0))/p; oy = (oy*(p-1) + (f<0?-f:0))/p; o.push(oy === 0 ? 100 : 100 - 100/(1+ok/oy)); } return o; }
@@ -1671,7 +1675,6 @@ function divergenceBul(mumlar) { const kapanis = mumlar.map(m => m.close), r = r
 function fibonacciBul(mumlar) { const yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low); const son60Y = Math.max(...yuk.slice(-60)), son60D = Math.min(...dus.slice(-60)); const sonF = mumlar[mumlar.length-1].close, fark = son60Y - son60D; const oranlar = [0.236, 0.382, 0.5, 0.618, 0.786]; const seviyeler = oranlar.map(o => ({ oran: (o*100).toFixed(1) + '%', fiyat: son60D + fark * o })); const trend = sonF > (son60Y + son60D) / 2 ? 'yukarı' : 'aşağı'; return { ust: son60Y, alt: son60D, seviyeler, trend, fiyat: sonF }; }
 function volumeProfileBul(mumlar, bins = 25) { const son = mumlar.slice(-200); const yuk = Math.max(...son.map(m => m.high)), dus = Math.min(...son.map(m => m.low)); const adim = (yuk - dus) / bins; const kovalar = Array(bins).fill(0).map((_, i) => ({ hacim: 0, alt: dus + i*adim, ust: dus + (i+1)*adim })); son.forEach(m => { const tp = (m.high + m.low + m.close) / 3; const idx = Math.min(bins - 1, Math.max(0, Math.floor((tp - dus) / adim))); kovalar[idx].hacim += m.volume; }); const sirali = [...kovalar].sort((a,b) => b.hacim - a.hacim); return { poc: sirali[0], ustKovalar: sirali.slice(0, 3), kovalar: sirali }; }
 
-/* ═══ İŞLEME GİRME FİLTRESİ ═══ */
 function islemFiltresi(karar, rsi, hacimOran, atrV, atrOrt, adxV) {
   if (!karar.includes('LONG') && !karar.includes('SHORT')) return { engelle: false, sebep: '' };
   if (karar.includes('LONG') && rsi > 78) return { engelle: true, sebep: 'RSI aşırı alımda, tepede LONG riskli' };
@@ -1683,9 +1686,7 @@ function islemFiltresi(karar, rsi, hacimOran, atrV, atrOrt, adxV) {
   return { engelle: false, sebep: uyarilar.join(' • '), uyarilar };
 }
 
-/* ═══ ANALİZ MOTORU v4.3 ═══ */
 function analizEt(mumlar, mod) {
-  // mod: false=full, true=hafif (backtest/paper/radar), object={skipFvg,skipVp,skipOb,skipIchi}
   let hafif = mod === true;
   const opts = typeof mod === 'object' ? mod : { skipFvg: hafif, skipVp: hafif, skipOb: hafif, skipIchi: hafif };
   const kapanis = mumlar.map(m => m.close), yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low), hacim = mumlar.map(m => m.volume);
@@ -1743,11 +1744,9 @@ function analizEt(mumlar, mod) {
   if (konum < 0.15) { p = 1; txt = 'Desteğe yakın'; } else if (konum > 0.85) { p = -1; txt = 'Dirençe yakın'; } else { p = 0; txt = 'Orta bölge'; }
   skorlar.push({ ad: 'Destek/Direnç', puan: p, aciklama: txt, deger: `%${(konum*100).toFixed(0)}` }); toplam += p;
 
-  // v4.3: Order Block puanı doğrudan skorlara
   const obGeciciSonuc = orderBlockPuanHesapla(oblar, fiyat, 'NÖTR');
   skorlar.push({ ad: 'Order Block', puan: obGeciciSonuc.puan, aciklama: oblar.length ? (obGeciciSonuc.aciklama || `${oblar.length} bölge`) : 'Bölge yok', deger: oblar.length ? oblar.map(o => o.yon === 'bullish' ? '🟢' : '🔴').join('') : '-' });
 
-  // v4.3: Ichimoku puanı skorlara
   if (ichimoku) {
     skorlar.push({ ad: 'Ichimoku', puan: ichimoku.puan, aciklama: ichimoku.aciklama, deger: ichimoku.sinyal });
   } else if (!opts.skipIchi) {
@@ -1848,7 +1847,6 @@ function analizEt(mumlar, mod) {
   return { karar, kararRenk, kararIkon, kararAciklama, masterPuan, toplam: toplamAgirlikli, toplamHam: toplam, maxPuan, guvenYuzde: guvenYuzde.toFixed(0), skorlar, filtreler, motorBonuslar, volatiliteUyari, onayliSayi, filtreYon, fiyat, rsi: r, macd: mL, macdSig: mS, macdHist: mH, ema20: f20, ema50: f50, ema200: f200, bUst: bU, bAlt: bA, stK: sK, stD: sD, adx: adxV, pdi, mdi, atr: aV, son50Yuk: son50Y, son50Dus: son50D, stopLong: fiyat - 2*aV, hedefLong: fiyat + 3*aV, stopShort: fiyat + 2*aV, hedefShort: fiyat - 3*aV, fvgler, formasyonlar, yapi, divs, vwap: vwapV, fib, vp, formPuan, hO, islemFiltresi: filtre, oblar, ichimoku, obSonuc: obPuanSonuc };
 }
 
-/* ═══ İŞLEM KALİTESİ ═══ */
 function islemKalitesiHesapla(a) {
   const sebepler = [];
   const riskler = [];
@@ -1902,7 +1900,7 @@ function islemKalitesiHesapla(a) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   GRAFİK (v4.3 — OB çizgi leak fix)
+   GRAFİK (v4.4 — Overlay Canvas)
    ═══════════════════════════════════════════════════════════ */
 function grafikOlustur() {
   const el = document.getElementById('chart');
@@ -1923,10 +1921,149 @@ function grafikOlustur() {
   ema50Seri = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1 });
   ema200Seri = chart.addLineSeries({ color: '#ef4444', lineWidth: 2 });
   vwapSeri = chart.addLineSeries({ color: '#a78bfa', lineWidth: 1, lineStyle: 2 });
-  obCizgileri = [];
   uygulaGostergeDurumu();
-  const obBtn = document.getElementById('obCizgiBtn');
-  if (obBtn) obBtn.style.opacity = obCizgiGoster ? '1' : '0.5';
+  // v4.4: Overlay canvas hazırla
+  overlayWrap = document.getElementById('chartWrap');
+  overlayCanvas = document.getElementById('chartOverlay');
+  overlayCtx = overlayCanvas.getContext('2d');
+  overlayBoyutlandir();
+  // Chart hareket olayları
+  chart.timeScale().subscribeVisibleLogicalRangeChange(() => {
+    if (overlayRedrawTimeout) clearTimeout(overlayRedrawTimeout);
+    overlayRedrawTimeout = setTimeout(overlayCiz, 30);
+  });
+  // Toggle durumları
+  document.getElementById('obRectBtn').classList.toggle('aktif', obRectGoster);
+  document.getElementById('fvgBtn').classList.toggle('aktif', fvgGoster);
+  document.getElementById('ichiBtn').classList.toggle('aktif', ichimokuBulutGoster);
+  document.getElementById('gostergeBtn').classList.toggle('aktif', gostergelerAcik);
+}
+
+function overlayBoyutlandir() {
+  if (!overlayCanvas || !overlayWrap) return;
+  const dpr = window.devicePixelRatio || 1;
+  const w = overlayWrap.clientWidth;
+  const h = overlayWrap.clientHeight;
+  overlayCanvas.width = w * dpr;
+  overlayCanvas.height = h * dpr;
+  overlayCanvas.style.width = w + 'px';
+  overlayCanvas.style.height = h + 'px';
+  if (overlayCtx) overlayCtx.setTransform(1, 0, 0, 1, 0, 0);
+  if (overlayCtx) overlayCtx.scale(dpr, dpr);
+}
+
+function overlayCiz() {
+  if (!overlayCtx || !chart || !candleSeries || !sonAnalizMumlar || !sonAnaliz) return;
+  const w = overlayWrap.clientWidth;
+  const h = overlayWrap.clientHeight;
+  const ctx = overlayCtx;
+  ctx.clearRect(0, 0, w, h);
+  const timeScale = chart.timeScale();
+  const sonMumTime = sonAnalizMumlar[sonAnalizMumlar.length - 1].time;
+
+  // ═══ OB DİKDÖRTGENLERİ ═══
+  if (obRectGoster && sonAnaliz.oblar && sonAnaliz.oblar.length) {
+    sonAnaliz.oblar.forEach(ob => {
+      const xStart = timeScale.timeToCoordinate(ob.zaman);
+      const xEnd = timeScale.timeToCoordinate(sonMumTime);
+      const yUst = candleSeries.priceToCoordinate(ob.ust);
+      const yAlt = candleSeries.priceToCoordinate(ob.alt);
+      if (xStart === null || xEnd === null || yUst === null || yAlt === null) return;
+      const x = Math.min(xStart, xEnd);
+      const y = Math.min(yUst, yAlt);
+      const wRect = Math.abs(xEnd - xStart);
+      const hRect = Math.abs(yAlt - yUst);
+      ctx.fillStyle = ob.yon === 'bullish' ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)';
+      ctx.fillRect(x, y, wRect, hRect);
+      ctx.strokeStyle = ob.yon === 'bullish' ? 'rgba(16,185,129,0.55)' : 'rgba(239,68,68,0.55)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, wRect, hRect);
+      // Etiket
+      if (wRect > 50) {
+        ctx.font = 'bold 9px JetBrains Mono, monospace';
+        ctx.fillStyle = ob.yon === 'bullish' ? 'rgba(16,185,129,0.9)' : 'rgba(239,68,68,0.9)';
+        ctx.textAlign = 'left';
+        ctx.fillText(ob.yon === 'bullish' ? '🟢 OB' : '🔴 OB', x + 4, y + 11);
+      }
+    });
+  }
+
+  // ═══ FVG DİKDÖRTGENLERİ ═══
+  if (fvgGoster && sonAnaliz.fvgler && sonAnaliz.fvgler.length) {
+    sonAnaliz.fvgler.forEach(f => {
+      const xStart = timeScale.timeToCoordinate(f.zaman);
+      const xEnd = timeScale.timeToCoordinate(sonMumTime);
+      const yUst = candleSeries.priceToCoordinate(f.ust);
+      const yAlt = candleSeries.priceToCoordinate(f.alt);
+      if (xStart === null || xEnd === null || yUst === null || yAlt === null) return;
+      const x = Math.min(xStart, xEnd);
+      const y = Math.min(yUst, yAlt);
+      const wRect = Math.abs(xEnd - xStart);
+      const hRect = Math.abs(yAlt - yUst);
+      ctx.fillStyle = f.tip === 'bullish' ? 'rgba(34,211,238,0.08)' : 'rgba(167,139,250,0.08)';
+      ctx.fillRect(x, y, wRect, hRect);
+      ctx.strokeStyle = f.tip === 'bullish' ? 'rgba(34,211,238,0.45)' : 'rgba(167,139,250,0.45)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeRect(x, y, wRect, hRect);
+      ctx.setLineDash([]);
+      if (wRect > 50) {
+        ctx.font = 'bold 9px JetBrains Mono, monospace';
+        ctx.fillStyle = f.tip === 'bullish' ? 'rgba(34,211,238,0.9)' : 'rgba(167,139,250,0.9)';
+        ctx.textAlign = 'left';
+        ctx.fillText(f.tip === 'bullish' ? '📐 FVG↑' : '📐 FVG↓', x + 4, y + 11);
+      }
+    });
+  }
+
+  // ═══ ICHIMOKU BULUTU ═══
+  if (ichimokuBulutGoster && sonAnaliz.ichimoku && sonAnaliz.ichimoku.senkouA_dizi && sonAnaliz.ichimoku.senkouB_dizi) {
+    const senkouA = sonAnaliz.ichimoku.senkouA_dizi;
+    const senkouB = sonAnaliz.ichimoku.senkouB_dizi;
+    const mumlar = sonAnalizMumlar;
+    const n = mumlar.length;
+    // Son 120 mum için bulut çiz
+    const baslangic = Math.max(0, n - 120);
+    // Segment segment çiz (renk değişimlerinde ayrı)
+    let sonSegment = null;
+    const segments = [];
+    for (let i = baslangic; i < n; i++) {
+      const sA = senkouA[i];
+      const sB = senkouB[i];
+      if (sA === null || sB === null) { sonSegment = null; continue; }
+      const tip = sA > sB ? 'bull' : 'bear';
+      if (!sonSegment || sonSegment.tip !== tip) {
+        sonSegment = { tip, points: [] };
+        segments.push(sonSegment);
+      }
+      sonSegment.points.push({ i, sA, sB });
+    }
+    segments.forEach(seg => {
+      if (seg.points.length < 2) return;
+      ctx.beginPath();
+      // Üst sınır (max)
+      seg.points.forEach((pt, idx) => {
+        const x = timeScale.timeToCoordinate(mumlar[pt.i].time);
+        const y = candleSeries.priceToCoordinate(Math.max(pt.sA, pt.sB));
+        if (x === null || y === null) return;
+        if (idx === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      // Alt sınır (min) ters yönde
+      for (let idx = seg.points.length - 1; idx >= 0; idx--) {
+        const pt = seg.points[idx];
+        const x = timeScale.timeToCoordinate(mumlar[pt.i].time);
+        const y = candleSeries.priceToCoordinate(Math.min(pt.sA, pt.sB));
+        if (x === null || y === null) continue;
+        ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = seg.tip === 'bull' ? 'rgba(16,185,129,0.10)' : 'rgba(239,68,68,0.10)';
+      ctx.fill();
+      ctx.strokeStyle = seg.tip === 'bull' ? 'rgba(16,185,129,0.35)' : 'rgba(239,68,68,0.35)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+  }
 }
 
 function cizGrafik(mumlar, analiz) {
@@ -1941,30 +2078,12 @@ function cizGrafik(mumlar, analiz) {
   const vwapData = [];
   for (let i = 0; i < mumlar.length; i++) if (vw[i] !== null) vwapData.push({ time: mumlar[i].time, value: vw[i] });
   vwapSeri.setData(vwapData);
-  // v4.3: ÖNCE eski OB çizgilerini temizle (memory leak fix)
-  obCizgileriTemizle();
-  // Yeni OB çizgileri (opsiyonel)
-  if (obCizgiGoster && analiz.oblar && analiz.oblar.length) {
-    analiz.oblar.forEach((ob) => {
-      try {
-        const renk = ob.yon === 'bullish' ? 'rgba(16,185,129,.7)' : 'rgba(239,68,68,.7)';
-        const lineUst = candleSeries.createPriceLine({
-          price: ob.ust, color: renk, lineWidth: 1, lineStyle: 0,
-          axisLabelVisible: true, title: ob.yon === 'bullish' ? '🟢OB↑' : '🔴OB↑'
-        });
-        const lineAlt = candleSeries.createPriceLine({
-          price: ob.alt, color: renk, lineWidth: 1, lineStyle: 0,
-          axisLabelVisible: true, title: ob.yon === 'bullish' ? '🟢OB↓' : '🔴OB↓'
-        });
-        obCizgileri.push(lineUst, lineAlt);
-      } catch(e) {}
-    });
-  }
   chart.timeScale().fitContent();
   uygulaGostergeDurumu();
+  // Overlay'i çiz
+  setTimeout(overlayCiz, 50);
 }
 
-/* ═══ KARAR HAFIZASI ═══ */
 function kararHafizaEkle(coin, karar, ikon) {
   if (!kararHafiza[coin]) kararHafiza[coin] = { gecmis: [] };
   const son = kararHafiza[coin].gecmis[kararHafiza[coin].gecmis.length - 1];
@@ -1977,7 +2096,6 @@ function kararHafizaEkle(coin, karar, ikon) {
   localStorage.setItem('kararHafiza', JSON.stringify(kararHafiza));
 }
 
-/* ═══ MUM KİLİT GÖSTERGESİ ═══ */
 function mumKilitGuncelle() {
   const el = document.getElementById('mumKilitInfo');
   if (!el) return;
@@ -1997,7 +2115,6 @@ function mumKilitGuncelle() {
   el.innerHTML = `🔒 <span style="color:var(--text)">${karar}</span> · <span style="color:var(--cyan)">${zamanStr}</span> sonra yeni mum`;
 }
 
-/* ═══ COİN YÜKLE ═══ */
 async function coinYukle(symbol, forceYeni = false) {
   let hedef = null;
   if (symbol) hedef = akilliSembolDuzelt(symbol);
@@ -2056,7 +2173,6 @@ async function coinYukle(symbol, forceYeni = false) {
   }
 }
 
-/* ═══ PANEL DOLDUR ═══ */
 function panelDoldur(a) {
   const kart = document.getElementById('kararKart');
   kart.className = 'signal-hero ' + (a.kararRenk || 'bekle');
@@ -2229,9 +2345,72 @@ function panelDoldur(a) {
   if (analizVeriCache.mtfSonuclar) renderMtfCompact(analizVeriCache.mtfSonuclar);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PAPER TRADING
-   ═══════════════════════════════════════════════════════════ */
+/* v4.4: MINI CHARTS */
+async function miniChartlariYukle() {
+  const el = document.getElementById('miniChartler');
+  if (!el) return;
+  el.innerHTML = '';
+  miniCharts.forEach(m => { try { m.chart.remove(); } catch(e) {} });
+  miniCharts = [];
+  const isLight = tema === 'light';
+  for (const coin of MINI_COINLER) {
+    const div = document.createElement('div');
+    div.className = 'mini-chart-card';
+    div.setAttribute('data-coin', coin);
+    div.onclick = () => { coinYukle(coin, true); };
+    div.innerHTML = `
+      <div class="mini-chart-header">
+        <span>${coin.replace('USDT','')}</span>
+        <span class="mini-chart-price" id="miniFiyat_${coin}" style="color:var(--text-dim)">-</span>
+      </div>
+      <div class="mini-chart-area" id="mini_${coin}"></div>
+    `;
+    el.appendChild(div);
+    const area = div.querySelector('.mini-chart-area');
+    const mchart = LightweightCharts.createChart(area, {
+      layout: { background: { color: 'transparent' }, textColor: 'transparent', fontSize: 9 },
+      grid: { vertLines: { visible: false }, horzLines: { visible: false } },
+      rightPriceScale: { visible: false },
+      timeScale: { visible: false },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Magnet },
+      handleScroll: false,
+      handleScale: false,
+      height: 80
+    });
+    const series = mchart.addAreaSeries({
+      lineColor: '#22d3ee',
+      topColor: 'rgba(34,211,238,0.3)',
+      bottomColor: 'rgba(34,211,238,0.02)',
+      lineWidth: 1
+    });
+    miniCharts.push({ coin, chart: mchart, series, area });
+  }
+  // Verileri yükle
+  for (const m of miniCharts) {
+    try {
+      const mumlar = await klineCek(m.coin, '15', 100);
+      if (!mumlar || !mumlar.length) continue;
+      m.series.setData(mumlar.map(x => ({ time: x.time, value: x.close })));
+      m.chart.timeScale().fitContent();
+      const sonF = mumlar[mumlar.length - 1].close;
+      const ilkF = mumlar[0].close;
+      const deg = ((sonF - ilkF) / ilkF) * 100;
+      const fiyatEl = document.getElementById('miniFiyat_' + m.coin);
+      if (fiyatEl) {
+        fiyatEl.textContent = '$' + fmt(sonF);
+        fiyatEl.style.color = deg >= 0 ? '#4ade80' : '#f87171';
+      }
+      // Rengi değiştir
+      m.series.applyOptions({
+        lineColor: deg >= 0 ? '#10b981' : '#ef4444',
+        topColor: deg >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)',
+        bottomColor: deg >= 0 ? 'rgba(16,185,129,0.02)' : 'rgba(239,68,68,0.02)'
+      });
+      // Coin yazısına tıklama ana grafiğe geç
+    } catch(e) {}
+  }
+}
+
 let paperAyar = JSON.parse(localStorage.getItem('paperAyar') || '{"bakiye":100,"maxPoz":5,"minGuven":70,"taramaSayi":50}');
 let paperBakiye = parseFloat(localStorage.getItem('paperBakiye') || paperAyar.bakiye);
 let paperBaslangicBakiye = parseFloat(localStorage.getItem('paperBaslangicBakiye') || paperAyar.bakiye);
@@ -2461,7 +2640,6 @@ function paperPozisyonKapat(id) {
   paperPaneliDoldur();
 }
 
-/* ═══ RADAR ═══ */
 let radarIptalEdildi = false;
 function radarIptal() {
   radarIptalEdildi = true;
@@ -2531,7 +2709,6 @@ async function radarTaramayaBasla() {
 }
 function radarCoinSec(coin) { radarKapat(); coinYukle(coin, true); }
 
-/* ═══ TEST SİSTEMİ ═══ */
 function sinyalTestKaydet(analiz, coin, tf) {
   if (analiz.karar === 'BEKLE' || analiz.karar.includes('ZAYIF') || analiz.karar.includes('⚠️')) return;
   const sureMap = { '1': 10, '5': 30, '15': 75, '60': 240, '240': 720, 'D': 1440 };
@@ -2622,7 +2799,6 @@ function testleriTemizle() {
   testPaneliniGuncelle();
 }
 
-/* ═══ BACKTEST (v4.3 — OB/Ichimoku entegre) ═══ */
 async function ciddiBacktestCalistir() {
   const btn = document.getElementById('btBtn'), el = document.getElementById('btSonuc');
   btn.disabled = true; btn.textContent = 'Simüle ediliyor...';
@@ -2634,7 +2810,6 @@ async function ciddiBacktestCalistir() {
     let bakiye = BASLANGIC, acikPoz = null;
     const islemler = [], equity = [{ time: mumlar[200].time, value: BASLANGIC }];
     let maxBakiye = BASLANGIC, maxDD = 0;
-    // v4.3: OB/Ichimoku dahil (adım 5 mum, performans için)
     const analizMod = { skipFvg: true, skipVp: true, skipOb: false, skipIchi: false };
     const ADIM = 5;
     const TOPLAM = Math.floor((mumlar.length - 250) / ADIM);
@@ -2706,7 +2881,6 @@ async function ciddiBacktestCalistir() {
   btn.disabled = false; btn.textContent = 'Simülasyonu Çalıştır';
 }
 
-/* ═══ KLINE (v4.3 — cache) ═══ */
 async function klineCek(symbol, interval = '15', limit = 500) {
   const key = `${symbol}_${interval}_${limit}`;
   const now = Date.now();
@@ -2786,6 +2960,7 @@ function wsMesajIsle(m) {
       volumeSeries.update({ time: mum.time, value: mum.volume, color: mum.close >= mum.open ? 'rgba(16,185,129,.2)' : 'rgba(239,68,68,.2)' });
     } catch (e) {}
     fiyatGuncelle(mum.close);
+    overlayCiz();
     if (yeniMumGeldi) {
       sonMumZamani = mum.time;
       donusSonUyari = 0; donusSonSeviye = null; donusAlarmGizle();
@@ -2817,7 +2992,6 @@ function fiyatGuncelle(yeniFiyat) {
   if (alarmFiyat) kontrolAlarm(yeniFiyat);
 }
 
-/* ═══ SEMBOL ARAMA ═══ */
 async function sembolleriYukle() {
   try {
     const r = await fetch('https://api.bybit.com/v5/market/instruments-info?category=spot&limit=1000');
@@ -2846,7 +3020,6 @@ function aramaOneriGoster(q) {
 }
 function oneriSec(sym) { document.getElementById('aramaOneri').style.display = 'none'; document.getElementById('aramaCoin').value = ''; coinYukle(sym, true); }
 
-/* ═══ HIZLI BAKIŞ ═══ */
 async function hizliYukle() {
   const el = document.getElementById('hizliListe');
   el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-mute);font-size:13px;grid-column:1/-1"><span class="spinner"></span> Yükleniyor...</div>';
@@ -2867,7 +3040,6 @@ async function hizliYukle() {
   }).join('');
 }
 
-/* ═══ RİSK / ALARM ═══ */
 function riskHesapla() {
   if (!sonAnaliz) return;
   const bakiye = parseFloat(document.getElementById('riskBakiye').value);
@@ -2905,7 +3077,6 @@ function kontrolAlarm(fiyat) {
   }
 }
 
-/* ═══ ACİL DURUM + DÖNÜŞ ═══ */
 function donusSinyaliKontrol(mumlar, kilitAnaliz) {
   if (!mumlar || mumlar.length < 25 || !kilitAnaliz) return null;
   const yon = kilitAnaliz.karar.includes('LONG') ? 'LONG' : kilitAnaliz.karar.includes('SHORT') ? 'SHORT' : null;
@@ -3056,7 +3227,6 @@ async function acilDurumKontrol() {
   } catch(e) {}
 }
 
-/* ═══ TF DEĞİŞTİR ═══ */
 function tfDegistir(tf) {
   aktifTF = tf;
   document.querySelectorAll('.tf-pill').forEach(b => { if (b.dataset.tf === tf) b.classList.add('aktif'); else b.classList.remove('aktif'); });
@@ -3065,11 +3235,8 @@ function tfDegistir(tf) {
   coinYukle(aktifCoin, true);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   BAŞLAT
-   ═══════════════════════════════════════════════════════════ */
 async function baslat() {
-  logEkle('bilgi', '🚀 Sistem başlatıldı', `v4.3 • ${new Date().toLocaleString('tr-TR')}`, 'sistem');
+  logEkle('bilgi', '🚀 Sistem başlatıldı', `v4.4 • ${new Date().toLocaleString('tr-TR')}`, 'sistem');
   obLogEkle('🚀 OB Alarm sistemi aktif', 'Arka planda tarama başlıyor', 'bilgi');
   temaUygula(tema);
   document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
@@ -3085,6 +3252,7 @@ async function baslat() {
   await autoLoadBtcYon();
   await coinYukle('BTCUSDT', true);
   hizliYukle();
+  miniChartlariYukle();
   paperPaneliDoldur();
   testPaneliniGuncelle();
   obAlarmPaneliGuncelle();
@@ -3099,6 +3267,7 @@ async function baslat() {
   paperPozBoyutGuncelle();
 
   setInterval(hizliYukle, 120000);
+  setInterval(miniChartlariYukle, 90000);
   setInterval(tickerYukle, 30000);
   setInterval(() => testleriKontrolEt(false), 60000);
   setInterval(mumKilitGuncelle, 1000);
@@ -3120,7 +3289,12 @@ async function baslat() {
     if (!e.target.closest('#aramaCoin') && !e.target.closest('#aramaOneri')) ao.style.display = 'none';
   });
 
-  window.addEventListener('resize', () => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); });
+  window.addEventListener('resize', () => {
+    if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth });
+    overlayBoyutlandir();
+    overlayCiz();
+    miniCharts.forEach(m => { try { m.chart.applyOptions({ width: m.area.clientWidth }); } catch(e) {} });
+  });
   window.addEventListener('error', e => { try { logEkle('hata', '💥 JS Hatası', `${e.message} (${e.filename}:${e.lineno})`, 'hata'); } catch(err) {} });
   window.addEventListener('unhandledrejection', e => { try { logEkle('hata', '💥 Promise Hatası', String(e.reason).slice(0, 100), 'hata'); } catch(err) {} });
 }
