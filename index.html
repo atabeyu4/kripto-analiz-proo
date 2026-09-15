@@ -12,7 +12,6 @@
 body.light{--bg:#f5f7fa;--bg-soft:#ffffff;--surface:#ffffff;--surface-2:#f0f3f7;--border:rgba(15,23,42,.08);--border-2:rgba(15,23,42,.14);--text:#0f172a;--text-dim:#475569;--text-mute:#94a3b8;--shadow:0 8px 32px rgba(15,23,42,.08)}
 *{-webkit-tap-highlight-color:transparent;box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body.light{background:var(--bg)}
 .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
 #chart{width:100%;height:520px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;transition:border-color .2s,background .2s}
@@ -29,7 +28,6 @@ body.light{background:var(--bg)}
 @keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 .ticker-item{display:inline-flex;gap:8px;align-items:center;font-size:12px}
 .ticker-sym{color:var(--text-dim);font-weight:700}
-.ticker-up{color:var(--emerald)}.ticker-down{color:var(--red)}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(34,211,238,.15);border-top-color:var(--cyan);border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .scroll-thin::-webkit-scrollbar{width:6px;height:6px}
@@ -60,7 +58,6 @@ body.light{background:var(--bg)}
 .verdict-long{background:rgba(16,185,129,.12);color:#4ade80;border:1px solid rgba(16,185,129,.25)}
 .verdict-short{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25)}
 .verdict-bekle{background:var(--surface-2);color:var(--text-dim);border:1px solid var(--border)}
-.verdict-celiski{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.25)}
 .tab-bar{display:flex;gap:2px;padding:4px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow-x:auto}
 .tab-bar::-webkit-scrollbar{display:none}
 .tab-btn{flex:1;min-width:70px;padding:8px 10px;font-size:11.5px;font-weight:700;border-radius:9px;border:none;background:transparent;color:var(--text-mute);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;font-family:inherit}
@@ -76,10 +73,6 @@ body.light{background:var(--bg)}
 .row-label{color:var(--text-dim);font-weight:600}
 .row-value{font-weight:700;font-family:'JetBrains Mono',monospace}
 .badge{display:inline-block;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;letter-spacing:.02em;text-transform:uppercase}
-.badge-long{background:rgba(16,185,129,.15);color:#4ade80;border:1px solid rgba(16,185,129,.3)}
-.badge-short{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
-.badge-bekle{background:var(--surface-2);color:var(--text-mute);border:1px solid var(--border)}
-.badge-info{background:rgba(34,211,238,.15);color:var(--cyan);border:1px solid rgba(34,211,238,.3)}
 .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .metric-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
 .metric-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-mute);margin-bottom:4px}
@@ -138,7 +131,6 @@ body.light{background:var(--bg)}
 .pos-card:hover{border-color:var(--border-2)}
 .radar-item{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:12px;margin-bottom:6px;transition:all .15s;cursor:pointer}
 .radar-item:hover{background:var(--surface-2);border-color:var(--border-2);transform:translateX(3px)}
-.radar-item.guclu{border-color:rgba(34,211,238,.3);background:rgba(34,211,238,.04)}
 .setting-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}
 .setting-row:last-child{border-bottom:none}
 .setting-label{font-size:13px;font-weight:700;color:var(--text)}
@@ -153,9 +145,56 @@ body.light{background:var(--bg)}
 .help-btn:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(34,211,238,.5)}
 .log-btn{position:fixed;bottom:20px;right:84px;z-index:90;width:52px;height:52px;border-radius:50%;background:var(--purple);color:#fff;font-size:18px;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(167,139,250,.35);transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:inherit}
 .log-btn:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(167,139,250,.5)}
-.autoload-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.25);font-family:'JetBrains Mono',monospace}
-.autoload-badge.loading{background:rgba(245,158,11,.1);color:var(--amber);border-color:rgba(245,158,11,.25)}
-.autoload-badge.ok{background:rgba(16,185,129,.1);color:#4ade80;border-color:rgba(16,185,129,.25)}
+
+/* ═══ OB ALARM BADGE ═══ */
+.ob-badge{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--border);font-size:11px;font-weight:800;cursor:pointer;transition:all .2s;font-family:'JetBrains Mono',monospace;color:var(--text-dim);white-space:nowrap}
+.ob-badge:hover{border-color:rgba(34,211,238,.3)}
+.ob-badge.aktif-sari{background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.4)}
+.ob-badge.aktif-kirmizi{background:rgba(239,68,68,.15);color:#f87171;border-color:rgba(239,68,68,.4);animation:ob-pulse 1.5s ease-in-out infinite}
+@keyframes ob-pulse{0%,100%{box-shadow:0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 12px rgba(239,68,68,.6)}}
+.ob-badge .ob-sayi{font-size:13px}
+
+/* OB ALARM KART */
+.ob-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;transition:all .2s;cursor:pointer}
+.ob-item:hover{border-color:var(--border-2);transform:translateX(4px)}
+.ob-item.hazir{border-color:rgba(239,68,68,.4);background:linear-gradient(135deg,rgba(239,68,68,.06),transparent);animation:ob-pulse 2s ease-in-out infinite}
+.ob-item.izle{border-color:rgba(251,191,36,.3);background:linear-gradient(135deg,rgba(251,191,36,.04),transparent)}
+.ob-item.takip{border-color:rgba(249,115,22,.2);background:linear-gradient(135deg,rgba(249,115,22,.02),transparent)}
+.ob-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.ob-coin{font-size:15px;font-weight:800}
+.ob-tip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.05em}
+.ob-tip.bullish{background:rgba(16,185,129,.15);color:#4ade80}
+.ob-tip.bearish{background:rgba(239,68,68,.15);color:#f87171}
+.ob-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11.5px;font-family:'JetBrains Mono',monospace;margin-bottom:8px}
+.ob-info-item{color:var(--text-mute)}
+.ob-info-item b{color:var(--text);font-weight:700}
+.ob-durum{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border);font-size:12px}
+.ob-durum-badge{font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:8px;text-transform:uppercase;letter-spacing:.05em}
+.ob-durum-badge.hazir{background:rgba(239,68,68,.2);color:#f87171}
+.ob-durum-badge.izle{background:rgba(251,191,36,.2);color:#fbbf24}
+.ob-durum-badge.takip{background:rgba(249,115,22,.2);color:#fb923c}
+.ob-durum-badge.bekle{background:var(--surface-2);color:var(--text-mute)}
+.ob-mesafe{font-family:'JetBrains Mono',monospace;font-weight:700}
+.ob-mesafe.yakin{color:#f87171}
+.ob-mesafe.orta{color:#fbbf24}
+.ob-mesafe.uzak{color:var(--text-mute)}
+
+.ob-bos{text-align:center;padding:50px 20px;color:var(--text-mute)}
+.ob-bos-icon{font-size:52px;margin-bottom:14px;opacity:.4}
+.ob-bos-title{font-size:14px;font-weight:700;color:var(--text-dim);margin-bottom:6px}
+.ob-bos-desc{font-size:12px;line-height:1.6;max-width:300px;margin:0 auto}
+
+/* BİLDİRİM */
+.notif-stack{position:fixed;top:80px;right:20px;z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.notif{background:var(--surface);border:1px solid rgba(239,68,68,.4);border-left:4px solid #ef4444;border-radius:12px;padding:14px;min-width:280px;max-width:340px;box-shadow:var(--shadow);animation:notif-in .3s ease-out;pointer-events:auto}
+.notif.uyari{border-color:rgba(251,191,36,.4);border-left-color:#fbbf24}
+.notif.bilgi{border-color:rgba(34,211,238,.4);border-left-color:var(--cyan)}
+@keyframes notif-in{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
+.notif-title{font-size:12.5px;font-weight:800;margin-bottom:4px}
+.notif-desc{font-size:11.5px;color:var(--text-dim);line-height:1.5}
+.notif-close{position:absolute;top:6px;right:8px;background:transparent;border:none;color:var(--text-mute);cursor:pointer;font-size:16px;font-family:inherit}
+.notif{position:relative}
+
 @media(max-width:640px){
   #chart{height:280px!important}
   .signal-text{font-size:24px}
@@ -164,22 +203,25 @@ body.light{background:var(--bg)}
   .help-btn,.log-btn{width:46px;height:46px;bottom:16px}
   .log-btn{right:74px}
   .card-pad{padding:16px}
+  .ob-info{grid-template-columns:1fr}
+  .notif-stack{right:10px;left:10px;top:70px}
+  .notif{min-width:auto;max-width:100%}
 }
 </style>
 </head>
 <body>
 
 <!-- WELCOME -->
-<div id="welcomeScreen">
-<div style="max-width:760px;width:100%;text-align:center;padding:24px">
+<div id="welcomeScreen" style="position:fixed;inset:0;z-index:300;background:radial-gradient(ellipse at top,rgba(34,211,238,.1),transparent 50%),var(--bg);display:flex;align-items:center;justify-content:center;padding:24px">
+<div style="max-width:760px;width:100%;text-align:center">
 <div style="width:72px;height:72px;border-radius:20px;background:var(--cyan);display:inline-flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:20px;box-shadow:0 12px 40px rgba(34,211,238,.3)">📈</div>
 <h1 style="font-size:34px;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;line-height:1.15">Kripto Analiz <span style="color:var(--cyan)">Pro Terminal</span></h1>
-<p style="font-size:15px;color:var(--text-dim);margin-bottom:28px;line-height:1.6;max-width:560px;margin-left:auto;margin-right:auto">Gerçek zamanlı veriler, akıllı sinyal motoru, otomatik bonus hesaplama, paper trading ve profesyonel analiz.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:28px;text-align:left">
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">⚡</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Otomatik Veri</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">MTF, funding, OI, whale hepsi arka planda otomatik yüklenir.</div></div>
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🎯</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">İşleme Girilir mi?</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Yıldızlı kalite skoru, net sebepler ve riskler.</div></div>
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🧪</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Paper Trading</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Otomatik tarama, en iyi coine sanal giriş, canlı P&L.</div></div>
-<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🚫</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Akıllı Filtre</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Kötü piyasada giriş engellenir. Koruma aktif.</div></div>
+<p style="font-size:15px;color:var(--text-dim);margin-bottom:28px;line-height:1.6;max-width:560px;margin-left:auto;margin-right:auto">Order Block, Ichimoku, otomatik veri, paper trading ve fırsat radarı ile profesyonel kripto analizi.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:28px;text-align:left">
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🎯</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Order Block</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Kurumsal alıcı/satıcı bölgeleri.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">☁️</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Ichimoku</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Trend + destek/direnç tek bakışta.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🔔</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">OB Alarm</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Fırsat yaklaşınca haber verir.</div></div>
+<div class="card card-pad"><div style="font-size:20px;margin-bottom:6px">🧪</div><div style="font-weight:800;font-size:13px;margin-bottom:3px">Paper Trading</div><div style="font-size:11.5px;color:var(--text-dim);line-height:1.5">Sanal işlem, canlı P&L.</div></div>
 </div>
 <button onclick="welcomeKapat()" class="btn btn-primary" style="padding:14px 40px;font-size:15px">🚀 Başla</button>
 <p style="font-size:11px;color:var(--text-mute);margin-top:16px">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>
@@ -191,10 +233,10 @@ body.light{background:var(--bg)}
 
 <!-- HEADER -->
 <header style="position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)">
-<div style="max-width:1600px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px">
+<div style="max-width:1600px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px">
 <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
 <div style="width:36px;height:36px;border-radius:10px;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:18px">📈</div>
-<div class="hidden md:block"><div style="font-weight:800;font-size:13px;color:var(--text)">KRİPTO ANALİZ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.0</div></div>
+<div class="hidden md:block"><div style="font-weight:800;font-size:13px;color:var(--text)">KRİPTO ANALİZ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.2</div></div>
 </div>
 <div style="flex:1;max-width:520px;position:relative;display:flex;gap:8px">
 <input id="aramaCoin" placeholder="🔍 BTC, ETH, SOL... ( / )" autocomplete="off" class="input-field" style="flex:1">
@@ -202,6 +244,11 @@ body.light{background:var(--bg)}
 <div id="aramaOneri" style="position:absolute;top:100%;left:0;right:0;margin-top:8px;background:var(--surface);border:1px solid var(--border-2);border-radius:12px;box-shadow:var(--shadow);z-index:50;max-height:320px;overflow-y:auto;display:none" class="scroll-thin"></div>
 </div>
 <button onclick="radarAc()" title="Radar (R)" class="btn btn-secondary hidden sm:flex" style="padding:8px 12px">🎯</button>
+<button onclick="obAlarmAc()" id="obBadge" class="ob-badge" title="Order Block Alarmları">
+  <span>🎯</span>
+  <span class="ob-sayi" id="obBadgeSayi">0</span>
+  <span style="font-size:9.5px">OB</span>
+</button>
 <button id="sesBtn" onclick="sesToggle()" title="Ses" class="btn btn-secondary" style="padding:8px 12px">🔇</button>
 <button id="temaBtn" onclick="temaToggle()" title="Tema (T)" class="btn btn-secondary" style="padding:8px 12px">🌙</button>
 <div id="canliDurum" class="hidden md:flex" style="align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:var(--surface);border:1px solid var(--border)">
@@ -231,16 +278,18 @@ body.light{background:var(--bg)}
 </div>
 </header>
 
+<!-- NOTIF STACK -->
+<div id="notifStack" class="notif-stack"></div>
+
 <!-- MAIN -->
 <main style="max-width:1600px;margin:0 auto;padding:16px">
 
-<!-- ÜST BİLGİ -->
 <div class="card card-pad" style="margin-bottom:16px">
 <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center">
 <div>
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap">
 <span id="aktifCoin" style="font-size:22px;font-weight:800;letter-spacing:-.01em">BTCUSDT</span>
-<span class="badge badge-info">SPOT</span>
+<span style="background:rgba(34,211,238,.1);color:var(--cyan);font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;border:1px solid rgba(34,211,238,.25)">SPOT</span>
 <span id="chartInfo" style="font-size:10.5px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">—</span>
 </div>
 <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
@@ -258,7 +307,6 @@ body.light{background:var(--bg)}
 </div>
 
 <div style="display:grid;grid-template-columns:1fr;gap:16px" class="main-grid">
-<!-- SOL: GRAFİK -->
 <div>
 <div class="card" style="padding:16px;position:relative">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -275,7 +323,6 @@ body.light{background:var(--bg)}
 </div>
 </div>
 
-<!-- SAĞ: SEKMELER -->
 <div>
 <div class="tab-bar" style="margin-bottom:14px">
 <button onclick="tabGec('karar')" data-tab="karar" class="tab-btn aktif">🎯 Karar</button>
@@ -286,10 +333,8 @@ body.light{background:var(--bg)}
 <button onclick="tabGec('test')" data-tab="test" class="tab-btn">🧠 Test</button>
 </div>
 
-<!-- TAB: KARAR (SADE) -->
 <div id="tab-karar" style="display:flex;flex-direction:column;gap:14px">
 
-<!-- Sinyal Motoru -->
 <div id="kararKart" class="signal-hero bekle">
 <div class="signal-label">SİNYAL MOTORU</div>
 <div id="kararIkon" class="signal-icon">⏸️</div>
@@ -300,7 +345,12 @@ body.light{background:var(--bg)}
 <div id="donusAlarm" style="display:none;font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:8px;padding:10px;border-radius:10px;background:rgba(245,158,11,.1);color:#fbbf24;text-align:center">—</div>
 </div>
 
-<!-- İşleme Girilir mi? (YENİ) -->
+<!-- OB ALARM ÖZET -->
+<div class="card card-pad" id="obOzetKart" style="cursor:pointer" onclick="obAlarmAc()">
+<div class="card-title"><span class="card-title-icon">🎯</span>Order Block Alarmları<span class="card-title-meta" id="obOzetMeta">—</span></div>
+<div id="obOzetListe" style="max-height:180px;overflow-y:auto" class="scroll-thin"></div>
+</div>
+
 <div class="card card-pad" id="islemKart">
 <div class="card-title"><span class="card-title-icon">🎯</span>İşleme Girilir mi?<span class="card-title-meta" id="islemKaliteBadge">—</span></div>
 <div id="islemYildizlar" class="stars">—</div>
@@ -308,13 +358,11 @@ body.light{background:var(--bg)}
 <div id="islemVerdict" class="verdict-box verdict-bekle">Analiz yapılıyor...</div>
 </div>
 
-<!-- İşlem Planı -->
 <div class="card card-pad" id="planKart">
 <div class="card-title"><span class="card-title-icon">📋</span>İşlem Planı<span class="card-title-meta" id="planRR">—</span></div>
 <div id="planIcerik"></div>
 </div>
 
-<!-- Neden Bu Karar? (Filtreler) -->
 <div class="card card-pad">
 <div class="card-title"><span class="card-title-icon">🧠</span>Neden Bu Karar?</div>
 <div id="sebepListe"></div>
@@ -322,7 +370,6 @@ body.light{background:var(--bg)}
 
 </div>
 
-<!-- TAB: TEKNİK -->
 <div id="tab-teknik" style="display:none;flex-direction:column;gap:14px">
 <div class="card card-pad"><div class="card-title"><span class="card-title-icon">📊</span>Göstergeler</div><div id="gostergeler"></div></div>
 <div class="card card-pad"><div class="card-title"><span class="card-title-icon">🕯️</span>Formasyonlar & Divergence</div><div id="formasyonListe"></div></div>
@@ -333,14 +380,12 @@ body.light{background:var(--bg)}
 <div class="card card-pad"><div class="card-title"><span class="card-title-icon">🔑</span>Kritik Seviyeler</div><div id="seviyeler"></div></div>
 </div>
 
-<!-- TAB: PİYASA -->
 <div id="tab-piyasa" style="display:none;flex-direction:column;gap:14px">
 <div class="card card-pad"><div class="card-title"><span class="card-title-icon">💰</span>Funding & OI<span class="card-title-meta" style="color:var(--purple)">VADELİ</span></div><div id="fundingListe"></div></div>
 <div class="card card-pad"><div class="card-title"><span class="card-title-icon">😱</span>Fear & Greed</div><div id="fngListe"></div></div>
 <div class="card card-pad"><div class="card-title"><span class="card-title-icon">📖</span>Order Book<span class="card-title-meta" style="color:var(--cyan)">SPOT</span></div><div id="obListe"></div></div>
 </div>
 
-<!-- TAB: HABER -->
 <div id="tab-haber" style="display:none;flex-direction:column;gap:14px">
 <div class="card card-pad">
 <div class="card-title"><span class="card-title-icon">🐋</span>Whale Hareketleri<span class="card-title-meta" id="whaleUpdate">—</span></div>
@@ -354,34 +399,31 @@ body.light{background:var(--bg)}
 </div>
 </div>
 
-<!-- TAB: PAPER TRADING (YENİ) -->
 <div id="tab-paper" style="display:none;flex-direction:column;gap:14px">
 <div class="card card-pad">
 <div class="card-title"><span class="card-title-icon">🧪</span>Paper Trading<span class="card-title-meta" id="paperDurumBadge">—</span></div>
-<p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:14px">Bot otomatik tarama yapar, en güçlü sinyalleri bulur, sanal pozisyon açar. Gerçek para yok — sadece performans testi.</p>
+<p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:14px">Bot otomatik tarama yapar, en güçlü sinyalleri bulur, sanal pozisyon açar. Gerçek para yok.</p>
 <div style="display:flex;gap:8px;margin-bottom:14px">
 <button onclick="paperTradingBaslat()" id="paperStartBtn" class="btn btn-primary" style="flex:1">▶️ Başlat</button>
 <button onclick="paperTradingDurdur()" id="paperStopBtn" class="btn btn-danger" style="flex:1" disabled>⏹️ Durdur</button>
 </div>
 <div id="paperAyarlar" style="display:none">
 <div class="setting-row">
-<div><div class="setting-label">Maksimum Pozisyon</div><div class="setting-desc">Aynı anda kaç açık pozisyon</div></div>
-<select id="paperMaxPoz" class="setting-select" onchange="paperAyarKaydet()">
-<option value="3">3 pozisyon</option>
-<option value="5" selected>5 pozisyon</option>
-<option value="10">10 pozisyon</option>
-</select>
+<div><div class="setting-label">💰 Başlangıç Bakiyesi ($)</div><div class="setting-desc">Sanal para (10 - 1.000.000)</div></div>
+<input id="paperBakiyeInput" type="number" min="10" max="1000000" step="10" value="100" class="setting-select" style="width:130px" onchange="paperAyarKaydet()">
 </div>
 <div class="setting-row">
-<div><div class="setting-label">Pozisyon Büyüklüğü</div><div class="setting-desc">Her işlem için sanal miktar</div></div>
-<select id="paperPozBoyut" class="setting-select" onchange="paperAyarKaydet()">
-<option value="100" selected>100 USDT</option>
-<option value="250">250 USDT</option>
-<option value="500">500 USDT</option>
-</select>
+<div><div class="setting-label">📊 Maksimum Pozisyon</div><div class="setting-desc">1 - 50 arası</div></div>
+<input id="paperMaxPozInput" type="number" min="1" max="50" step="1" value="5" class="setting-select" style="width:80px" onchange="paperAyarKaydet()">
+</div>
+<div class="setting-row" style="background:rgba(34,211,238,.05);border-radius:10px;padding:12px;margin:10px 0;border:none">
+<div style="width:100%;display:flex;justify-content:space-between;align-items:center">
+<div><div class="setting-label">💵 Otomatik Pozisyon Boyutu</div><div class="setting-desc">Bakiye ÷ Max poz</div></div>
+<div id="paperPozBoyutGoster" style="font-size:20px;font-weight:800;color:var(--cyan);font-family:'JetBrains Mono',monospace">$20.00</div>
+</div>
 </div>
 <div class="setting-row">
-<div><div class="setting-label">Minimum Güven</div><div class="setting-desc">Sinyalin en az güven yüzdesi</div></div>
+<div><div class="setting-label">🎯 Minimum Güven</div><div class="setting-desc">Sinyalin en az güveni</div></div>
 <select id="paperMinGuven" class="setting-select" onchange="paperAyarKaydet()">
 <option value="65">%65</option>
 <option value="70" selected>%70</option>
@@ -390,7 +432,7 @@ body.light{background:var(--bg)}
 </select>
 </div>
 <div class="setting-row">
-<div><div class="setting-label">Taranacak Coin Sayısı</div><div class="setting-desc">Her taramada kaç coin</div></div>
+<div><div class="setting-label">🔍 Taranacak Coin</div><div class="setting-desc">Her taramada</div></div>
 <select id="paperTaramaSayi" class="setting-select" onchange="paperAyarKaydet()">
 <option value="20">20 coin</option>
 <option value="50" selected>50 coin</option>
@@ -410,7 +452,6 @@ body.light{background:var(--bg)}
 </div>
 </div>
 
-<!-- TAB: TEST -->
 <div id="tab-test" style="display:none;flex-direction:column;gap:14px">
 <div class="card card-pad">
 <div class="card-title"><span class="card-title-icon">🧠</span>Otomatik Test<span class="card-title-meta" style="color:var(--cyan)">CANLI</span></div>
@@ -439,9 +480,8 @@ body.light{background:var(--bg)}
 </div>
 </div>
 
-<!-- HIZLI BAKIŞ -->
 <div class="card card-pad" style="margin-top:16px">
-<div class="card-title"><span class="card-title-icon">⚡</span>Hızlı Bakış<button onclick="hizliYukle()" class="card-title-meta" style="background:transparent;border:none;cursor:pointer;color:var(--cyan);font-family:inherit;font-size:11px;font-weight:700">🔄 Yenile</button></div>
+<div class="card-title"><span class="card-title-icon">⚡</span>Hızlı Bakış<button onclick="hizliYukle()" style="background:transparent;border:none;cursor:pointer;color:var(--cyan);font-family:inherit;font-size:11px;font-weight:700;margin-left:auto">🔄 Yenile</button></div>
 <div id="hizliListe" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px"></div>
 </div>
 
@@ -451,8 +491,25 @@ body.light{background:var(--bg)}
 <button onclick="loglariGoster()" class="log-btn" title="Loglar (L)">📋</button>
 <button onclick="yardimAc()" class="help-btn" title="Yardım (?)">?</button>
 
+<!-- MODAL: OB ALARM -->
+<div id="obAlarmModal" class="modal-overlay" onclick="if(event.target===this) obAlarmKapat()">
+<div class="modal-box modal-box-wide">
+<div class="modal-header">
+<div>
+<div style="font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px">🎯 Order Block Alarmları</div>
+<p style="font-size:12px;color:var(--text-mute);margin-top:4px" id="obAlarmSubtitle">Fiyat bölgeye yaklaşınca uyarır</p>
+</div>
+<div style="display:flex;gap:8px">
+<button onclick="obAlarmTara()" id="obTaraBtn" class="btn btn-secondary" style="padding:8px 12px;font-size:12px">🔄 Yenile</button>
+<button onclick="obAlarmKapat()" class="modal-close">×</button>
+</div>
+</div>
+<div id="obAlarmSonuc"></div>
+</div>
+</div>
+
 <!-- MODAL: RADAR -->
-<div id="radarModal" class="modal-overlay" onclick="if(event.target === this) radarKapat()">
+<div id="radarModal" class="modal-overlay" onclick="if(event.target===this) radarKapat()">
 <div class="modal-box modal-box-wide">
 <div class="modal-header">
 <div>
@@ -469,7 +526,7 @@ body.light{background:var(--bg)}
 </div>
 
 <!-- MODAL: LOG -->
-<div id="logModal" class="modal-overlay" onclick="if(event.target === this) loglariKapat()">
+<div id="logModal" class="modal-overlay" onclick="if(event.target===this) loglariKapat()">
 <div class="modal-box modal-box-wide">
 <div class="modal-header">
 <div>
@@ -479,16 +536,17 @@ body.light{background:var(--bg)}
 <button onclick="loglariKapat()" class="modal-close">×</button>
 </div>
 <div class="tab-bar" style="margin-bottom:14px">
-<button onclick="logTabGec('olay')" data-logtab="olay" class="tab-btn aktif">📜 Olay Günlüğü</button>
-<button onclick="logTabGec('paper')" data-logtab="paper" class="tab-btn">🧪 Paper Log</button>
+<button onclick="logTabGec('olay')" data-logtab="olay" class="tab-btn aktif">📜 Olay</button>
+<button onclick="logTabGec('paper')" data-logtab="paper" class="tab-btn">🧪 Paper</button>
+<button onclick="logTabGec('ob')" data-logtab="ob" class="tab-btn">🎯 OB</button>
 </div>
 <div id="logtab-olay">
 <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
 <button onclick="logFiltrele('hepsi')" data-logfiltre="hepsi" class="filter-btn aktif">Tümü</button>
 <button onclick="logFiltrele('sinyal')" data-logfiltre="sinyal" class="filter-btn">🎯 Sinyal</button>
 <button onclick="logFiltrele('uyari')" data-logfiltre="uyari" class="filter-btn">⚠️ Uyarı</button>
-<button onclick="logFiltrele('islem')" data-logfiltre="islem" class="filter-btn">💼 İşlem</button>
 <button onclick="logFiltrele('paper')" data-logfiltre="paper" class="filter-btn">🧪 Paper</button>
+<button onclick="logFiltrele('ob')" data-logfiltre="ob" class="filter-btn">🎯 OB</button>
 <button onclick="logFiltrele('hata')" data-logfiltre="hata" class="filter-btn">❌ Hata</button>
 </div>
 <div id="logListe" style="max-height:55vh;overflow-y:auto" class="scroll-thin"></div>
@@ -500,24 +558,28 @@ body.light{background:var(--bg)}
 <div id="logtab-paper" style="display:none">
 <div id="paperLogListe" style="max-height:60vh;overflow-y:auto" class="scroll-thin"></div>
 </div>
+<div id="logtab-ob" style="display:none">
+<div id="obLogListe" style="max-height:60vh;overflow-y:auto" class="scroll-thin"></div>
+</div>
 </div>
 </div>
 
 <!-- MODAL: AYARLAR -->
-<div id="ayarlarModal" class="modal-overlay" onclick="if(event.target === this) ayarlarKapat()">
+<div id="ayarlarModal" class="modal-overlay" onclick="if(event.target===this) ayarlarKapat()">
 <div class="modal-box">
 <div class="modal-header">
 <div style="font-size:18px;font-weight:800">⚙️ Ayarlar</div>
 <button onclick="ayarlarKapat()" class="modal-close">×</button>
 </div>
 <div class="setting-row"><div><div class="setting-label">Tema</div><div class="setting-desc">Koyu veya açık</div></div><select id="ayarTema" class="setting-select" onchange="ayarKaydet('tema', this.value)"><option value="dark">🌙 Koyu</option><option value="light">☀️ Açık</option></select></div>
-<div class="setting-row"><div><div class="setting-label">Varsayılan Zaman Dilimi</div><div class="setting-desc">Site açılınca hangi TF</div></div><select id="ayarTF" class="setting-select" onchange="ayarKaydet('varsayilanTF', this.value)"><option value="1">1 dakika</option><option value="5">5 dakika</option><option value="15">15 dakika</option><option value="60">1 saat</option><option value="240">4 saat</option><option value="D">1 gün</option></select></div>
+<div class="setting-row"><div><div class="setting-label">Varsayılan Zaman Dilimi</div><div class="setting-desc">Site açılınca</div></div><select id="ayarTF" class="setting-select" onchange="ayarKaydet('varsayilanTF', this.value)"><option value="1">1 dakika</option><option value="5">5 dakika</option><option value="15">15 dakika</option><option value="60">1 saat</option><option value="240">4 saat</option><option value="D">1 gün</option></select></div>
 <div class="setting-row"><div><div class="setting-label">Radar Coin Sayısı</div><div class="setting-desc">Kaç coin taransın</div></div><select id="ayarRadarSayi" class="setting-select" onchange="ayarKaydet('radarSayi', parseInt(this.value))"><option value="50">50 coin</option><option value="100">100 coin</option><option value="200">200 coin</option><option value="500">500 coin</option></select></div>
 <div class="setting-row"><div><div class="setting-label">Ses Uyarıları</div><div class="setting-desc">Güçlü sinyal sesi</div></div><div id="ayarSes" class="toggle" onclick="ayarToggle('ses')"></div></div>
-<div class="setting-row"><div><div class="setting-label">Pozisyon Güncelleme</div><div class="setting-desc">Kaç saniyede bir</div></div><select id="ayarPozGuncelleme" class="setting-select" onchange="ayarKaydet('pozGuncelleme', parseInt(this.value))"><option value="15">15 sn</option><option value="30">30 sn</option><option value="60">1 dk</option></select></div>
-<div style="font-size:10.5px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin:20px 0 10px">📱 Telegram Bildirim</div>
-<div class="setting-row"><div><div class="setting-label">Bot Token</div><div class="setting-desc">@BotFather'dan al</div></div><input id="ayarTgToken" type="text" placeholder="7712...:AAH..." class="setting-select" style="width:150px" onchange="ayarKaydet('telegramToken', this.value)"></div>
-<div class="setting-row"><div><div class="setting-label">Chat ID</div><div class="setting-desc">@userinfobot'tan al</div></div><input id="ayarTgChatId" type="text" placeholder="123456789" class="setting-select" style="width:130px" onchange="ayarKaydet('telegramChatId', this.value)"></div>
+<div class="setting-row"><div><div class="setting-label">🎯 OB Alarm</div><div class="setting-desc">Order Block uyarısı aktif mi</div></div><div id="ayarObAlarm" class="toggle acik" onclick="ayarToggle('obAlarm')"></div></div>
+<div class="setting-row"><div><div class="setting-label">🔔 Site Bildirimi</div><div class="setting-desc">Alarm gelince sağ üstte göster</div></div><div id="ayarNotif" class="toggle acik" onclick="ayarToggle('notif')"></div></div>
+<div style="font-size:10.5px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin:20px 0 10px">📱 Telegram</div>
+<div class="setting-row"><div><div class="setting-label">Bot Token</div><div class="setting-desc">@BotFather</div></div><input id="ayarTgToken" type="text" placeholder="7712...:AAH..." class="setting-select" style="width:150px" onchange="ayarKaydet('telegramToken', this.value)"></div>
+<div class="setting-row"><div><div class="setting-label">Chat ID</div><div class="setting-desc">@userinfobot</div></div><input id="ayarTgChatId" type="text" placeholder="123456789" class="setting-select" style="width:130px" onchange="ayarKaydet('telegramChatId', this.value)"></div>
 <div class="setting-row"><div><div class="setting-label">Test Et</div><div class="setting-desc">Bot + Chat ID kontrol</div></div><button onclick="telegramTest()" id="tgTestBtn" class="btn btn-secondary" style="padding:8px 14px;font-size:12px">Test</button></div>
 <button onclick="ayarlariSifirla()" class="btn btn-danger btn-block" style="margin-top:16px">🔄 Ayarları Sıfırla</button>
 </div>
@@ -527,16 +589,16 @@ body.light{background:var(--bg)}
 <div id="yardimModal" class="modal-overlay" onclick="if(event.target===this) yardimKapat()">
 <div class="modal-box">
 <div class="modal-header"><div style="font-size:18px;font-weight:800">❓ Yardım</div><button onclick="yardimKapat()" class="modal-close">×</button></div>
-<div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:10px">⌨️ Klavye Kısayolları</div>
+<div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:10px">⌨️ Klavye</div>
 <div style="font-size:12.5px;line-height:2;color:var(--text-dim)">
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">R</span> Radar</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">T</span> Tema</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">F</span> Tam Ekran</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">L</span> Loglar</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">A</span> Ayarlar</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">H</span> Menü</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">/</span> Arama</span></div>
-<div style="display:flex;justify-content:space-between"><span><span class="badge badge-info">ESC</span> Kapat</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>R</b> Radar</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>O</b> OB Alarm</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>T</b> Tema</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>F</b> Tam Ekran</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>L</b> Loglar</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>A</b> Ayarlar</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>H</b> Menü</span></div>
+<div style="display:flex;justify-content:space-between"><span><b>?</b> Yardım</span></div>
 </div>
 </div>
 </div>
@@ -545,20 +607,21 @@ body.light{background:var(--bg)}
 <div id="hamburgerOverlay" class="hamburger-overlay" onclick="hamburgerKapat()"></div>
 <div id="hamburgerPanel" class="hamburger-panel">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
-<div><div style="font-weight:800;font-size:15px;color:var(--cyan)">MENÜ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.0</div></div>
+<div><div style="font-weight:800;font-size:15px;color:var(--cyan)">MENÜ</div><div style="font-size:10px;color:var(--text-mute);font-family:'JetBrains Mono',monospace">v4.2</div></div>
 <button onclick="hamburgerKapat()" class="modal-close">×</button>
 </div>
+<div class="hamburger-item" onclick="obAlarmAc(); hamburgerKapat()"><span class="hamburger-icon">🎯</span>OB Alarmları</div>
 <div class="hamburger-item" onclick="ayarlarAc(); hamburgerKapat()"><span class="hamburger-icon">⚙️</span>Ayarlar</div>
 <div class="hamburger-item" onclick="loglariGoster(); hamburgerKapat()"><span class="hamburger-icon">📋</span>Loglar</div>
 <div class="hamburger-item" onclick="yardimAc(); hamburgerKapat()"><span class="hamburger-icon">❓</span>Yardım</div>
 <div class="hamburger-item" onclick="welcomeGoster(); hamburgerKapat()"><span class="hamburger-icon">🏠</span>Karşılama</div>
 <div class="hamburger-item" onclick="hakkindaAc(); hamburgerKapat()"><span class="hamburger-icon">📖</span>Hakkında</div>
+<div class="hamburger-item" onclick="sssAc(); hamburgerKapat()"><span class="hamburger-icon">💬</span>SSS</div>
 <div class="hamburger-section">Bağlantılar</div>
 <div class="hamburger-item" onclick="window.open('https://github.com/atabeyu4/kripto-analiz-proo','_blank')"><span class="hamburger-icon">⭐</span>GitHub</div>
 <div class="hamburger-item" onclick="window.open('https://www.bybit.com','_blank')"><span class="hamburger-icon">🏦</span>Bybit</div>
 </div>
 
-<!-- BİLGİ MODAL -->
 <div id="bilgiModal" class="modal-overlay" onclick="if(event.target===this) bilgiKapat()">
 <div class="modal-box">
 <div class="modal-header"><div id="bilgiBaslik" style="font-size:18px;font-weight:800">Hakkında</div><button onclick="bilgiKapat()" class="modal-close">×</button></div>
@@ -566,10 +629,10 @@ body.light{background:var(--bg)}
 </div>
 </div>
 
-<!-- PARÇA 2 BAŞLANGICI -->
+<!-- PARÇA 2/4 BAŞLANGICI -->
 <script>
 /* ═══════════════════════════════════════════════════════════
-   v4.1 — DÜZELTİLMİŞ SÜRÜM
+   v4.2 — Global + OB + Ichimoku + OB Alarm + AutoLoader
    ═══════════════════════════════════════════════════════════ */
 
 let chart, candleSeries, volumeSeries, ema20Seri, ema50Seri, ema200Seri, vwapSeri;
@@ -579,7 +642,7 @@ let tamEkran = false;
 let gostergelerAcik = JSON.parse(localStorage.getItem('gostergelerAcik') || 'false');
 let pozGuncellemeIntervalId = null;
 
-const AYARLAR_DEFAULT = { tema: 'dark', radarSayi: 100, varsayilanTF: '15', ses: false, pozGuncelleme: 30, telegramToken: '', telegramChatId: '', telegramSinyal: true, telegramAcil: true, telegramDonus: true, telegramAlarm: true };
+const AYARLAR_DEFAULT = { tema: 'dark', radarSayi: 100, varsayilanTF: '15', ses: false, pozGuncelleme: 30, telegramToken: '', telegramChatId: '', telegramSinyal: true, telegramAcil: true, telegramDonus: true, telegramAlarm: true, obAlarm: true, notif: true };
 let AYARLAR = { ...AYARLAR_DEFAULT, ...JSON.parse(localStorage.getItem('ayarlar') || '{}') };
 let sesAcik = AYARLAR.ses;
 let tema = AYARLAR.tema;
@@ -594,7 +657,6 @@ let TUM_SEMBOLLER = [];
 let sonFiyat = null;
 let aktifTestler = JSON.parse(localStorage.getItem('aktifTestler') || '[]');
 let tamamlananTestler = JSON.parse(localStorage.getItem('tamamlananTestler') || '[]');
-let pozisyonlar = JSON.parse(localStorage.getItem('pozisyonlar') || '[]');
 let kararHafiza = JSON.parse(localStorage.getItem('kararHafiza') || '{}');
 let sonMumZamani = null;
 let kilitliAnaliz = null;
@@ -612,11 +674,19 @@ let donusSonSeviye = null;
 let analizVeriCache = { coin: null, mtfOnay: null, fundingRate: null, oiDegisim: null, whaleNetAkis: 0, obOran: null, btcYon: 'NÖTR', btcDegisim: 0 };
 let autoLoadDurum = { mtf: false, funding: false, ob: false, whale: false, aktif: false, bitti: false };
 
+/* OB ALARM SİSTEMİ */
+let obAlarmlar = JSON.parse(localStorage.getItem('obAlarmlar') || '[]');
+let obLoglari = JSON.parse(localStorage.getItem('obLoglari') || '[]');
+let obTaramaAktif = false;
+let obTaramaInterval = null;
+let obKontrolInterval = null;
+
 const AGIRLIKLAR = {
   'RSI': 0.8, 'MACD': 1.0, 'EMA Trend': 1.3, 'Bollinger': 0.9,
   'Stochastic': 0.8, 'ADX Trend': 1.3, 'Hacim': 1.1, 'FVG': 1.0,
   'Mum Formasyonu': 1.2, 'Piyasa Yapısı': 1.2, 'VWAP': 0.9,
-  'Divergence': 1.5, 'Destek/Direnç': 0.8
+  'Divergence': 1.5, 'Destek/Direnç': 0.8,
+  'Order Block': 1.4, 'Ichimoku': 1.3
 };
 
 let logKayitlari = JSON.parse(localStorage.getItem('logKayitlari') || '[]');
@@ -625,6 +695,7 @@ let logAktifFiltre = 'hepsi';
 let logAktifTab = 'olay';
 const MAX_LOG = 500;
 const MAX_PAPER_LOG = 500;
+const MAX_OB_LOG = 300;
 
 /* ═══ YARDIMCILAR ═══ */
 function fmt(n, d = 4) {
@@ -648,22 +719,24 @@ function ayarKaydet(key, deger) {
   localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
   if (key === 'tema') temaUygula(deger);
   if (key === 'ses') { sesAcik = deger; document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇'; }
-  if (key === 'pozGuncelleme') { if (pozGuncellemeIntervalId) clearInterval(pozGuncellemeIntervalId); pozGuncellemeIntervalId = setInterval(pozisyonlariGuncelle, deger * 1000); }
 }
 function ayarToggle(key) {
   AYARLAR[key] = !AYARLAR[key];
   localStorage.setItem('ayarlar', JSON.stringify(AYARLAR));
   if (key === 'ses') { sesAcik = AYARLAR.ses; document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇'; document.getElementById('ayarSes').classList.toggle('acik', AYARLAR.ses); }
+  if (key === 'obAlarm') document.getElementById('ayarObAlarm').classList.toggle('acik', AYARLAR.obAlarm);
+  if (key === 'notif') document.getElementById('ayarNotif').classList.toggle('acik', AYARLAR.notif);
 }
 function ayarlariYukle() {
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
   set('ayarTema', AYARLAR.tema);
   set('ayarTF', AYARLAR.varsayilanTF);
   set('ayarRadarSayi', AYARLAR.radarSayi);
-  set('ayarPozGuncelleme', AYARLAR.pozGuncelleme);
   set('ayarTgToken', AYARLAR.telegramToken || '');
   set('ayarTgChatId', AYARLAR.telegramChatId || '');
   const as = document.getElementById('ayarSes'); if (as) as.classList.toggle('acik', AYARLAR.ses);
+  const ao = document.getElementById('ayarObAlarm'); if (ao) ao.classList.toggle('acik', AYARLAR.obAlarm !== false);
+  const an = document.getElementById('ayarNotif'); if (an) an.classList.toggle('acik', AYARLAR.notif !== false);
 }
 function ayarlarAc() { ayarlariYukle(); document.getElementById('ayarlarModal').classList.add('acik'); }
 function ayarlarKapat() { document.getElementById('ayarlarModal').classList.remove('acik'); }
@@ -729,13 +802,12 @@ function tamEkranToggle() {
   setTimeout(() => { if (chart) chart.applyOptions({ width: document.getElementById('chart').clientWidth }); }, 100);
 }
 
-/* ═══ TAB SİSTEMİ ═══ */
+/* ═══ TAB ═══ */
 function tabGec(ad) {
   document.querySelectorAll('[id^="tab-"]').forEach(e => e.style.display = 'none');
   const el = document.getElementById('tab-' + ad);
   if (el) el.style.display = 'flex';
   document.querySelectorAll('.tab-btn').forEach(b => { if (b.dataset.tab === ad) b.classList.add('aktif'); else b.classList.remove('aktif'); });
-  // Cache'deki verileri hemen göster
   if (ad === 'piyasa') {
     if (analizVeriCache.fundingRate !== null || analizVeriCache.oiDegisim !== null) renderFundingOi();
     if (analizVeriCache.obOran !== null) renderOrderBook();
@@ -746,11 +818,12 @@ function tabGec(ad) {
 document.addEventListener('keydown', e => {
   const aktif = document.activeElement;
   const yaziyor = aktif && (aktif.tagName === 'INPUT' || aktif.tagName === 'TEXTAREA' || aktif.tagName === 'SELECT');
-  if (e.key === 'Escape') { hamburgerKapat(); radarKapat(); ayarlarKapat(); bilgiKapat(); yardimKapat(); loglariKapat(); const ao = document.getElementById('aramaOneri'); if (ao) ao.style.display = 'none'; return; }
+  if (e.key === 'Escape') { hamburgerKapat(); radarKapat(); ayarlarKapat(); bilgiKapat(); yardimKapat(); loglariKapat(); obAlarmKapat(); const ao = document.getElementById('aramaOneri'); if (ao) ao.style.display = 'none'; return; }
   if (yaziyor) return;
   const k = e.key;
   if (k === '/') { e.preventDefault(); document.getElementById('aramaCoin').focus(); return; }
   if (k === 'r' || k === 'R') { e.preventDefault(); radarAc(); return; }
+  if (k === 'o' || k === 'O') { e.preventDefault(); obAlarmAc(); return; }
   if (k === 't' || k === 'T') { e.preventDefault(); temaToggle(); return; }
   if (k === 'f' || k === 'F') { e.preventDefault(); tamEkranToggle(); return; }
   if (k === 'a' || k === 'A') { e.preventDefault(); ayarlarAc(); return; }
@@ -789,12 +862,13 @@ function logFiltrele(f) {
   document.querySelectorAll('[data-logfiltre]').forEach(b => { if (b.dataset.logfiltre === f) b.classList.add('aktif'); else b.classList.remove('aktif'); });
   logListeDoldur();
 }
-function loglariGoster() { document.getElementById('logModal').classList.add('acik'); logListeDoldur(); paperLogDoldur(); }
+function loglariGoster() { document.getElementById('logModal').classList.add('acik'); logListeDoldur(); paperLogDoldur(); obLogDoldur(); }
 function loglariKapat() { document.getElementById('logModal').classList.remove('acik'); }
 function logTabGec(tab) {
   logAktifTab = tab;
   document.getElementById('logtab-olay').style.display = tab === 'olay' ? 'block' : 'none';
   document.getElementById('logtab-paper').style.display = tab === 'paper' ? 'block' : 'none';
+  document.getElementById('logtab-ob').style.display = tab === 'ob' ? 'block' : 'none';
   document.querySelectorAll('[data-logtab]').forEach(b => { if (b.dataset.logtab === tab) b.classList.add('aktif'); else b.classList.remove('aktif'); });
 }
 function loglariTemizle() {
@@ -802,12 +876,12 @@ function loglariTemizle() {
   logKayitlari = []; localStorage.removeItem('logKayitlari'); logListeDoldur();
 }
 function loglariIndir() {
-  const data = { olaylar: logKayitlari, paper: paperLoglari, indirmeTarihi: new Date().toISOString(), surum: 'v4.1' };
+  const data = { olaylar: logKayitlari, paper: paperLoglari, ob: obLoglari, obAlarmlar: obAlarmlar, indirmeTarihi: new Date().toISOString(), surum: 'v4.2' };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = `kripto-log-${new Date().toISOString().slice(0, 10)}.json`; a.click();
   URL.revokeObjectURL(url);
-  logEkle('bilgi', '📥 Log indirildi', 'JSON dosyası kaydedildi', 'sistem');
+  logEkle('bilgi', '📥 Log indirildi', 'JSON kaydedildi', 'sistem');
 }
 function paperLogEkle(baslik, detay, tip = 'bilgi') {
   const ikonlar = { 'basarili': '✅', 'hata': '❌', 'uyari': '⚠️', 'bilgi': 'ℹ️', 'long': '🟢', 'short': '🔴', 'kapanis': '🏁' };
@@ -823,6 +897,26 @@ function paperLogDoldur() {
   if (!el) return;
   if (!paperLoglari.length) { el.innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--text-mute)"><div style="font-size:36px;margin-bottom:8px">📭</div><div style="font-size:13px">Paper log yok</div></div>'; return; }
   el.innerHTML = paperLoglari.slice(0, 200).map(k => {
+    const z = new Date(k.zaman);
+    const saat = z.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+    const tarih = z.toLocaleDateString('tr-TR', {day:'2-digit', month:'2-digit'});
+    return `<div class="log-item ${k.tip}"><span class="log-icon">${k.ikon}</span><div class="log-body"><div class="log-title">${k.baslik}</div>${k.detay ? `<div class="log-detail">${k.detay}</div>` : ''}</div><span class="log-time">${tarih} ${saat}</span></div>`;
+  }).join('');
+}
+function obLogEkle(baslik, detay, tip = 'bilgi') {
+  const ikonlar = { 'basarili': '🎯', 'hata': '❌', 'uyari': '⚠️', 'bilgi': 'ℹ️', 'hazir': '🚨', 'izle': '🟡' };
+  const kayit = { id: 'OB' + Date.now(), zaman: Date.now(), tip, ikon: ikonlar[tip] || '🎯', baslik, detay };
+  obLoglari.unshift(kayit);
+  if (obLoglari.length > MAX_OB_LOG) obLoglari = obLoglari.slice(0, MAX_OB_LOG);
+  try { localStorage.setItem('obLoglari', JSON.stringify(obLoglari)); } catch(e) {}
+  const modal = document.getElementById('logModal');
+  if (modal && modal.classList.contains('acik') && logAktifTab === 'ob') obLogDoldur();
+}
+function obLogDoldur() {
+  const el = document.getElementById('obLogListe');
+  if (!el) return;
+  if (!obLoglari.length) { el.innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--text-mute)"><div style="font-size:36px;margin-bottom:8px">📭</div><div style="font-size:13px">OB log yok</div></div>'; return; }
+  el.innerHTML = obLoglari.slice(0, 200).map(k => {
     const z = new Date(k.zaman);
     const saat = z.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
     const tarih = z.toLocaleDateString('tr-TR', {day:'2-digit', month:'2-digit'});
@@ -871,18 +965,18 @@ async function telegramGonder(mesaj) {
     });
     const j = await r.json();
     if (j.ok) return true;
-    logEkle('uyari', '⚠️ Telegram hatası', j.description || 'Bilinmeyen hata', 'hata');
+    logEkle('uyari', '⚠️ Telegram hatası', j.description || 'Hata', 'hata');
     return false;
-  } catch(e) { logEkle('hata', '❌ Telegram hatası', e.message, 'hata'); return false; }
+  } catch(e) { logEkle('hata', '❌ Telegram', e.message, 'hata'); return false; }
 }
 async function telegramTest() {
   const btn = document.getElementById('tgTestBtn');
-  if (!AYARLAR.telegramToken || !AYARLAR.telegramChatId) { alert('⚠️ Önce Bot Token ve Chat ID gir!'); return; }
+  if (!AYARLAR.telegramToken || !AYARLAR.telegramChatId) { alert('⚠️ Önce Token ve Chat ID gir!'); return; }
   if (btn) { btn.textContent = '...'; btn.disabled = true; }
-  const ok = await telegramGonder(`✅ <b>Test Başarılı!</b>\n\n🤖 Bot çalışıyor.\n📊 Coin: <b>${aktifCoin}</b>\n⏰ ${new Date().toLocaleString('tr-TR')}`);
+  const ok = await telegramGonder(`✅ <b>Test Başarılı!</b>\n\n🤖 Bot çalışıyor.\n📊 ${aktifCoin}\n⏰ ${new Date().toLocaleString('tr-TR')}`);
   if (btn) { btn.textContent = 'Test'; btn.disabled = false; }
-  alert(ok ? '✅ Mesaj gönderildi!' : '❌ Gönderilemedi.');
-  logEkle(ok ? 'basarili' : 'hata', ok ? '📱 Telegram test başarılı' : '❌ Telegram test başarısız', '', 'sistem');
+  alert(ok ? '✅ Gönderildi!' : '❌ Gönderilemedi.');
+  logEkle(ok ? 'basarili' : 'hata', ok ? '📱 Telegram OK' : '❌ Telegram FAIL', '', 'sistem');
 }
 function telegramSinyalGonder(analiz, coin, tf) {
   if (AYARLAR.telegramSinyal === false) return;
@@ -898,9 +992,29 @@ function telegramSinyalGonder(analiz, coin, tf) {
   const tfText = tf === 'D' ? '1 Gün' : tf === '240' ? '4 Saat' : tf === '60' ? '1 Saat' : tf + ' Dk';
   telegramGonder(`${icon} <b>${analiz.karar}</b> — ${coin.replace('USDT','')}\n\n${yon === 'LONG' ? '🟢' : '🔴'} <b>Yön:</b> ${yon}\n💰 <b>Fiyat:</b> $${fmt(analiz.fiyat)}\n🎯 <b>Güven:</b> %${analiz.guvenYuzde}\n✅ <b>Onay:</b> ${analiz.onayliSayi}/5\n📊 <b>Zaman:</b> ${tfText}\n📈 RSI: ${analiz.rsi.toFixed(0)} • ADX: ${analiz.adx.toFixed(0)}\n\n🎯 <b>Giriş:</b> $${fmt(analiz.fiyat)}\n🛑 <b>Stop:</b> $${fmt(stop)}\n🏁 <b>Hedef:</b> $${fmt(hedef)}\n\n⚠️ <i>Yatırım tavsiyesi değildir.</i>`);
 }
-function telegramAcilGonder(mesaj) { if (AYARLAR.telegramAcil === false) return; telegramGonder(`🚨 <b>ACİL</b> — ${aktifCoin.replace('USDT','')}\n\n${mesaj.replace(/<[^>]*>/g, '')}\n\n⏰ ${new Date().toLocaleString('tr-TR')}`); }
-function telegramDonusGonder(mesaj) { if (AYARLAR.telegramDonus === false) return; telegramGonder(`🔄 <b>DÖNÜŞ</b> — ${aktifCoin.replace('USDT','')}\n\n${mesaj.replace(/<[^>]*>/g, '')}\n\n⏰ ${new Date().toLocaleString('tr-TR')}`); }
-function telegramAlarmGonder(coin, fiyat) { if (AYARLAR.telegramAlarm === false) return; telegramGonder(`🔔 <b>FİYAT ALARMI</b> — ${coin.replace('USDT','')}\n\n💰 $${fmt(fiyat)}\n⏰ ${new Date().toLocaleString('tr-TR')}`); }
+function telegramAcilGonder(mesaj) { if (AYARLAR.telegramAcil === false) return; telegramGonder(`🚨 <b>ACİL</b> — ${aktifCoin.replace('USDT','')}\n\n${mesaj.replace(/<[^>]*>/g, '')}\n⏰ ${new Date().toLocaleString('tr-TR')}`); }
+function telegramDonusGonder(mesaj) { if (AYARLAR.telegramDonus === false) return; telegramGonder(`🔄 <b>DÖNÜŞ</b> — ${aktifCoin.replace('USDT','')}\n\n${mesaj.replace(/<[^>]*>/g, '')}\n⏰ ${new Date().toLocaleString('tr-TR')}`); }
+function telegramAlarmGonder(coin, fiyat) { if (AYARLAR.telegramAlarm === false) return; telegramGonder(`🔔 <b>FİYAT ALARMI</b> — ${coin.replace('USDT','')}\n💰 $${fmt(fiyat)}\n⏰ ${new Date().toLocaleString('tr-TR')}`); }
+function telegramObGonder(ob) {
+  if (AYARLAR.obAlarm === false) return;
+  const emoji = ob.yon === 'bullish' ? '🟢' : '🔴';
+  const durumEmoji = ob.durum === 'HAZIR' ? '🚨' : ob.durum === 'IZLE' ? '🟡' : '🟠';
+  telegramGonder(`${durumEmoji} <b>Order Block Alarm</b> — ${ob.coin.replace('USDT','')}\n\n${emoji} <b>Tip:</b> ${ob.yon === 'bullish' ? 'Bullish (destek)' : 'Bearish (direnç)'}\n📍 <b>Bölge:</b> $${fmt(ob.alt)} - $${fmt(ob.ust)}\n💰 <b>Şu an:</b> $${fmt(ob.guncelFiyat)}\n📏 <b>Mesafe:</b> %${ob.mesafe.toFixed(2)}\n⚡ <b>Durum:</b> ${ob.durum}\n\n🎯 <b>Hedef Bölge:</b> $${fmt(ob.hedefBölge)}\n🛑 <b>Stop:</b> $${fmt(ob.stopOneri)}\n\n⏰ ${new Date().toLocaleString('tr-TR')}`);
+}
+
+/* ═══ SİTE BİLDİRİM ═══ */
+function siteBildirim(title, desc, tip = 'uyari', sure = 8000) {
+  if (AYARLAR.notif === false) return;
+  const stack = document.getElementById('notifStack');
+  if (!stack) return;
+  const id = 'notif_' + Date.now();
+  const notif = document.createElement('div');
+  notif.className = 'notif ' + tip;
+  notif.id = id;
+  notif.innerHTML = `<button class="notif-close" onclick="document.getElementById('${id}').remove()">×</button><div class="notif-title">${title}</div><div class="notif-desc">${desc}</div>`;
+  stack.appendChild(notif);
+  setTimeout(() => { const el = document.getElementById(id); if (el) el.remove(); }, sure);
+}
 
 /* ═══ MOTOR BONUS FONKSİYONLARI ═══ */
 function mtfBonusHesapla(filtreYon) {
@@ -952,7 +1066,7 @@ function obPuan(yon) {
 function btcYonFiltrePuan(coin, yon) {
   if (coin === 'BTCUSDT') return { puan: 0, aciklama: 'BTC kendisi' };
   const btcYon = analizVeriCache.btcYon;
-  if (!btcYon || btcYon === 'NÖTR') return { puan: 0, aciklama: 'BTC yönü belirsiz' };
+  if (!btcYon || btcYon === 'NÖTR') return { puan: 0, aciklama: 'BTC belirsiz' };
   if (sonAnalizMumlar && sonAnalizMumlar.length > 20 && aktifCoin === coin) {
     const sonMum = sonAnalizMumlar[sonAnalizMumlar.length - 1];
     const onceki = sonAnalizMumlar[Math.max(0, sonAnalizMumlar.length - 5)];
@@ -961,22 +1075,340 @@ function btcYonFiltrePuan(coin, yon) {
       return { puan: 0, aciklama: `Bağımsız hareket (%${coinDegisim.toFixed(1)} vs BTC %${analizVeriCache.btcDegisim.toFixed(1)})` };
     }
   }
-  if (btcYon === 'LONG' && yon === 'LONG') return { puan: 1, aciklama: 'BTC yükselişte — uyumlu' };
-  if (btcYon === 'SHORT' && yon === 'SHORT') return { puan: 1, aciklama: 'BTC düşüşte — uyumlu' };
-  if (btcYon === 'SHORT' && yon === 'LONG') return { puan: -2, aciklama: 'BTC düşüşte — altcoin LONG riskli' };
-  if (btcYon === 'LONG' && yon === 'SHORT') return { puan: -2, aciklama: 'BTC yükselişte — altcoin SHORT riskli' };
+  if (btcYon === 'LONG' && yon === 'LONG') return { puan: 1, aciklama: 'BTC uyumlu' };
+  if (btcYon === 'SHORT' && yon === 'SHORT') return { puan: 1, aciklama: 'BTC uyumlu' };
+  if (btcYon === 'SHORT' && yon === 'LONG') return { puan: -2, aciklama: 'BTC düşüşte — LONG riskli' };
+  if (btcYon === 'LONG' && yon === 'SHORT') return { puan: -2, aciklama: 'BTC yükselişte — SHORT riskli' };
   return { puan: 0, aciklama: '-' };
 }
 
-/* ═══ OTOMATİK VERİ ÇEKME (DÜZELTİLMİŞ) ═══ */
+/* ═══ ORDER BLOCK ═══ */
+function orderBlockBul(mumlar, minBoyutPct = 0.3) {
+  if (!mumlar || mumlar.length < 30) return [];
+  const oblar = [];
+  const son = mumlar.length - 1;
+  const taramaBaslangic = Math.max(5, son - 100);
+  for (let i = taramaBaslangic; i <= son - 3; i++) {
+    const m1 = mumlar[i];
+    const govde1 = Math.abs(m1.close - m1.open);
+    const ort = mumlar.slice(Math.max(0, i-20), i).reduce((s, m) => s + Math.abs(m.close - m.open), 0) / Math.min(20, i);
+    if (govde1 < ort * 1.5) continue;
+    const sonraki3 = mumlar.slice(i + 1, Math.min(i + 4, mumlar.length));
+    let buyuk = false;
+    for (const mm of sonraki3) {
+      const boyut = Math.abs(mm.close - mm.open) / mm.open * 100;
+      if (boyut > minBoyutPct * 2) { buyuk = true; break; }
+    }
+    if (!buyuk) continue;
+    const yon = m1.close >= m1.open ? 'bullish' : 'bearish';
+    const sonrakiHareket = mumlar.slice(i + 1, Math.min(i + 4, mumlar.length));
+    let gecerli = false;
+    if (yon === 'bullish') {
+      for (const mm of sonrakiHareket) if (mm.close > m1.high) gecerli = true;
+    } else {
+      for (const mm of sonrakiHareket) if (mm.close < m1.low) gecerli = true;
+    }
+    if (!gecerli) continue;
+    const alt = Math.min(m1.open, m1.close, m1.low);
+    const ust = Math.max(m1.open, m1.close, m1.high);
+    let kullanildi = false;
+    for (let j = i + 4; j <= son; j++) {
+      const m = mumlar[j];
+      if (yon === 'bullish' && m.low <= ust) { kullanildi = true; break; }
+      if (yon === 'bearish' && m.high >= alt) { kullanildi = true; break; }
+    }
+    if (kullanildi) continue;
+    const guncelFiyat = mumlar[son].close;
+    const uzaklik = yon === 'bullish' ? (guncelFiyat - ust) / guncelFiyat * 100 : (alt - guncelFiyat) / guncelFiyat * 100;
+    if (uzaklik < -0.5 || uzaklik > 15) continue;
+    const boyut = (ust - alt) / alt * 100;
+    if (boyut < minBoyutPct || boyut > 5) continue;
+    oblar.push({
+      tip: 'ob',
+      yon,
+      alt,
+      ust,
+      orta: (alt + ust) / 2,
+      zaman: m1.time,
+      boyut,
+      uzaklik,
+      guc: Math.min(5, Math.round(boyut * 2 + 2))
+    });
+    if (oblar.length >= 5) break;
+  }
+  oblar.sort((a, b) => Math.abs(a.uzaklik) - Math.abs(b.uzaklik));
+  return oblar.slice(0, 3);
+}
+function orderBlockPuanHesapla(oblar, guncelFiyat, yon) {
+  if (!oblar.length || yon === 'NÖTR') return { puan: 0, aciklama: 'Order Block yok', yakinOb: null };
+  const yakinBullish = oblar.filter(o => o.yon === 'bullish').sort((a,b) => a.uzaklik - b.uzaklik)[0];
+  const yakinBearish = oblar.filter(o => o.yon === 'bearish').sort((a,b) => a.uzaklik - b.uzaklik)[0];
+  if (yon === 'LONG' && yakinBullish) {
+    if (yakinBullish.uzaklik < 0.5) return { puan: 4, aciklama: `Bullish OB çok yakın ($${fmt(yakinBullish.alt)}-$${fmt(yakinBullish.ust)})`, yakinOb: yakinBullish };
+    if (yakinBullish.uzaklik < 1) return { puan: 3, aciklama: `Bullish OB yakın (%${yakinBullish.uzaklik.toFixed(2)})`, yakinOb: yakinBullish };
+    if (yakinBullish.uzaklik < 2) return { puan: 2, aciklama: `Bullish OB orta (%${yakinBullish.uzaklik.toFixed(2)})`, yakinOb: yakinBullish };
+  }
+  if (yon === 'SHORT' && yakinBearish) {
+    if (yakinBearish.uzaklik < 0.5) return { puan: -4, aciklama: `Bearish OB çok yakın ($${fmt(yakinBearish.alt)}-$${fmt(yakinBearish.ust)})`, yakinOb: yakinBearish };
+    if (yakinBearish.uzaklik < 1) return { puan: -3, aciklama: `Bearish OB yakın (%${yakinBearish.uzaklik.toFixed(2)})`, yakinOb: yakinBearish };
+    if (yakinBearish.uzaklik < 2) return { puan: -2, aciklama: `Bearish OB orta (%${yakinBearish.uzaklik.toFixed(2)})`, yakinOb: yakinBearish };
+  }
+  if (yon === 'LONG' && yakinBearish && yakinBearish.uzaklik < 0.8) return { puan: -3, aciklama: `Bearish OB direnç yakın`, yakinOb: yakinBearish };
+  if (yon === 'SHORT' && yakinBullish && yakinBullish.uzaklik < 0.8) return { puan: 3, aciklama: `Bullish OB destek yakın`, yakinOb: yakinBullish };
+  return { puan: 0, aciklama: `${oblar.length} OB bölge`, yakinOb: null };
+}
+
+/* ═══ ICHIMOKU ═══ */
+function ichimokuHesapla(mumlar) {
+  if (!mumlar || mumlar.length < 52) return null;
+  const tenkan = [], kijun = [], senkouA = [], senkouB = [], chikou = [];
+  const ortalama = (arr, idx, p) => {
+    if (idx < p - 1) return null;
+    const s = arr.slice(idx - p + 1, idx + 1);
+    return (Math.max(...s) + Math.min(...s)) / 2;
+  };
+  const yuk = mumlar.map(m => m.high);
+  const dus = mumlar.map(m => m.low);
+  const kapanis = mumlar.map(m => m.close);
+  for (let i = 0; i < mumlar.length; i++) {
+    tenkan.push(ortalama(yuk.map((y, j) => j === i ? y : y), i, 9) !== null ? (ortalama(yuk, i, 9) + ortalama(dus, i, 9)) / 2 : null);
+    kijun.push(i >= 25 ? (ortalama(yuk, i, 26) + ortalama(dus, i, 26)) / 2 : null);
+    if (i >= 51) {
+      senkouB.push((Math.max(...yuk.slice(i - 51, i + 1)) + Math.min(...dus.slice(i - 51, i + 1))) / 2);
+    } else {
+      senkouB.push(null);
+    }
+  }
+  for (let i = 0; i < mumlar.length; i++) {
+    senkouA.push(i >= 25 && tenkan[i] !== null && kijun[i] !== null ? (tenkan[i] + kijun[i]) / 2 : null);
+  }
+  const son = mumlar.length - 1;
+  const fiyat = kapanis[son];
+  const t = tenkan[son];
+  const k = kijun[son];
+  const sA = senkouA[son];
+  const sB = senkouB[son];
+  const sA26Once = senkouA[son - 26] || null;
+  const sB26Once = senkouB[son - 26] || null;
+  const bulutUst = sA26Once !== null && sB26Once !== null ? Math.max(sA26Once, sB26Once) : null;
+  const bulutAlt = sA26Once !== null && sB26Once !== null ? Math.min(sA26Once, sB26Once) : null;
+  let sinyal = 'NÖTR', aciklama = 'Belirsiz', puan = 0;
+  if (bulutUst !== null && bulutAlt !== null && k !== null && t !== null) {
+    if (fiyat > bulutUst && t > k) { sinyal = 'GÜÇLÜ LONG'; aciklama = 'Bulut üstü + TK kesişim'; puan = 3; }
+    else if (fiyat > bulutUst) { sinyal = 'LONG'; aciklama = 'Bulut üstü'; puan = 2; }
+    else if (fiyat > k && t > k) { sinyal = 'ZAYIF LONG'; aciklama = 'Kijun üstü'; puan = 1; }
+    else if (fiyat < bulutAlt && t < k) { sinyal = 'GÜÇLÜ SHORT'; aciklama = 'Bulut altı + TK kesişim'; puan = -3; }
+    else if (fiyat < bulutAlt) { sinyal = 'SHORT'; aciklama = 'Bulut altı'; puan = -2; }
+    else if (fiyat < k && t < k) { sinyal = 'ZAYIF SHORT'; aciklama = 'Kijun altı'; puan = -1; }
+    else { sinyal = 'NÖTR'; aciklama = 'Bulut içinde'; puan = 0; }
+  }
+  return { tenkan: t, kijun: k, senkouA: sA, senkouB: sB, bulutUst, bulutAlt, sinyal, aciklama, puan, fiyat };
+}
+
+/* ═══ OB ALARM SİSTEMİ ═══ */
+async function obTaramaYap() {
+  if (obTaramaAktif) return;
+  if (AYARLAR.obAlarm === false) return;
+  obTaramaAktif = true;
+  console.log('🎯 OB tarama başladı');
+  obLogEkle('🔍 OB tarama başladı', 'Top coinler taranıyor', 'bilgi');
+  try {
+    const r = await fetch('https://api.bybit.com/v5/market/tickers?category=spot');
+    const j = await r.json();
+    if (j.retCode !== 0) { obTaramaAktif = false; return; }
+    const aktifCoinler = j.result.list
+      .filter(t => parseFloat(t.turnover24h || 0) > 5000000 && t.symbol.endsWith('USDT'))
+      .sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h))
+      .slice(0, 30)
+      .map(t => t.symbol);
+    const bulunanlar = [];
+    for (const coin of aktifCoinler) {
+      try {
+        const mumlar = await klineCek(coin, '15', 200);
+        if (!mumlar || mumlar.length < 50) continue;
+        const oblar = orderBlockBul(mumlar, 0.3);
+        if (!oblar.length) continue;
+        const guncelFiyat = mumlar[mumlar.length - 1].close;
+        for (const ob of oblar) {
+          if (Math.abs(ob.uzaklik) > 5) continue;
+          const stopOneri = ob.yon === 'bullish' ? ob.alt * 0.998 : ob.ust * 1.002;
+          const hedefBölge = ob.yon === 'bullish' ? ob.ust + (ob.ust - ob.alt) * 1.5 : ob.alt - (ob.ust - ob.alt) * 1.5;
+          let durum = 'BEKLE';
+          if (Math.abs(ob.uzaklik) < 0.5) durum = 'HAZIR';
+          else if (Math.abs(ob.uzaklik) < 1) durum = 'IZLE';
+          else if (Math.abs(ob.uzaklik) < 2) durum = 'TAKIP';
+          bulunanlar.push({
+            id: 'OB_' + coin + '_' + ob.zaman,
+            coin,
+            yon: ob.yon,
+            alt: ob.alt,
+            ust: ob.ust,
+            orta: ob.orta,
+            zaman: ob.zaman,
+            boyut: ob.boyut,
+            guc: ob.guc,
+            uzaklik: ob.uzaklik,
+            guncelFiyat,
+            durum,
+            stopOneri,
+            hedefBölge,
+            olusturmaZamani: Date.now()
+          });
+        }
+      } catch(e) {}
+    }
+    bulunanlar.sort((a, b) => Math.abs(a.uzaklik) - Math.abs(b.uzaklik));
+    obAlarmlar = bulunanlar.slice(0, 20);
+    localStorage.setItem('obAlarmlar', JSON.stringify(obAlarmlar));
+    obLogEkle('✅ OB tarama tamamlandı', `${aktifCoinler.length} coin tarandı • ${obAlarmlar.length} OB bulundu`, 'basarili');
+    obAlarmPaneliGuncelle();
+    obBadgeGuncelle();
+    console.log(`🎯 OB tarama bitti: ${obAlarmlar.length} OB`);
+  } catch(e) {
+    console.error('OB tarama hatası:', e);
+    obLogEkle('❌ OB tarama hatası', e.message, 'hata');
+  }
+  obTaramaAktif = false;
+}
+
+async function obFiyatKontrol() {
+  if (!obAlarmlar.length) return;
+  if (AYARLAR.obAlarm === false) return;
+  const coinler = [...new Set(obAlarmlar.map(o => o.coin))];
+  const fiyatlar = {};
+  await Promise.all(coinler.map(async c => {
+    try {
+      const r = await fetch(`https://api.bybit.com/v5/market/tickers?category=spot&symbol=${c}`);
+      const j = await r.json();
+      if (j.retCode === 0 && j.result?.list?.[0]) fiyatlar[c] = parseFloat(j.result.list[0].lastPrice);
+    } catch(e) {}
+  }));
+  let degisti = false;
+  for (const ob of obAlarmlar) {
+    const f = fiyatlar[ob.coin];
+    if (!f) continue;
+    ob.guncelFiyat = f;
+    ob.uzaklik = ob.yon === 'bullish' ? (f - ob.ust) / f * 100 : (ob.alt - f) / f * 100;
+    const eskiDurum = ob.durum;
+    let yeniDurum = 'BEKLE';
+    if (Math.abs(ob.uzaklik) < 0.5) yeniDurum = 'HAZIR';
+    else if (Math.abs(ob.uzaklik) < 1) yeniDurum = 'IZLE';
+    else if (Math.abs(ob.uzaklik) < 2) yeniDurum = 'TAKIP';
+    ob.durum = yeniDurum;
+    if (eskiDurum !== yeniDurum) {
+      degisti = true;
+      if (yeniDurum === 'HAZIR' && eskiDurum !== 'HAZIR') {
+        const emoji = ob.yon === 'bullish' ? '🟢' : '🔴';
+        siteBildirim(`🚨 OB HAZIR: ${ob.coin.replace('USDT','')}`, `${emoji} ${ob.yon === 'bullish' ? 'Bullish' : 'Bearish'} • $${fmt(ob.alt)}-$${fmt(ob.ust)} • Şu an $${fmt(f)}`, 'uyari', 12000);
+        if (sesAcik) sesCal(1200, 0.4);
+        telegramObGonder(ob);
+        obLogEkle(`🚨 HAZIR — ${ob.coin.replace('USDT','')} ${ob.yon === 'bullish' ? 'Bullish' : 'Bearish'}`, `Bölge $${fmt(ob.alt)}-$${fmt(ob.ust)} • Fiyat $${fmt(f)}`, 'hazir');
+        logEkle('uyari', `🎯 OB HAZIR: ${ob.coin.replace('USDT','')}`, `$${fmt(ob.alt)}-$${fmt(ob.ust)}`, 'ob');
+      } else if (yeniDurum === 'IZLE' && eskiDurum === 'BEKLE') {
+        siteBildirim(`🟡 OB İzle: ${ob.coin.replace('USDT','')}`, `Bölge yaklaşıyor • $${fmt(ob.alt)}-$${fmt(ob.ust)}`, 'bilgi', 8000);
+        obLogEkle(`🟡 İZLE — ${ob.coin.replace('USDT','')}`, `Mesafe %${Math.abs(ob.uzaklik).toFixed(2)}`, 'izle');
+      }
+    }
+  }
+  if (degisti) {
+    localStorage.setItem('obAlarmlar', JSON.stringify(obAlarmlar));
+    obAlarmPaneliGuncelle();
+    obOzetGuncelle();
+    obBadgeGuncelle();
+  }
+}
+
+function obBadgeGuncelle() {
+  const badge = document.getElementById('obBadge');
+  const sayi = document.getElementById('obBadgeSayi');
+  if (!badge || !sayi) return;
+  const hazir = obAlarmlar.filter(o => o.durum === 'HAZIR').length;
+  const izle = obAlarmlar.filter(o => o.durum === 'IZLE').length;
+  sayi.textContent = hazir + izle;
+  badge.classList.remove('aktif-sari', 'aktif-kirmizi');
+  if (hazir > 0) badge.classList.add('aktif-kirmizi');
+  else if (izle > 0) badge.classList.add('aktif-sari');
+}
+
+function obAlarmAc() {
+  document.getElementById('obAlarmModal').classList.add('acik');
+  obAlarmPaneliGuncelle();
+}
+function obAlarmKapat() { document.getElementById('obAlarmModal').classList.remove('acik'); }
+function obAlarmTara() { obTaramaYap(); }
+
+function obAlarmPaneliGuncelle() {
+  const el = document.getElementById('obAlarmSonuc');
+  const subtitle = document.getElementById('obAlarmSubtitle');
+  if (!el) return;
+  if (!obAlarmlar.length) {
+    el.innerHTML = `<div class="ob-bos"><div class="ob-bos-icon">🎯</div><div class="ob-bos-title">Order Block bulunamadı</div><div class="ob-bos-desc">Bot arka planda tarama yapıyor. Yeni bölgeler bulunca burada görünecek.</div><button onclick="obAlarmTara()" class="btn btn-primary" style="margin-top:16px">🔄 Şimdi Tara</button></div>`;
+    if (subtitle) subtitle.textContent = 'Henüz OB bölgesi yok';
+    return;
+  }
+  const hazir = obAlarmlar.filter(o => o.durum === 'HAZIR');
+  const izle = obAlarmlar.filter(o => o.durum === 'IZLE');
+  const takip = obAlarmlar.filter(o => o.durum === 'TAKIP');
+  const bekle = obAlarmlar.filter(o => o.durum === 'BEKLE');
+  if (subtitle) subtitle.textContent = `${hazir.length} hazır • ${izle.length} izle • ${takip.length} takip`;
+  const renderItem = (o) => {
+    const durumClass = o.durum === 'HAZIR' ? 'hazir' : o.durum === 'IZLE' ? 'izle' : o.durum === 'TAKIP' ? 'takip' : 'bekle';
+    const durumText = o.durum === 'HAZIR' ? '🚨 HAZIR OL' : o.durum === 'IZLE' ? '🟡 İZLE' : o.durum === 'TAKIP' ? '🟠 TAKİP' : '⚪ BEKLE';
+    const mesafeClass = Math.abs(o.uzaklik) < 0.5 ? 'yakin' : Math.abs(o.uzaklik) < 1 ? 'orta' : 'uzak';
+    return `<div class="ob-item ${durumClass}" onclick="coinYukle('${o.coin}', true); obAlarmKapat();">
+      <div class="ob-header">
+        <div>
+          <div class="ob-coin">${o.coin.replace('USDT','')}</div>
+          <div style="font-size:11px;color:var(--text-mute);margin-top:3px">${new Date(o.zaman * 1000).toLocaleString('tr-TR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'})}</div>
+        </div>
+        <div class="ob-tip ${o.yon}">${o.yon === 'bullish' ? '🟢 BULLISH' : '🔴 BEARISH'}</div>
+      </div>
+      <div class="ob-info">
+        <div class="ob-info-item">Bölge: <b>$${fmt(o.alt)} - $${fmt(o.ust)}</b></div>
+        <div class="ob-info-item">Şu an: <b>$${fmt(o.guncelFiyat)}</b></div>
+        <div class="ob-info-item">Boyut: <b>%${o.boyut.toFixed(2)}</b></div>
+        <div class="ob-info-item">Güç: <b>${'⭐'.repeat(Math.min(5, o.guc))}</b></div>
+      </div>
+      <div class="ob-durum">
+        <span class="ob-durum-badge ${durumClass}">${durumText}</span>
+        <span class="ob-mesafe ${mesafeClass}">%${Math.abs(o.uzaklik).toFixed(2)}</span>
+      </div>
+    </div>`;
+  };
+  let html = '';
+  if (hazir.length) html += `<div style="margin-bottom:16px"><div style="font-size:11px;color:#f87171;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">🚨 HAZIR (${hazir.length})</div>${hazir.map(renderItem).join('')}</div>`;
+  if (izle.length) html += `<div style="margin-bottom:16px"><div style="font-size:11px;color:#fbbf24;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">🟡 İZLE (${izle.length})</div>${izle.map(renderItem).join('')}</div>`;
+  if (takip.length) html += `<details style="margin-bottom:12px" open><summary style="cursor:pointer;font-size:11px;color:#fb923c;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:8px;background:var(--surface-2);border-radius:8px">🟠 TAKİP (${takip.length})</summary><div style="margin-top:8px">${takip.map(renderItem).join('')}</div></details>`;
+  if (bekle.length) html += `<details style="margin-bottom:12px"><summary style="cursor:pointer;font-size:11px;color:var(--text-mute);font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:8px;background:var(--surface-2);border-radius:8px">⚪ BEKLE (${bekle.length})</summary><div style="margin-top:8px">${bekle.map(renderItem).join('')}</div></details>`;
+  el.innerHTML = html;
+}
+
+function obOzetGuncelle() {
+  const el = document.getElementById('obOzetListe');
+  const meta = document.getElementById('obOzetMeta');
+  if (!el) return;
+  const hazir = obAlarmlar.filter(o => o.durum === 'HAZIR');
+  const izle = obAlarmlar.filter(o => o.durum === 'IZLE');
+  if (meta) meta.textContent = `${hazir.length} hazır • ${izle.length} izle`;
+  if (!hazir.length && !izle.length) {
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-mute);font-size:12px">Yakında OB bölgesi yok</div>';
+    return;
+  }
+  const goster = [...hazir, ...izle].slice(0, 3);
+  el.innerHTML = goster.map(o => {
+    const durumRenk = o.durum === 'HAZIR' ? '#f87171' : '#fbbf24';
+    const emoji = o.yon === 'bullish' ? '🟢' : '🔴';
+    return `<div class="row" style="border-left:3px solid ${durumRenk}"><div><div style="font-weight:800;font-size:12.5px">${o.coin.replace('USDT','')} ${emoji}</div><div style="font-size:10.5px;color:var(--text-mute);margin-top:2px;font-family:'JetBrains Mono',monospace">$${fmt(o.alt)} - $${fmt(o.ust)}</div></div><span style="font-size:11px;font-weight:700;color:${durumRenk};font-family:'JetBrains Mono',monospace">%${Math.abs(o.uzaklik).toFixed(2)}</span></div>`;
+  }).join('');
+}
+
+/* ═══ OTOMATİK VERİ ÇEKME ═══ */
 function withTimeout(p, ms = 12000) {
   return Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
 }
-
 async function autoLoadAll(coin) {
   if (!coin) coin = aktifCoin;
   autoLoadDurum = { mtf: false, funding: false, ob: false, whale: false, aktif: true, bitti: false };
-  console.log('🔄 Auto-load başladı:', coin);
   await Promise.allSettled([
     withTimeout(autoLoadMtf(coin)),
     withTimeout(autoLoadFundingOi(coin)),
@@ -984,7 +1416,6 @@ async function autoLoadAll(coin) {
     withTimeout(autoLoadWhaleNetAkis()),
     withTimeout(autoLoadBtcYon())
   ]);
-  console.log('✅ Auto-load bitti');
   autoLoadDurum.aktif = false;
   autoLoadDurum.bitti = true;
   if (sonAnalizMumlar && sonAnaliz && sonAnaliz.coin === aktifCoin) {
@@ -992,18 +1423,13 @@ async function autoLoadAll(coin) {
       const taze = analizEt(sonAnalizMumlar, false);
       sonAnaliz = { ...taze, kilitli: true, stabilite: 'auto-reload' };
       panelDoldur(sonAnaliz);
-    } catch(e) { console.warn('Panel yenileme hatası:', e); }
+    } catch(e) {}
   }
 }
-
 async function autoLoadMtf(coin) {
   try {
     const cacheKey = coin + '_' + Math.floor(Date.now() / 60000);
-    if (mtfCache[cacheKey]) {
-      analizVeriCache.mtfOnay = hesaplaMtfOnay(mtfCache[cacheKey]);
-      autoLoadDurum.mtf = true;
-      return;
-    }
+    if (mtfCache[cacheKey]) { analizVeriCache.mtfOnay = hesaplaMtfOnay(mtfCache[cacheKey]); autoLoadDurum.mtf = true; return; }
     const tfList = [{ k: 'D', fb: '240', ad: '1 Gün' }, { k: '60', fb: '60', ad: '1 Saat' }, { k: '15', fb: '15', ad: '15 Dk' }];
     const sonuclar = await Promise.all(tfList.map(async t => {
       let m = await klineCek(coin, t.k, 300); let ad = t.ad;
@@ -1020,9 +1446,8 @@ async function autoLoadMtf(coin) {
     analizVeriCache.mtfOnay = hesaplaMtfOnay(sonuclar);
     autoLoadDurum.mtf = true;
     renderMtfCompact(sonuclar);
-  } catch(e) { console.warn('autoLoadMtf:', e); }
+  } catch(e) {}
 }
-
 function hesaplaMtfOnay(sonuclar) {
   const l = sonuclar.filter(s => s.yon === 'LONG').length;
   const sh = sonuclar.filter(s => s.yon === 'SHORT').length;
@@ -1032,7 +1457,6 @@ function hesaplaMtfOnay(sonuclar) {
   if (sh >= 2) return '📉 SHORT AĞIRLIKLI';
   return 'KARIŞIK';
 }
-
 function renderMtfCompact(sonuclar) {
   const el = document.getElementById('mtfListe');
   if (!el) return;
@@ -1041,7 +1465,6 @@ function renderMtfCompact(sonuclar) {
     return `<div class="row"><span class="row-label">${s.ad}</span><span class="row-value" style="color:${renk}">${s.yon}</span></div>`;
   }).join('');
 }
-
 async function autoLoadFundingOi(coin) {
   try {
     const denemeler = [coin, coin.replace('USDT', '-USDT'), coin.replace('USDT', 'PERP')];
@@ -1053,7 +1476,7 @@ async function autoLoadFundingOi(coin) {
         if (j.retCode === 0 && j.result?.list?.[0]) { t = j.result.list[0]; break; }
       } catch(e) {}
     }
-    if (!t) { console.warn('Funding veri yok'); autoLoadDurum.funding = true; return; }
+    if (!t) { autoLoadDurum.funding = true; return; }
     let oiList = [];
     for (const s of denemeler) {
       try {
@@ -1070,33 +1493,23 @@ async function autoLoadFundingOi(coin) {
     analizVeriCache.oiDegisim = oiDeg;
     autoLoadDurum.funding = true;
     renderFundingOi();
-  } catch(e) { console.warn('autoLoadFundingOi:', e); autoLoadDurum.funding = true; }
+  } catch(e) { autoLoadDurum.funding = true; }
 }
-
 function renderFundingOi() {
   const el = document.getElementById('fundingListe');
   if (!el) return;
   const fr = analizVeriCache.fundingRate;
   const oiDeg = analizVeriCache.oiDegisim;
-  if (fr === null && oiDeg === null) {
-    el.innerHTML = '<div style="text-align:center;padding:14px;color:var(--text-mute);font-size:12px">Vadeli veri yok</div>';
-    return;
-  }
+  if (fr === null && oiDeg === null) { el.innerHTML = '<div style="text-align:center;padding:14px;color:var(--text-mute);font-size:12px">Vadeli veri yok</div>'; return; }
   const frYon = fr > 0.02 ? 'Aşırı Long' : fr < -0.02 ? 'Aşırı Short' : 'Nötr';
   const frRenk = fr > 0.02 ? '#f87171' : fr < -0.02 ? '#4ade80' : 'var(--text)';
-  el.innerHTML = `
-    <div class="row"><span class="row-label">Funding Rate</span><span class="row-value" style="color:${frRenk}">${(fr || 0).toFixed(4)}%</span></div>
-    <div class="row"><span class="row-label">Funding Durumu</span><span class="row-value" style="color:${frRenk}">${frYon}</span></div>
-    <div class="row"><span class="row-label">OI 5dk Değişim</span><span class="row-value" style="color:${(oiDeg || 0) >= 0 ? '#4ade80' : '#f87171'}">${(oiDeg || 0) >= 0 ? '+' : ''}${(oiDeg || 0).toFixed(2)}%</span></div>
-    <div style="text-align:center;font-size:10.5px;color:var(--text-mute);margin-top:8px">✅ Otomatik yüklendi</div>
-  `;
+  el.innerHTML = `<div class="row"><span class="row-label">Funding Rate</span><span class="row-value" style="color:${frRenk}">${(fr || 0).toFixed(4)}%</span></div><div class="row"><span class="row-label">Funding Durumu</span><span class="row-value" style="color:${frRenk}">${frYon}</span></div><div class="row"><span class="row-label">OI 5dk Değişim</span><span class="row-value" style="color:${(oiDeg || 0) >= 0 ? '#4ade80' : '#f87171'}">${(oiDeg || 0) >= 0 ? '+' : ''}${(oiDeg || 0).toFixed(2)}%</span></div><div style="text-align:center;font-size:10.5px;color:var(--text-mute);margin-top:8px">✅ Otomatik yüklendi</div>`;
 }
-
 async function autoLoadOrderBook(coin) {
   try {
     const r = await fetch(`https://api.bybit.com/v5/market/orderbook?category=spot&symbol=${coin}&limit=50`);
     const j = await r.json();
-    if (j.retCode !== 0) { console.warn('OB veri yok'); autoLoadDurum.ob = true; return; }
+    if (j.retCode !== 0) { autoLoadDurum.ob = true; return; }
     const bids = j.result.b, asks = j.result.a;
     const bT = bids.reduce((t, b) => t + parseFloat(b[1]), 0);
     const aT = asks.reduce((t, a) => t + parseFloat(a[1]), 0);
@@ -1104,26 +1517,17 @@ async function autoLoadOrderBook(coin) {
     analizVeriCache.obOran = oran;
     autoLoadDurum.ob = true;
     renderOrderBook();
-  } catch(e) { console.warn('autoLoadOrderBook:', e); autoLoadDurum.ob = true; }
+  } catch(e) { autoLoadDurum.ob = true; }
 }
-
 function renderOrderBook() {
   const el = document.getElementById('obListe');
   if (!el) return;
   const oran = analizVeriCache.obOran;
-  if (oran === null) {
-    el.innerHTML = '<div style="text-align:center;padding:14px;color:var(--text-mute);font-size:12px">Order Book verisi yok</div>';
-    return;
-  }
+  if (oran === null) { el.innerHTML = '<div style="text-align:center;padding:14px;color:var(--text-mute);font-size:12px">Order Book yok</div>'; return; }
   const yon = oran > 1.2 ? 'ALICI BASKIN' : oran < 0.8 ? 'SATICI BASKIN' : 'DENGELİ';
   const renk = oran > 1.2 ? '#4ade80' : oran < 0.8 ? '#f87171' : 'var(--text)';
-  el.innerHTML = `
-    <div class="row"><span class="row-label">Alış/Satış Oranı</span><span class="row-value" style="color:${renk}">${oran.toFixed(2)}</span></div>
-    <div class="row"><span class="row-label">Durum</span><span class="row-value" style="color:${renk}">${yon}</span></div>
-    <div style="text-align:center;font-size:10.5px;color:var(--text-mute);margin-top:8px">✅ Otomatik yüklendi</div>
-  `;
+  el.innerHTML = `<div class="row"><span class="row-label">Alış/Satış Oranı</span><span class="row-value" style="color:${renk}">${oran.toFixed(2)}</span></div><div class="row"><span class="row-label">Durum</span><span class="row-value" style="color:${renk}">${yon}</span></div><div style="text-align:center;font-size:10.5px;color:var(--text-mute);margin-top:8px">✅ Otomatik yüklendi</div>`;
 }
-
 async function autoLoadWhaleNetAkis() {
   try {
     const semboller = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT'];
@@ -1145,9 +1549,8 @@ async function autoLoadWhaleNetAkis() {
     }
     analizVeriCache.whaleNetAkis = net;
     autoLoadDurum.whale = true;
-  } catch(e) { console.warn('autoLoadWhale:', e); autoLoadDurum.whale = true; }
+  } catch(e) { autoLoadDurum.whale = true; }
 }
-
 async function autoLoadBtcYon() {
   try {
     const m = await klineCek('BTCUSDT', '60', 200);
@@ -1166,46 +1569,43 @@ async function autoLoadBtcYon() {
     else if (f < f20 && f20 < f50) yon = 'SHORT';
     analizVeriCache.btcYon = yon;
     analizVeriCache.btcDegisim = degisim;
-  } catch(e) { console.warn('autoLoadBtcYon:', e); }
+  } catch(e) {}
 }
 
 /* ═══ BİLGİ MODAL ═══ */
 function hakkindaAc() {
   document.getElementById('bilgiBaslik').textContent = '📖 Hakkında';
-  document.getElementById('bilgiIcerik').innerHTML = `<p style="margin-bottom:12px"><b>Kripto Analiz Pro Terminal v4.1</b> — karar destek aracı. Otomatik veri yükleme, motor bonusları, paper trading ve profesyonel analiz.</p><p style="font-size:11px;font-style:italic;color:var(--text-mute)">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
+  document.getElementById('bilgiIcerik').innerHTML = `<p style="margin-bottom:12px"><b>Kripto Analiz Pro v4.2</b> — Order Block + Ichimoku + OB Alarm + Paper Trading</p><ul style="padding-left:20px"><li>Order Block (kurumsal bölge)</li><li>Ichimoku (trend analizi)</li><li>OB Alarm (fırsat radarı)</li><li>Paper Trading (sanal işlem)</li><li>Otomatik veri yükleme</li></ul><p style="font-size:11px;font-style:italic;color:var(--text-mute);margin-top:12px">Karar destek aracıdır. Yatırım tavsiyesi değildir.</p>`;
   document.getElementById('bilgiModal').classList.add('acik');
 }
-
 function sssAc() {
-  document.getElementById('bilgiBaslik').textContent = '💬 Sıkça Sorulan Sorular';
+  document.getElementById('bilgiBaslik').textContent = '💬 SSS';
   document.getElementById('bilgiIcerik').innerHTML = `
-    <div style="margin-bottom:20px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #fbbf24">
-      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:4px">⭐ Yıldız Sistemi</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Her sinyal <b>1-5 yıldız</b> alır. Ne kadar yüksekse, sinyal o kadar güvenilir.</div>
-      <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#fbbf24;font-size:14px">★★★★★</span><div style="flex:1"><b style="color:#4ade80">MÜKEMMEL</b> <span style="font-size:11.5px;color:var(--text-mute)">— Her şey uyumlu</span></div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#fbbf24;font-size:14px">★★★★<span style="opacity:.3">★</span></span><div style="flex:1"><b style="color:#4ade80">ÇOK İYİ</b> <span style="font-size:11.5px;color:var(--text-mute)">— Güçlü sinyal</span></div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#fbbf24;font-size:14px">★★★<span style="opacity:.3">★★</span></span><div style="flex:1"><b style="color:#fbbf24">ORTA</b> <span style="font-size:11.5px;color:var(--text-mute)">— Sınırda, küçük pozisyon</span></div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#fbbf24;font-size:14px">★★<span style="opacity:.3">★★★</span></span><div style="flex:1"><b style="color:#f87171">ZAYIF</b> <span style="font-size:11.5px;color:var(--text-mute)">— Girme</span></div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#fbbf24;font-size:14px">★<span style="opacity:.3">★★★★</span></span><div style="flex:1"><b style="color:#f87171">KÖTÜ</b> <span style="font-size:11.5px;color:var(--text-mute)">— Sakın girme</span></div></div>
-      </div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #22d3ee">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🎯 Order Block</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Kurumsal alıcı/satıcının bıraktığı iz. Fiyat ileride oraya gelince tepki verir. Bullish OB = destek, Bearish OB = direnç.</div>
     </div>
-    <div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:8px">❓ Yıldızlar nasıl hesaplanır?</div>
-      <ul style="padding-left:18px;font-size:12.5px;color:var(--text-dim);line-height:1.8">
-        <li><b>+2 yıldız:</b> Güven %80+</li><li><b>+1 yıldız:</b> Güven %65-79</li>
-        <li><b>+1 yıldız:</b> Onay 4/5 veya 5/5</li><li><b>+1 yıldız:</b> MTF tam uyumlu</li>
-        <li><b>+1 yıldız:</b> Hacim artıyor (1.3x+)</li><li><b>+1 yıldız:</b> Divergence yakalanmış</li>
-      </ul></div>
-    <div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:8px">⚡ Motor Bonusları ne demek?</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Ana puana ek puan veren faktörler: MTF (+3'e kadar), Funding (±2), OI (±2), Whale (±2), Order Book (±1), BTC Yönü (±2), Uç Nokta (±3). Hepsi otomatik arka planda yüklenir.</div></div>
-    <div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:8px">🚫 "İşleme girme" filtresi nedir?</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Kötü koşullarda seni korur: LONG'da RSI >78, SHORT'ta RSI <22, hacim çok düşükse, sıkışma varsa, ADX <15 → sinyal engellenir veya uyarı verilir.</div></div>
-    <div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:8px">🧪 Paper Trading nasıl çalışır?</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Bot gerçek para olmadan sanal işlem yapar. Her 60 saniyede tarama yapar, en güçlü sinyalleri bulur, otomatik sanal pozisyon açar. Stop/hedef otomatik kontrol edilir.</div></div>
-    <div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:8px">🔒 Mum kilidi ne işe yarar?</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Karar verildiğinde o mum kapanana kadar sabit kalır. 15dk grafikte 15 dakika boyunca sinyal değişmez.</div></div>
-    <div><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:8px">⚠️ Otomatik al/sat yapar mı?</div>
-      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Hayır. Karar destek aracıdır. Yatırım tavsiyesi değildir.</div></div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #a78bfa">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">☁️ Ichimoku</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Fiyat bulut üstünde → trend yukarı, bulut altında → trend aşağı, bulut içinde → belirsiz.</div>
+    </div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #fbbf24">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🔔 OB Alarm</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Bot arka planda tarar. Fiyat OB bölgesine yaklaşınca site içi + Telegram bildirim gelir. 🚨 HAZIR = anında gir.</div>
+    </div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #10b981">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">⭐ Yıldız Sistemi</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">5 yıldız = mükemmel, 4 = çok iyi (gir), 3 = orta (küçük poz), 2 = zayıf (girme), 1 = kötü (sakın).</div>
+    </div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #ef4444">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🚫 İşleme Girme Filtresi</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Kötü koşullarda otomatik engeller. LONG'da RSI >78, SHORT'ta RSI <22, çok düşük hacim, sıkışma, ADX <15.</div>
+    </div>
+    <div style="margin-bottom:16px;padding:14px;background:var(--surface-2);border-radius:12px;border-left:3px solid #f59e0b">
+      <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px">🧪 Paper Trading</div>
+      <div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Gerçek para olmadan sanal işlem. Her 60 sn tarama yapar, en güçlü sinyalleri bulur, otomatik pozisyon açar.</div>
+    </div>
+    <div><div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:6px">⚠️ Otomatik al/sat yapar mı?</div><div style="font-size:12.5px;color:var(--text-dim);line-height:1.7">Hayır. Karar destek aracıdır. Yatırım tavsiyesi değildir.</div></div>
   `;
   document.getElementById('bilgiModal').classList.add('acik');
 }
@@ -1246,7 +1646,7 @@ function islemFiltresi(karar, rsi, hacimOran, atrV, atrOrt, adxV) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   ANALİZ MOTORU v4.1
+   ANALİZ MOTORU v4.2 (OB + Ichimoku DAHİL)
    ═══════════════════════════════════════════════════════════ */
 function analizEt(mumlar, hafifMod = false) {
   const kapanis = mumlar.map(m => m.close), yuk = mumlar.map(m => m.high), dus = mumlar.map(m => m.low), hacim = mumlar.map(m => m.volume);
@@ -1261,6 +1661,9 @@ function analizEt(mumlar, hafifMod = false) {
   const vwapV = vwapSon(mumlar);
   const fib = fibonacciBul(mumlar);
   const vp = hafifMod ? { ustKovalar: [], poc: null } : volumeProfileBul(mumlar);
+  // YENİ: Order Block + Ichimoku
+  const oblar = hafifMod ? [] : orderBlockBul(mumlar, 0.3);
+  const ichimoku = hafifMod ? null : ichimokuHesapla(mumlar);
   const r = rsiS[son]; const skorlar = []; let toplam = 0; const maxPuan = 30; let p, txt;
   if (r < 20) { p = 3; txt = `Çok aşırı satım (${r.toFixed(0)})`; } else if (r < 30) { p = 2; txt = `Aşırı satım (${r.toFixed(0)})`; } else if (r < 45) { p = 1; txt = `Zayıf (${r.toFixed(0)})`; } else if (r < 55) { p = 0; txt = `Nötr (${r.toFixed(0)})`; } else if (r < 70) { p = -1; txt = `Pozitif (${r.toFixed(0)})`; } else if (r < 80) { p = -2; txt = `Aşırı alım (${r.toFixed(0)})`; } else { p = -3; txt = `Çok aşırı alım (${r.toFixed(0)})`; }
   skorlar.push({ ad: 'RSI', puan: p, aciklama: txt, deger: r.toFixed(1) }); toplam += p;
@@ -1301,6 +1704,17 @@ function analizEt(mumlar, hafifMod = false) {
   const konum = (fiyat - son50D) / (son50Y - son50D);
   if (konum < 0.15) { p = 1; txt = 'Desteğe yakın'; } else if (konum > 0.85) { p = -1; txt = 'Dirençe yakın'; } else { p = 0; txt = 'Orta bölge'; }
   skorlar.push({ ad: 'Destek/Direnç', puan: p, aciklama: txt, deger: `%${(konum*100).toFixed(0)}` }); toplam += p;
+
+  // YENİ: Order Block puanı
+  const obSonuc = orderBlockPuanHesapla(oblar, fiyat, 'NÖTR');
+  skorlar.push({ ad: 'Order Block', puan: 0, aciklama: oblar.length ? `${oblar.length} bölge` : 'Bölge yok', deger: oblar.length ? oblar.map(o => o.yon === 'bullish' ? '🟢' : '🔴').join('') : '-' });
+
+  // YENİ: Ichimoku puanı
+  if (ichimoku) {
+    skorlar.push({ ad: 'Ichimoku', puan: ichimoku.puan, aciklama: ichimoku.aciklama, deger: ichimoku.sinyal });
+    toplam += ichimoku.puan;
+  }
+
   const trendYuk = f20 > f50 && f50 > f200, trendAs = f20 < f50 && f50 < f200;
   const trendOk = (trendYuk || trendAs) && adxV > 25, trendYon = trendYuk ? 'LONG' : trendAs ? 'SHORT' : 'NÖTR';
   const hacimOk = hO > 1.3, hacimYon = s5D > 0.5 ? 'LONG' : s5D < -0.5 ? 'SHORT' : 'NÖTR';
@@ -1331,20 +1745,40 @@ function analizEt(mumlar, hafifMod = false) {
   const mtfB = mtfBonusHesapla(bonusYon);
   if (mtfB !== 0) { masterPuan += mtfB; motorBonuslar.push({ ad: '📊 MTF', puan: mtfB, aciklama: analizVeriCache.mtfOnay || '-', aktif: true }); }
   else if (analizVeriCache.mtfOnay) motorBonuslar.push({ ad: '📊 MTF', puan: 0, aciklama: analizVeriCache.mtfOnay, aktif: true });
-  else motorBonuslar.push({ ad: '📊 MTF', puan: 0, aciklama: autoLoadDurum.aktif ? 'Yükleniyor...' : (autoLoadDurum.bitti ? 'Veri gelmedi' : 'Bekliyor'), aktif: false });
+  else motorBonuslar.push({ ad: '📊 MTF', puan: 0, aciklama: autoLoadDurum.aktif ? 'Yükleniyor...' : 'Veri yok', aktif: false });
+
+  // YENİ: Order Block bonus
+  const obPuanSonuc = orderBlockPuanHesapla(oblar, fiyat, bonusYon);
+  if (obPuanSonuc.puan !== 0) { masterPuan += obPuanSonuc.puan; motorBonuslar.push({ ad: '📦 Order Block', puan: obPuanSonuc.puan, aciklama: obPuanSonuc.aciklama, aktif: true }); }
+  else if (oblar.length) motorBonuslar.push({ ad: '📦 Order Block', puan: 0, aciklama: `${oblar.length} bölge (uzak)`, aktif: true });
+  else motorBonuslar.push({ ad: '📦 Order Block', puan: 0, aciklama: 'Yakında bölge yok', aktif: false });
+
+  // YENİ: Ichimoku bonus
+  if (ichimoku) {
+    const ichiPuan = ichimoku.puan;
+    if ((bonusYon === 'LONG' && ichiPuan > 0) || (bonusYon === 'SHORT' && ichiPuan < 0)) {
+      masterPuan += ichiPuan * 0.5;
+      motorBonuslar.push({ ad: '☁️ Ichimoku', puan: ichiPuan, aciklama: ichimoku.aciklama, aktif: true });
+    } else if (ichiPuan !== 0) {
+      motorBonuslar.push({ ad: '☁️ Ichimoku', puan: ichiPuan, aciklama: ichimoku.aciklama + ' (çelişkili)', aktif: true });
+    } else {
+      motorBonuslar.push({ ad: '☁️ Ichimoku', puan: 0, aciklama: ichimoku.aciklama, aktif: true });
+    }
+  }
+
   const ucN = ucNoktaCezasi(r, bonusYon);
   if (ucN !== 0) { masterPuan += ucN; motorBonuslar.push({ ad: '⚠️ Uç Nokta', puan: ucN, aciklama: ucN > 0 ? 'Dipte SHORT riski' : 'Tepede LONG riski', aktif: true }); }
   const frB = fundingPuan(analizVeriCache.fundingRate, bonusYon);
   if (frB !== 0) { masterPuan += frB; const fr = analizVeriCache.fundingRate; motorBonuslar.push({ ad: '💰 Funding', puan: frB, aciklama: `${fr.toFixed(4)}% • ${fr > 0 ? 'Longlar kalabalık' : 'Shortlar kalabalık'}`, aktif: true }); }
   else if (analizVeriCache.fundingRate !== null) motorBonuslar.push({ ad: '💰 Funding', puan: 0, aciklama: `${analizVeriCache.fundingRate.toFixed(4)}% • Nötr`, aktif: true });
-  else motorBonuslar.push({ ad: '💰 Funding', puan: 0, aciklama: autoLoadDurum.aktif ? 'Yükleniyor...' : (autoLoadDurum.bitti ? 'Veri gelmedi' : 'Bekliyor'), aktif: false });
+  else motorBonuslar.push({ ad: '💰 Funding', puan: 0, aciklama: autoLoadDurum.aktif ? 'Yükleniyor...' : 'Veri yok', aktif: false });
   const oiB = oiPuan(analizVeriCache.oiDegisim, s5D, bonusYon);
   if (oiB !== 0) { masterPuan += oiB; motorBonuslar.push({ ad: '📈 OI', puan: oiB, aciklama: `5dk: ${(analizVeriCache.oiDegisim || 0).toFixed(2)}% • Fiyat ${s5D > 0 ? '↑' : '↓'}`, aktif: true }); }
   else if (analizVeriCache.oiDegisim !== null) motorBonuslar.push({ ad: '📈 OI', puan: 0, aciklama: `5dk: ${analizVeriCache.oiDegisim.toFixed(2)}%`, aktif: true });
   const whB = whalePuan(bonusYon);
   if (whB !== 0) { masterPuan += whB; const akis = analizVeriCache.whaleNetAkis || 0; motorBonuslar.push({ ad: '🐋 Whale', puan: whB, aciklama: `${akis > 0 ? '+' : ''}$${(akis/1000).toFixed(0)}K net`, aktif: true }); }
   else if (analizVeriCache.whaleNetAkis !== 0) motorBonuslar.push({ ad: '🐋 Whale', puan: 0, aciklama: `$${(analizVeriCache.whaleNetAkis/1000).toFixed(0)}K net`, aktif: true });
-  else motorBonuslar.push({ ad: '🐋 Whale', puan: 0, aciklama: autoLoadDurum.aktif ? 'Yükleniyor...' : (autoLoadDurum.bitti ? 'Veri gelmedi' : 'Bekliyor'), aktif: false });
+  else motorBonuslar.push({ ad: '🐋 Whale', puan: 0, aciklama: autoLoadDurum.aktif ? 'Yükleniyor...' : 'Veri yok', aktif: false });
   const obB = obPuan(bonusYon);
   if (obB !== 0) { masterPuan += obB; motorBonuslar.push({ ad: '📖 Order Book', puan: obB, aciklama: `A/S: ${(analizVeriCache.obOran || 0).toFixed(2)}`, aktif: true }); }
   else if (analizVeriCache.obOran !== null) motorBonuslar.push({ ad: '📖 Order Book', puan: 0, aciklama: `A/S: ${analizVeriCache.obOran.toFixed(2)}`, aktif: true });
@@ -1369,14 +1803,12 @@ function analizEt(mumlar, hafifMod = false) {
   else if (masterPuan <= -6) { karar = 'SHORT'; kararRenk = 'short'; kararIkon = '📉'; kararAciklama = 'Aşağı eğilim.'; }
   else if (masterPuan <= -2) { karar = 'ZAYIF SHORT'; kararRenk = 'zayif-short'; kararIkon = '➖'; kararAciklama = 'Hafif aşağı.'; }
   else { karar = 'BEKLE'; kararRenk = 'bekle'; kararIkon = '⏸️'; kararAciklama = 'Net sinyal yok.'; }
-
   const filtre = islemFiltresi(karar, r, hO, aV, atrOrt, adxV);
   if (filtre.engelle && (karar.includes('LONG') || karar.includes('SHORT'))) {
     kararAciklama = '🚫 ' + filtre.sebep;
   }
-
   const guvenYuzde = Math.min(100, Math.max(5, (Math.abs(masterPuan) + maxPuan) / (2*maxPuan) * 100));
-  return { karar, kararRenk, kararIkon, kararAciklama, masterPuan, toplam: toplamAgirlikli, toplamHam: toplam, maxPuan, guvenYuzde: guvenYuzde.toFixed(0), skorlar, filtreler, motorBonuslar, volatiliteUyari, onayliSayi, filtreYon, fiyat, rsi: r, macd: mL, macdSig: mS, macdHist: mH, ema20: f20, ema50: f50, ema200: f200, bUst: bU, bAlt: bA, stK: sK, stD: sD, adx: adxV, pdi, mdi, atr: aV, son50Yuk: son50Y, son50Dus: son50D, stopLong: fiyat - 2*aV, hedefLong: fiyat + 3*aV, stopShort: fiyat + 2*aV, hedefShort: fiyat - 3*aV, fvgler, formasyonlar, yapi, divs, vwap: vwapV, fib, vp, formPuan, hO, islemFiltresi: filtre };
+  return { karar, kararRenk, kararIkon, kararAciklama, masterPuan, toplam: toplamAgirlikli, toplamHam: toplam, maxPuan, guvenYuzde: guvenYuzde.toFixed(0), skorlar, filtreler, motorBonuslar, volatiliteUyari, onayliSayi, filtreYon, fiyat, rsi: r, macd: mL, macdSig: mS, macdHist: mH, ema20: f20, ema50: f50, ema200: f200, bUst: bU, bAlt: bA, stK: sK, stD: sD, adx: adxV, pdi, mdi, atr: aV, son50Yuk: son50Y, son50Dus: son50D, stopLong: fiyat - 2*aV, hedefLong: fiyat + 3*aV, stopShort: fiyat + 2*aV, hedefShort: fiyat - 3*aV, fvgler, formasyonlar, yapi, divs, vwap: vwapV, fib, vp, formPuan, hO, islemFiltresi: filtre, oblar, ichimoku, obSonuc: obPuanSonuc };
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1387,9 +1819,7 @@ function islemKalitesiHesapla(a) {
   const riskler = [];
   let yildiz = 0;
   const yon = a.karar.includes('LONG') ? 'LONG' : a.karar.includes('SHORT') ? 'SHORT' : null;
-  if (!yon) {
-    return { yildiz: 0, sebepler: [], riskler: ['Net yön yok'], verdict: 'bekle', verdictText: 'Şimdilik bekle' };
-  }
+  if (!yon) return { yildiz: 0, sebepler: [], riskler: ['Net yön yok'], verdict: 'bekle', verdictText: 'Şimdilik bekle' };
   const guven = parseFloat(a.guvenYuzde);
   if (guven >= 80) { yildiz += 2; sebepler.push('Yüksek güven (%' + guven + ')'); }
   else if (guven >= 65) { yildiz += 1; sebepler.push('İyi güven (%' + guven + ')'); }
@@ -1411,6 +1841,14 @@ function islemKalitesiHesapla(a) {
   }
   if (a.fvgler.length > 0) sebepler.push(a.fvgler.length + ' FVG bölgesi');
   if (a.divs.length > 0) { sebepler.push(a.divs[0].ad); yildiz += 1; }
+  // Order Block
+  if (a.obSonuc && a.obSonuc.puan > 0) { yildiz += 1; sebepler.push('Order Block ' + yon.toLowerCase()); }
+  else if (a.obSonuc && a.obSonuc.puan < 0) riskler.push('Order Block ters yönde');
+  // Ichimoku
+  if (a.ichimoku) {
+    if (a.ichimoku.sinyal.includes(yon)) { yildiz += 1; sebepler.push('Ichimoku ' + a.ichimoku.aciklama.toLowerCase()); }
+    else if (a.ichimoku.sinyal.includes(yon === 'LONG' ? 'SHORT' : 'LONG')) riskler.push('Ichimoku ters yönde');
+  }
   if (analizVeriCache.fundingRate !== null) {
     const fr = analizVeriCache.fundingRate;
     if ((yon === 'LONG' && fr > 0.03) || (yon === 'SHORT' && fr < -0.03)) riskler.push('Funding yüksek');
@@ -1422,14 +1860,12 @@ function islemKalitesiHesapla(a) {
   if (yon === 'LONG' && mesafeUst < 1) riskler.push('Direnç %' + mesafeUst.toFixed(1) + ' yukarıda');
   if (yon === 'SHORT' && mesafeAlt < 1) riskler.push('Destek %' + mesafeAlt.toFixed(1) + ' aşağıda');
   if (a.adx > 25) sebepler.push('ADX güçlü trend');
-
   yildiz = Math.max(1, Math.min(5, yildiz));
   let verdict = 'bekle', verdictText = 'Şimdilik bekle';
   if (yildiz >= 4) { verdict = yon === 'LONG' ? 'long' : 'short'; verdictText = yon + ' düşünülebilir'; }
   else if (yildiz === 3) { verdict = 'bekle'; verdictText = 'Sınırda — küçük pozisyon'; }
   else { verdict = 'bekle'; verdictText = 'Şimdilik girme'; }
-
-  return { yildiz, sebepler: sebepler.slice(0, 6), riskler: riskler.slice(0, 4), verdict, verdictText };
+  return { yildiz, sebepler: sebepler.slice(0, 8), riskler: riskler.slice(0, 5), verdict, verdictText };
 }
 
 /* === PARÇA 4/4 BURADAN DEVAM EDİYOR === */
@@ -1458,7 +1894,7 @@ function grafikOlustur() {
   uygulaGostergeDurumu();
 }
 
-function cizGrafik(mumlar) {
+function cizGrafik(mumlar, analiz) {
   candleSeries.setData(mumlar.map(m => ({ time: m.time, open: m.open, high: m.high, low: m.low, close: m.close })));
   volumeSeries.setData(mumlar.map(m => ({ time: m.time, value: m.volume, color: m.close >= m.open ? 'rgba(16,185,129,.2)' : 'rgba(239,68,68,.2)' })));
   const kapanis = mumlar.map(m => m.close);
@@ -1470,6 +1906,25 @@ function cizGrafik(mumlar) {
   const vwapData = [];
   for (let i = 0; i < mumlar.length; i++) if (vw[i] !== null) vwapData.push({ time: mumlar[i].time, value: vw[i] });
   vwapSeri.setData(vwapData);
+  // Order Block çizgileri (yatay)
+  try {
+    if (analiz.oblar && analiz.oblar.length) {
+      // Önceki varsa silinmiyor (Lightweight Charts'ta dynamic line yok, ek çizim için price line kullanılır)
+      const sonMum = mumlar[mumlar.length - 1];
+      analiz.oblar.forEach((ob, idx) => {
+        try {
+          candleSeries.createPriceLine({
+            price: ob.orta,
+            color: ob.yon === 'bullish' ? 'rgba(16,185,129,.6)' : 'rgba(239,68,68,.6)',
+            lineWidth: 1,
+            lineStyle: 2,
+            axisLabelVisible: true,
+            title: ob.yon === 'bullish' ? '🟢OB' : '🔴OB'
+          });
+        } catch(e) {}
+      });
+    }
+  } catch(e) {}
   chart.timeScale().fitContent();
   uygulaGostergeDurumu();
 }
@@ -1557,10 +2012,9 @@ async function coinYukle(symbol, forceYeni = false) {
       kullanilacakAnaliz = { ...kilitliAnaliz, kilitli: true, stabilite: 'kararli' };
     }
     sonAnaliz = kullanilacakAnaliz;
-    cizGrafik(mumlar);
+    cizGrafik(mumlar, kullanilacakAnaliz);
     panelDoldur(kullanilacakAnaliz);
     sinyalTestKaydet(kullanilacakAnaliz, aktifCoin, aktifTF);
-    // Otomatik veri çekmeyi başlat (tab açmaya gerek yok)
     autoLoadAll(aktifCoin);
     sonFiyat = sonMum.close;
     document.getElementById('aktifFiyat').textContent = '$' + fmt(sonMum.close);
@@ -1577,7 +2031,6 @@ async function coinYukle(symbol, forceYeni = false) {
    PANEL DOLDUR
    ═══════════════════════════════════════════════════════════ */
 function panelDoldur(a) {
-  // Sinyal hero
   const kart = document.getElementById('kararKart');
   kart.className = 'signal-hero ' + (a.kararRenk || 'bekle');
   document.getElementById('kararIkon').textContent = a.kararIkon;
@@ -1592,18 +2045,10 @@ function panelDoldur(a) {
   const badge = document.getElementById('islemKaliteBadge');
   if (badge) {
     if (a.karar === 'BEKLE' || (!a.karar.includes('LONG') && !a.karar.includes('SHORT'))) {
-      badge.textContent = '—';
-      badge.style.color = 'var(--text-mute)';
-    } else if (kalite.yildiz >= 4) {
-      badge.textContent = '⭐ Yüksek Kalite';
-      badge.style.color = '#4ade80';
-    } else if (kalite.yildiz === 3) {
-      badge.textContent = '⭐ Orta';
-      badge.style.color = '#fbbf24';
-    } else {
-      badge.textContent = '⭐ Zayıf';
-      badge.style.color = '#f87171';
-    }
+      badge.textContent = '—'; badge.style.color = 'var(--text-mute)';
+    } else if (kalite.yildiz >= 4) { badge.textContent = '⭐ Yüksek Kalite'; badge.style.color = '#4ade80'; }
+    else if (kalite.yildiz === 3) { badge.textContent = '⭐ Orta'; badge.style.color = '#fbbf24'; }
+    else { badge.textContent = '⭐ Zayıf'; badge.style.color = '#f87171'; }
   }
   const yildizEl = document.getElementById('islemYildizlar');
   if (yildizEl) {
@@ -1626,9 +2071,7 @@ function panelDoldur(a) {
       html += `<div style="font-size:10px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin:14px 0 6px">⚠️ Riskler</div>`;
       html += kalite.riskler.map(s => `<div class="check-row"><span class="check-warn">!</span><span>${s}</span></div>`).join('');
     }
-    if (!kalite.sebepler.length && !kalite.riskler.length) {
-      html = '<div style="text-align:center;padding:14px;color:var(--text-mute);font-size:12.5px">Belirgin sebep yok</div>';
-    }
+    if (!kalite.sebepler.length && !kalite.riskler.length) html = '<div style="text-align:center;padding:14px;color:var(--text-mute);font-size:12.5px">Belirgin sebep yok</div>';
     sebepEl.innerHTML = html;
   }
   const verdictEl = document.getElementById('islemVerdict');
@@ -1667,7 +2110,7 @@ function panelDoldur(a) {
     plan.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-mute);font-size:13px">Net sinyal bekle. Dönüş Radarı aktif.</div>';
   }
 
-  // Neden Bu Karar? (Filtreler + Motor Bonuslar)
+  // Neden Bu Karar?
   let sebepHTML = a.filtreler.map(f => {
     const icon = f.ok ? '✓' : '×';
     const cls = f.ok ? 'check-yes' : 'check-no';
@@ -1682,13 +2125,11 @@ function panelDoldur(a) {
     const spinner = b.aktif === false ? '<span class="spinner" style="width:10px;height:10px;border-width:1.5px;margin-left:6px"></span>' : '';
     return `<div class="check-row"><span style="color:${renk};font-weight:800;width:16px;flex-shrink:0;font-family:'JetBrains Mono',monospace">${ok}</span><div style="flex:1"><div style="display:flex;justify-content:space-between"><span style="color:var(--text);font-weight:600">${b.ad}${spinner}</span><span style="font-size:11px;font-weight:700;color:${renk};font-family:'JetBrains Mono',monospace">${puan > 0 ? '+' : ''}${puan}</span></div><div style="font-size:11px;color:var(--text-mute);margin-top:2px">${b.aciklama}</div></div></div>`;
   }).join('');
-  if (a.volatiliteUyari) {
-    sebepHTML += `<div style="margin-top:12px;padding:10px;border-radius:10px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24;font-size:12px">${a.volatiliteUyari}</div>`;
-  }
+  if (a.volatiliteUyari) sebepHTML += `<div style="margin-top:12px;padding:10px;border-radius:10px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24;font-size:12px">${a.volatiliteUyari}</div>`;
   sebepHTML += `<div class="row" style="margin-top:14px"><span class="row-label">Onay</span><span class="row-value" style="color:${a.onayliSayi >= 4 ? '#4ade80' : a.onayliSayi === 3 ? '#fbbf24' : 'var(--text-dim)'}">${a.onayliSayi}/5</span></div>`;
   document.getElementById('sebepListe').innerHTML = sebepHTML;
 
-  // Teknik tab: Göstergeler
+  // Göstergeler
   document.getElementById('gostergeler').innerHTML = a.skorlar.map(s => {
     const renk = s.puan > 0 ? '#4ade80' : s.puan < 0 ? '#f87171' : 'var(--text-mute)';
     return `<div class="row"><div><div class="row-label" style="font-size:11.5px">${s.ad}</div><div style="font-size:11px;color:var(--text-mute);margin-top:2px">${s.aciklama}</div></div><span class="row-value" style="color:${renk};font-size:13px">${s.puan > 0 ? '+' : ''}${s.puan}</span></div>`;
@@ -1757,7 +2198,11 @@ function panelDoldur(a) {
     <div class="row"><span class="row-label">EMA 200</span><span class="row-value" style="color:#f87171">$${fmt(a.ema200)}</span></div>
     <div class="row"><span class="row-label">+DI / -DI</span><span class="row-value">${a.pdi.toFixed(0)} / ${a.mdi.toFixed(0)}</span></div>
     <div class="row"><span class="row-label">ATR</span><span class="row-value">${fmt(a.atr)}</span></div>
+    ${a.ichimoku ? `<div class="row"><span class="row-label">Ichimoku</span><span class="row-value" style="color:${a.ichimoku.puan > 0 ? '#4ade80' : a.ichimoku.puan < 0 ? '#f87171' : 'var(--text-dim)'}">${a.ichimoku.sinyal}</span></div>` : ''}
   `;
+
+  // OB özet
+  obOzetGuncelle();
 
   // Statlar
   document.getElementById('statYuksek').textContent = '$' + fmt(a.son50Yuk);
@@ -1778,13 +2223,8 @@ let paperGecmis = JSON.parse(localStorage.getItem('paperGecmis') || '[]');
 let paperAktif = false;
 let paperInterval = null;
 
-function paperPozBoyutAl() {
-  return (paperAyar.bakiye || 100) / (paperAyar.maxPoz || 5);
-}
-function paperPozBoyutGuncelle() {
-  const el = document.getElementById('paperPozBoyutGoster');
-  if (el) el.textContent = '$' + paperPozBoyutAl().toFixed(2);
-}
+function paperPozBoyutAl() { return (paperAyar.bakiye || 100) / (paperAyar.maxPoz || 5); }
+function paperPozBoyutGuncelle() { const el = document.getElementById('paperPozBoyutGoster'); if (el) el.textContent = '$' + paperPozBoyutAl().toFixed(2); }
 function paperAyarKaydet() {
   const bakEl = document.getElementById('paperBakiyeInput');
   const maxEl = document.getElementById('paperMaxPozInput');
@@ -1821,8 +2261,8 @@ function paperTradingBaslat() {
   document.getElementById('paperAyarlar').style.display = 'block';
   document.getElementById('paperDurumBadge').textContent = '🟢 ÇALIŞIYOR';
   document.getElementById('paperDurumBadge').style.color = '#4ade80';
-  logEkle('basarili', '🧪 Paper Trading başlatıldı', `Maks ${paperAyar.maxPoz} pozisyon • Min güven %${paperAyar.minGuven}`, 'paper');
-  paperLogEkle('🚀 Paper Trading başlatıldı', `Bakiye: $${paperAyar.bakiye} • Maks ${paperAyar.maxPoz} poz • Poz boyut $${paperPozBoyutAl().toFixed(2)}`, 'bilgi');
+  logEkle('basarili', '🧪 Paper başlatıldı', `Maks ${paperAyar.maxPoz} poz • Min %${paperAyar.minGuven}`, 'paper');
+  paperLogEkle('🚀 Paper başlatıldı', `Bakiye $${paperAyar.bakiye} • Max ${paperAyar.maxPoz} poz • Poz boyut $${paperPozBoyutAl().toFixed(2)}`, 'bilgi');
   paperTaramaYap();
   paperInterval = setInterval(paperTaramaYap, 60000);
   paperPozisyonlariGuncelle();
@@ -1836,8 +2276,8 @@ function paperTradingDurdur() {
   document.getElementById('paperDurumBadge').textContent = '⏸️ DURDURULDU';
   document.getElementById('paperDurumBadge').style.color = '#fbbf24';
   if (paperInterval) { clearInterval(paperInterval); paperInterval = null; }
-  logEkle('bilgi', '🧪 Paper Trading durduruldu', `Bakiye: $${paperBakiye.toFixed(2)}`, 'paper');
-  paperLogEkle('⏹️ Paper Trading durduruldu', `Bakiye: $${paperBakiye.toFixed(2)}`, 'bilgi');
+  logEkle('bilgi', '🧪 Paper durduruldu', `Bakiye: $${paperBakiye.toFixed(2)}`, 'paper');
+  paperLogEkle('⏹️ Paper durduruldu', `Bakiye: $${paperBakiye.toFixed(2)}`, 'bilgi');
 }
 
 async function paperTaramaYap() {
@@ -1846,16 +2286,14 @@ async function paperTaramaYap() {
     paperLogEkle('🔍 Tarama başladı', `${paperAyar.taramaSayi} coin taranıyor...`, 'bilgi');
     const r = await fetch('https://api.bybit.com/v5/market/tickers?category=spot');
     const j = await r.json();
-    if (j.retCode !== 0) { paperLogEkle('❌ API hatası', 'Bybit tickers alınamadı', 'hata'); return; }
+    if (j.retCode !== 0) { paperLogEkle('❌ API hatası', 'Tickers alınamadı', 'hata'); return; }
     const aktifCoinler = j.result.list
       .filter(t => parseFloat(t.turnover24h || 0) > 2000000 && t.symbol.endsWith('USDT'))
       .sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h))
       .slice(0, paperAyar.taramaSayi)
       .map(t => t.symbol);
-
     const mevcutCoinler = new Set(paperPozisyonlar.map(p => p.coin));
     const firsatlar = [];
-
     for (const coin of aktifCoinler) {
       if (mevcutCoinler.has(coin)) continue;
       try {
@@ -1876,21 +2314,13 @@ async function paperTaramaYap() {
         });
       } catch(e) {}
     }
-
     firsatlar.sort((a, b) => b.guven - a.guven);
     paperLogEkle('📊 Tarama tamamlandı', `${aktifCoinler.length} coin tarandı, ${firsatlar.length} fırsat bulundu`, 'bilgi');
-
     const bosYer = paperAyar.maxPoz - paperPozisyonlar.length;
     const eklenecek = firsatlar.slice(0, Math.max(0, bosYer));
-
     for (const f of eklenecek) paperPozisyonAc(f);
-
-    if (!eklenecek.length) {
-      paperLogEkle('💤 Yeni pozisyon yok', bosYer <= 0 ? 'Maksimum pozisyon dolu' : `Güven %${paperAyar.minGuven}+ sinyal yok`, 'bilgi');
-    }
-  } catch(e) {
-    paperLogEkle('❌ Tarama hatası', e.message, 'hata');
-  }
+    if (!eklenecek.length) paperLogEkle('💤 Yeni pozisyon yok', bosYer <= 0 ? 'Maksimum pozisyon dolu' : `Güven %${paperAyar.minGuven}+ sinyal yok`, 'bilgi');
+  } catch(e) { paperLogEkle('❌ Tarama hatası', e.message, 'hata'); }
   paperPaneliDoldur();
 }
 
@@ -1907,7 +2337,7 @@ function paperPozisyonAc(f) {
   paperPozisyonlar.push(poz);
   localStorage.setItem('paperPozisyonlar', JSON.stringify(paperPozisyonlar));
   paperLogEkle(`${f.yon === 'LONG' ? '🟢' : '🔴'} ${f.yon} açıldı — ${f.coin.replace('USDT','')}`,
-    `$${fmt(f.girisFiyat)} • Güven %${f.guven} • Poz $${boyut.toFixed(2)} • Stop $${fmt(f.stop)} • Hedef $${fmt(f.hedef)}`,
+    `$${fmt(f.girisFiyat)} • %${f.guven} • $${boyut.toFixed(2)} • Stop $${fmt(f.stop)} • Hedef $${fmt(f.hedef)}`,
     f.yon === 'LONG' ? 'long' : 'short');
   logEkle('basarili', `🧪 Paper: ${f.yon} ${f.coin.replace('USDT','')}`, `$${fmt(f.girisFiyat)} • %${f.guven}`, 'paper');
   if (sesAcik) sesCal(900, 0.15);
@@ -1924,7 +2354,6 @@ async function paperPozisyonlariGuncelle() {
       if (j.retCode === 0 && j.result?.list?.[0]) fiyatlar[c] = parseFloat(j.result.list[0].lastPrice);
     } catch(e) {}
   }));
-
   const kapananlar = [];
   for (const p of paperPozisyonlar) {
     const f = fiyatlar[p.coin];
@@ -1933,7 +2362,6 @@ async function paperPozisyonlariGuncelle() {
     if (p.yon === 'LONG') p.karZarar = ((f - p.girisFiyat) / p.girisFiyat) * 100;
     else p.karZarar = ((p.girisFiyat - f) / p.girisFiyat) * 100;
     p.usdKarZarar = p.miktar * (p.karZarar / 100);
-
     let kapat = false, sebep = '';
     if (p.yon === 'LONG') {
       if (f <= p.stop) { kapat = true; sebep = 'STOP'; }
@@ -1952,8 +2380,7 @@ async function paperPozisyonlariGuncelle() {
       paperLogEkle(`${sebep === 'HEDEF' ? '🎯' : '🛑'} ${sebep} — ${p.coin.replace('USDT','')} ${p.yon}`,
         `$${fmt(p.girisFiyat)} → $${fmt(f)} • ${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% ($${p.usdKarZarar >= 0 ? '+' : ''}${p.usdKarZarar.toFixed(2)})`,
         sebep === 'HEDEF' ? 'basarili' : 'hata');
-      logEkle(sebep === 'HEDEF' ? 'basarili' : 'hata', `🧪 Paper ${sebep}: ${p.coin.replace('USDT','')}`,
-        `${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}%`, 'paper');
+      logEkle(sebep === 'HEDEF' ? 'basarili' : 'hata', `🧪 Paper ${sebep}: ${p.coin.replace('USDT','')}`, `${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}%`, 'paper');
       if (sesAcik) sesCal(sebep === 'HEDEF' ? 1500 : 400, 0.3);
     }
   }
@@ -1973,24 +2400,20 @@ function paperPaneliDoldur() {
   const kaybeden = paperGecmis.filter(p => p.karZarar < 0).length;
   const winRate = (kazanan + kaybeden) > 0 ? (kazanan / (kazanan + kaybeden) * 100) : 0;
   const toplamGetiri = ((paperBakiye - paperBaslangicBakiye) / paperBaslangicBakiye) * 100;
-
   const ozet = document.getElementById('paperOzet');
-  if (ozet) {
-    ozet.innerHTML = `
-      <div class="metric-card"><div class="metric-label">Bakiye</div><div class="metric-value" style="color:${toplamGetiri >= 0 ? '#4ade80' : '#f87171'}">$${paperBakiye.toFixed(2)}</div></div>
-      <div class="metric-card"><div class="metric-label">Getiri</div><div class="metric-value" style="color:${toplamGetiri >= 0 ? '#4ade80' : '#f87171'}">${toplamGetiri >= 0 ? '+' : ''}${toplamGetiri.toFixed(2)}%</div></div>
-      <div class="metric-card"><div class="metric-label">Win Rate</div><div class="metric-value" style="color:${winRate >= 50 ? '#4ade80' : '#f87171'}">${winRate.toFixed(0)}%</div></div>
-      <div class="metric-card"><div class="metric-label">Açık Poz</div><div class="metric-value">${paperPozisyonlar.length}</div></div>
-      <div class="metric-card"><div class="metric-label">Açık K/Z</div><div class="metric-value" style="color:${acikToplam >= 0 ? '#4ade80' : '#f87171'}">${acikToplam >= 0 ? '+' : ''}$${acikToplam.toFixed(2)}</div></div>
-      <div class="metric-card"><div class="metric-label">Kapanan</div><div class="metric-value">${paperGecmis.length}</div></div>
-    `;
-  }
+  if (ozet) ozet.innerHTML = `
+    <div class="metric-card"><div class="metric-label">Bakiye</div><div class="metric-value" style="color:${toplamGetiri >= 0 ? '#4ade80' : '#f87171'}">$${paperBakiye.toFixed(2)}</div></div>
+    <div class="metric-card"><div class="metric-label">Getiri</div><div class="metric-value" style="color:${toplamGetiri >= 0 ? '#4ade80' : '#f87171'}">${toplamGetiri >= 0 ? '+' : ''}${toplamGetiri.toFixed(2)}%</div></div>
+    <div class="metric-card"><div class="metric-label">Win Rate</div><div class="metric-value" style="color:${winRate >= 50 ? '#4ade80' : '#f87171'}">${winRate.toFixed(0)}%</div></div>
+    <div class="metric-card"><div class="metric-label">Açık</div><div class="metric-value">${paperPozisyonlar.length}</div></div>
+    <div class="metric-card"><div class="metric-label">Açık K/Z</div><div class="metric-value" style="color:${acikToplam >= 0 ? '#4ade80' : '#f87171'}">${acikToplam >= 0 ? '+' : ''}$${acikToplam.toFixed(2)}</div></div>
+    <div class="metric-card"><div class="metric-label">Kapanan</div><div class="metric-value">${paperGecmis.length}</div></div>`;
   const liste = document.getElementById('paperPozListe');
   if (liste) {
     if (!paperPozisyonlar.length) liste.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-mute);font-size:12.5px">Açık paper pozisyon yok</div>';
     else liste.innerHTML = paperPozisyonlar.map(p => {
       const renk = p.karZarar >= 0 ? '#4ade80' : '#f87171';
-      return `<div class="pos-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div><div style="font-size:13px;font-weight:800">${p.coin.replace('USDT','')} <span style="color:${p.yon === 'LONG' ? '#4ade80' : '#f87171'};font-size:11.5px">${p.yon}</span></div><div style="font-size:10.5px;color:var(--text-mute);margin-top:2px">${new Date(p.acilisZamani).toLocaleString('tr-TR')}</div></div><button onclick="paperPozisyonKapat('${p.id}')" class="btn btn-danger" style="padding:4px 10px;font-size:10.5px">Kapat</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace;margin-bottom:8px"><div><span style="color:var(--text-mute)">Giriş:</span> $${fmt(p.girisFiyat)}</div><div><span style="color:var(--text-mute)">Şimdi:</span> $${fmt(p.guncelFiyat)}</div><div><span style="color:var(--text-mute)">Stop:</span> $${fmt(p.stop)}</div><div><span style="color:var(--text-mute)">Hedef:</span> $${fmt(p.hedef)}</div></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border);font-size:12px"><span style="color:var(--text-mute)">Güven %${p.guven} • $${p.miktar.toFixed(2)}</span><span style="color:${renk};font-weight:800;font-family:'JetBrains Mono',monospace">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% (${p.usdKarZarar >= 0 ? '+' : ''}$${p.usdKarZarar.toFixed(2)})</span></div></div>`;
+      return `<div class="pos-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div><div style="font-size:13px;font-weight:800">${p.coin.replace('USDT','')} <span style="color:${p.yon === 'LONG' ? '#4ade80' : '#f87171'};font-size:11.5px">${p.yon}</span></div><div style="font-size:10.5px;color:var(--text-mute);margin-top:2px">${new Date(p.acilisZamani).toLocaleString('tr-TR')}</div></div><button onclick="paperPozisyonKapat('${p.id}')" class="btn btn-danger" style="padding:4px 10px;font-size:10.5px">Kapat</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace;margin-bottom:8px"><div><span style="color:var(--text-mute)">Giriş:</span> $${fmt(p.girisFiyat)}</div><div><span style="color:var(--text-mute)">Şimdi:</span> $${fmt(p.guncelFiyat)}</div><div><span style="color:var(--text-mute)">Stop:</span> $${fmt(p.stop)}</div><div><span style="color:var(--text-mute)">Hedef:</span> $${fmt(p.hedef)}</div></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border);font-size:12px"><span style="color:var(--text-mute)">%${p.guven} • $${p.miktar.toFixed(2)}</span><span style="color:${renk};font-weight:800;font-family:'JetBrains Mono',monospace">${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% (${p.usdKarZarar >= 0 ? '+' : ''}$${p.usdKarZarar.toFixed(2)})</span></div></div>`;
     }).join('');
   }
   const g = document.getElementById('paperGecmis');
@@ -2017,9 +2440,7 @@ function paperPozisyonKapat(id) {
   localStorage.setItem('paperPozisyonlar', JSON.stringify(paperPozisyonlar));
   localStorage.setItem('paperGecmis', JSON.stringify(paperGecmis));
   localStorage.setItem('paperBakiye', paperBakiye.toFixed(2));
-  paperLogEkle(`✋ Manuel kapatıldı — ${p.coin.replace('USDT','')}`,
-    `${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% ($${p.usdKarZarar >= 0 ? '+' : ''}${p.usdKarZarar.toFixed(2)})`,
-    'kapanis');
+  paperLogEkle(`✋ Manuel kapatıldı — ${p.coin.replace('USDT','')}`, `${p.karZarar >= 0 ? '+' : ''}${p.karZarar.toFixed(2)}% ($${p.usdKarZarar >= 0 ? '+' : ''}${p.usdKarZarar.toFixed(2)})`, 'kapanis');
   paperPaneliDoldur();
 }
 
@@ -2179,8 +2600,7 @@ function testPaneliniGuncelle() {
     <div style="display:flex;gap:8px">
       <button onclick="testleriKontrolEt(true)" class="btn btn-secondary" style="flex:1">🔄 Kontrol Et</button>
       <button onclick="testleriTemizle()" class="btn btn-danger" style="padding:10px 16px">🗑️</button>
-    </div>
-  `;
+    </div>`;
 }
 function testleriTemizle() {
   if (!confirm('Test verileri silinsin mi?')) return;
@@ -2456,7 +2876,7 @@ function alarmKur() {
   alarmFiyat = f;
   el.textContent = `✅ Alarm: $${fmt(f)}`;
   el.style.color = '#4ade80';
-  logEkle('bilgi', '🔔 Fiyat alarmı kuruldu', `${aktifCoin} → $${fmt(f)}`, 'uyari');
+  logEkle('bilgi', '🔔 Fiyat alarmı', `${aktifCoin} → $${fmt(f)}`, 'uyari');
 }
 function kontrolAlarm(fiyat) {
   if (!alarmFiyat) return;
@@ -2464,6 +2884,7 @@ function kontrolAlarm(fiyat) {
     if (Notification.permission === 'granted') new Notification(`⚡ ${aktifCoin}`, { body: `$${fmt(fiyat)}` });
     if (sesAcik) sesCal(1000, 0.4);
     telegramAlarmGonder(aktifCoin, fiyat);
+    siteBildirim(`🔔 Fiyat Alarmı: ${aktifCoin.replace('USDT','')}`, `Hedef $${fmt(alarmFiyat)} → Şu an $${fmt(fiyat)}`, 'uyari', 12000);
     logEkle('basarili', '🔔 Alarm tetiklendi', `${aktifCoin} → $${fmt(fiyat)}`, 'uyari');
     alarmFiyat = null;
     const el = document.getElementById('alarmDurum');
@@ -2635,13 +3056,13 @@ function tfDegistir(tf) {
   coinYukle(aktifCoin, true);
 }
 function saatGuncelle() { const el = document.getElementById('saat'); if (el) el.textContent = new Date().toLocaleTimeString('tr-TR'); }
-function pozisyonlariGuncelle() { /* paper'da yapılıyor */ }
 
 /* ═══════════════════════════════════════════════════════════
    BAŞLAT
    ═══════════════════════════════════════════════════════════ */
 async function baslat() {
-  logEkle('bilgi', '🚀 Sistem başlatıldı', `v4.1 • ${new Date().toLocaleString('tr-TR')}`, 'sistem');
+  logEkle('bilgi', '🚀 Sistem başlatıldı', `v4.2 • ${new Date().toLocaleString('tr-TR')}`, 'sistem');
+  obLogEkle('🚀 OB Alarm sistemi aktif', 'Arka planda tarama başlıyor', 'bilgi');
   temaUygula(tema);
   document.getElementById('sesBtn').textContent = sesAcik ? '🔊' : '🔇';
   if (localStorage.getItem('welcomeGorundu') === 'true') document.getElementById('welcomeScreen').style.display = 'none';
@@ -2658,6 +3079,9 @@ async function baslat() {
   hizliYukle();
   paperPaneliDoldur();
   testPaneliniGuncelle();
+  obAlarmPaneliGuncelle();
+  obOzetGuncelle();
+  obBadgeGuncelle();
 
   const setV = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
   setV('paperBakiyeInput', paperAyar.bakiye);
@@ -2666,6 +3090,7 @@ async function baslat() {
   setV('paperTaramaSayi', paperAyar.taramaSayi);
   paperPozBoyutGuncelle();
 
+  // Zamanlayıcılar
   setInterval(saatGuncelle, 1000); saatGuncelle();
   setInterval(hizliYukle, 120000);
   setInterval(tickerYukle, 30000);
@@ -2676,6 +3101,11 @@ async function baslat() {
   setInterval(paperPozisyonlariGuncelle, 15000);
   setTimeout(sinyalLogKontrolEt, 30000);
   acilKontrolInterval = setInterval(acilDurumKontrol, ACIL_KONTROL_MS);
+
+  // OB Alarm döngüleri
+  setTimeout(() => obTaramaYap(), 5000);
+  obTaramaInterval = setInterval(obTaramaYap, 5 * 60 * 1000); // Her 5 dk
+  obKontrolInterval = setInterval(obFiyatKontrol, 30 * 1000); // Her 30 sn
 
   document.getElementById('aramaCoin').addEventListener('keypress', e => { if (e.key === 'Enter') coinYukle(null, true); });
   document.getElementById('aramaCoin').addEventListener('input', e => aramaOneriGoster(e.target.value));
