@@ -3177,5 +3177,41 @@ async function baslat(){
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',baslat);}else{baslat();}
 </script>
+<script>
+(function(){
+  function welcomeFix(){
+    var ws = document.getElementById('welcomeScreen');
+    if (!ws) return;
+    try {
+      if (localStorage.getItem('welcomeGorundu') === 'true') {
+        ws.style.setProperty('display','none','important');
+      }
+    } catch(e) {}
+    var btns = ws.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) {
+      (function(b){
+        if (b.dataset.patched === '1') return;
+        b.dataset.patched = '1';
+        b.addEventListener('click', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+          ws.style.setProperty('display','none','important');
+          try { localStorage.setItem('welcomeGorundu','true'); } catch(err) {}
+        }, true);
+      })(btns[i]);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', welcomeFix);
+  } else {
+    welcomeFix();
+  }
+  window.addEventListener('load', welcomeFix);
+  setTimeout(welcomeFix, 300);
+  setTimeout(welcomeFix, 1500);
+  setTimeout(welcomeFix, 3000);
+})();
+</script>
 </body>
 </html>
