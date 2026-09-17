@@ -182,6 +182,7 @@ input,select{font-family:inherit}
 .notif-x{position:absolute;top:4px;right:6px;background:transparent;color:var(--muted);font-size:14px;cursor:pointer}
 .notif-x:hover{color:var(--text)}
 .hidden{display:none!important}
+.text-green,.up{color:var(--green)!important}.text-red,.down{color:var(--red)!important}.text-yellow{color:var(--yellow)!important}
 .text-c{text-align:center}
 .mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}
 .flex{display:flex}.flex-b{justify-content:space-between}
@@ -396,8 +397,7 @@ body.light{background:radial-gradient(circle at 8% 0%,rgba(139,92,246,.12),trans
           <div class="card-h"><div class="card-t"><span class="ico">🤖</span> Bot Kontrol</div><span class="status-pill stop" id="botStatus">DURDURULDU</span></div>
           <div class="card-b">
             <div class="fgrid">
-              <div class="fg full"><label class="fl">API Key</label><input class="fi" id="apiKey" type="password" placeholder="Bybit API Key"></div>
-              <div class="fg full"><label class="fl">API Secret</label><input class="fi" id="apiSecret" type="password" placeholder="Bybit API Secret"></div>
+              <div class="fg full"><label class="fl">Çalışma modu</label><select class="fs" id="botMode"><option value="paper" selected>Paper simülasyon</option><option value="testnet">Testnet izleme (emir kapalı)</option><option value="live">Canlı Bybit emirleri</option></select></div>
               <div class="fg"><label class="fl">Kaldıraç</label><select class="fs" id="leverage"><option>1</option><option>2</option><option selected>3</option><option>5</option><option>10</option><option>20</option></select></div>
               <div class="fg"><label class="fl">Kar %</label><input class="fi" id="tpPct" type="number" value="1.2" step="0.1"></div>
               <div class="fg"><label class="fl">Stop %</label><input class="fi" id="slPct" type="number" value="0.6" step="0.1"></div>
@@ -410,7 +410,7 @@ body.light{background:radial-gradient(circle at 8% 0%,rgba(139,92,246,.12),trans
               <button class="btn btn-s btn-block" id="startBotBtn" onclick="startRealBot()">▶️ Başlat</button>
               <button class="btn btn-d btn-block hidden" id="stopBotBtn" onclick="stopRealBot()">⏹️ Durdur</button>
             </div>
-            <div class="alert d" style="font-size:11px">⚠️ <b>DİKKAT:</b> Gerçek para! Önce testnet'te deneyin.</div>
+            <div class="alert w" style="font-size:11px">⚠️ Canlı mod gerçek emir gönderebilir. API anahtarları bu sayfaya girilmez; yalnızca yerel `.env` dosyasındaki backend kullanılır. Önce testnet ile doğrulayın.</div>
           </div>
         </div>
         <div class="card">
@@ -550,7 +550,7 @@ body.light{background:radial-gradient(circle at 8% 0%,rgba(139,92,246,.12),trans
     <div style="font-size:12.5px;line-height:1.9;color:var(--text2)">
       <b style="color:var(--text)">Workspace'ler</b><br>
       📈 Grafik — Analiz + canlı grafik<br>
-      🤖 Bot — Gerçek para + risk motoru<br>
+      🤖 Bot — Paper simülasyon + risk motoru<br>
       🎯 Radar — Toplu tarama + test sonuçları<br>
       🧪 Paper — Sanal işlem<br>
       🎓 Eğitim — Akademi + backtest<br><br>
@@ -600,7 +600,7 @@ function safeJSON(key, fallback) {
 const S = {
   ws:'chart', symbol:'BTCUSDT', tf:'15',
   theme: localStorage.getItem('theme') || 'dark',
-  chart:null, candleSeries:null, volSeries:null,
+  chart:null, candleSeries:null, volSeries:null, restPoll:null,
   ema20:null, ema50:null, ema200:null, vwapLine:null,
   obLines:[], ind:{ema:true,vwap:true,ob:true,volume:true},
   candles:[], analysis:null,
@@ -627,16 +627,17 @@ const S = {
     cfg: Object.assign({balance:100,maxPos:5,minConf:70,scanCount:50}, safeJSON('paperCfg',{}))
   },
   bot: {
-    running:false, apiKey:'', apiSecret:'',
+    running:false, mode:'paper',
     balance:1000, startBalance:1000,
     positions:[], history:[], logs:[],
     scanInterval:null, monitorInterval:null,
-    risk:{dailyStart:0,maxDailyLoss:0,tradesToday:0,consLosses:0,circuit:false},
+    risk:{dailyStart:1000,maxDailyLoss:30,tradesToday:0,consLosses:0,circuit:false},
     settings:{leverage:3,tpPct:1.2,slPct:0.6,trailPct:0.3,maxPos:3,riskPct:1,dailyLimit:3,trailing:true,atrBased:true,telegram:true}
   }
 };
 
 const $ = id => document.getElementById(id);
+const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const fmt = (n,d=4) => {
   if (n===undefined||n===null||isNaN(n)) return '-';
   if (n>=1000) return n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -699,14 +700,22 @@ function beep(freq, dur) {
 /* ═══ BYBIT API ═══ */
 const API = 'https://api.bybit.com';
 async function api(path) {
-  const r = await fetch(API+path);
-  const j = await r.json();
-  if (j.retCode !== 0) throw new Error(j.retMsg || 'API');
-  return j.result;
+  return backendRequest('/api/market?path=' + encodeURIComponent(path));
+}
+async function backendRequest(path, options={}) {
+  const target = location.protocol === 'file:' ? 'http://127.0.0.1:8765' + path : path;
+  const response = await fetch(target, {
+    ...options,
+    headers:{'Content-Type':'application/json',...(options.headers||{})},
+    signal:AbortSignal.timeout(12000)
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.error) throw new Error(data.error || `Backend HTTP ${response.status}`);
+  return data;
 }
 async function getKlines(sym, tf, limit=500) {
   const s = sym === 'XAUUSD' ? 'XAUTUSDT' : sym;
-  const j = await api(`/v5/market/kline?category=spot&symbol=${s}&interval=${tf}&limit=${limit}`);
+  const j = await api(`/v5/market/kline?category=spot&symbol=${encodeURIComponent(s)}&interval=${encodeURIComponent(tf)}&limit=${limit}`);
   const arr = (j.list||[]).reverse().map(k => ({
     time: Math.floor(+k[0]/1000), open:+k[1], high:+k[2], low:+k[3], close:+k[4], volume:+k[5]
   }));
@@ -714,7 +723,8 @@ async function getKlines(sym, tf, limit=500) {
   return arr.filter(c => { if (seen.has(c.time)) return false; seen.add(c.time); return true; }).sort((a,b)=>a.time-b.time);
 }
 async function getTickers(sym) {
-  const p = sym ? `/v5/market/tickers?category=spot&symbol=${sym}` : '/v5/market/tickers?category=spot';
+  const s = sym === 'XAUUSD' ? 'XAUTUSDT' : sym;
+  const p = s ? `/v5/market/tickers?category=spot&symbol=${encodeURIComponent(s)}` : '/v5/market/tickers?category=spot';
   return api(p);
 }
 async function getTicker(sym) { const j = await getTickers(sym); return j.list && j.list[0]; }
@@ -853,8 +863,10 @@ function calcIchimoku(cd) {
 
 /* ═══ ANALYSIS ENGINE ═══ */
 function analyze(cd, mod) {
+  if (!Array.isArray(cd) || cd.length < 60) throw new Error('Analiz için en az 60 mum gerekli');
   const hafif = mod === true;
   const skip = typeof mod === 'object' ? mod : {skipFvg:hafif,skipVp:hafif,skipOb:hafif,skipIchi:hafif};
+  const useContext = !skip.context;
   const cl=cd.map(c=>c.close), hi=cd.map(c=>c.high), lo=cd.map(c=>c.low), vl=cd.map(c=>c.volume);
   const n=cl.length-1, price=cl[n];
   const rsiArr=rsi(cl,14), macdObj=macd(cl), bb=boll(cl), st=stoch(hi,lo,cl);
@@ -949,7 +961,7 @@ function analyze(cd, mod) {
   if (confirmations<=1) master*=0.6;
   const dir = master>1?'LONG':master<-1?'SHORT':(filterDir!=='NÖTR'?filterDir:'NÖTR');
   const bonuses = [];
-  if (S.cache.mtfSummary) {
+  if (useContext && S.cache.mtfSummary) {
     let b=0;
     if (S.cache.mtfSummary.includes('TAM LONG')&&dir==='LONG') b=3;
     else if (S.cache.mtfSummary.includes('TAM SHORT')&&dir==='SHORT') b=-3;
@@ -974,7 +986,7 @@ function analyze(cd, mod) {
   } else if (ichi && ichi.score!==0) {
     bonuses.push({name:'☁️ Ichimoku',val:ichi.score,desc:ichi.desc+' (çelişki)',active:true});
   }
-  if (S.cache.funding !== null && S.cache.funding !== undefined) {
+  if (useContext && S.cache.funding !== null && S.cache.funding !== undefined) {
     let b=0;
     if (S.cache.funding>0.02 && dir==='LONG') b=-2;
     else if (S.cache.funding>0.02 && dir==='SHORT') b=-1;
@@ -983,14 +995,14 @@ function analyze(cd, mod) {
     if (b!==0) { master+=b; bonuses.push({name:'💰 Funding',val:b,desc:`${S.cache.funding.toFixed(4)}%`,active:true}); }
     else bonuses.push({name:'💰 Funding',val:0,desc:`${S.cache.funding.toFixed(4)}%`,active:true});
   } else bonuses.push({name:'💰 Funding',val:0,desc:'Yok',active:false});
-  if (S.cache.oi !== null && S.cache.oi !== undefined) {
+  if (useContext && S.cache.oi !== null && S.cache.oi !== undefined) {
     let b=0;
     if (S.cache.oi>0.5) { if (p5>0&&dir==='LONG') b=2; if (p5<0&&dir==='SHORT') b=-2; }
     else if (S.cache.oi<-0.5) { if (p5>0&&dir==='LONG') b=-1; if (p5<0&&dir==='SHORT') b=1; }
     if (b!==0) { master+=b; bonuses.push({name:'📈 OI',val:b,desc:`${S.cache.oi.toFixed(2)}%`,active:true}); }
     else bonuses.push({name:'📈 OI',val:0,desc:`${S.cache.oi.toFixed(2)}%`,active:true});
   } else bonuses.push({name:'📈 OI',val:0,desc:'Yok',active:false});
-  if (S.cache.whale !== 0) {
+  if (useContext && S.cache.whale !== 0) {
     let b=0;
     if (S.cache.whale>500000&&dir==='LONG') b=2;
     else if (S.cache.whale<-500000&&dir==='SHORT') b=-2;
@@ -999,14 +1011,14 @@ function analyze(cd, mod) {
     if (b!==0) { master+=b; bonuses.push({name:'🐋 Whale',val:b,desc:`$${(S.cache.whale/1000).toFixed(0)}K`,active:true}); }
     else bonuses.push({name:'🐋 Whale',val:0,desc:`$${(S.cache.whale/1000).toFixed(0)}K`,active:true});
   } else bonuses.push({name:'🐋 Whale',val:0,desc:'Yok',active:false});
-  if (S.cache.obRatio !== null && S.cache.obRatio !== undefined) {
+  if (useContext && S.cache.obRatio !== null && S.cache.obRatio !== undefined) {
     let b=0;
     if (S.cache.obRatio>1.3&&dir==='LONG') b=1;
     else if (S.cache.obRatio<0.7&&dir==='SHORT') b=-1;
     if (b!==0) { master+=b; bonuses.push({name:'📖 OB',val:b,desc:`A/S:${S.cache.obRatio.toFixed(2)}`,active:true}); }
     else bonuses.push({name:'📖 OB',val:0,desc:`A/S:${S.cache.obRatio.toFixed(2)}`,active:true});
   } else bonuses.push({name:'📖 OB',val:0,desc:'Yok',active:false});
-  if (S.symbol !== 'BTCUSDT' && S.cache.btcDir !== 'NÖTR') {
+  if (useContext && S.symbol !== 'BTCUSDT' && S.cache.btcDir !== 'NÖTR') {
     let b=0;
     if ((S.cache.btcDir==='LONG'&&dir==='LONG')||(S.cache.btcDir==='SHORT'&&dir==='SHORT')) b=1;
     else if ((S.cache.btcDir==='SHORT'&&dir==='LONG')||(S.cache.btcDir==='LONG'&&dir==='SHORT')) b=-2;
@@ -1098,6 +1110,7 @@ function renderChart(cd) {
       } catch(e) {}
     });
   }
+  S.chart.timeScale().applyOptions({barSpacing:7, rightOffset:12});
   S.chart.timeScale().fitContent();
 }
 function toggleInd(name, btn) {
@@ -1346,6 +1359,9 @@ function handleWS(m) {
     const s = S.symbol === 'XAUUSD' ? 'XAUTUSDT' : S.symbol;
     if (m.topic !== `kline.${S.tf}.${s}`) return;
     const c = {time:Math.floor(parseInt(k.start)/1000), open:+k.open, high:+k.high, low:+k.low, close:+k.close, volume:+k.volume};
+    const liveIndex = S.candles.findIndex(item => item.time === c.time);
+    if (liveIndex >= 0) S.candles[liveIndex] = c;
+    else if (S.candles.length) S.candles.push(c);
     try { S.candleSeries.update(c); } catch(e){}
     try { S.volSeries.update({time:c.time,value:c.volume,color:c.close>=c.open?'rgba(38,166,154,.3)':'rgba(239,83,80,.3)'}); } catch(e){}
     // Fiyat alarm kontrolü
@@ -2051,12 +2067,14 @@ async function runBacktest() {
       const minV = Math.min(...equity.map(e=>e.value));
       const maxV = Math.max(...equity.map(e=>e.value));
       const minT = equity[0].time, maxT = equity[equity.length-1].time;
+      const timeSpan = Math.max(1, maxT-minT);
       ctx.clearRect(0,0,w,h);
       ctx.strokeStyle = bal>START?'#26a69a':'#ef5350'; ctx.lineWidth = 2;
       ctx.beginPath();
       equity.forEach((e,i) => {
-        const x = ((e.time-minT)/(maxT-minT))*w;
-        const y = h-10-((e.value-minV)/(maxV-minV))*(h-20);
+        const x = ((e.time-minT)/timeSpan)*w;
+        const valueSpan = Math.max(1, maxV-minV);
+        const y = h-10-((e.value-minV)/valueSpan)*(h-20);
         if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
       });
       ctx.stroke();
@@ -2248,17 +2266,25 @@ function logBot(msg, level='info') {
   const el = $('botLog');
   if (el) {
     const cls = level==='success'?'s':level==='error'?'e':level==='warn'?'w':'i';
-    el.innerHTML += `<div class="log-line"><span class="t">[${nowStr()}]</span> <span class="${cls}">${msg}</span></div>`;
+    el.insertAdjacentHTML('beforeend', `<div class="log-line"><span class="t">[${nowStr()}]</span> <span class="${cls}">${esc(msg)}</span></div>`);
     el.scrollTop = el.scrollHeight;
   }
 }
 function clearBotLog() { S.bot.logs = []; const el = $('botLog'); if (el) el.innerHTML = ''; }
 async function startRealBot() {
-  const key = $('apiKey').value.trim();
-  const secret = $('apiSecret').value.trim();
-  if (!key || !secret) { alert('API Key ve Secret gerekli!'); return; }
-  if (!confirm('⚠️ GERÇEK PARA İLE İŞLEM BAŞLATILIYOR!\n\nDevam?')) return;
-  S.bot.apiKey = key; S.bot.apiSecret = secret;
+  if (S.bot.running) return;
+  const mode = $('botMode')?.value || 'paper';
+  if (mode === 'live' || mode === 'testnet') {
+    let config;
+    try { config = await backendRequest('/api/config'); }
+    catch (error) { notify('❌ Backend bulunamadı', 'Testnet/canlı mod için kripto-server.js çalışıyor olmalı.', 'error'); return; }
+    if (!config.liveTrading) { notify('🛡️ Emir modu kapalı', 'Backend .env içinde LIVE_TRADING=1 ayarlanmalı.', 'warn'); return; }
+    if (mode === 'testnet' && !config.testnet) { notify('❌ Ağ uyuşmazlığı', 'Testnet modu için backend BYBIT_TESTNET=1 olmalı.', 'error'); return; }
+    if (!config.testnet && !confirm('⚠️ BYBIT MAINNET CANLI EMİR MODU\n\nBu işlem gerçek para riski taşır. Devam etmek istiyor musunuz?')) return;
+  } else if (mode !== 'paper') {
+    notify('🛡️ Emir modu kapalı', 'Bu sürüm yalnızca veri izleme ve paper simülasyonu çalıştırır.', 'warn');
+  }
+  S.bot.mode = mode;
   S.bot.settings.leverage = +$('leverage').value;
   S.bot.settings.tpPct = +$('tpPct').value;
   S.bot.settings.slPct = +$('slPct').value;
@@ -2274,8 +2300,13 @@ async function startRealBot() {
   $('reStatus').textContent = 'AKTİF'; $('reStatus').className = 'status-pill run';
   $('startBotBtn').classList.add('hidden'); $('stopBotBtn').classList.remove('hidden');
   $('botLiveInd').style.display = 'inline-block';
-  logBot('🚀 Bot başlatıldı | '+S.bot.settings.leverage+'x', 'success');
+  logBot(mode === 'live' ? '🔴 Mainnet bot başlatıldı | '+S.bot.settings.leverage+'x' : mode === 'testnet' ? '🟠 Testnet bot başlatıldı | '+S.bot.settings.leverage+'x' : '🧪 Paper bot başlatıldı | '+S.bot.settings.leverage+'x', mode === 'paper' ? 'success' : 'warn');
+  if (mode === 'paper') logBot('🛡️ Gerçek emirler devre dışı', 'warn');
   logBot('🛡️ Günlük limit: $'+S.bot.risk.maxDailyLoss.toFixed(2), 'info');
+  if (mode === 'live') {
+    try { await syncLiveBot(); }
+    catch (error) { stopRealBot(); notify('❌ Hesap senkronizasyonu başarısız', error.message, 'error'); return; }
+  }
   scanBot(); monitorBot();
   S.bot.scanInterval = setInterval(scanBot, 60000);
   S.bot.monitorInterval = setInterval(monitorBot, 5000);
@@ -2302,11 +2333,17 @@ async function scanBot() {
       try {
         const cd = await getKlines(sym, '15', 200);
         if (!cd || cd.length<100) continue;
-        const a = analyze(cd, {skipFvg:true,skipVp:true,skipOb:false,skipIchi:false});
+        const closed = cd.slice(0, -1);
+        const a = analyze(closed, {skipFvg:false,skipVp:true,skipOb:false,skipIchi:false,context:true});
         if (a.decision === 'BEKLE' || a.decision.includes('ZAYIF')) continue;
-        if (parseFloat(a.confidence) < 65) continue;
+        if (parseFloat(a.confidence) < 68 || a.confirmations < 2) continue;
+        const signalSide = a.decision.includes('LONG') ? 'LONG' : 'SHORT';
+        if (a.filterDir !== signalSide) continue;
         if (a.blocked) continue;
-        opps.push({symbol:sym, analysis:a, conf: parseFloat(a.confidence)});
+        const ticker = await getTicker(sym).catch(() => null);
+        const livePrice = ticker ? Number(ticker.lastPrice) : a.price;
+        if (!Number.isFinite(livePrice) || livePrice <= 0) continue;
+        opps.push({symbol:sym, analysis:a, price:livePrice, conf: parseFloat(a.confidence)});
       } catch(e){}
     }
     opps.sort((a,b)=>b.conf-a.conf);
@@ -2317,20 +2354,32 @@ async function scanBot() {
       if (S.bot.positions.length >= S.bot.settings.maxPos) break;
       const riskAmount = S.bot.balance * (S.bot.settings.riskPct/100);
       const side = o.analysis.decision.includes('LONG') ? 'LONG' : 'SHORT';
-      const price = o.analysis.price;
-      const slDist = price * (S.bot.settings.slPct/100);
-      const tpDist = price * (S.bot.settings.tpPct/100);
+      const price = o.price;
+      const slDist = Math.max(price * (S.bot.settings.slPct/100), o.analysis.atr * 1.5);
+      const tpDist = Math.max(price * (S.bot.settings.tpPct/100), slDist * 1.8);
       const sl = side==='LONG' ? price - slDist : price + slDist;
       const tp = side==='LONG' ? price + tpDist : price - tpDist;
+      let order = null;
+      if (S.bot.mode === 'live' || S.bot.mode === 'testnet') {
+        try {
+          order = await backendRequest('/api/order', {
+            method:'POST',
+            body:JSON.stringify({symbol:o.symbol, side, qty:riskAmount/slDist, price, sl, tp, leverage:S.bot.settings.leverage})
+          });
+        } catch (error) {
+          logBot(`❌ Emir reddedildi: ${o.symbol} — ${error.message}`, 'error');
+          continue;
+        }
+      }
       S.bot.positions.push({
         id:'BP'+Date.now()+Math.random().toString(36).slice(2,5),
         symbol:o.symbol, side, entry:price, current:price,
-        size: riskAmount * S.bot.settings.leverage,
+        size: riskAmount * price / slDist,
         sl, tp, highest:price, lowest:price,
         trailing:S.bot.settings.trailing, conf:o.conf,
-        openedAt:Date.now(), pnlPct:0, pnlUsd:0
+        openedAt:Date.now(), pnlPct:0, pnlUsd:0, orderId:order?.orderId || null
       });
-      logBot(`🟢 ${side}: ${o.symbol} @ $${fmt(price)} | SL $${fmt(sl)} | TP $${fmt(tp)}`, 'success');
+      logBot(`${S.bot.mode==='live'?'🔴':S.bot.mode==='testnet'?'🟠':'🟢'} ${side}: ${o.symbol} @ $${fmt(price)} | SL $${fmt(sl)} | TP $${fmt(tp)}${order?.orderId ? ' | '+order.orderId : ''}`, S.bot.mode==='paper'?'success':'warn');
       notify(`🟢 ${side} açıldı`, `${o.symbol} @ $${fmt(price)}`, 'success');
       if (S.tgToken && S.tgChat) tgSend(`🟢 <b>${side}</b> — ${o.symbol}\n@ $${fmt(price)}\nTP: $${fmt(tp)} | SL: $${fmt(sl)}`);
     }
@@ -2338,8 +2387,40 @@ async function scanBot() {
     renderBot();
   } catch(e) { logBot('❌ '+e.message, 'error'); }
 }
+async function syncLiveBot() {
+  const [account, result] = await Promise.all([
+    backendRequest('/api/account'),
+    backendRequest('/api/positions')
+  ]);
+  if (!S.bot.liveInitialized) {
+    S.bot.balance = account.walletBalance || S.bot.balance;
+    S.bot.risk.dailyStart = S.bot.balance;
+    S.bot.risk.maxDailyLoss = S.bot.balance * (S.bot.settings.dailyLimit/100);
+    S.bot.liveInitialized = true;
+  } else {
+    S.bot.balance = account.walletBalance || S.bot.balance;
+  }
+  S.bot.positions = (result.positions || []).map(p => {
+    const entry = Number(p.avgPrice || 0), current = Number(p.markPrice || p.lastPrice || entry);
+    const notional = Number(p.size || 0) * entry;
+    const pnlUsd = Number(p.unrealisedPnl || 0);
+    return {
+      id:'LIVE_'+p.symbol, orderId:null, symbol:p.symbol,
+      side:p.side === 'Buy' ? 'LONG' : 'SHORT', entry, current,
+      size:notional, sl:Number(p.stopLoss || 0), tp:Number(p.takeProfit || 0),
+      highest:current, lowest:current, trailing:false, conf:0,
+      openedAt:Date.now(), pnlPct:notional ? pnlUsd/notional*100 : 0, pnlUsd
+    };
+  });
+}
 async function monitorBot() {
-  if (!S.bot.running || !S.bot.positions.length) return;
+  if (!S.bot.running) return;
+  if (S.bot.mode === 'live' || S.bot.mode === 'testnet') {
+    try { await syncLiveBot(); } catch (error) { logBot('❌ Canlı senkronizasyon: '+error.message, 'error'); }
+    renderBot();
+    return;
+  }
+  if (!S.bot.positions.length) return;
   const syms = [...new Set(S.bot.positions.map(p=>p.symbol))];
   const prices = {};
   await Promise.all(syms.map(async s => {
@@ -2437,10 +2518,19 @@ function renderBot() {
   if ($('pfPF')) $('pfPF').textContent = pf.toFixed(2);
   if ($('pfPnl')) { $('pfPnl').textContent = fmtUsd(tPnl); $('pfPnl').className = 'metric-v ' + (tPnl>=0?'text-green':'text-red'); }
 }
-function closeBotPos(id) {
+async function closeBotPos(id) {
   const p = S.bot.positions.find(x=>x.id===id);
   if (!p) return;
   if (!confirm(p.symbol+' kapatılsın mı?')) return;
+  if (S.bot.mode === 'live' || S.bot.mode === 'testnet') {
+    try {
+      await backendRequest('/api/close', {method:'POST', body:JSON.stringify({symbol:p.symbol})});
+      logBot('✋ Canlı pozisyon kapatıldı: '+p.symbol, 'warn');
+      await syncLiveBot();
+      renderBot();
+    } catch (error) { logBot('❌ Canlı pozisyon kapatılamadı: '+error.message, 'error'); }
+    return;
+  }
   p.exit = p.current; p.reason = 'MANUEL'; p.closedAt = Date.now();
   p.pnlPct = p.side==='LONG' ? ((p.current-p.entry)/p.entry)*100 : ((p.entry-p.current)/p.entry)*100;
   p.pnlUsd = p.size * (p.pnlPct/100);
@@ -2491,7 +2581,7 @@ async function init() {
     si.addEventListener('keypress', e => { if (e.key==='Enter') { e.preventDefault(); loadSymbol(null, true); } });
     si.addEventListener('focus', e => { if (e.target.value) showSearch(e.target.value); });
     document.addEventListener('click', e => { if (!e.target.closest('.search-box')) $('searchResults').classList.remove('open'); });
-    window.addEventListener('resize', () => { if (S.chart) S.chart.applyOptions({width: $('mainChart').clientWidth}); });
+      window.addEventListener('resize', () => { if (S.chart) S.chart.applyOptions({width: $('mainChart').clientWidth}); });
     window.addEventListener('error', e => { try { log('error','JS Hatası', e.message); } catch(err){} });
     // Paper ayar değişiklikleri
     ['paperBalance','paperMaxPos','paperMinConf','paperScanCount'].forEach(id => {
@@ -2507,6 +2597,7 @@ async function init() {
     const bt = $('btBtn'); if (bt) bt.onclick = runBacktest;
     // Arka plan döngüler
     setInterval(() => loadBtcDir(), 120000);
+    S.restPoll = setInterval(() => loadSymbol(S.symbol, false).catch(() => {}), 15000);
     setInterval(() => {
       const l = $('sigLock'); if (!l || !S.locked) return;
       const tfMin = S.tf==='D'?1440:parseInt(S.tf);
