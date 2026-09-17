@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kripto Pro v5.2 — Terminal</title>
 <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0e14;--bg2:#131722;--bg3:#1e222d;--bg4:#2a2e39;--border:#2a2e39;--border2:#363a45;--text:#d1d4dc;--text2:#787b86;--muted:#5d606b;--blue:#2962ff;--cyan:#00bcd4;--green:#26a69a;--red:#ef5350;--yellow:#ffb74d;--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
 body.light{--bg:#fff;--bg2:#f7f8fa;--bg3:#eff1f5;--bg4:#e0e3eb;--border:#d1d4dc;--border2:#b8bcc7;--text:#131722;--text2:#5d606b;--muted:#8b98a8}
@@ -186,6 +186,33 @@ input,select{font-family:inherit}
 .mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}
 .flex{display:flex}.flex-b{justify-content:space-between}
 @media(max-width:900px){.asb,.bot-side{display:none}.fgrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
+</style>
+<style>
+/* Aurora contrast layer */
+:root{--violet:#8b5cf6;--pink:#f472b6;--aurora:linear-gradient(120deg,var(--violet),var(--cyan) 52%,var(--pink))}
+body{font-family:'Space Grotesk',var(--font);background:radial-gradient(circle at 8% 0%,rgba(139,92,246,.18),transparent 28%),radial-gradient(circle at 92% 12%,rgba(244,114,182,.12),transparent 24%),var(--bg)}
+body.light{background:radial-gradient(circle at 8% 0%,rgba(139,92,246,.12),transparent 28%),#f7f8fa}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--violet),var(--pink))}
+.topbar,.subbar{background:linear-gradient(90deg,rgba(20,18,39,.98),rgba(14,24,39,.98));border-color:rgba(139,92,246,.28)}
+.brand-mark{background:conic-gradient(from 0deg,var(--violet),var(--cyan),var(--pink),var(--violet));box-shadow:0 0 22px rgba(139,92,246,.45);animation:hue 8s linear infinite}
+.ws-tab.active{color:#d8caff;border-bottom-color:var(--pink);box-shadow:inset 0 -2px 12px rgba(139,92,246,.2)}
+.tfb.active,.ctb.active{background:var(--aurora);border-color:transparent;box-shadow:0 0 18px rgba(98,230,255,.3)}
+.qs:hover,.tbbtn:hover,.ctb:hover{border-color:var(--violet);color:#d8caff}
+.chart-col{background:radial-gradient(circle at 25% 0%,rgba(139,92,246,.09),transparent 30%),var(--bg)}
+.chart-head,.chart-toolbar{background:linear-gradient(90deg,rgba(21,20,42,.95),rgba(12,24,39,.95));border-color:rgba(139,92,246,.24)}
+.chart-body{background:linear-gradient(145deg,rgba(16,18,35,.72),rgba(7,12,22,.9))}
+.asb,.bot-side{background:linear-gradient(180deg,rgba(24,22,43,.98),rgba(12,20,34,.98));border-color:rgba(139,92,246,.28)}
+.asb-head,.card-h{background:linear-gradient(90deg,rgba(35,28,61,.9),rgba(22,31,50,.92));border-color:rgba(139,92,246,.22)}
+.signal-card.wait{background:radial-gradient(circle at 50% 5%,rgba(139,92,246,.25),transparent 58%),linear-gradient(145deg,rgba(26,24,53,.95),rgba(12,20,35,.96));border-color:rgba(139,92,246,.45);box-shadow:0 0 28px rgba(139,92,246,.16)}
+.signal-card.long{box-shadow:0 0 28px rgba(38,166,154,.15)}.signal-card.short{box-shadow:0 0 28px rgba(239,83,80,.16)}
+.card,.metric{background:linear-gradient(145deg,rgba(27,25,51,.72),rgba(13,22,37,.82));border-color:rgba(139,92,246,.22)}
+.card:hover{border-color:rgba(98,230,255,.45)}
+.btn-p{background:var(--aurora);box-shadow:0 7px 20px rgba(139,92,246,.2)}
+.btn:active,.tbbtn:active,.ws-tab:active{transform:scale(.97)}
+.metric{position:relative;overflow:hidden}.metric:after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:2px;background:var(--aurora);opacity:.7}
+.log-term{background:linear-gradient(145deg,#0b1020,#15102a);border-color:rgba(139,92,246,.3)}
+.mo .mb{background:linear-gradient(145deg,rgba(28,24,53,.98),rgba(12,22,38,.98));border:1px solid transparent;background-clip:padding-box;box-shadow:0 0 0 1px rgba(139,92,246,.5),0 24px 80px rgba(0,0,0,.6)}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -560,6 +587,16 @@ input,select{font-family:inherit}
    KRIPTO PRO v5.2 — TAM SÜRÜM
    ═══════════════════════════════════════════════════════ */
 
+function safeJSON(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw === null ? fallback : JSON.parse(raw);
+  } catch (e) {
+    try { localStorage.removeItem(key); } catch (ignore) {}
+    return fallback;
+  }
+}
+
 const S = {
   ws:'chart', symbol:'BTCUSDT', tf:'15',
   theme: localStorage.getItem('theme') || 'dark',
@@ -570,24 +607,24 @@ const S = {
   wsObj:null, wsSym:null, wsTF:null, wsPing:null,
   cache:{mtf:null,mtfSummary:null,funding:null,oi:null,obRatio:null,whale:0,btcDir:'NÖTR',btcChange:0},
   locked:null, lockSym:null, lastCandleTime:null, snapshot:null,
-  logs: JSON.parse(localStorage.getItem('sysLogs')||'[]'),
-  notifications: JSON.parse(localStorage.getItem('notifs')||'[]'),
+  logs: safeJSON('sysLogs',[]),
+  notifications: safeJSON('notifs',[]),
   sound: localStorage.getItem('sound')==='1',
   tgToken: localStorage.getItem('tgToken')||'',
   tgChat: localStorage.getItem('tgChat')||'',
   notifEnabled: localStorage.getItem('notifEnabled')!=='0',
-  decisionHistory: JSON.parse(localStorage.getItem('decisionHistory')||'{}'),
-  obAlarms: JSON.parse(localStorage.getItem('obAlarms')||'[]'),
-  signalTests: JSON.parse(localStorage.getItem('signalTests')||'[]'),
-  completedTests: JSON.parse(localStorage.getItem('completedTests')||'[]'),
+  decisionHistory: safeJSON('decisionHistory',{}),
+  obAlarms: safeJSON('obAlarms',[]),
+  signalTests: safeJSON('signalTests',[]),
+  completedTests: safeJSON('completedTests',[]),
   alarmPrice: null, lastAlarmTrigger: 0,
   acilInterval: null, donusLastWarn: 0,
   paper: {
     active:false, balance:100, startBalance:100,
-    positions: JSON.parse(localStorage.getItem('paperPositions')||'[]'),
-    history: JSON.parse(localStorage.getItem('paperHistory')||'[]'),
+    positions: safeJSON('paperPositions',[]),
+    history: safeJSON('paperHistory',[]),
     interval:null, monitor:null,
-    cfg: Object.assign({balance:100,maxPos:5,minConf:70,scanCount:50}, JSON.parse(localStorage.getItem('paperCfg')||'{}'))
+    cfg: Object.assign({balance:100,maxPos:5,minConf:70,scanCount:50}, safeJSON('paperCfg',{}))
   },
   bot: {
     running:false, apiKey:'', apiSecret:'',
@@ -1608,7 +1645,7 @@ async function scanOBAlarms() {
         if (!obs.length) continue;
         const price = cd[cd.length-1].close;
         obs.forEach(o => {
-          if (Math.abs(o.dist)>5) continue;
+          if (Math.abs(o.dist)>5) return;
           let status = 'BEKLE';
           if (Math.abs(o.dist)<0.5) status='HAZIR';
           else if (Math.abs(o.dist)<1) status='IZLE';
@@ -2035,8 +2072,8 @@ async function runBacktest() {
 function loadPaper() {
   S.paper.balance = parseFloat(localStorage.getItem('paperBalance')) || S.paper.cfg.balance;
   S.paper.startBalance = parseFloat(localStorage.getItem('paperStartBalance')) || S.paper.cfg.balance;
-  S.paper.positions = JSON.parse(localStorage.getItem('paperPositions') || '[]');
-  S.paper.history = JSON.parse(localStorage.getItem('paperHistory') || '[]');
+  S.paper.positions = safeJSON('paperPositions', []);
+  S.paper.history = safeJSON('paperHistory', []);
   const b = $('paperBalance'); if (b) b.value = S.paper.cfg.balance;
   const m = $('paperMaxPos'); if (m) m.value = S.paper.cfg.maxPos;
   const c = $('paperMinConf'); if (c) c.value = S.paper.cfg.minConf;
