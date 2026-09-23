@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>NEBULA Terminal v8.0</title>
+<title>NEBULA Terminal v8.2</title>
 <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -11,14 +11,19 @@
 body.light{--bg:#f0f4f8;--bg2:#fff;--bg3:#e8eef5;--bg4:#dce3ec;--rim:rgba(0,100,180,.1);--rim2:rgba(0,100,180,.2);--rim3:rgba(0,100,180,.4);--ink:#0a1420;--ink2:#3d5570;--ink3:#7d95b8;--ink4:#b0c0d0}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);height:100vh;overflow:hidden;font-size:12px;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--ink4);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--ink3)}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--ink4);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink3)}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,select{font-family:inherit}
 .hidden{display:none!important}
 .text-c{text-align:center}
 .mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}
 .flex{display:flex}
-.text-green{color:var(--green)!important}.text-red{color:var(--red)!important}.text-yellow{color:var(--gold)!important}
+.text-green{color:var(--green)!important}
+.text-red{color:var(--red)!important}
+.text-yellow{color:var(--gold)!important}
 .mono{font-family:var(--mono)}
 .app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
@@ -44,7 +49,7 @@ input,select{font-family:inherit}
 .header-btn.pulse{border-color:var(--red);animation:pulseRing 1.5s infinite}
 @keyframes pulseRing{0%,100%{box-shadow:0 0 0 rgba(255,61,92,.3)}50%{box-shadow:0 0 24px rgba(255,61,92,.7)}}
 
-/* TICKER (Kayan) */
+/* TICKER */
 .ticker-wrap{height:32px;background:linear-gradient(90deg,rgba(0,217,255,.04),rgba(0,217,255,.02));border-bottom:1px solid var(--rim);overflow:hidden;position:relative;flex-shrink:0}
 .ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
 .ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
@@ -74,12 +79,12 @@ input,select{font-family:inherit}
 .me-title .badge::before{content:'● ';animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .me-search{width:100%;padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--rim);color:var(--ink);font-family:var(--mono);font-size:11px;font-weight:600;outline:none;transition:all .2s;margin-bottom:10px}
-.me-search:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,217,255,.15),0 0 24px rgba(0,217,255,.2)}
+.me-search:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,217,255,.15)}
 .me-search::placeholder{color:var(--ink3)}
 .me-chips{display:flex;gap:4px;flex-wrap:wrap}
 .me-chip{padding:4px 8px;border-radius:5px;font-family:var(--mono);font-size:9.5px;font-weight:800;color:var(--ink3);letter-spacing:.06em;background:var(--bg3);border:1px solid var(--rim);cursor:pointer;transition:all .15s}
 .me-chip:hover{color:var(--ink);border-color:var(--rim2)}
-.me-chip.active{color:var(--cyan);background:rgba(0,217,255,.1);border-color:var(--rim3);box-shadow:0 0 12px rgba(0,217,255,.25)}
+.me-chip.active{color:var(--cyan);background:rgba(0,217,255,.1);border-color:var(--rim3)}
 .me-list{flex:1;overflow-y:auto;padding:6px}
 .stock-item{display:grid;grid-template-columns:26px 1fr 56px 68px;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;transition:all .15s;align-items:center;margin-bottom:2px;position:relative;overflow:hidden}
 .stock-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--cyan);transform:translateX(-100%);transition:transform .2s}
@@ -95,7 +100,8 @@ input,select{font-family:inherit}
 .stock-price-col{text-align:right;display:flex;flex-direction:column;gap:1px}
 .stock-price{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--ink)}
 .stock-chg{font-family:var(--mono);font-size:9px;font-weight:700}
-.stock-chg.up{color:var(--green)}.stock-chg.down{color:var(--red)}
+.stock-chg.up{color:var(--green)}
+.stock-chg.down{color:var(--red)}
 
 /* TERMINAL CENTER */
 .terminal-center{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;background:var(--bg)}
@@ -138,7 +144,7 @@ input,select{font-family:inherit}
 .spinner{width:24px;height:24px;border:2px solid rgba(0,217,255,.2);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* TAPE (Canlı Emir Akışı) */
+/* TAPE */
 .tape{width:180px;flex-shrink:0;background:var(--bg2);border-left:1px solid var(--rim);display:flex;flex-direction:column;overflow:hidden}
 .tape-head{padding:8px 10px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:9px;font-weight:800;color:var(--ink3);letter-spacing:.15em;text-transform:uppercase;flex-shrink:0;display:flex;justify-content:space-between;align-items:center}
 .tape-head .live{color:var(--green)}
@@ -149,22 +155,22 @@ input,select{font-family:inherit}
 .tape-row.sell{border-left-color:rgba(255,61,92,.5);background:linear-gradient(90deg,rgba(255,61,92,.05),transparent)}
 .tape-row.big{background:linear-gradient(90deg,rgba(255,184,0,.12),transparent);border-left-color:rgba(255,184,0,.6);animation:tapeFlash .6s ease-out}
 @keyframes tapeFlash{0%{background:rgba(255,184,0,.3)}100%{background:rgba(255,184,0,.12)}}
-.tape-row:hover{background:var(--bg3)}
 .tape-price{color:var(--ink);font-weight:700;text-align:left}
-.tape-price.up{color:var(--green)}.tape-price.down{color:var(--red)}
+.tape-price.up{color:var(--green)}
+.tape-price.down{color:var(--red)}
 .tape-size{color:var(--ink2);text-align:right;font-weight:600}
 .tape-size.big{color:var(--gold);font-weight:900;text-shadow:0 0 8px rgba(255,184,0,.5)}
 .tape-time{color:var(--ink3);font-size:9px;text-align:right}
 
 /* BOTTOM PANEL */
-.bot-panel{height:200px;flex-shrink:0;display:flex;flex-direction:column;background:var(--bg2);overflow:hidden}
+.bot-panel{height:380px;flex-shrink:0;display:flex;flex-direction:column;background:var(--bg2);overflow:hidden}
 .bot-tabs{display:flex;padding:0 12px;border-bottom:1px solid var(--rim);background:linear-gradient(180deg,var(--bg3),var(--bg2));flex-shrink:0;overflow-x:auto}
 .bot-tabs::-webkit-scrollbar{display:none}
 .bot-tab{padding:9px 14px;font-family:var(--mono);font-size:9.5px;font-weight:800;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .18s;position:relative;white-space:nowrap;cursor:pointer}
 .bot-tab:hover{color:var(--ink)}
 .bot-tab.active{color:var(--cyan);border-bottom-color:var(--cyan);background:rgba(0,217,255,.04);text-shadow:0 0 10px rgba(0,217,255,.5)}
 .bot-tab .count{font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(0,217,255,.15);color:var(--cyan);margin-left:5px}
-.bot-content{flex:1;overflow-y:auto;padding:8px 12px}
+.bot-content{flex:1;overflow-y:auto;padding:10px 14px}
 .bot-content table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:10.5px}
 .bot-content th{text-align:left;font-size:9px;font-weight:800;color:var(--ink3);letter-spacing:.08em;padding:6px 8px;text-transform:uppercase;border-bottom:1px solid var(--rim)}
 .bot-content td{padding:7px 8px;border-bottom:1px solid rgba(0,180,255,.05)}
@@ -176,6 +182,41 @@ input,select{font-family:inherit}
 .sym-cell{display:flex;align-items:center;gap:6px}
 .sym-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#000}
 .bot-empty{text-align:center;padding:26px;color:var(--ink3);font-size:11px;font-family:var(--mono)}
+
+/* DETAYLI POZİSYON KARTLARI */
+.pos-list{display:flex;flex-direction:column;gap:10px}
+.pos-card{background:linear-gradient(145deg,rgba(15,26,46,.9),rgba(10,18,32,.9));border:1px solid var(--rim);border-radius:10px;padding:12px;position:relative;overflow:hidden;transition:all .2s}
+.pos-card:hover{border-color:var(--rim3);box-shadow:0 8px 24px rgba(0,217,255,.1)}
+.pos-card.long{border-left:3px solid var(--green)}
+.pos-card.short{border-left:3px solid var(--red)}
+.pos-card.win{background:linear-gradient(145deg,rgba(0,40,25,.5),rgba(10,25,20,.6))}
+.pos-card.loss{background:linear-gradient(145deg,rgba(50,15,25,.5),rgba(25,10,15,.6))}
+.pos-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;position:relative;z-index:1}
+.pos-sym{font-family:var(--mono);font-weight:900;font-size:14px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.pos-side{padding:3px 8px;border-radius:5px;font-family:var(--mono);font-size:9.5px;font-weight:900;letter-spacing:.06em}
+.pos-side.long{background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.3)}
+.pos-side.short{background:rgba(255,61,92,.15);color:var(--red);border:1px solid rgba(255,61,92,.3)}
+.pos-pnl-big{font-family:var(--mono);font-weight:900;font-size:18px;letter-spacing:-.02em;line-height:1}
+.pos-pnl-big.up{color:var(--green);text-shadow:0 0 12px rgba(0,230,118,.4)}
+.pos-pnl-big.down{color:var(--red);text-shadow:0 0 12px rgba(255,61,92,.4)}
+.pos-pnl-usd{font-family:var(--mono);font-size:11px;font-weight:700;margin-top:3px}
+.pos-pnl-usd.up{color:var(--green)}
+.pos-pnl-usd.down{color:var(--red)}
+.pos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;position:relative;z-index:1;margin-bottom:8px}
+.pos-cell{background:rgba(0,0,0,.3);padding:6px 8px;border-radius:6px;border:1px solid rgba(0,180,255,.08)}
+.pos-cell-k{font-family:var(--mono);font-size:8px;font-weight:800;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.pos-cell-v{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--ink)}
+.pos-cell-v.g{color:var(--green)}
+.pos-cell-v.r{color:var(--red)}
+.pos-cell-v.y{color:var(--gold)}
+.pos-bar{height:4px;background:rgba(0,0,0,.4);border-radius:3px;position:relative;overflow:visible;margin:6px 0 8px}
+.pos-bar-fill{height:100%;border-radius:3px;position:absolute;top:0;transition:all .3s}
+.pos-bar-fill.sl{background:linear-gradient(90deg,rgba(255,61,92,.7),rgba(255,61,92,.15));left:0}
+.pos-bar-fill.tp{background:linear-gradient(90deg,rgba(0,230,118,.15),rgba(0,230,118,.7));right:0}
+.pos-bar-marker{position:absolute;top:-3px;width:3px;height:10px;background:var(--gold);box-shadow:0 0 10px var(--gold);transition:left .3s;border-radius:2px}
+.pos-foot{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid rgba(0,180,255,.1);position:relative;z-index:1;font-size:10.5px;font-family:var(--mono);color:var(--ink3)}
+.pos-foot .close-btn{padding:4px 10px;border-radius:6px;background:rgba(255,61,92,.12);color:var(--red);border:1px solid rgba(255,61,92,.3);font-size:9.5px;font-weight:800;cursor:pointer;font-family:var(--mono);letter-spacing:.05em;transition:all .15s}
+.pos-foot .close-btn:hover{background:rgba(255,61,92,.25)}
 
 /* FOOTER */
 .term-footer{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;background:var(--bg2);border-top:1px solid var(--rim);font-family:var(--mono);font-size:9.5px;color:var(--ink3);flex-shrink:0}
@@ -214,9 +255,11 @@ input,select{font-family:inherit}
 .row-name{color:var(--ink2);font-weight:600;font-size:11px}
 .row-name small{display:block;font-size:9.5px;color:var(--ink4);margin-top:1px;font-weight:500}
 .row-val{font-family:var(--mono);font-weight:800;font-size:11.5px}
-.row-val.g{color:var(--green)}.row-val.r{color:var(--red)}.row-val.y{color:var(--gold)}
+.row-val.g{color:var(--green)}
+.row-val.r{color:var(--red)}
+.row-val.y{color:var(--gold)}
 .row-bar{height:3px;border-radius:2px;background:rgba(0,180,255,.08);margin-top:5px;overflow:hidden;width:100%}
-.row-bar span{display:block;height:100%;border-radius:inherit;transition:width .5s;box-shadow:0 0 8px currentColor}
+.row-bar span{display:block;height:100%;border-radius:inherit;transition:width .5s}
 .empty-msg{text-align:center;padding:18px;color:var(--ink3);font-size:11px;font-family:var(--mono)}
 
 /* ALERTS */
@@ -226,7 +269,7 @@ input,select{font-family:inherit}
 .alert.i{background:rgba(0,217,255,.08);border-color:rgba(0,217,255,.3);color:var(--cyan)}
 .alert.s{background:rgba(0,230,118,.08);border-color:rgba(0,230,118,.3);color:var(--green)}
 
-/* WS SIMPLE */
+/* WORKSPACE SIMPLE */
 .ws-simple{display:flex;flex:1;overflow:hidden;width:100%}
 .simple-main{flex:1;overflow-y:auto;padding:16px;min-width:0}
 .card{background:var(--bg2);border:1px solid var(--rim);border-radius:10px;margin-bottom:12px;overflow:hidden}
@@ -237,23 +280,23 @@ input,select{font-family:inherit}
 .metric::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyan);opacity:.3}
 .metric-l{font-family:var(--mono);font-size:9px;font-weight:800;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase}
 .metric-v{font-family:var(--mono);font-size:17px;font-weight:900;margin-top:5px}
-.metric-v.g{color:var(--green)}.metric-v.r{color:var(--red)}.metric-v.y{color:var(--gold)}
+.metric-v.g{color:var(--green)}
+.metric-v.r{color:var(--red)}
+.metric-v.y{color:var(--gold)}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fg{display:flex;flex-direction:column;gap:4px}
 .fg.full{grid-column:1/-1}
 .fl{font-family:var(--mono);font-size:9px;font-weight:800;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
 .fi,.fs{padding:9px 11px;border-radius:6px;border:1px solid var(--rim);background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:11.5px;font-weight:600;outline:none;width:100%;transition:all .2s}
-.fi:focus,.fs:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,217,255,.15),0 0 16px rgba(0,217,255,.2)}
+.fi:focus,.fs:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,217,255,.15)}
 .trow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--rim)}
 .trow:last-child{border-bottom:none}
 .tlabel{font-size:12px;font-weight:700}
 .tswitch{width:38px;height:20px;border-radius:10px;background:var(--bg4);position:relative;border:1px solid var(--rim);cursor:pointer;transition:all .2s}
 .tswitch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--ink3);transition:all .2s}
-.tswitch.on{background:var(--cyan);box-shadow:0 0 12px rgba(0,217,255,.5)}
+.tswitch.on{background:var(--cyan)}
 .tswitch.on::after{transform:translateX(18px);background:#000}
 .btn{padding:9px 15px;border-radius:8px;font-size:11px;font-weight:800;font-family:var(--mono);letter-spacing:.05em;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-transform:uppercase;cursor:pointer;position:relative;overflow:hidden}
-.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transform:translateX(-100%);transition:transform .6s}
-.btn:hover::before{transform:translateX(100%)}
 .btn-p{background:var(--cyan);color:#000}
 .btn-p:hover{background:var(--cyan2);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,217,255,.4)}
 .btn-s{background:var(--green);color:#000}
@@ -261,7 +304,7 @@ input,select{font-family:inherit}
 .btn-d{background:var(--red);color:#fff}
 .btn-d:hover{background:#e6294c;transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,61,92,.4)}
 .btn-g{background:var(--bg3);border:1px solid var(--rim);color:var(--ink2)}
-.btn-g:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 16px rgba(0,217,255,.2)}
+.btn-g:hover{border-color:var(--cyan);color:var(--cyan)}
 .btn-block{width:100%}
 .btn-sm{padding:5px 10px;font-size:10px}
 .pill{font-family:var(--mono);font-size:9px;font-weight:900;padding:3px 8px;border-radius:12px;letter-spacing:.06em;text-transform:uppercase}
@@ -271,7 +314,11 @@ input,select{font-family:inherit}
 .pill.warn{background:rgba(255,184,0,.15);color:var(--gold)}
 .terminal-log{background:#03060c;border:1px solid var(--rim);border-radius:6px;padding:10px;font-family:var(--mono);font-size:10px;line-height:1.75;max-height:200px;overflow-y:auto;color:var(--ink2)}
 .log-line{white-space:pre-wrap;word-break:break-word}
-.log-line .t{color:var(--ink4)}.log-line .s{color:var(--green)}.log-line .e{color:var(--red)}.log-line .w{color:var(--gold)}.log-line .i{color:var(--cyan)}
+.log-line .t{color:var(--ink4)}
+.log-line .s{color:var(--green)}
+.log-line .e{color:var(--red)}
+.log-line .w{color:var(--gold)}
+.log-line .i{color:var(--cyan)}
 .edu-card{padding:14px;border-radius:10px;background:var(--bg3);border:1px solid var(--rim);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
 .edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);opacity:.5}
 .edu-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,217,255,.15)}
@@ -280,13 +327,12 @@ input,select{font-family:inherit}
 .radar-item.long{border-left-color:var(--green)}
 .radar-item.short{border-left-color:var(--red)}
 
-/* NOTIF STACK */
+/* NOTIF */
 .notif-stack{position:fixed;top:90px;right:18px;z-index:900;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:320px}
 .notif{background:var(--bg2);border:1px solid var(--rim2);border-left:3px solid var(--cyan);border-radius:10px;padding:12px;box-shadow:0 8px 32px rgba(0,0,0,.6);animation:slideR .3s ease-out;pointer-events:auto;position:relative}
 .notif.warn{border-left-color:var(--gold)}
 .notif.success{border-left-color:var(--green)}
-.notif.error{border-left-color:var(--red);animation:slideR .3s ease-out,shake .3s .3s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.notif.error{border-left-color:var(--red)}
 @keyframes slideR{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
 .notif-t{font-size:12px;font-weight:800;margin-bottom:3px}
 .notif-d{font-size:11px;color:var(--ink2);line-height:1.4}
@@ -297,8 +343,7 @@ input,select{font-family:inherit}
 .mo{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.85);backdrop-filter:blur(8px)}
 .mo.on{display:flex;animation:fadeIn .2s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.mb{background:var(--bg2);border:1px solid var(--rim2);border-radius:14px;padding:20px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 60px rgba(0,217,255,.1);animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);position:relative}
-.mb::before{content:'';position:absolute;inset:-1px;border-radius:inherit;background:conic-gradient(from 0deg,var(--cyan),var(--purple),var(--green),var(--cyan));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:1px;opacity:.3;animation:spin 8s linear infinite;pointer-events:none}
+.mb{background:var(--bg2);border:1px solid var(--rim2);border-radius:14px;padding:20px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.7);animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);position:relative}
 .mb.wide{max-width:800px}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;position:relative;z-index:1}
@@ -306,8 +351,19 @@ input,select{font-family:inherit}
 .mc{width:30px;height:30px;border-radius:8px;border:1px solid var(--rim);color:var(--ink2);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
 .mc:hover{background:var(--bg3);color:var(--red);border-color:rgba(255,61,92,.3)}
 
+/* BOT KOMPAKT */
+#ws-bot .card-b{padding:12px 14px}
+#ws-bot .fgrid{gap:8px}
+#ws-bot .fl{font-size:8.5px;letter-spacing:.05em;margin-bottom:2px}
+#ws-bot .fi,#ws-bot .fs{padding:6px 10px;font-size:11px}
+#ws-bot .metric{padding:9px 10px}
+#ws-bot .metric-v{font-size:15px;margin-top:3px}
+#ws-bot #botCapital{font-size:14px!important;font-weight:900!important;color:var(--gold)!important}
+#ws-bot .alert{padding:8px 11px;font-size:10.5px;margin-top:6px}
+#ws-bot .card{margin-bottom:8px}
+
 @media(max-width:1200px){.asb{display:none}.tape{width:150px}}
-@media(max-width:900px){.market-exp,.tape{display:none}.ch-stats{display:none}.bot-panel{height:160px}.top-tab{padding:8px 9px;font-size:9.5px}}
+@media(max-width:900px){.market-exp,.tape{display:none}.ch-stats{display:none}.bot-panel{height:320px}.top-tab{padding:8px 9px;font-size:9.5px}.pos-grid{grid-template-columns:repeat(2,1fr)!important}}
 </style>
 </head>
 <body>
@@ -323,8 +379,8 @@ input,select{font-family:inherit}
     <button class="top-tab" data-ws="edu" onclick="switchWS('edu')">EĞİTİM</button>
   </nav>
   <div class="top-money">
-    <div class="money-box" id="portfolioBox"><small>PORTFÖY</small><b id="portfolioVal">$1,000.00</b></div>
-    <div class="money-box cash" id="cashBox"><small>NAKİT</small><b id="cashVal">$1,000.00</b></div>
+    <div class="money-box" id="portfolioBox"><small>PORTFÖY</small><b id="portfolioVal">$0.00</b></div>
+    <div class="money-box cash" id="cashBox"><small>NAKİT</small><b id="cashVal">$0.00</b></div>
     <button class="header-btn" onclick="openOBAlarm()" id="obBadge" title="Order Block Alarmları">🎯<span class="dot hidden" id="obBadgeCount">0</span></button>
     <button class="header-btn" onclick="openNotifCenter()" id="notifBadge" title="Bildirimler">🔔<span class="dot hidden" id="notifCount">0</span></button>
     <button class="header-btn" onclick="toggleSound()" id="soundBtn" title="Ses">🔇</button>
@@ -413,7 +469,7 @@ input,select{font-family:inherit}
         </div>
         <div class="term-footer">
           <div class="status"><span><span class="dot" id="ftDot"></span><span id="ftConn">Bağlanıyor...</span></span><span id="ftClock">--:--:--</span></div>
-          <div class="status"><span id="ftMsg">NEBULA v8.0</span></div>
+          <div class="status"><span id="ftMsg">NEBULA v8.2</span></div>
         </div>
       </div>
       <aside class="asb">
@@ -451,7 +507,7 @@ input,select{font-family:inherit}
         <div class="card-h"><span>🤖 BOT KONTROL</span><span class="pill stop" id="botStatus">DURDURULDU</span></div>
         <div class="card-b">
           <div class="fgrid">
-            <div class="fg full"><label class="fl">💰 BAŞLANGIÇ SERMAYESİ ($)</label><input class="fi" id="botCapital" type="number" value="100" min="10" step="10" placeholder="örn: 50, 100, 500, 1000" style="font-size:16px;font-weight:800;color:var(--gold)"><div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:4px">Bot bu sermayeye göre otomatik risk yönetimi uygular</div></div>
+            <div class="fg full"><label class="fl">💰 BAŞLANGIÇ SERMAYESİ ($)</label><input class="fi" id="botCapital" type="number" value="100" min="10" step="10" placeholder="örn: 50, 100, 500, 1000"><div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:4px">Bot bu sermayeye göre otomatik risk yönetimi uygular</div></div>
             <div class="fg full"><label class="fl">⚠️ RİSK PROFİLİ</label>
               <select class="fs" id="riskProfile" onchange="applyRiskProfile()">
                 <option value="conservative">🛡️ Konservatif — Risk %0.5, Kaldıraç 2x</option>
@@ -572,13 +628,13 @@ input,select{font-family:inherit}
     <div id="notifCenterBody" style="max-height:60vh;overflow-y:auto"></div>
   </div>
 </div>
-<!-- KISIM 1: Analiz Motoru + Chart + Market Data -->
+
 <script>
 /* ═══════════════════════════════════════════════════════
-   NEBULA Terminal v8.1 — KISIM 1/2
-   Analiz Motoru + Chart + Ticker + Tape + Market Data
+   NEBULA Terminal v8.2 — Tek Dosya Tam Sürüm
    ═══════════════════════════════════════════════════════ */
 
+/* SAFE HELPERS */
 function safeJSON(k, fb){ try { const v = localStorage.getItem(k); return v===null?fb:JSON.parse(v); } catch(e){ return fb; } }
 const $ = id => document.getElementById(id);
 const fmt = (n,d=4) => { if(n===undefined||n===null||isNaN(n)) return '—'; if(n>=1000) return n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2}); if(n>=100) return n.toFixed(2); if(n>=1) return n.toFixed(d); return n.toFixed(6); };
@@ -608,20 +664,18 @@ const S = {
   meData:[], meFilter:'all', mePrices:{}, tickerData:[],
 };
 
-/* WORKSPACE */
 function switchWS(ws){
   S.ws = ws;
   document.querySelectorAll('.ws').forEach(el=>el.classList.remove('active'));
   const el = $('ws-'+ws); if(el) el.classList.add('active');
   document.querySelectorAll('.top-tab').forEach(t=>t.classList.toggle('active', t.dataset.ws === ws));
   if(ws === 'chart' && S.chart) setTimeout(()=>{ try { S.chart.applyOptions({width: $('mainChart').clientWidth}); } catch(e){} }, 60);
-  if(ws === 'paper' && typeof renderPaper === 'function') renderPaper();
-  if(ws === 'edu' && typeof renderEdu === 'function') renderEdu();
-  if(ws === 'bot' && typeof renderBot === 'function'){ renderBot(); updateRiskSummary(); }
-  if(ws === 'signals' && typeof renderTests === 'function') renderTests();
+  if(ws === 'paper') renderPaper();
+  if(ws === 'edu') renderEdu();
+  if(ws === 'bot') { renderBot(); updateRiskSummary(); }
+  if(ws === 'signals') renderTests();
 }
 
-/* THEME */
 function toggleTheme(){ applyTheme(S.theme === 'dark' ? 'light' : 'dark'); }
 function applyTheme(t){
   S.theme = t; localStorage.setItem('theme', t);
@@ -1012,6 +1066,7 @@ async function loadSymbol(sym, force=false){
       saveDecision(S.symbol, a.decision);
       sinyalTestKaydet(a, S.symbol, S.tf);
       log('signal', '🎯 Karar: ' + a.decision, S.symbol + ' • %' + a.confidence);
+      if(a.decision.includes('LONG') || a.decision.includes('SHORT')) telegramSinyalGonder(a, S.symbol, S.tf);
     }
     S.analysis = S.locked;
     renderChart(cd);
@@ -1045,7 +1100,7 @@ function setTF(tf){
 }
 function refreshAll(){ loadSymbol(S.symbol, true); }
 
-/* UI UPDATE */
+/* UI */
 function updateUI(sym, ticker, a){
   if(ticker){
     const p = +ticker.lastPrice;
@@ -1083,7 +1138,7 @@ function updateUI(sym, ticker, a){
       else if(a.decision.includes('SHORT')){ badge.textContent='SHORT'; badge.className='ch-badge short'; }
       else { badge.textContent='İZLE'; badge.className='ch-badge'; }
     }
-    if(typeof updateBotPanel === 'function') updateBotPanel();
+    updateBotPanel();
   }
 }
 function updateGauge(pct, cls){
@@ -1146,10 +1201,10 @@ function updateAnalysisUI(a){
     }).join('');
     else hEl.innerHTML = '<div class="empty-msg">Geçmiş yok</div>';
   }
-  if(typeof updateRiskSummary === 'function') updateRiskSummary();
+  updateRiskSummary();
 }
 
-/* MTF / FUNDING / OB / WHALE / BTC */
+/* MTF / FUNDING / ORDERBOOK / WHALE / BTC */
 async function loadMTF(sym){
   try {
     const tfs = [{k:'D',fb:'240',label:'1 Gün'},{k:'60',fb:'60',label:'1 Saat'},{k:'15',fb:'15',label:'15 Dk'}];
@@ -1235,7 +1290,7 @@ async function loadBtcDir(){
   } catch(e){}
 }
 
-/* WEBSOCKET */
+/* WS */
 function initWS(){
   if(S.wsObj && (S.wsObj.readyState === 0 || S.wsObj.readyState === 1)) return;
   if(S.wsObj){ try { S.wsObj.close(); } catch(e){} }
@@ -1323,22 +1378,22 @@ function handleWS(m){
   }
 }
 
-/* ACİL DÖNÜŞ */
+/* ACİL */
 const ACIL_ESIK = 1.5, DONUS_ESIK = 0.4;
 let donusLastSeviye = null;
 function hideAlerts(){ const a = $('acilAlert'); if(a) a.classList.add('hidden'); const d = $('donusAlert'); if(d) d.classList.add('hidden'); }
 function showAcil(msg){
   const el = $('acilAlert'); if(el){ el.textContent = msg; el.classList.remove('hidden'); }
   beep(500, 0.4);
-  if(typeof notify === 'function') notify('🚨 ACİL DÖNÜŞ', msg, 'error');
-  if(typeof telegramAcilGonder === 'function') telegramAcilGonder(msg);
+  notify('🚨 ACİL DÖNÜŞ', msg, 'error');
+  telegramAcilGonder(msg);
   log('error', '🚨 ACİL', msg);
 }
 function showDonus(msg){
   const el = $('donusAlert'); if(el){ el.textContent = msg; el.classList.remove('hidden'); }
   beep(700, 0.25);
-  if(typeof notify === 'function') notify('🟡 Dönüş Sinyali', msg, 'warn');
-  if(typeof telegramDonusGonder === 'function') telegramDonusGonder(msg);
+  notify('🟡 Dönüş Sinyali', msg, 'warn');
+  telegramDonusGonder(msg);
   log('warn', '🟡 Dönüş', msg);
 }
 function checkAcilLive(price){
@@ -1410,12 +1465,12 @@ function sinyalTestKaydet(a, coin, tf){
   S.signalTests.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8), coin, tf, decision:a.decision, decCls:a.decCls, conf:a.confidence, entry:a.price, time:Date.now(), checkTime:Date.now()+sure*60000, rsi:a.rsi, adx:a.adx, status:'BEKLIYOR'});
   if(S.signalTests.length > 100) S.signalTests = S.signalTests.slice(-100);
   localStorage.setItem('signalTests', JSON.stringify(S.signalTests));
-  if(typeof renderTests === 'function') renderTests();
+  renderTests();
 }
 async function checkSignalTests(){
   const simdi = Date.now();
   const check = S.signalTests.filter(t=>t.checkTime <= simdi).slice(0,20);
-  if(!check.length){ if(typeof renderTests === 'function') renderTests(); return; }
+  if(!check.length){ renderTests(); return; }
   const results = await Promise.allSettled(check.map(async t=>{
     const tick = await getTicker(t.coin); if(!tick) return null;
     const px = +tick.lastPrice, diff = ((px - t.entry)/t.entry)*100;
@@ -1434,7 +1489,7 @@ async function checkSignalTests(){
   if(S.completedTests.length > 500) S.completedTests = S.completedTests.slice(-500);
   localStorage.setItem('signalTests', JSON.stringify(S.signalTests));
   localStorage.setItem('completedTests', JSON.stringify(S.completedTests));
-  if(typeof renderTests === 'function') renderTests();
+  renderTests();
 }
 function renderTests(){
   const el = $('testPanel'); if(!el) return;
@@ -1459,7 +1514,7 @@ function saveDecision(sym, decision){
   localStorage.setItem('decisionHistory', JSON.stringify(S.decisionHistory));
 }
 
-/* OB ALARM */
+/* OB */
 let obScanning = false;
 async function scanOBAlarms(){
   if(obScanning) return;
@@ -1519,19 +1574,19 @@ function renderOBModal(){
   el.innerHTML = html || '<div class="empty-msg">Kayıt yok</div>';
 }
 
-/* FİYAT ALARMI */
+/* ALARM */
 function checkPriceAlarm(price){
   if(!S.alarmPrice) return;
   if(Math.abs(price - S.alarmPrice)/S.alarmPrice < 0.005){
-    if(typeof notify === 'function') notify(`🔔 ${S.symbol}`, `Hedef $${fmt(S.alarmPrice)} → $${fmt(price)}`, 'warn', 12000);
+    notify(`🔔 ${S.symbol}`, `Hedef $${fmt(S.alarmPrice)} → $${fmt(price)}`, 'warn', 12000);
     beep(1000, 0.4);
-    if(typeof telegramAlarmGonder === 'function') telegramAlarmGonder(S.symbol, price);
+    telegramAlarmGonder(S.symbol, price);
     log('success', '🔔 Alarm', `${S.symbol} → $${fmt(price)}`);
     S.alarmPrice = null;
   }
 }
 
-/* NOTIFICATIONS */
+/* NOTIF */
 function notify(title, desc, level='info', dur=8000){
   if(!S.notifEnabled) return;
   const n = {id:Date.now()+Math.random(), title, desc, level, time:Date.now(), read:false};
@@ -1600,11 +1655,11 @@ async function testTelegram(){
   S.tgToken = $('setTgToken').value.trim() || S.tgToken;
   S.tgChat = $('setTgChat').value.trim() || S.tgChat;
   if(!S.tgToken || !S.tgChat){ alert('Token ve Chat ID gerekli'); return; }
-  const ok = await tgSend('✅ <b>Test</b>\nNEBULA v8.1');
+  const ok = await tgSend('✅ <b>Test</b>\nNEBULA v8.2');
   notify(ok ? '✅ Telegram OK' : '❌ Telegram hata', '', ok ? 'success' : 'error');
 }
 
-/* LOGGING */
+/* LOG */
 function log(cat, title, detail='', level='info'){
   const entry = {id:Date.now()+'_'+Math.random().toString(36).slice(2,5), time:Date.now(), cat, title, detail, level};
   S.logs.unshift(entry);
@@ -1660,24 +1715,98 @@ function toggleSec(el){
   else { body.classList.add('collapsed'); span.textContent = '+'; }
 }
 
-/* BOTTOM PANEL */
+/* BOTTOM TAB */
 function switchBotTab(tab, btn){
   S.botTab = tab;
   document.querySelectorAll('.bot-tab').forEach(b=>b.classList.toggle('active', b === btn));
   updateBotPanel();
 }
+
+/* DETAYLI POZİSYON PANELİ */
 function updateBotPanel(){
   const el = $('botContent'); if(!el) return;
   const cnt = $('tabCountPos'); if(cnt) cnt.textContent = S.bot.positions.length;
+  
   if(S.botTab === 'portfolio'){
-    if(!S.bot.positions.length){ el.innerHTML = '<div class="bot-empty">Açık pozisyon yok</div>'; return; }
-    el.innerHTML = `<table><thead><tr><th>VARLIK</th><th>YÖN</th><th>BOYUT</th><th>ORT. MALİYET</th><th>ŞİMDİ</th><th>K/Z</th></tr></thead><tbody>` + S.bot.positions.map(p=>{
+    if(!S.bot.positions.length){ el.innerHTML = '<div class="bot-empty">Açık pozisyon yok — Bot taramada...</div>'; return; }
+    el.innerHTML = '<div class="pos-list">' + S.bot.positions.map(p => {
       const up = p.pnlPct >= 0;
+      const sideCls = p.side === 'LONG' ? 'long' : 'short';
+      const lev = S.bot.settings.leverage;
+      const liqPrice = p.side === 'LONG' ? p.entry * (1 - 1/lev + 0.005) : p.entry * (1 + 1/lev - 0.005);
+      const elapsed = Date.now() - (p.openedAt || Date.now());
+      const hh = Math.floor(elapsed / 3600000);
+      const mm = Math.floor((elapsed % 3600000) / 60000);
+      const ss = Math.floor((elapsed % 60000) / 1000);
+      const agoStr = hh > 0 ? `${hh}s ${mm}d` : mm > 0 ? `${mm}d ${ss}s` : `${ss}s`;
+      const slDistPct = (Math.abs((p.current - p.sl) / p.current) * 100).toFixed(2);
+      const tpDistPct = (Math.abs((p.tp - p.current) / p.current) * 100).toFixed(2);
+      let markerPct = 50;
+      if(p.side === 'LONG' && (p.tp - p.sl) !== 0) markerPct = Math.max(0, Math.min(100, ((p.current - p.sl) / (p.tp - p.sl)) * 100));
+      else if(p.side === 'SHORT' && (p.sl - p.tp) !== 0) markerPct = Math.max(0, Math.min(100, ((p.sl - p.current) / (p.sl - p.tp)) * 100));
+      const rr = (Math.abs((p.tp - p.entry) / (p.entry - p.sl))).toFixed(2);
+      let durum = 'İzleniyor';
+      if(p.side === 'LONG'){
+        if(p.current >= p.tp) durum = '🎯 TP ULAŞTI';
+        else if(p.current <= p.sl) durum = '🛑 SL ULAŞTI';
+        else if(parseFloat(tpDistPct) < 0.3) durum = '⚡ TP ÇOK YAKIN';
+        else if(parseFloat(slDistPct) < 0.3) durum = '⚠️ SL ÇOK YAKIN';
+        else if(p.pnlPct > 0.5) durum = '✅ KÂRDA';
+        else if(p.pnlPct < -0.3) durum = '❌ ZARARDA';
+      } else {
+        if(p.current <= p.tp) durum = '🎯 TP ULAŞTI';
+        else if(p.current >= p.sl) durum = '🛑 SL ULAŞTI';
+        else if(parseFloat(tpDistPct) < 0.3) durum = '⚡ TP ÇOK YAKIN';
+        else if(parseFloat(slDistPct) < 0.3) durum = '⚠️ SL ÇOK YAKIN';
+        else if(p.pnlPct > 0.5) durum = '✅ KÂRDA';
+        else if(p.pnlPct < -0.3) durum = '❌ ZARARDA';
+      }
       const color = stockColor(p.symbol);
-      return `<tr><td><div class="sym-cell"><span class="sym-dot" style="background:${color}">${p.symbol[0]}</span>${p.symbol.replace('USDT','')}</div></td><td class="${p.side==='LONG'?'side-long':'side-short'}">${p.side} ${S.bot.settings.leverage}x</td><td>$${p.size.toFixed(2)}</td><td>$${fmt(p.entry)}</td><td>$${fmt(p.current)}</td><td class="${up?'pnl-pos':'pnl-neg'}">${up?'+':''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})</td></tr>`;
-    }).join('') + '</tbody></table>';
-  } else if(S.botTab === 'orders'){ el.innerHTML = '<div class="bot-empty">Bekleyen emir yok</div>'; }
-  else if(S.botTab === 'analysis'){
+      const size = p.size || 0;
+      const margin = p.margin || (size/lev) || 0;
+      
+      return `<div class="pos-card ${sideCls} ${up ? 'win' : 'loss'}">
+        <div class="pos-head">
+          <div class="pos-sym">
+            <span style="width:22px;height:22px;border-radius:50%;background:${color};display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#000;font-weight:900">${p.symbol[0]}</span>
+            ${p.symbol.replace('USDT','')}
+            <span class="pos-side ${sideCls}">${p.side}</span>
+            <span style="font-size:9.5px;color:var(--ink3);font-weight:700">${lev}x</span>
+          </div>
+          <div style="text-align:right">
+            <div class="pos-pnl-big ${up ? 'up' : 'down'}">${up ? '+' : ''}${p.pnlPct.toFixed(2)}%</div>
+            <div class="pos-pnl-usd ${up ? 'up' : 'down'}">${fmtUsd(p.pnlUsd)}</div>
+          </div>
+        </div>
+        <div class="pos-grid">
+          <div class="pos-cell"><div class="pos-cell-k">Giriş</div><div class="pos-cell-v">$${fmt(p.entry)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">Şu An</div><div class="pos-cell-v ${up ? 'g' : 'r'}">$${fmt(p.current)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">SL</div><div class="pos-cell-v r">$${fmt(p.sl)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">TP</div><div class="pos-cell-v g">$${fmt(p.tp)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">Boyut</div><div class="pos-cell-v">$${size.toFixed(2)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">Marj</div><div class="pos-cell-v">$${margin.toFixed(2)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">Likidasyon</div><div class="pos-cell-v y">$${fmt(liqPrice)}</div></div>
+          <div class="pos-cell"><div class="pos-cell-k">Süre</div><div class="pos-cell-v">${agoStr}</div></div>
+        </div>
+        <div class="pos-bar">
+          <div class="pos-bar-fill sl" style="width:${p.side === 'LONG' ? '40%' : '60%'}"></div>
+          <div class="pos-bar-fill tp" style="width:${p.side === 'LONG' ? '60%' : '40%'}"></div>
+          <div class="pos-bar-marker" style="left:${markerPct}%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;font-family:var(--mono);color:var(--ink2);margin-bottom:8px;position:relative;z-index:1">
+          <span>SL: <b class="text-red">${slDistPct}%</b></span>
+          <span style="color:var(--gold);font-weight:800">${durum}</span>
+          <span>TP: <b class="text-green">${tpDistPct}%</b></span>
+        </div>
+        <div class="pos-foot">
+          <span>R:R <b style="color:var(--ink)">1:${rr}</b> • %${p.conf} güven</span>
+          <button class="close-btn" onclick="closeBotPos('${p.id}')">✕ KAPAT</button>
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+  } else if(S.botTab === 'orders'){ 
+    el.innerHTML = '<div class="bot-empty">Bekleyen emir yok</div>'; 
+  } else if(S.botTab === 'analysis'){
     if(!S.locked){ el.innerHTML = '<div class="bot-empty">Analiz yok</div>'; return; }
     el.innerHTML = `<table><thead><tr><th>GÖSTERGE</th><th>PUAN</th><th>AÇIKLAMA</th></tr></thead><tbody>` + S.locked.scores.map(s=>{
       const cls = s.val > 0 ? 'pnl-pos' : s.val < 0 ? 'pnl-neg' : '';
@@ -1686,6 +1815,627 @@ function updateBotPanel(){
   } else if(S.botTab === 'signals'){
     el.innerHTML = `<div style="padding:16px;text-align:center"><div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.15em">AKTİF SİNYAL</div><div style="font-family:var(--mono);font-size:32px;font-weight:900;margin-top:8px;color:${S.locked?.decCls==='long'?'#00e676':S.locked?.decCls==='short'?'#ff3d5c':'#7d95b8'}">${S.locked?.decision||'—'}</div><div style="font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:6px">Güven: %${S.locked?.confidence||0} • Onay: ${S.locked?.confirmations||0}/5</div><div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:4px">${S.locked?.decDesc||''}</div></div>`;
   }
+}
+
+/* MONEY BAR */
+function updateMoneyBar(){
+  const open = S.bot.positions.reduce((s,p)=>s+(p.pnlUsd||0),0);
+  const total = S.bot.balance + open;
+  const pEl = $('portfolioVal'), cEl = $('cashVal');
+  if(pEl){ pEl.textContent = '$' + total.toFixed(2); pEl.style.color = total >= S.bot.startBalance ? 'var(--green)' : 'var(--red)'; }
+  if(cEl) cEl.textContent = '$' + S.bot.balance.toFixed(2);
+}
+function flashMoneyBox(id){ const el = $(id); if(el){ el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); } }
+
+/* BOT LOG */
+function logBot(msg, level='info'){
+  S.bot.logs.push({time:Date.now(), msg, level});
+  if(S.bot.logs.length > 500) S.bot.logs = S.bot.logs.slice(-500);
+  const el = $('botLog'); if(!el) return;
+  const cls = level === 'success' ? 's' : level === 'error' ? 'e' : level === 'warn' ? 'w' : 'i';
+  el.insertAdjacentHTML('beforeend', `<div class="log-line"><span class="t">[${nowStr()}]</span> <span class="${cls}">${esc(msg)}</span></div>`);
+  el.scrollTop = el.scrollHeight;
+}
+function clearBotLog(){ S.bot.logs = []; const el = $('botLog'); if(el) el.innerHTML = ''; }
+
+/* RİSK PROFİLİ */
+function applyRiskProfile(){
+  const profile = $('riskProfile')?.value || 'balanced';
+  const presets = {
+    conservative: {leverage:2, riskPct:0.5, tpPct:0.8, slPct:0.4, trailPct:0.2, maxPos:2, dailyLimit:2},
+    balanced: {leverage:3, riskPct:1, tpPct:1.2, slPct:0.6, trailPct:0.3, maxPos:3, dailyLimit:3},
+    aggressive: {leverage:5, riskPct:2, tpPct:2, slPct:1, trailPct:0.5, maxPos:5, dailyLimit:5}
+  };
+  if(profile === 'custom'){ updateRiskSummary(); return; }
+  const p = presets[profile];
+  if(!p) return;
+  const setV = (id, v) => { const el = $(id); if(el) el.value = v; };
+  setV('leverage', p.leverage);
+  setV('riskPct', p.riskPct);
+  setV('tpPct', p.tpPct);
+  setV('slPct', p.slPct);
+  setV('trailPct', p.trailPct);
+  setV('maxPos', p.maxPos);
+  setV('dailyLimit', p.dailyLimit);
+  updateRiskSummary();
+}
+function updateRiskSummary(){
+  const el = $('riskSummary'); if(!el) return;
+  const capital = parseFloat($('botCapital')?.value || 100);
+  const riskPct = parseFloat($('riskPct')?.value || 1);
+  const leverage = parseInt($('leverage')?.value || 3);
+  const maxPos = parseInt($('maxPos')?.value || 3);
+  const dailyLimit = parseFloat($('dailyLimit')?.value || 3);
+  const riskAmount = capital * (riskPct/100);
+  const dailyLossMax = capital * (dailyLimit/100);
+  const positionValue = riskAmount * leverage;
+  const totalRisk = riskAmount * maxPos;
+  el.innerHTML = `💰 <b>Sermaye:</b> $${capital.toFixed(2)} &nbsp;•&nbsp; ⚠️ <b>İşlem başı risk:</b> $${riskAmount.toFixed(2)} (%${riskPct}) &nbsp;•&nbsp; 📊 <b>Pozisyon değeri:</b> $${positionValue.toFixed(2)} (${leverage}x) &nbsp;•&nbsp; 🛑 <b>Maks günlük kayıp:</b> $${dailyLossMax.toFixed(2)} (%${dailyLimit}) &nbsp;•&nbsp; 🎯 <b>Toplam risk:</b> $${totalRisk.toFixed(2)} (${maxPos} poz)`;
+}
+
+/* BOT RENDER */
+function renderBot(){
+  const bal = S.bot.balance;
+  const open = S.bot.positions.reduce((s,p)=>s+(p.pnlUsd||0),0);
+  const dailyPnl = bal + open - S.bot.risk.dailyStart;
+  const balEl = $('botBalance');
+  if(balEl){ balEl.textContent = '$' + bal.toFixed(2); balEl.className = 'metric-v ' + (bal >= S.bot.startBalance ? 'g' : 'r'); }
+  const pnlEl = $('botPnl');
+  if(pnlEl){ pnlEl.textContent = fmtUsd(dailyPnl); pnlEl.className = 'metric-v ' + (dailyPnl >= 0 ? 'g' : 'r'); }
+  const opEl = $('botOpen'); if(opEl) opEl.textContent = S.bot.positions.length;
+  const hist = S.bot.history;
+  const wins = hist.filter(p=>p.pnlUsd > 0).length;
+  const losses = hist.filter(p=>p.pnlUsd < 0).length;
+  const total = hist.length;
+  const wr = (wins + losses) > 0 ? (wins/(wins+losses)*100) : 0;
+  const tw = hist.filter(p=>p.pnlUsd > 0).reduce((s,p)=>s+p.pnlUsd, 0);
+  const tl = Math.abs(hist.filter(p=>p.pnlUsd < 0).reduce((s,p)=>s+p.pnlUsd, 0));
+  const pf = tl > 0 ? tw/tl : (tw > 0 ? 999 : 0);
+  const wrEl = $('botWR');
+  if(wrEl){ wrEl.textContent = total > 0 ? wr.toFixed(1) + '%' : '—'; wrEl.className = 'metric-v ' + (wr >= 50 ? 'g' : 'r'); }
+  const pfEl = $('botPF');
+  if(pfEl){ pfEl.textContent = total > 0 ? pf.toFixed(2) : '—'; pfEl.className = 'metric-v ' + (pf >= 1 ? 'g' : 'r'); }
+  const tEl = $('botTotal'); if(tEl) tEl.textContent = total;
+  updateMoneyBar();
+  updateBotPanel();
+}
+
+/* BOT START/STOP */
+async function startRealBot(){
+  if(S.bot.running) return;
+  const mode = $('botMode')?.value || 'paper';
+  if(mode === 'live' || mode === 'testnet'){
+    let config;
+    try {
+      const url = $('backendUrl').value || 'http://127.0.0.1:8765';
+      const r = await fetch(url + '/api/config', {signal: timeoutSignal(5000)});
+      config = await r.json();
+    } catch(e){ notify('❌ Backend bulunamadı', 'Testnet/Canlı için backend çalışmalı', 'error'); return; }
+    if(!config.liveTrading){ notify('🛡️ Emir modu kapalı', '.env içinde LIVE_TRADING=1 olmalı', 'warn'); return; }
+    if(mode === 'testnet' && !config.testnet){ notify('❌ Ağ uyuşmazlığı', 'BYBIT_TESTNET=1 olmalı', 'error'); return; }
+    if(!config.testnet && !confirm('⚠️ MAINNET CANLI EMİR\n\nGerçek para riski! Devam?')) return;
+  }
+  let capital = parseFloat($('botCapital')?.value || 100);
+  if(isNaN(capital) || capital < 10) capital = 10;
+  if(capital > 1000000) capital = 1000000;
+  S.bot.capital = capital;
+  S.bot.balance = capital;
+  S.bot.startBalance = capital;
+  S.bot.mode = mode;
+  S.bot.running = true;
+  S.bot.risk.dailyStart = capital;
+  S.bot.risk.consLosses = 0;
+  S.bot.risk.circuit = false;
+  S.bot.settings.leverage = +($('leverage')?.value || 3);
+  S.bot.settings.tpPct = +($('tpPct')?.value || 1.2);
+  S.bot.settings.slPct = +($('slPct')?.value || 0.6);
+  S.bot.settings.trailPct = +($('trailPct')?.value || 0.3);
+  S.bot.settings.maxPos = +($('maxPos')?.value || 3);
+  S.bot.settings.riskPct = +($('riskPct')?.value || 1);
+  S.bot.settings.dailyLimit = +($('dailyLimit')?.value || 3);
+  S.bot.risk.maxDailyLoss = capital * (S.bot.settings.dailyLimit/100);
+  S.bot.liveInitialized = false;
+  const st = $('botStatus'); if(st){ st.textContent = 'ÇALIŞIYOR'; st.className = 'pill run'; }
+  const sb = $('startBotBtn'); if(sb) sb.classList.add('hidden');
+  const stb = $('stopBotBtn'); if(stb) stb.classList.remove('hidden');
+  logBot(mode === 'live' ? '🔴 MAINNET başlatıldı' : mode === 'testnet' ? '🟠 TESTNET başlatıldı' : '🧪 PAPER başlatıldı', mode === 'paper' ? 'success' : 'warn');
+  logBot(`💰 Sermaye: $${capital.toFixed(2)} | Risk %${S.bot.settings.riskPct} | Kaldıraç ${S.bot.settings.leverage}x`, 'info');
+  logBot(`🛡️ İşlem başı risk: $${(capital * S.bot.settings.riskPct/100).toFixed(2)} | Günlük limit: $${S.bot.risk.maxDailyLoss.toFixed(2)}`, 'info');
+  scanBot();
+  monitorBot();
+  S.bot.scanInterval = setInterval(scanBot, 60000);
+  S.bot.monitorInterval = setInterval(monitorBot, 5000);
+  renderBot();
+}
+function stopRealBot(){
+  if(!S.bot.running) return;
+  S.bot.running = false;
+  const st = $('botStatus'); if(st){ st.textContent = 'DURDURULDU'; st.className = 'pill stop'; }
+  const sb = $('startBotBtn'); if(sb) sb.classList.remove('hidden');
+  const stb = $('stopBotBtn'); if(stb) stb.classList.add('hidden');
+  if(S.bot.scanInterval){ clearInterval(S.bot.scanInterval); S.bot.scanInterval = null; }
+  if(S.bot.monitorInterval){ clearInterval(S.bot.monitorInterval); S.bot.monitorInterval = null; }
+  logBot(`⏹️ Bot durduruldu | Bakiye: $${S.bot.balance.toFixed(2)}`, 'warn');
+}
+
+/* BOT SCAN */
+async function scanBot(){
+  if(!S.bot.running) return;
+  if(S.bot.risk.circuit){ logBot('🚫 Devre kesici aktif', 'warn'); return; }
+  logBot('🔍 Piyasa taranıyor...', 'info');
+  try {
+    const tickers = await getTickers();
+    const activeSyms = tickers.list
+      .filter(t => t.symbol.endsWith('USDT') && parseFloat(t.turnover24h||0) > 2e6)
+      .sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h))
+      .slice(0, 40)
+      .map(t => t.symbol);
+    logBot(`📊 ${activeSyms.length} coin taranıyor...`, 'info');
+    const opps = [];
+    let sinyalSayisi = 0, filtreTakilan = 0;
+    for(const sym of activeSyms){
+      if(S.bot.positions.some(p => p.symbol === sym)) continue;
+      try {
+        const cd = await getKlines(sym, '15', 250);
+        if(!cd || cd.length < 100) continue;
+        const closed = cd.slice(0, -1);
+        const a = analyze(closed, {skipFvg:false, skipVp:true, skipOb:false, skipIchi:false, context:true});
+        if(a.decision === 'BEKLE') continue;
+        if(a.decision.includes('ZAYIF')) continue;
+        sinyalSayisi++;
+        if(parseFloat(a.confidence) < 55){ filtreTakilan++; continue; }
+        if(a.confirmations < 1){ filtreTakilan++; continue; }
+        if(a.blocked){ filtreTakilan++; continue; }
+        const signalSide = a.decision.includes('LONG') ? 'LONG' : 'SHORT';
+        if(a.filterDir !== 'NÖTR' && a.filterDir !== signalSide){ filtreTakilan++; continue; }
+        const ticker = tickers.list.find(t => t.symbol === sym);
+        const livePrice = ticker ? +ticker.lastPrice : a.price;
+        if(!Number.isFinite(livePrice) || livePrice <= 0) continue;
+        opps.push({symbol:sym, analysis:a, price:livePrice, conf:parseFloat(a.confidence)});
+      } catch(e){}
+    }
+    logBot(`✅ ${sinyalSayisi} sinyal, ${filtreTakilan} filtreye takıldı, ${opps.length} uygun`, opps.length > 0 ? 'success' : 'info');
+    opps.sort((a,b) => b.conf - a.conf);
+    const slots = S.bot.settings.maxPos - S.bot.positions.length;
+    for(const o of opps.slice(0, Math.max(0, slots))){
+      const dailyLoss = Math.max(0, S.bot.risk.dailyStart - S.bot.balance);
+      if(dailyLoss >= S.bot.risk.maxDailyLoss){ S.bot.risk.circuit = true; logBot('🚫 Günlük limit aşıldı', 'error'); notify('🚫 Devre Kesici', 'Günlük kayıp limiti aşıldı', 'error'); break; }
+      if(S.bot.positions.length >= S.bot.settings.maxPos) break;
+      const riskAmount = S.bot.balance * (S.bot.settings.riskPct/100);
+      const side = o.analysis.decision.includes('LONG') ? 'LONG' : 'SHORT';
+      const price = o.price;
+      const atr = o.analysis.atr;
+      const slDistPct = price * (S.bot.settings.slPct/100);
+      const slDistAtr = atr * 1.2;
+      const slDist = Math.max(slDistPct, slDistAtr);
+      const tpDistPct = price * (S.bot.settings.tpPct/100);
+      const tpDistMin = slDist * 1.5;
+      const tpDist = Math.max(tpDistPct, tpDistMin);
+      const sl = side === 'LONG' ? price - slDist : price + slDist;
+      const tp = side === 'LONG' ? price + tpDist : price - tpDist;
+      const qty = riskAmount / slDist;
+      const notional = qty * price;
+      const margin = notional / S.bot.settings.leverage;
+      if(margin > S.bot.balance * 0.9){ logBot(`⚠️ ${o.symbol} marj yüksek: $${margin.toFixed(2)}`, 'warn'); continue; }
+      let order = null;
+      if(S.bot.mode === 'live' || S.bot.mode === 'testnet'){
+        try {
+          const url = $('backendUrl').value || 'http://127.0.0.1:8765';
+          const r = await fetch(url + '/api/order', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({symbol:o.symbol, side, qty, price, sl, tp, leverage:S.bot.settings.leverage}), signal: timeoutSignal(10000)});
+          order = await r.json();
+          if(!r.ok || order.error) throw new Error(order.error || 'Order failed');
+        } catch(error){ logBot(`❌ Emir red: ${o.symbol} — ${error.message}`, 'error'); continue; }
+      }
+      S.bot.positions.push({
+        id: 'BP' + Date.now() + Math.random().toString(36).slice(2,5),
+        symbol: o.symbol, side, entry: price, current: price,
+        size: notional, qty, margin, sl, tp,
+        highest: price, lowest: price, trailing: true,
+        conf: o.conf, decision: o.analysis.decision,
+        openedAt: Date.now(), pnlPct: 0, pnlUsd: 0,
+        orderId: order?.orderId || null
+      });
+      const emoji = S.bot.mode === 'live' ? '🔴' : S.bot.mode === 'testnet' ? '🟠' : '🟢';
+      logBot(`${emoji} ${side}: ${o.symbol} @ $${fmt(price)} | Risk: $${riskAmount.toFixed(2)} | SL: $${fmt(sl)} | TP: $${fmt(tp)}`, 'success');
+      notify(`🟢 ${side} açıldı`, `${o.symbol} @ $${fmt(price)} • Risk $${riskAmount.toFixed(2)}`, 'success');
+      flashMoneyBox('portfolioBox');
+      if(S.tgToken && S.tgChat){ tgSend(`🟢 <b>${side}</b> — ${o.symbol}\n@ $${fmt(price)}\nRisk: $${riskAmount.toFixed(2)}`); }
+    }
+    if(!opps.length && sinyalSayisi === 0) logBot(`💤 ${activeSyms.length} coin tarandı, sinyal yok`, 'info');
+    renderBot();
+  } catch(e){
+    logBot('❌ Tarama hatası: ' + e.message, 'error');
+    console.error(e);
+  }
+}
+
+/* BOT MONITOR */
+async function monitorBot(){
+  if(!S.bot.running) return;
+  if(S.bot.mode === 'live' || S.bot.mode === 'testnet'){
+    try {
+      const url = $('backendUrl').value || 'http://127.0.0.1:8765';
+      const [posR, accR] = await Promise.all([fetch(url + '/api/positions', {signal: timeoutSignal(8000)}), fetch(url + '/api/account', {signal: timeoutSignal(8000)})]);
+      const data = await posR.json();
+      const account = await accR.json();
+      if(!S.bot.liveInitialized){ S.bot.balance = account.walletBalance || S.bot.balance; S.bot.risk.dailyStart = S.bot.balance; S.bot.risk.maxDailyLoss = S.bot.balance * (S.bot.settings.dailyLimit/100); S.bot.liveInitialized = true; }
+      else S.bot.balance = account.walletBalance || S.bot.balance;
+      S.bot.positions = (data.positions || []).map(p=>{
+        const entry = Number(p.avgPrice || 0);
+        const current = Number(p.markPrice || p.lastPrice || entry);
+        const notional = Number(p.size || 0) * entry;
+        const pnlUsd = Number(p.unrealisedPnl || 0);
+        return { id: 'LIVE_' + p.symbol, orderId: null, symbol: p.symbol, side: p.side === 'Buy' ? 'LONG' : 'SHORT', entry, current, size: notional, qty: Number(p.size || 0), margin: notional / S.bot.settings.leverage, sl: Number(p.stopLoss || 0), tp: Number(p.takeProfit || 0), highest: current, lowest: current, trailing: false, conf: 0, openedAt: Date.now(), pnlPct: notional ? pnlUsd/notional*100 : 0, pnlUsd };
+      });
+      renderBot();
+    } catch(error){ logBot('❌ Senkron: ' + error.message, 'error'); }
+    return;
+  }
+  if(!S.bot.positions.length){ renderBot(); return; }
+  const syms = [...new Set(S.bot.positions.map(p=>p.symbol))];
+  const prices = {};
+  await Promise.all(syms.map(async s=>{ try { const t = await getTicker(s); if(t) prices[s] = +t.lastPrice; } catch(e){} }));
+  const closed = [];
+  S.bot.positions.forEach(p=>{
+    const px = prices[p.symbol];
+    if(!px) return;
+    p.current = px;
+    if(p.side === 'LONG'){
+      p.pnlPct = ((px - p.entry)/p.entry)*100;
+      p.pnlUsd = p.size * (p.pnlPct/100);
+      if(px > p.highest) p.highest = px;
+      if(p.trailing && p.pnlPct > 0.3){ const newSL = p.highest * (1 - S.bot.settings.trailPct/100); if(newSL > p.sl) p.sl = newSL; }
+    } else {
+      p.pnlPct = ((p.entry - px)/p.entry)*100;
+      p.pnlUsd = p.size * (p.pnlPct/100);
+      if(px < p.lowest) p.lowest = px;
+      if(p.trailing && p.pnlPct > 0.3){ const newSL = p.lowest * (1 + S.bot.settings.trailPct/100); if(newSL < p.sl) p.sl = newSL; }
+    }
+  });
+  S.bot.positions = S.bot.positions.filter(p=>{
+    let exit = null, reason = '';
+    if(p.side === 'LONG'){ if(p.current <= p.sl){ exit = p.sl; reason = 'STOP'; } else if(p.current >= p.tp){ exit = p.tp; reason = 'TP'; } }
+    else { if(p.current >= p.sl){ exit = p.sl; reason = 'STOP'; } else if(p.current <= p.tp){ exit = p.tp; reason = 'TP'; } }
+    if(exit){
+      p.exit = exit; p.reason = reason; p.closedAt = Date.now();
+      p.pnlPct = p.side === 'LONG' ? ((exit - p.entry)/p.entry)*100 : ((p.entry - exit)/p.entry)*100;
+      p.pnlUsd = p.size * (p.pnlPct/100);
+      S.bot.balance += p.pnlUsd;
+      S.bot.history.push({...p});
+      closed.push(p);
+      logBot(`${reason === 'TP' ? '🎯' : '🛑'} ${reason}: ${p.symbol} ${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`, p.pnlUsd >= 0 ? 'success' : 'error');
+      notify(`${reason === 'TP' ? '🎯 Hedef' : '🛑 Stop'}`, `${p.symbol} ${p.pnlPct >= 0 ? '+' : ''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`, p.pnlUsd >= 0 ? 'success' : 'error');
+      flashMoneyBox('portfolioBox');
+      if(S.tgToken && S.tgChat){ tgSend(`${reason === 'TP' ? '🎯' : '🛑'} <b>${reason}</b> — ${p.symbol}\n${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`); }
+      if(p.pnlUsd < 0) S.bot.risk.consLosses++; else S.bot.risk.consLosses = 0;
+      return false;
+    }
+    return true;
+  });
+  if(closed.length) renderBot();
+  else updateMoneyBar();
+}
+
+/* BOT CLOSE */
+async function closeBotPos(id){
+  const p = S.bot.positions.find(x=>x.id === id);
+  if(!p) return;
+  if(!confirm(`${p.symbol} ${p.side} kapatılsın mı?`)) return;
+  if(S.bot.mode === 'live' || S.bot.mode === 'testnet'){
+    try {
+      const url = $('backendUrl').value || 'http://127.0.0.1:8765';
+      const r = await fetch(url + '/api/close', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({symbol:p.symbol}), signal: timeoutSignal(10000)});
+      const data = await r.json();
+      if(!r.ok || data.error) throw new Error(data.error || 'Close failed');
+      logBot('✋ Canlı kapatıldı: ' + p.symbol, 'warn');
+      await monitorBot();
+    } catch(error){ logBot('❌ Kapatılamadı: ' + error.message, 'error'); }
+    return;
+  }
+  p.exit = p.current; p.reason = 'MANUEL'; p.closedAt = Date.now();
+  p.pnlPct = p.side === 'LONG' ? ((p.current - p.entry)/p.entry)*100 : ((p.entry - p.current)/p.entry)*100;
+  p.pnlUsd = p.size * (p.pnlPct/100);
+  S.bot.balance += p.pnlUsd;
+  S.bot.history.push({...p});
+  S.bot.positions = S.bot.positions.filter(x=>x.id !== id);
+  logBot(`✋ Manuel kapatıldı: ${p.symbol} ${p.pnlPct.toFixed(2)}%`, 'warn');
+  renderBot();
+}
+
+/* PAPER */
+function loadPaper(){
+  S.paper.balance = parseFloat(localStorage.getItem('paperBalance')) || S.paper.cfg.balance;
+  S.paper.startBalance = parseFloat(localStorage.getItem('paperStartBalance')) || S.paper.cfg.balance;
+  S.paper.positions = safeJSON('paperPositions', []);
+  S.paper.history = safeJSON('paperHistory', []);
+  const b = $('paperBalance'); if(b) b.value = S.paper.cfg.balance;
+  const m = $('paperMaxPos'); if(m) m.value = S.paper.cfg.maxPos;
+  const c = $('paperMinConf'); if(c) c.value = S.paper.cfg.minConf;
+  const sc = $('paperScanCount'); if(sc) sc.value = S.paper.cfg.scanCount;
+}
+function savePaper(){
+  localStorage.setItem('paperBalance', S.paper.balance.toFixed(2));
+  localStorage.setItem('paperStartBalance', S.paper.startBalance.toFixed(2));
+  localStorage.setItem('paperPositions', JSON.stringify(S.paper.positions));
+  localStorage.setItem('paperHistory', JSON.stringify(S.paper.history));
+}
+function startPaper(){
+  if(S.paper.active) return;
+  const bal = parseFloat($('paperBalance').value) || 100;
+  S.paper.cfg.balance = bal;
+  S.paper.cfg.maxPos = parseInt($('paperMaxPos').value) || 5;
+  S.paper.cfg.minConf = parseInt($('paperMinConf').value) || 70;
+  S.paper.cfg.scanCount = parseInt($('paperScanCount').value) || 50;
+  if(S.paper.positions.length === 0){ S.paper.balance = bal; S.paper.startBalance = bal; }
+  localStorage.setItem('paperCfg', JSON.stringify(S.paper.cfg));
+  S.paper.active = true;
+  const st = $('paperStatus'); if(st){ st.textContent = 'ÇALIŞIYOR'; st.className = 'pill run'; }
+  const sb = $('paperStartBtn'); if(sb) sb.classList.add('hidden');
+  const stb = $('paperStopBtn'); if(stb) stb.classList.remove('hidden');
+  log('info', `Paper başlatıldı: $${bal}`, '', 'success');
+  scanPaper();
+  monitorPaper();
+  S.paper.interval = setInterval(scanPaper, 60000);
+  S.paper.monitor = setInterval(monitorPaper, 15000);
+}
+function stopPaper(){
+  S.paper.active = false;
+  const st = $('paperStatus'); if(st){ st.textContent = 'DURDURULDU'; st.className = 'pill stop'; }
+  const sb = $('paperStartBtn'); if(sb) sb.classList.remove('hidden');
+  const stb = $('paperStopBtn'); if(stb) stb.classList.add('hidden');
+  if(S.paper.interval){ clearInterval(S.paper.interval); S.paper.interval = null; }
+  if(S.paper.monitor){ clearInterval(S.paper.monitor); S.paper.monitor = null; }
+  log('info', 'Paper durduruldu', '');
+}
+function paperPosSize(){ return Math.max(1, S.paper.balance / Math.max(1, S.paper.cfg.maxPos)); }
+async function scanPaper(){
+  if(!S.paper.active) return;
+  try {
+    const tickers = await getTickers();
+    const active = tickers.list.filter(t => t.symbol.endsWith('USDT') && parseFloat(t.turnover24h||0) > 2e6).sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h)).slice(0, S.paper.cfg.scanCount);
+    const currentSyms = new Set(S.paper.positions.map(p=>p.symbol));
+    const opps = [];
+    for(const t of active){
+      if(currentSyms.has(t.symbol)) continue;
+      try {
+        const cd = await getKlines(t.symbol, '15', 300);
+        if(!cd || cd.length < 100) continue;
+        const a = analyze(cd, {skipFvg:true, skipVp:true, skipOb:false, skipIchi:false, context:false});
+        const conf = parseFloat(a.confidence);
+        if(conf < S.paper.cfg.minConf) continue;
+        if(!['GÜÇLÜ LONG','GÜÇLÜ SHORT','LONG','SHORT'].includes(a.decision)) continue;
+        if(a.blocked) continue;
+        opps.push({symbol:t.symbol, ...a});
+      } catch(e){}
+    }
+    opps.sort((a,b) => parseFloat(b.confidence) - parseFloat(a.confidence));
+    const slots = S.paper.cfg.maxPos - S.paper.positions.length;
+    for(const o of opps.slice(0, Math.max(0, slots))){
+      const side = o.decision.includes('LONG') ? 'LONG' : 'SHORT';
+      S.paper.positions.push({ id: 'PP' + Date.now() + Math.random().toString(36).slice(2,5), symbol: o.symbol, side, entry: o.price, current: o.price, size: paperPosSize(), sl: side === 'LONG' ? o.stopLong : o.stopShort, tp: side === 'LONG' ? o.tpLong : o.tpShort, conf: o.confidence, openedAt: Date.now(), pnlPct: 0, pnlUsd: 0 });
+      log('signal', `${side === 'LONG' ? '🟢' : '🔴'} Paper: ${o.symbol}`, `$${fmt(o.price)} • %${o.confidence}`);
+    }
+    savePaper();
+    renderPaper();
+  } catch(e){ log('error', 'Paper tarama: ' + e.message, ''); }
+}
+async function monitorPaper(){
+  if(!S.paper.positions.length){ renderPaper(); return; }
+  const syms = [...new Set(S.paper.positions.map(p=>p.symbol))];
+  const prices = {};
+  await Promise.all(syms.map(async s=>{ try { const t = await getTicker(s); if(t) prices[s] = +t.lastPrice; } catch(e){} }));
+  const closed = [];
+  S.paper.positions = S.paper.positions.filter(p=>{
+    const px = prices[p.symbol];
+    if(!px) return true;
+    p.current = px;
+    p.pnlPct = p.side === 'LONG' ? ((px - p.entry)/p.entry)*100 : ((p.entry - px)/p.entry)*100;
+    p.pnlUsd = p.size * (p.pnlPct/100);
+    let exit = null, reason = '';
+    if(p.side === 'LONG'){ if(px <= p.sl){ exit = p.sl; reason = 'STOP'; } else if(px >= p.tp){ exit = p.tp; reason = 'TP'; } }
+    else { if(px >= p.sl){ exit = p.sl; reason = 'STOP'; } else if(px <= p.tp){ exit = p.tp; reason = 'TP'; } }
+    if(exit){
+      p.exit = exit; p.reason = reason; p.closedAt = Date.now();
+      p.pnlPct = p.side === 'LONG' ? ((exit - p.entry)/p.entry)*100 : ((p.entry - exit)/p.entry)*100;
+      p.pnlUsd = p.size * (p.pnlPct/100);
+      S.paper.balance += p.pnlUsd;
+      closed.push(p);
+      log('signal', `${reason === 'TP' ? '🎯' : '🛑'} Paper ${reason}: ${p.symbol}`, `${p.pnlPct >= 0 ? '+' : ''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`, p.pnlUsd >= 0 ? 'success' : 'error');
+      return false;
+    }
+    return true;
+  });
+  closed.forEach(c => S.paper.history.push(c));
+  if(S.paper.history.length > 200) S.paper.history = S.paper.history.slice(-200);
+  savePaper();
+  renderPaper();
+}
+function renderPaper(){
+  const open = S.paper.positions.reduce((s,p)=>s+(p.pnlUsd||0), 0);
+  const wins = S.paper.history.filter(p=>p.pnlUsd > 0).length;
+  const losses = S.paper.history.filter(p=>p.pnlUsd < 0).length;
+  const wr = (wins + losses) > 0 ? (wins/(wins+losses)*100) : 0;
+  const ret = S.paper.startBalance > 0 ? ((S.paper.balance - S.paper.startBalance)/S.paper.startBalance*100) : 0;
+  const m = $('paperMetrics');
+  if(m) m.innerHTML = `<div class="metric"><div class="metric-l">Bakiye</div><div class="metric-v ${ret >= 0 ? 'g' : 'r'}">$${S.paper.balance.toFixed(2)}</div></div><div class="metric"><div class="metric-l">Getiri</div><div class="metric-v ${ret >= 0 ? 'g' : 'r'}">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div></div><div class="metric"><div class="metric-l">Kazanma</div><div class="metric-v ${wr >= 50 ? 'g' : 'r'}">${wr.toFixed(0)}%</div></div><div class="metric"><div class="metric-l">Açık</div><div class="metric-v">${S.paper.positions.length}</div></div><div class="metric"><div class="metric-l">Açık K/Z</div><div class="metric-v ${open >= 0 ? 'g' : 'r'}">${fmtUsd(open)}</div></div><div class="metric"><div class="metric-l">Kapanan</div><div class="metric-v">${S.paper.history.length}</div></div>`;
+  const pOpen = $('paperOpen');
+  if(pOpen){
+    if(!S.paper.positions.length) pOpen.innerHTML = '<div class="empty-msg">Açık pozisyon yok</div>';
+    else pOpen.innerHTML = S.paper.positions.map(p=>`<div class="row" style="flex-direction:column;align-items:stretch;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><div><span style="font-family:var(--mono);font-weight:800">${p.symbol.replace('USDT','')}</span> <span class="${p.side === 'LONG' ? 'side-long' : 'side-short'}" style="font-size:10px;margin-left:6px">${p.side}</span></div><button class="btn btn-d btn-sm" onclick="closePaper('${p.id}')" style="padding:3px 8px;font-size:9px">KAPAT</button></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-family:var(--mono);font-size:10px"><div><div style="color:var(--ink3)">Giriş</div><div>$${fmt(p.entry)}</div></div><div><div style="color:var(--ink3)">Şimdi</div><div>$${fmt(p.current)}</div></div><div><div style="color:var(--ink3)">SL</div><div class="text-red">$${fmt(p.sl)}</div></div><div><div style="color:var(--ink3)">TP</div><div class="text-green">$${fmt(p.tp)}</div></div></div><div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:8px;border-top:1px solid var(--rim);font-size:11px"><span style="color:var(--ink3)">Güven %${p.conf}</span><span class="row-val ${p.pnlPct >= 0 ? 'g' : 'r'}">${p.pnlPct >= 0 ? '+' : ''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})</span></div></div>`).join('');
+  }
+}
+function closePaper(id){
+  const p = S.paper.positions.find(x=>x.id === id);
+  if(!p) return;
+  if(!confirm(`${p.symbol} kapatılsın mı?`)) return;
+  p.exit = p.current; p.reason = 'MANUEL'; p.closedAt = Date.now();
+  p.pnlPct = p.side === 'LONG' ? ((p.current - p.entry)/p.entry)*100 : ((p.entry - p.current)/p.entry)*100;
+  p.pnlUsd = p.size * (p.pnlPct/100);
+  S.paper.balance += p.pnlUsd;
+  S.paper.history.push(p);
+  S.paper.positions = S.paper.positions.filter(x=>x.id !== id);
+  savePaper();
+  renderPaper();
+}
+
+/* RADAR */
+let radarRunning = false;
+async function runRadar(){
+  if(radarRunning) return;
+  radarRunning = true;
+  const el = $('radarResults');
+  if(el) el.innerHTML = '<div class="bot-empty"><span class="spinner"></span> Taranıyor...</div>';
+  try {
+    const tickers = await getTickers();
+    const active = tickers.list.filter(t => t.symbol.endsWith('USDT') && parseFloat(t.turnover24h||0) > 1e7).sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h)).slice(0, 40);
+    const results = [];
+    for(const t of active){
+      try {
+        const cd = await getKlines(t.symbol, S.tf, 300);
+        if(!cd || cd.length < 100) continue;
+        const a = analyze(cd, {skipFvg:true, skipVp:true, skipOb:false, skipIchi:false, context:false});
+        if(a.decCls !== 'wait') results.push({symbol:t.symbol, ...a});
+      } catch(e){}
+    }
+    results.sort((a,b) => +b.confidence - +a.confidence);
+    if(el){
+      if(!results.length){ el.innerHTML = '<div class="empty-msg">Sinyal yok (' + active.length + ' coin tarandı)</div>'; }
+      else el.innerHTML = results.slice(0, 30).map(r=>{
+        const cls = r.decCls === 'long' ? 'long' : 'short';
+        return `<div class="radar-item ${cls}" onclick="loadSymbol('${r.symbol}'); switchWS('chart')"><div><div style="font-family:var(--mono);font-weight:800;font-size:13px">${r.symbol.replace('USDT','')}</div><div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:3px">$${fmt(r.price)} • RSI ${r.rsi.toFixed(0)} • ADX ${r.adx.toFixed(0)}</div></div><div style="text-align:right"><div style="font-family:var(--mono);font-weight:900;font-size:12px;color:${r.decCls === 'long' ? 'var(--green)' : 'var(--red)'}">${r.decIcon} ${r.decision}</div><div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:3px">${r.confirmations}/5 • %${r.confidence}</div></div></div>`;
+      }).join('');
+    }
+    const badge = $('radarBadge');
+    if(badge){
+      const strong = results.filter(r => r.decision.includes('GÜÇLÜ')).length;
+      if(strong > 0){ badge.textContent = strong; badge.classList.remove('hidden'); }
+      else badge.classList.add('hidden');
+    }
+    log('signal', '🎯 Radar tamamlandı', results.length + ' sinyal');
+  } catch(e){ if(el) el.innerHTML = '<div class="empty-msg">Hata: ' + e.message + '</div>'; }
+  radarRunning = false;
+}
+
+/* EĞİTİM */
+const EDU = {
+  trend: {title: 'Trend Takibi', desc: 'EMA + ADX + Yapı', sections: [['Piyasa Yapısı', 'HH+HL yükseliş, LH+LL düşüş. Kırılım olmadan karşı yön sinyali yalnızca düzeltmedir.'],['Trend Gücü', 'EMA20/50/200 hizası + ADX > 25 güçlü trend. ADX yön söylemez, +DI/-DI ile birlikte okunur.'],['İşlem Planı', 'Üst TF yön + alt TF kırılım/retest. Kapanış teyidi olmadan giriş yapılmaz.']]},
+  risk: {title: 'Risk Yönetimi', desc: 'Pozisyon boyutu + R', sections: [['Pozisyon Boyutu', 'Kabul edilen zarar = bakiye × risk%. Miktar = zarar / stop mesafesi.'],['R-Multiple', 'Her işlem -1R / +2R cinsinden ölçülür. Win rate tek başına yetmez.'],['Portföy Riski', 'Korelasyonlu coinlerde toplam risk = tek işlem limiti. Kaldıraç = risk değil.']]},
+  ob: {title: 'Order Block & FVG', desc: 'Displacement + likidite', sections: [['OB Doğrulama', 'Güçlü displacement öncesindeki son karşıt mum. Likidite süpürmesi + yapı kırılımı gerekli.'],['FVG Mantığı', 'Üç mum arası dengesizlik. HTF uyumu + kapanış teyidi olmadan giriş değildir.'],['Giriş & Geçersizlik', 'OB/FVG kesişimi ilgi alanı. Rejection veya yapı değişimi sonrası planlanır.']]},
+  backtest: {title: 'Backtest Okuma', desc: 'PF + DD + örneklem', sections: [['Metrikler', 'Expectancy, profit factor, max DD, ardışık kayıp hep birlikte okunur.'],['Örneklem', 'En az 100 işlem, trend + yatay dönem. In-sample/out-of-sample ayrımı.'],['Gerçekçilik', 'Slippage, spread, gecikme ekle. Equity tek işleme bağlı olmamalı.']]},
+  grafik: {title: 'Grafik Okuma', desc: 'Bağlam + seviye + senaryo', sections: [['Bağlam', 'HTF yön → işlem TF → tetikleyici. Bu sıra atlanmaz.'],['Seviye Kalitesi', 'Çoklu temas + hacim + güçlü kapanış seviyeyi güçlendirir.'],['Senaryo', 'Kırılım, retest, yanılma noktası önceden yazılır.']]},
+  mum: {title: 'Mum Analizi', desc: 'Gövde + fitil + hacim', sections: [['Gövde & Fitil', 'Büyük gövde kararlılık, uzun fitil reddi gösterir.'],['Formasyon Şartı', 'Engulfing için gövde sarımı, doji için kararsızlık + takip mumu.'],['Doğrulama', 'Kapanış + takip mumu + hacim üçlüsü.']]},
+  gostergeler: {title: 'Teknik Göstergeler', desc: 'Farklı sorular için farklı araç', sections: [['Rol Ayrımı', 'EMA/Ichimoku yön, RSI/MACD momentum, ATR/BB volatilite, VWAP akış.'],['Çelişki', 'Trend yukarı + RSI aşırı alım otomatik short değildir.'],['Puanlama', 'Her gösterge bağımsız kanıt; aynı veri iki kez sayılmaz.']]},
+  psikoloji: {title: 'İşlem Psikolojisi', desc: 'Disiplin + kayıp serisi', sections: [['İşlem Öncesi', 'Giriş, stop, hedef, risk cümlesi yazılı olmalı.'],['Kayıp Serisi', '2-3 kayıp stratejinin bozulduğu anlamına gelmez. Boyut artırma.'],['Günlük', 'Gerekçe + duygu + sonuç. Plan dışı davranışı işaretle.']]}
+};
+function renderEdu(){
+  const grid = $('eduGrid');
+  if(!grid || grid.dataset.done) return;
+  grid.dataset.done = '1';
+  grid.innerHTML = Object.entries(EDU).map(([k,v],i)=>`<div class="edu-card" onclick="openEdu('${k}')"><div style="font-family:var(--mono);font-weight:900;color:var(--cyan);font-size:14px;margin-bottom:8px">${String(i+1).padStart(2,'0')}</div><div style="font-weight:800;font-size:13px;margin-bottom:4px">${v.title}</div><div style="font-size:11px;color:var(--ink3)">${v.desc}</div></div>`).join('');
+}
+function openEdu(key){
+  const l = EDU[key]; if(!l) return;
+  const sections = l.sections.map((s,i)=>`<div style="padding:14px;background:var(--bg3);border-radius:8px;margin-bottom:10px;border-left:3px solid var(--cyan)"><div style="font-weight:800;font-size:12px;margin-bottom:6px;color:var(--cyan)">${i+1}. ${s[0]}</div><div style="font-size:12px;color:var(--ink2);line-height:1.7">${s[1]}</div></div>`).join('');
+  let modal = document.getElementById('eduDetailModal');
+  if(!modal){
+    modal = document.createElement('div');
+    modal.className = 'mo';
+    modal.id = 'eduDetailModal';
+    modal.onclick = (e)=>{ if(e.target === modal) modal.classList.remove('on'); };
+    modal.innerHTML = '<div class="mb"><div class="mh"><div class="mt" id="eduDetailTitle"></div><button class="mc" onclick="document.getElementById(\'eduDetailModal\').classList.remove(\'on\')">×</button></div><div id="eduDetailBody"></div></div>';
+    document.body.appendChild(modal);
+  }
+  $('eduDetailTitle').textContent = '✦ ' + l.title;
+  $('eduDetailBody').innerHTML = sections;
+  modal.classList.add('on');
+}
+
+/* BACKTEST */
+async function runBacktest(){
+  const btn = $('btBtn'), el = $('btResults');
+  if(!btn || !el) return;
+  btn.disabled = true; btn.textContent = 'ÇALIŞIYOR...';
+  el.innerHTML = '<div class="text-c" style="padding:20px"><span class="spinner"></span></div>';
+  try {
+    const cd = await getKlines(S.symbol, S.tf, 1000);
+    if(!cd || cd.length < 300) throw new Error('Yetersiz veri');
+    const START = 1000, POS = 0.1, FEE = 0.001;
+    let bal = START, open = null;
+    const trades = [], equity = [{time: cd[200].time, value: START}];
+    let peak = START, maxDD = 0, wins = 0, losses = 0;
+    for(let i = 200; i < cd.length - 5; i += 5){
+      const m = cd[i];
+      if(open){
+        let exit = null, reason = '';
+        if(open.side === 'LONG'){ if(m.low <= open.sl){ exit = open.sl; reason = 'STOP'; } else if(m.high >= open.tp){ exit = open.tp; reason = 'TP'; } }
+        else { if(m.high >= open.sl){ exit = open.sl; reason = 'STOP'; } else if(m.low <= open.tp){ exit = open.tp; reason = 'TP'; } }
+        if(exit){
+          const qty = open.size / open.entry;
+          const brut = open.side === 'LONG' ? (exit - open.entry)*qty : (open.entry - exit)*qty;
+          const net = brut - open.size * FEE * 2;
+          bal += net;
+          if(net > 0) wins++; else losses++;
+          trades.push({...open, exit, reason, pnl: net});
+          open = null;
+        }
+      }
+      if(!open){
+        try {
+          const a = analyze(cd.slice(0, i), {skipFvg:true, skipVp:true, skipOb:false, skipIchi:false, context:false});
+          if(a.decision.includes('GÜÇLÜ LONG') || a.decision === 'LONG') open = {side:'LONG', entry: m.close, size: bal*POS, sl: a.stopLong, tp: a.tpLong};
+          else if(a.decision.includes('GÜÇLÜ SHORT') || a.decision === 'SHORT') open = {side:'SHORT', entry: m.close, size: bal*POS, sl: a.stopShort, tp: a.tpShort};
+        } catch(e){}
+      }
+      if(bal > peak) peak = bal;
+      const dd = ((peak - bal)/peak)*100;
+      if(dd > maxDD) maxDD = dd;
+      if(i % 25 === 0) equity.push({time: m.time, value: bal});
+    }
+    if(open){
+      const last = cd[cd.length-1].close;
+      const qty = open.size / open.entry;
+      const brut = open.side === 'LONG' ? (last - open.entry)*qty : (open.entry - last)*qty;
+      const net = brut - open.size * FEE * 2;
+      bal += net;
+      trades.push({...open, exit: last, reason: 'AÇIK', pnl: net});
+    }
+    const total = trades.length;
+    const wr = total > 0 ? (wins/total*100) : 0;
+    const tw = trades.filter(t => t.pnl > 0).reduce((s,t) => s+t.pnl, 0);
+    const tl = Math.abs(trades.filter(t => t.pnl < 0).reduce((s,t) => s+t.pnl, 0));
+    const pf = tl > 0 ? tw/tl : (tw > 0 ? 999 : 0);
+    const ret = ((bal - START)/START)*100;
+    const cls = bal > START ? 'text-green' : 'text-red';
+    const canvasId = 'eqChart_' + Date.now();
+    el.innerHTML = `<div class="text-c mb12"><div style="font-family:var(--mono);font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em">FİNAL BAKİYE</div><div style="font-family:var(--mono);font-size:32px;font-weight:900;margin-top:6px" class="${cls}">$${bal.toFixed(2)}</div><div style="font-family:var(--mono);font-size:13px;font-weight:700" class="${cls}">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div></div><div style="background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:12px"><canvas id="${canvasId}" style="width:100%;height:120px"></canvas></div><div class="mgrid"><div class="metric"><div class="metric-l">İşlem</div><div class="metric-v">${total}</div></div><div class="metric"><div class="metric-l">Win Rate</div><div class="metric-v ${wr >= 50 ? 'g' : 'r'}">${wr.toFixed(1)}%</div></div><div class="metric"><div class="metric-l">Profit Factor</div><div class="metric-v ${pf >= 1 ? 'g' : 'r'}">${pf.toFixed(2)}</div></div><div class="metric"><div class="metric-l">Max DD</div><div class="metric-v r">-${maxDD.toFixed(1)}%</div></div></div>`;
+    const canvas = $(canvasId);
+    if(canvas && equity.length > 1){
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.scale(dpr, dpr);
+      const w = canvas.offsetWidth, h = canvas.offsetHeight;
+      const minV = Math.min(...equity.map(e => e.value));
+      const maxV = Math.max(...equity.map(e => e.value));
+      const range = maxV - minV || 1;
+      const isUp = bal > START;
+      ctx.strokeStyle = 'rgba(0,180,255,.06)'; ctx.lineWidth = 1;
+      for(let i = 0; i <= 4; i++){ const y = (h/4) * i; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, isUp ? 'rgba(0,230,118,.35)' : 'rgba(255,61,92,.35)');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      equity.forEach((e, i)=>{ const x = (i/(equity.length-1))*w; const y = h - 10 - ((e.value - minV)/range)*(h - 20); if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath();
+      equity.forEach((e, i)=>{ const x = (i/(equity.length-1))*w; const y = h - 10 - ((e.value - minV)/range)*(h - 20); if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      ctx.strokeStyle = isUp ? '#00e676' : '#ff3d5c'; ctx.lineWidth = 2; ctx.stroke();
+    }
+    log('signal', '💰 Backtest tamamlandı', '$' + bal.toFixed(2));
+  } catch(e){ el.innerHTML = '<div class="alert d">Hata: ' + e.message + '</div>'; }
+  btn.disabled = false; btn.textContent = 'SİMÜLASYONU ÇALIŞTIR';
 }
 
 /* CLOCK */
@@ -1698,7 +2448,7 @@ setInterval(()=>{
 /* INIT */
 async function init(){
   try {
-    console.log('[NEBULA v8.1] Başlatılıyor...');
+    console.log('[NEBULA v8.2] Başlatılıyor...');
     applyTheme(S.theme);
     const sb = $('soundBtn'); if(sb) sb.textContent = S.sound ? '🔊' : '🔇';
     initChart();
@@ -1706,14 +2456,46 @@ async function init(){
     initTape('BTCUSDT');
     updateOBBadge();
     updateNotifBadge();
-    if(typeof updateMoneyBar === 'function') updateMoneyBar();
-    log('info', 'NEBULA v8.1 başlatıldı', '');
-    
+    updateMoneyBar();
+    log('info', 'NEBULA v8.2 başlatıldı', '');
+
+    // Event listener'lar (capital + risk profili)
+    const capitalInput = $('botCapital');
+    if(capitalInput) capitalInput.addEventListener('input', updateRiskSummary);
+    const profileSelect = $('riskProfile');
+    if(profileSelect) profileSelect.addEventListener('change', applyRiskProfile);
+    ['riskPct','leverage','maxPos','dailyLimit','tpPct','slPct','trailPct'].forEach(id=>{
+      const el = $(id);
+      if(el){
+        el.addEventListener('input', () => {
+          const p = $('riskProfile');
+          if(p) p.value = 'custom';
+          updateRiskSummary();
+        });
+      }
+    });
+    ['paperBalance','paperMaxPos','paperMinConf','paperScanCount'].forEach(id=>{
+      const el = $(id);
+      if(el){
+        el.addEventListener('change', () => {
+          if(id === 'paperBalance') S.paper.cfg.balance = parseFloat(el.value) || 100;
+          if(id === 'paperMaxPos') S.paper.cfg.maxPos = parseInt(el.value) || 5;
+          if(id === 'paperMinConf') S.paper.cfg.minConf = parseInt(el.value) || 70;
+          if(id === 'paperScanCount') S.paper.cfg.scanCount = parseInt(el.value) || 50;
+          localStorage.setItem('paperCfg', JSON.stringify(S.paper.cfg));
+        });
+      }
+    });
+    const bt = $('btBtn'); if(bt) bt.onclick = runBacktest;
+    updateRiskSummary();
+    loadPaper();
+    renderEdu();
+
     await loadBtcDir();
     await loadSymbol('BTCUSDT', true);
     loadMarketExplorer();
-    console.log('[NEBULA v8.1] Hazır ✓');
-    
+    console.log('[NEBULA v8.2] Hazır ✓');
+
     setInterval(loadMarketExplorer, 8000);
     setInterval(loadBtcDir, 120000);
     setInterval(()=>loadSymbol(S.symbol, false).catch(()=>{}), 20000);
@@ -1760,7 +2542,7 @@ async function init(){
       }
       if(changed){ localStorage.setItem('obAlarms', JSON.stringify(S.obAlarms)); updateOBBadge(); }
     }, 30000);
-    
+
     const ms = $('meSearch');
     if(ms) ms.addEventListener('input', ()=>renderMarketExplorer());
     window.addEventListener('resize', ()=>{ if(S.chart) S.chart.applyOptions({width: $('mainChart').clientWidth}); });
@@ -1776,1025 +2558,12 @@ async function init(){
       if(e.key === 'l' || e.key === 'L') openLogs();
       if(e.key === 'a' || e.key === 'A') openSettings();
     });
-    
-    console.log('[NEBULA v8.1] Init tamamlandı ✓');
-  } catch(e){
-    console.error('[NEBULA] Init hatası:', e);
-  }
+
+    console.log('[NEBULA v8.2] Init tamamlandı ✓');
+  } catch(e){ console.error('[NEBULA] Init hatası:', e); }
 }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
-</script>
-<script>
-/* ═══════════════════════════════════════════════════════
-   NEBULA Terminal v8.1 — KISIM 2/2
-   Bot + Paper + Eğitim + Backtest + Risk Yönetimi
-   ═══════════════════════════════════════════════════════ */
-
-/* ═══ MONEY BAR ═══ */
-function updateMoneyBar(){
-  const open = S.bot.positions.reduce((s,p)=>s+(p.pnlUsd||0),0);
-  const total = S.bot.balance + open;
-  const pEl = $('portfolioVal'), cEl = $('cashVal');
-  if(pEl){
-    pEl.textContent = '$' + total.toFixed(2);
-    pEl.style.color = total >= S.bot.startBalance ? 'var(--green)' : 'var(--red)';
-  }
-  if(cEl) cEl.textContent = '$' + S.bot.balance.toFixed(2);
-}
-function flashMoneyBox(id){
-  const el = $(id);
-  if(el){ el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); }
-}
-
-/* ═══ BOT LOG ═══ */
-function logBot(msg, level='info'){
-  S.bot.logs.push({time:Date.now(), msg, level});
-  if(S.bot.logs.length > 500) S.bot.logs = S.bot.logs.slice(-500);
-  const el = $('botLog'); if(!el) return;
-  const cls = level === 'success' ? 's' : level === 'error' ? 'e' : level === 'warn' ? 'w' : 'i';
-  el.insertAdjacentHTML('beforeend', `<div class="log-line"><span class="t">[${nowStr()}]</span> <span class="${cls}">${esc(msg)}</span></div>`);
-  el.scrollTop = el.scrollHeight;
-}
-function clearBotLog(){ S.bot.logs = []; const el = $('botLog'); if(el) el.innerHTML = ''; }
-
-/* ═══ RİSK PROFİLİ ═══ */
-function applyRiskProfile(){
-  const profile = $('riskProfile')?.value || 'balanced';
-  const presets = {
-    conservative: {leverage:2, riskPct:0.5, tpPct:0.8, slPct:0.4, trailPct:0.2, maxPos:2, dailyLimit:2},
-    balanced: {leverage:3, riskPct:1, tpPct:1.2, slPct:0.6, trailPct:0.3, maxPos:3, dailyLimit:3},
-    aggressive: {leverage:5, riskPct:2, tpPct:2, slPct:1, trailPct:0.5, maxPos:5, dailyLimit:5}
-  };
-  if(profile === 'custom'){ updateRiskSummary(); return; }
-  const p = presets[profile];
-  if(!p) return;
-  const setV = (id, v) => { const el = $(id); if(el) el.value = v; };
-  setV('leverage', p.leverage);
-  setV('riskPct', p.riskPct);
-  setV('tpPct', p.tpPct);
-  setV('slPct', p.slPct);
-  setV('trailPct', p.trailPct);
-  setV('maxPos', p.maxPos);
-  setV('dailyLimit', p.dailyLimit);
-  updateRiskSummary();
-}
-
-/* ═══ RİSK ÖZETİ ═══ */
-function updateRiskSummary(){
-  const el = $('riskSummary'); if(!el) return;
-  const capital = parseFloat($('botCapital')?.value || 100);
-  const riskPct = parseFloat($('riskPct')?.value || 1);
-  const leverage = parseInt($('leverage')?.value || 3);
-  const maxPos = parseInt($('maxPos')?.value || 3);
-  const dailyLimit = parseFloat($('dailyLimit')?.value || 3);
-  
-  const riskAmount = capital * (riskPct/100);
-  const dailyLossMax = capital * (dailyLimit/100);
-  const positionValue = riskAmount * leverage;
-  const totalRisk = riskAmount * maxPos;
-  
-  el.innerHTML = `💰 <b>Sermaye:</b> $${capital.toFixed(2)} &nbsp;•&nbsp; 
-    ⚠️ <b>İşlem başı risk:</b> $${riskAmount.toFixed(2)} (%${riskPct}) &nbsp;•&nbsp; 
-    📊 <b>Pozisyon değeri:</b> $${positionValue.toFixed(2)} (${leverage}x) &nbsp;•&nbsp; 
-    🛑 <b>Maks günlük kayıp:</b> $${dailyLossMax.toFixed(2)} (%${dailyLimit}) &nbsp;•&nbsp; 
-    🎯 <b>Toplam risk:</b> $${totalRisk.toFixed(2)} (${maxPos} poz)`;
-}
-
-/* ═══ BOT RENDER ═══ */
-function renderBot(){
-  const bal = S.bot.balance;
-  const open = S.bot.positions.reduce((s,p)=>s+(p.pnlUsd||0),0);
-  const dailyPnl = bal + open - S.bot.risk.dailyStart;
-  
-  const balEl = $('botBalance');
-  if(balEl){ balEl.textContent = '$' + bal.toFixed(2); balEl.className = 'metric-v ' + (bal >= S.bot.startBalance ? 'g' : 'r'); }
-  const pnlEl = $('botPnl');
-  if(pnlEl){ pnlEl.textContent = fmtUsd(dailyPnl); pnlEl.className = 'metric-v ' + (dailyPnl >= 0 ? 'g' : 'r'); }
-  const opEl = $('botOpen'); if(opEl) opEl.textContent = S.bot.positions.length;
-  
-  const hist = S.bot.history;
-  const wins = hist.filter(p=>p.pnlUsd > 0).length;
-  const losses = hist.filter(p=>p.pnlUsd < 0).length;
-  const total = hist.length;
-  const wr = (wins + losses) > 0 ? (wins/(wins+losses)*100) : 0;
-  const tw = hist.filter(p=>p.pnlUsd > 0).reduce((s,p)=>s+p.pnlUsd, 0);
-  const tl = Math.abs(hist.filter(p=>p.pnlUsd < 0).reduce((s,p)=>s+p.pnlUsd, 0));
-  const pf = tl > 0 ? tw/tl : (tw > 0 ? 999 : 0);
-  
-  const wrEl = $('botWR');
-  if(wrEl){ wrEl.textContent = total > 0 ? wr.toFixed(1) + '%' : '—'; wrEl.className = 'metric-v ' + (wr >= 50 ? 'g' : 'r'); }
-  const pfEl = $('botPF');
-  if(pfEl){ pfEl.textContent = total > 0 ? pf.toFixed(2) : '—'; pfEl.className = 'metric-v ' + (pf >= 1 ? 'g' : 'r'); }
-  const tEl = $('botTotal'); if(tEl) tEl.textContent = total;
-  
-  updateMoneyBar();
-  updateBotPanel();
-}
-
-/* ═══ BOT BAŞLAT ═══ */
-async function startRealBot(){
-  if(S.bot.running) return;
-  const mode = $('botMode')?.value || 'paper';
-  
-  if(mode === 'live' || mode === 'testnet'){
-    let config;
-    try {
-      const url = $('backendUrl').value || 'http://127.0.0.1:8765';
-      const r = await fetch(url + '/api/config', {signal: timeoutSignal(5000)});
-      config = await r.json();
-    } catch(e){
-      notify('❌ Backend bulunamadı', 'Testnet/Canlı için backend çalışmalı', 'error');
-      return;
-    }
-    if(!config.liveTrading){ notify('🛡️ Emir modu kapalı', '.env içinde LIVE_TRADING=1 olmalı', 'warn'); return; }
-    if(mode === 'testnet' && !config.testnet){ notify('❌ Ağ uyuşmazlığı', 'BYBIT_TESTNET=1 olmalı', 'error'); return; }
-    if(!config.testnet && !confirm('⚠️ MAINNET CANLI EMİR\n\nGerçek para riski! Devam?')) return;
-  }
-  
-  let capital = parseFloat($('botCapital')?.value || 100);
-  if(isNaN(capital) || capital < 10){ capital = 10; }
-  if(capital > 1000000){ capital = 1000000; }
-  
-  S.bot.capital = capital;
-  S.bot.balance = capital;
-  S.bot.startBalance = capital;
-  S.bot.mode = mode;
-  S.bot.running = true;
-  S.bot.risk.dailyStart = capital;
-  S.bot.risk.consLosses = 0;
-  S.bot.risk.circuit = false;
-  S.bot.settings.leverage = +($('leverage')?.value || 3);
-  S.bot.settings.tpPct = +($('tpPct')?.value || 1.2);
-  S.bot.settings.slPct = +($('slPct')?.value || 0.6);
-  S.bot.settings.trailPct = +($('trailPct')?.value || 0.3);
-  S.bot.settings.maxPos = +($('maxPos')?.value || 3);
-  S.bot.settings.riskPct = +($('riskPct')?.value || 1);
-  S.bot.settings.dailyLimit = +($('dailyLimit')?.value || 3);
-  S.bot.risk.maxDailyLoss = capital * (S.bot.settings.dailyLimit/100);
-  S.bot.liveInitialized = false;
-  
-  const st = $('botStatus'); if(st){ st.textContent = 'ÇALIŞIYOR'; st.className = 'pill run'; }
-  const sb = $('startBotBtn'); if(sb) sb.classList.add('hidden');
-  const stb = $('stopBotBtn'); if(stb) stb.classList.remove('hidden');
-  
-  logBot(mode === 'live' ? '🔴 MAINNET başlatıldı' : mode === 'testnet' ? '🟠 TESTNET başlatıldı' : '🧪 PAPER başlatıldı', mode === 'paper' ? 'success' : 'warn');
-  logBot(`💰 Sermaye: $${capital.toFixed(2)} | Risk %${S.bot.settings.riskPct} | Kaldıraç ${S.bot.settings.leverage}x`, 'info');
-  logBot(`🛡️ İşlem başı risk: $${(capital * S.bot.settings.riskPct/100).toFixed(2)} | Günlük limit: $${S.bot.risk.maxDailyLoss.toFixed(2)}`, 'info');
-  
-  scanBot();
-  monitorBot();
-  S.bot.scanInterval = setInterval(scanBot, 60000);
-  S.bot.monitorInterval = setInterval(monitorBot, 5000);
-  renderBot();
-}
-
-function stopRealBot(){
-  if(!S.bot.running) return;
-  S.bot.running = false;
-  const st = $('botStatus'); if(st){ st.textContent = 'DURDURULDU'; st.className = 'pill stop'; }
-  const sb = $('startBotBtn'); if(sb) sb.classList.remove('hidden');
-  const stb = $('stopBotBtn'); if(stb) stb.classList.add('hidden');
-  if(S.bot.scanInterval){ clearInterval(S.bot.scanInterval); S.bot.scanInterval = null; }
-  if(S.bot.monitorInterval){ clearInterval(S.bot.monitorInterval); S.bot.monitorInterval = null; }
-  logBot(`⏹️ Bot durduruldu | Bakiye: $${S.bot.balance.toFixed(2)}`, 'warn');
-}
-
-/* ═══ BOT SCAN — v8.1 GEVŞETİLMİŞ FİLTRELER ═══ */
-async function scanBot(){
-  if(!S.bot.running) return;
-  if(S.bot.risk.circuit){ logBot('🚫 Devre kesici aktif', 'warn'); return; }
-  logBot('🔍 Piyasa taranıyor...', 'info');
-  
-  try {
-    // Hacimli 40 coini çek
-    const tickers = await getTickers();
-    const activeSyms = tickers.list
-      .filter(t => t.symbol.endsWith('USDT') && parseFloat(t.turnover24h||0) > 2e6)
-      .sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h))
-      .slice(0, 40)
-      .map(t => t.symbol);
-    
-    logBot(`📊 ${activeSyms.length} coin taranıyor...`, 'info');
-    
-    const opps = [];
-    let sinyalSayisi = 0, filtreTakilan = 0;
-    
-    for(const sym of activeSyms){
-      if(S.bot.positions.some(p => p.symbol === sym)) continue;
-      try {
-        const cd = await getKlines(sym, '15', 250);
-        if(!cd || cd.length < 100) continue;
-        const closed = cd.slice(0, -1);
-        const a = analyze(closed, {skipFvg:false, skipVp:true, skipOb:false, skipIchi:false, context:true});
-        
-        if(a.decision === 'BEKLE') continue;
-        if(a.decision.includes('ZAYIF')) continue;
-        
-        sinyalSayisi++;
-        
-        // Gevşetilmiş filtreler
-        if(parseFloat(a.confidence) < 55){ filtreTakilan++; continue; }
-        if(a.confirmations < 1){ filtreTakilan++; continue; }
-        if(a.blocked){ filtreTakilan++; continue; }
-        
-        const signalSide = a.decision.includes('LONG') ? 'LONG' : 'SHORT';
-        if(a.filterDir !== 'NÖTR' && a.filterDir !== signalSide){ filtreTakilan++; continue; }
-        
-        const ticker = tickers.list.find(t => t.symbol === sym);
-        const livePrice = ticker ? +ticker.lastPrice : a.price;
-        if(!Number.isFinite(livePrice) || livePrice <= 0) continue;
-        
-        opps.push({symbol:sym, analysis:a, price:livePrice, conf:parseFloat(a.confidence)});
-      } catch(e){}
-    }
-    
-    logBot(`✅ ${sinyalSayisi} sinyal, ${filtreTakilan} filtreye takıldı, ${opps.length} uygun`, opps.length > 0 ? 'success' : 'info');
-    
-    opps.sort((a,b) => b.conf - a.conf);
-    const slots = S.bot.settings.maxPos - S.bot.positions.length;
-    
-    for(const o of opps.slice(0, Math.max(0, slots))){
-      const dailyLoss = Math.max(0, S.bot.risk.dailyStart - S.bot.balance);
-      if(dailyLoss >= S.bot.risk.maxDailyLoss){
-        S.bot.risk.circuit = true;
-        logBot('🚫 Günlük limit aşıldı', 'error');
-        notify('🚫 Devre Kesici', 'Günlük kayıp limiti aşıldı', 'error');
-        break;
-      }
-      if(S.bot.positions.length >= S.bot.settings.maxPos) break;
-      
-      const riskAmount = S.bot.balance * (S.bot.settings.riskPct/100);
-      const side = o.analysis.decision.includes('LONG') ? 'LONG' : 'SHORT';
-      const price = o.price;
-      const atr = o.analysis.atr;
-      
-      const slDistPct = price * (S.bot.settings.slPct/100);
-      const slDistAtr = atr * 1.2;
-      const slDist = Math.max(slDistPct, slDistAtr);
-      
-      const tpDistPct = price * (S.bot.settings.tpPct/100);
-      const tpDistMin = slDist * 1.5;
-      const tpDist = Math.max(tpDistPct, tpDistMin);
-      
-      const sl = side === 'LONG' ? price - slDist : price + slDist;
-      const tp = side === 'LONG' ? price + tpDist : price - tpDist;
-      
-      const qty = riskAmount / slDist;
-      const notional = qty * price;
-      const margin = notional / S.bot.settings.leverage;
-      
-      if(margin > S.bot.balance * 0.9){
-        logBot(`⚠️ ${o.symbol} marj yüksek: $${margin.toFixed(2)}`, 'warn');
-        continue;
-      }
-      
-      let order = null;
-      if(S.bot.mode === 'live' || S.bot.mode === 'testnet'){
-        try {
-          const url = $('backendUrl').value || 'http://127.0.0.1:8765';
-          const r = await fetch(url + '/api/order', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({symbol:o.symbol, side, qty, price, sl, tp, leverage:S.bot.settings.leverage}),
-            signal: timeoutSignal(10000)
-          });
-          order = await r.json();
-          if(!r.ok || order.error) throw new Error(order.error || 'Order failed');
-        } catch(error){
-          logBot(`❌ Emir red: ${o.symbol} — ${error.message}`, 'error');
-          continue;
-        }
-      }
-      
-      S.bot.positions.push({
-        id: 'BP' + Date.now() + Math.random().toString(36).slice(2,5),
-        symbol: o.symbol, side, entry: price, current: price,
-        size: notional, qty, margin, sl, tp,
-        highest: price, lowest: price, trailing: true,
-        conf: o.conf, decision: o.analysis.decision,
-        openedAt: Date.now(), pnlPct: 0, pnlUsd: 0,
-        orderId: order?.orderId || null
-      });
-      
-      const emoji = S.bot.mode === 'live' ? '🔴' : S.bot.mode === 'testnet' ? '🟠' : '🟢';
-      logBot(`${emoji} ${side}: ${o.symbol} @ $${fmt(price)} | Risk: $${riskAmount.toFixed(2)} | SL: $${fmt(sl)} | TP: $${fmt(tp)}`, 'success');
-      notify(`🟢 ${side} açıldı`, `${o.symbol} @ $${fmt(price)} • Risk $${riskAmount.toFixed(2)}`, 'success');
-      flashMoneyBox('portfolioBox');
-      
-      if(S.tgToken && S.tgChat){
-        tgSend(`🟢 <b>${side}</b> — ${o.symbol}\n@ $${fmt(price)}\nRisk: $${riskAmount.toFixed(2)}`);
-      }
-    }
-    
-    if(!opps.length && sinyalSayisi === 0) logBot(`💤 ${activeSyms.length} coin tarandı, sinyal yok`, 'info');
-    renderBot();
-  } catch(e){
-    logBot('❌ Tarama hatası: ' + e.message, 'error');
-    console.error(e);
-  }
-}
-
-/* ═══ BOT MONITOR ═══ */
-async function monitorBot(){
-  if(!S.bot.running) return;
-  
-  if(S.bot.mode === 'live' || S.bot.mode === 'testnet'){
-    try {
-      const url = $('backendUrl').value || 'http://127.0.0.1:8765';
-      const [posR, accR] = await Promise.all([
-        fetch(url + '/api/positions', {signal: timeoutSignal(8000)}),
-        fetch(url + '/api/account', {signal: timeoutSignal(8000)})
-      ]);
-      const data = await posR.json();
-      const account = await accR.json();
-      
-      if(!S.bot.liveInitialized){
-        S.bot.balance = account.walletBalance || S.bot.balance;
-        S.bot.risk.dailyStart = S.bot.balance;
-        S.bot.risk.maxDailyLoss = S.bot.balance * (S.bot.settings.dailyLimit/100);
-        S.bot.liveInitialized = true;
-      } else {
-        S.bot.balance = account.walletBalance || S.bot.balance;
-      }
-      
-      S.bot.positions = (data.positions || []).map(p=>{
-        const entry = Number(p.avgPrice || 0);
-        const current = Number(p.markPrice || p.lastPrice || entry);
-        const notional = Number(p.size || 0) * entry;
-        const pnlUsd = Number(p.unrealisedPnl || 0);
-        return {
-          id: 'LIVE_' + p.symbol, orderId: null, symbol: p.symbol,
-          side: p.side === 'Buy' ? 'LONG' : 'SHORT',
-          entry, current, size: notional, qty: Number(p.size || 0),
-          margin: notional / S.bot.settings.leverage,
-          sl: Number(p.stopLoss || 0), tp: Number(p.takeProfit || 0),
-          highest: current, lowest: current, trailing: false, conf: 0,
-          openedAt: Date.now(),
-          pnlPct: notional ? pnlUsd/notional*100 : 0, pnlUsd
-        };
-      });
-      renderBot();
-    } catch(error){
-      logBot('❌ Senkron: ' + error.message, 'error');
-    }
-    return;
-  }
-  
-  if(!S.bot.positions.length){ renderBot(); return; }
-  
-  const syms = [...new Set(S.bot.positions.map(p=>p.symbol))];
-  const prices = {};
-  await Promise.all(syms.map(async s=>{
-    try { const t = await getTicker(s); if(t) prices[s] = +t.lastPrice; } catch(e){}
-  }));
-  
-  const closed = [];
-  S.bot.positions.forEach(p=>{
-    const px = prices[p.symbol];
-    if(!px) return;
-    p.current = px;
-    
-    if(p.side === 'LONG'){
-      p.pnlPct = ((px - p.entry)/p.entry)*100;
-      p.pnlUsd = p.size * (p.pnlPct/100);
-      if(px > p.highest) p.highest = px;
-      if(p.trailing && p.pnlPct > 0.3){
-        const newSL = p.highest * (1 - S.bot.settings.trailPct/100);
-        if(newSL > p.sl) p.sl = newSL;
-      }
-    } else {
-      p.pnlPct = ((p.entry - px)/p.entry)*100;
-      p.pnlUsd = p.size * (p.pnlPct/100);
-      if(px < p.lowest) p.lowest = px;
-      if(p.trailing && p.pnlPct > 0.3){
-        const newSL = p.lowest * (1 + S.bot.settings.trailPct/100);
-        if(newSL < p.sl) p.sl = newSL;
-      }
-    }
-  });
-  
-  S.bot.positions = S.bot.positions.filter(p=>{
-    let exit = null, reason = '';
-    if(p.side === 'LONG'){
-      if(p.current <= p.sl){ exit = p.sl; reason = 'STOP'; }
-      else if(p.current >= p.tp){ exit = p.tp; reason = 'TP'; }
-    } else {
-      if(p.current >= p.sl){ exit = p.sl; reason = 'STOP'; }
-      else if(p.current <= p.tp){ exit = p.tp; reason = 'TP'; }
-    }
-    
-    if(exit){
-      p.exit = exit;
-      p.reason = reason;
-      p.closedAt = Date.now();
-      p.pnlPct = p.side === 'LONG' ? ((exit - p.entry)/p.entry)*100 : ((p.entry - exit)/p.entry)*100;
-      p.pnlUsd = p.size * (p.pnlPct/100);
-      S.bot.balance += p.pnlUsd;
-      S.bot.history.push({...p});
-      closed.push(p);
-      
-      logBot(`${reason === 'TP' ? '🎯' : '🛑'} ${reason}: ${p.symbol} ${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`, p.pnlUsd >= 0 ? 'success' : 'error');
-      notify(`${reason === 'TP' ? '🎯 Hedef' : '🛑 Stop'}`, `${p.symbol} ${p.pnlPct >= 0 ? '+' : ''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`, p.pnlUsd >= 0 ? 'success' : 'error');
-      flashMoneyBox('portfolioBox');
-      
-      if(S.tgToken && S.tgChat){
-        tgSend(`${reason === 'TP' ? '🎯' : '🛑'} <b>${reason}</b> — ${p.symbol}\n${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`);
-      }
-      
-      if(p.pnlUsd < 0) S.bot.risk.consLosses++;
-      else S.bot.risk.consLosses = 0;
-      return false;
-    }
-    return true;
-  });
-  
-  if(closed.length) renderBot();
-  else updateMoneyBar();
-}
-
-/* ═══ BOT MANUEL KAPAT ═══ */
-async function closeBotPos(id){
-  const p = S.bot.positions.find(x=>x.id === id);
-  if(!p) return;
-  if(!confirm(`${p.symbol} ${p.side} kapatılsın mı?`)) return;
-  
-  if(S.bot.mode === 'live' || S.bot.mode === 'testnet'){
-    try {
-      const url = $('backendUrl').value || 'http://127.0.0.1:8765';
-      const r = await fetch(url + '/api/close', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({symbol:p.symbol}),
-        signal: timeoutSignal(10000)
-      });
-      const data = await r.json();
-      if(!r.ok || data.error) throw new Error(data.error || 'Close failed');
-      logBot('✋ Canlı kapatıldı: ' + p.symbol, 'warn');
-      await monitorBot();
-    } catch(error){
-      logBot('❌ Kapatılamadı: ' + error.message, 'error');
-    }
-    return;
-  }
-  
-  p.exit = p.current;
-  p.reason = 'MANUEL';
-  p.closedAt = Date.now();
-  p.pnlPct = p.side === 'LONG' ? ((p.current - p.entry)/p.entry)*100 : ((p.entry - p.current)/p.entry)*100;
-  p.pnlUsd = p.size * (p.pnlPct/100);
-  S.bot.balance += p.pnlUsd;
-  S.bot.history.push({...p});
-  S.bot.positions = S.bot.positions.filter(x=>x.id !== id);
-  logBot(`✋ Manuel kapatıldı: ${p.symbol} ${p.pnlPct.toFixed(2)}%`, 'warn');
-  renderBot();
-}
-
-/* ═══════════════════════════════════════════════════════
-   PAPER TRADING
-   ═══════════════════════════════════════════════════════ */
-function loadPaper(){
-  S.paper.balance = parseFloat(localStorage.getItem('paperBalance')) || S.paper.cfg.balance;
-  S.paper.startBalance = parseFloat(localStorage.getItem('paperStartBalance')) || S.paper.cfg.balance;
-  S.paper.positions = safeJSON('paperPositions', []);
-  S.paper.history = safeJSON('paperHistory', []);
-  const b = $('paperBalance'); if(b) b.value = S.paper.cfg.balance;
-  const m = $('paperMaxPos'); if(m) m.value = S.paper.cfg.maxPos;
-  const c = $('paperMinConf'); if(c) c.value = S.paper.cfg.minConf;
-  const sc = $('paperScanCount'); if(sc) sc.value = S.paper.cfg.scanCount;
-}
-function savePaper(){
-  localStorage.setItem('paperBalance', S.paper.balance.toFixed(2));
-  localStorage.setItem('paperStartBalance', S.paper.startBalance.toFixed(2));
-  localStorage.setItem('paperPositions', JSON.stringify(S.paper.positions));
-  localStorage.setItem('paperHistory', JSON.stringify(S.paper.history));
-}
-function startPaper(){
-  if(S.paper.active) return;
-  const bal = parseFloat($('paperBalance').value) || 100;
-  S.paper.cfg.balance = bal;
-  S.paper.cfg.maxPos = parseInt($('paperMaxPos').value) || 5;
-  S.paper.cfg.minConf = parseInt($('paperMinConf').value) || 70;
-  S.paper.cfg.scanCount = parseInt($('paperScanCount').value) || 50;
-  if(S.paper.positions.length === 0){
-    S.paper.balance = bal;
-    S.paper.startBalance = bal;
-  }
-  localStorage.setItem('paperCfg', JSON.stringify(S.paper.cfg));
-  S.paper.active = true;
-  const st = $('paperStatus'); if(st){ st.textContent = 'ÇALIŞIYOR'; st.className = 'pill run'; }
-  const sb = $('paperStartBtn'); if(sb) sb.classList.add('hidden');
-  const stb = $('paperStopBtn'); if(stb) stb.classList.remove('hidden');
-  log('info', `Paper başlatıldı: $${bal}`, '', 'success');
-  scanPaper();
-  monitorPaper();
-  S.paper.interval = setInterval(scanPaper, 60000);
-  S.paper.monitor = setInterval(monitorPaper, 15000);
-}
-function stopPaper(){
-  S.paper.active = false;
-  const st = $('paperStatus'); if(st){ st.textContent = 'DURDURULDU'; st.className = 'pill stop'; }
-  const sb = $('paperStartBtn'); if(sb) sb.classList.remove('hidden');
-  const stb = $('paperStopBtn'); if(stb) stb.classList.add('hidden');
-  if(S.paper.interval){ clearInterval(S.paper.interval); S.paper.interval = null; }
-  if(S.paper.monitor){ clearInterval(S.paper.monitor); S.paper.monitor = null; }
-  log('info', 'Paper durduruldu', '');
-}
-function paperPosSize(){
-  return Math.max(1, S.paper.balance / Math.max(1, S.paper.cfg.maxPos));
-}
-
-async function scanPaper(){
-  if(!S.paper.active) return;
-  try {
-    const tickers = await getTickers();
-    const active = tickers.list
-      .filter(t => t.symbol.endsWith('USDT') && parseFloat(t.turnover24h||0) > 2e6)
-      .sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h))
-      .slice(0, S.paper.cfg.scanCount);
-    
-    const currentSyms = new Set(S.paper.positions.map(p=>p.symbol));
-    const opps = [];
-    
-    for(const t of active){
-      if(currentSyms.has(t.symbol)) continue;
-      try {
-        const cd = await getKlines(t.symbol, '15', 300);
-        if(!cd || cd.length < 100) continue;
-        const a = analyze(cd, {skipFvg:true, skipVp:true, skipOb:false, skipIchi:false, context:false});
-        const conf = parseFloat(a.confidence);
-        if(conf < S.paper.cfg.minConf) continue;
-        if(!['GÜÇLÜ LONG','GÜÇLÜ SHORT','LONG','SHORT'].includes(a.decision)) continue;
-        if(a.blocked) continue;
-        opps.push({symbol:t.symbol, ...a});
-      } catch(e){}
-    }
-    
-    opps.sort((a,b) => parseFloat(b.confidence) - parseFloat(a.confidence));
-    const slots = S.paper.cfg.maxPos - S.paper.positions.length;
-    
-    for(const o of opps.slice(0, Math.max(0, slots))){
-      const side = o.decision.includes('LONG') ? 'LONG' : 'SHORT';
-      S.paper.positions.push({
-        id: 'PP' + Date.now() + Math.random().toString(36).slice(2,5),
-        symbol: o.symbol, side, entry: o.price, current: o.price,
-        size: paperPosSize(),
-        sl: side === 'LONG' ? o.stopLong : o.stopShort,
-        tp: side === 'LONG' ? o.tpLong : o.tpShort,
-        conf: o.confidence,
-        openedAt: Date.now(), pnlPct: 0, pnlUsd: 0
-      });
-      log('signal', `${side === 'LONG' ? '🟢' : '🔴'} Paper: ${o.symbol}`, `$${fmt(o.price)} • %${o.confidence}`);
-    }
-    savePaper();
-    renderPaper();
-  } catch(e){ log('error', 'Paper tarama: ' + e.message, ''); }
-}
-
-async function monitorPaper(){
-  if(!S.paper.positions.length){ renderPaper(); return; }
-  const syms = [...new Set(S.paper.positions.map(p=>p.symbol))];
-  const prices = {};
-  await Promise.all(syms.map(async s=>{
-    try { const t = await getTicker(s); if(t) prices[s] = +t.lastPrice; } catch(e){}
-  }));
-  
-  const closed = [];
-  S.paper.positions = S.paper.positions.filter(p=>{
-    const px = prices[p.symbol];
-    if(!px) return true;
-    p.current = px;
-    p.pnlPct = p.side === 'LONG' ? ((px - p.entry)/p.entry)*100 : ((p.entry - px)/p.entry)*100;
-    p.pnlUsd = p.size * (p.pnlPct/100);
-    
-    let exit = null, reason = '';
-    if(p.side === 'LONG'){
-      if(px <= p.sl){ exit = p.sl; reason = 'STOP'; }
-      else if(px >= p.tp){ exit = p.tp; reason = 'TP'; }
-    } else {
-      if(px >= p.sl){ exit = p.sl; reason = 'STOP'; }
-      else if(px <= p.tp){ exit = p.tp; reason = 'TP'; }
-    }
-    
-    if(exit){
-      p.exit = exit;
-      p.reason = reason;
-      p.closedAt = Date.now();
-      p.pnlPct = p.side === 'LONG' ? ((exit - p.entry)/p.entry)*100 : ((p.entry - exit)/p.entry)*100;
-      p.pnlUsd = p.size * (p.pnlPct/100);
-      S.paper.balance += p.pnlUsd;
-      closed.push(p);
-      log('signal', `${reason === 'TP' ? '🎯' : '🛑'} Paper ${reason}: ${p.symbol}`, `${p.pnlPct >= 0 ? '+' : ''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})`, p.pnlUsd >= 0 ? 'success' : 'error');
-      return false;
-    }
-    return true;
-  });
-  
-  closed.forEach(c => S.paper.history.push(c));
-  if(S.paper.history.length > 200) S.paper.history = S.paper.history.slice(-200);
-  savePaper();
-  renderPaper();
-}
-
-function renderPaper(){
-  const open = S.paper.positions.reduce((s,p)=>s+(p.pnlUsd||0), 0);
-  const wins = S.paper.history.filter(p=>p.pnlUsd > 0).length;
-  const losses = S.paper.history.filter(p=>p.pnlUsd < 0).length;
-  const wr = (wins + losses) > 0 ? (wins/(wins+losses)*100) : 0;
-  const ret = S.paper.startBalance > 0 ? ((S.paper.balance - S.paper.startBalance)/S.paper.startBalance*100) : 0;
-  
-  const m = $('paperMetrics');
-  if(m) m.innerHTML = `
-    <div class="metric"><div class="metric-l">Bakiye</div><div class="metric-v ${ret >= 0 ? 'g' : 'r'}">$${S.paper.balance.toFixed(2)}</div></div>
-    <div class="metric"><div class="metric-l">Getiri</div><div class="metric-v ${ret >= 0 ? 'g' : 'r'}">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div></div>
-    <div class="metric"><div class="metric-l">Kazanma</div><div class="metric-v ${wr >= 50 ? 'g' : 'r'}">${wr.toFixed(0)}%</div></div>
-    <div class="metric"><div class="metric-l">Açık</div><div class="metric-v">${S.paper.positions.length}</div></div>
-    <div class="metric"><div class="metric-l">Açık K/Z</div><div class="metric-v ${open >= 0 ? 'g' : 'r'}">${fmtUsd(open)}</div></div>
-    <div class="metric"><div class="metric-l">Kapanan</div><div class="metric-v">${S.paper.history.length}</div></div>`;
-  
-  const pOpen = $('paperOpen');
-  if(pOpen){
-    if(!S.paper.positions.length) pOpen.innerHTML = '<div class="empty-msg">Açık pozisyon yok</div>';
-    else pOpen.innerHTML = S.paper.positions.map(p=>`
-      <div class="row" style="flex-direction:column;align-items:stretch;padding:12px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-          <div><span style="font-family:var(--mono);font-weight:800">${p.symbol.replace('USDT','')}</span> <span class="${p.side === 'LONG' ? 'side-long' : 'side-short'}" style="font-size:10px;margin-left:6px">${p.side}</span></div>
-          <button class="btn btn-d btn-sm" onclick="closePaper('${p.id}')" style="padding:3px 8px;font-size:9px">KAPAT</button>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-family:var(--mono);font-size:10px">
-          <div><div style="color:var(--ink3)">Giriş</div><div>$${fmt(p.entry)}</div></div>
-          <div><div style="color:var(--ink3)">Şimdi</div><div>$${fmt(p.current)}</div></div>
-          <div><div style="color:var(--ink3)">SL</div><div class="text-red">$${fmt(p.sl)}</div></div>
-          <div><div style="color:var(--ink3)">TP</div><div class="text-green">$${fmt(p.tp)}</div></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:8px;border-top:1px solid var(--rim);font-size:11px">
-          <span style="color:var(--ink3)">Güven %${p.conf}</span>
-          <span class="row-val ${p.pnlPct >= 0 ? 'g' : 'r'}">${p.pnlPct >= 0 ? '+' : ''}${p.pnlPct.toFixed(2)}% (${fmtUsd(p.pnlUsd)})</span>
-        </div>
-      </div>`).join('');
-  }
-}
-
-function closePaper(id){
-  const p = S.paper.positions.find(x=>x.id === id);
-  if(!p) return;
-  if(!confirm(`${p.symbol} kapatılsın mı?`)) return;
-  p.exit = p.current;
-  p.reason = 'MANUEL';
-  p.closedAt = Date.now();
-  p.pnlPct = p.side === 'LONG' ? ((p.current - p.entry)/p.entry)*100 : ((p.entry - p.current)/p.entry)*100;
-  p.pnlUsd = p.size * (p.pnlPct/100);
-  S.paper.balance += p.pnlUsd;
-  S.paper.history.push(p);
-  S.paper.positions = S.paper.positions.filter(x=>x.id !== id);
-  savePaper();
-  renderPaper();
-}
-
-/* ═══════════════════════════════════════════════════════
-   RADAR
-   ═══════════════════════════════════════════════════════ */
-let radarRunning = false;
-async function runRadar(){
-  if(radarRunning) return;
-  radarRunning = true;
-  const el = $('radarResults');
-  if(el) el.innerHTML = '<div class="bot-empty"><span class="spinner"></span> Taranıyor...</div>';
-  
-  try {
-    const tickers = await getTickers();
-    const active = tickers.list
-      .filter(t => t.symbol.endsWith('USDT') && parseFloat(t.turnover24h||0) > 1e7)
-      .sort((a,b) => parseFloat(b.turnover24h) - parseFloat(a.turnover24h))
-      .slice(0, 40);
-    
-    const results = [];
-    for(const t of active){
-      try {
-        const cd = await getKlines(t.symbol, S.tf, 300);
-        if(!cd || cd.length < 100) continue;
-        const a = analyze(cd, {skipFvg:true, skipVp:true, skipOb:false, skipIchi:false, context:false});
-        if(a.decCls !== 'wait') results.push({symbol:t.symbol, ...a});
-      } catch(e){}
-    }
-    
-    results.sort((a,b) => +b.confidence - +a.confidence);
-    
-    if(el){
-      if(!results.length){
-        el.innerHTML = '<div class="empty-msg">Sinyal yok (' + active.length + ' coin tarandı)</div>';
-      } else {
-        el.innerHTML = results.slice(0, 30).map(r=>{
-          const cls = r.decCls === 'long' ? 'long' : 'short';
-          return `<div class="radar-item ${cls}" onclick="loadSymbol('${r.symbol}'); switchWS('chart')">
-            <div>
-              <div style="font-family:var(--mono);font-weight:800;font-size:13px">${r.symbol.replace('USDT','')}</div>
-              <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:3px">$${fmt(r.price)} • RSI ${r.rsi.toFixed(0)} • ADX ${r.adx.toFixed(0)}</div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-family:var(--mono);font-weight:900;font-size:12px;color:${r.decCls === 'long' ? 'var(--green)' : 'var(--red)'}">${r.decIcon} ${r.decision}</div>
-              <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:3px">${r.confirmations}/5 • %${r.confidence}</div>
-            </div>
-          </div>`;
-        }).join('');
-      }
-    }
-    
-    const badge = $('radarBadge');
-    if(badge){
-      const strong = results.filter(r => r.decision.includes('GÜÇLÜ')).length;
-      if(strong > 0){ badge.textContent = strong; badge.classList.remove('hidden'); }
-      else badge.classList.add('hidden');
-    }
-    
-    log('signal', '🎯 Radar tamamlandı', results.length + ' sinyal');
-  } catch(e){
-    if(el) el.innerHTML = '<div class="empty-msg">Hata: ' + e.message + '</div>';
-  }
-  radarRunning = false;
-}
-
-/* ═══════════════════════════════════════════════════════
-   EĞİTİM
-   ═══════════════════════════════════════════════════════ */
-const EDU = {
-  trend: {title: 'Trend Takibi', desc: 'EMA + ADX + Yapı', sections: [
-    ['Piyasa Yapısı', 'HH+HL yükseliş, LH+LL düşüş. Kırılım olmadan karşı yön sinyali yalnızca düzeltmedir.'],
-    ['Trend Gücü', 'EMA20/50/200 hizası + ADX > 25 güçlü trend. ADX yön söylemez, +DI/-DI ile birlikte okunur.'],
-    ['İşlem Planı', 'Üst TF yön + alt TF kırılım/retest. Kapanış teyidi olmadan giriş yapılmaz.']
-  ]},
-  risk: {title: 'Risk Yönetimi', desc: 'Pozisyon boyutu + R', sections: [
-    ['Pozisyon Boyutu', 'Kabul edilen zarar = bakiye × risk%. Miktar = zarar / stop mesafesi.'],
-    ['R-Multiple', 'Her işlem -1R / +2R cinsinden ölçülür. Win rate tek başına yetmez.'],
-    ['Portföy Riski', 'Korelasyonlu coinlerde toplam risk = tek işlem limiti. Kaldıraç = risk değil.']
-  ]},
-  ob: {title: 'Order Block & FVG', desc: 'Displacement + likidite', sections: [
-    ['OB Doğrulama', 'Güçlü displacement öncesindeki son karşıt mum. Likidite süpürmesi + yapı kırılımı gerekli.'],
-    ['FVG Mantığı', 'Üç mum arası dengesizlik. HTF uyumu + kapanış teyidi olmadan giriş değildir.'],
-    ['Giriş & Geçersizlik', 'OB/FVG kesişimi ilgi alanı. Rejection veya yapı değişimi sonrası planlanır.']
-  ]},
-  backtest: {title: 'Backtest Okuma', desc: 'PF + DD + örneklem', sections: [
-    ['Metrikler', 'Expectancy, profit factor, max DD, ardışık kayıp hep birlikte okunur.'],
-    ['Örneklem', 'En az 100 işlem, trend + yatay dönem. In-sample/out-of-sample ayrımı.'],
-    ['Gerçekçilik', 'Slippage, spread, gecikme ekle. Equity tek işleme bağlı olmamalı.']
-  ]},
-  grafik: {title: 'Grafik Okuma', desc: 'Bağlam + seviye + senaryo', sections: [
-    ['Bağlam', 'HTF yön → işlem TF → tetikleyici. Bu sıra atlanmaz.'],
-    ['Seviye Kalitesi', 'Çoklu temas + hacim + güçlü kapanış seviyeyi güçlendirir.'],
-    ['Senaryo', 'Kırılım, retest, yanılma noktası önceden yazılır.']
-  ]},
-  mum: {title: 'Mum Analizi', desc: 'Gövde + fitil + hacim', sections: [
-    ['Gövde & Fitil', 'Büyük gövde kararlılık, uzun fitil reddi gösterir.'],
-    ['Formasyon Şartı', 'Engulfing için gövde sarımı, doji için kararsızlık + takip mumu.'],
-    ['Doğrulama', 'Kapanış + takip mumu + hacim üçlüsü.']
-  ]},
-  gostergeler: {title: 'Teknik Göstergeler', desc: 'Farklı sorular için farklı araç', sections: [
-    ['Rol Ayrımı', 'EMA/Ichimoku yön, RSI/MACD momentum, ATR/BB volatilite, VWAP akış.'],
-    ['Çelişki', 'Trend yukarı + RSI aşırı alım otomatik short değildir.'],
-    ['Puanlama', 'Her gösterge bağımsız kanıt; aynı veri iki kez sayılmaz.']
-  ]},
-  psikoloji: {title: 'İşlem Psikolojisi', desc: 'Disiplin + kayıp serisi', sections: [
-    ['İşlem Öncesi', 'Giriş, stop, hedef, risk cümlesi yazılı olmalı.'],
-    ['Kayıp Serisi', '2-3 kayıp stratejinin bozulduğu anlamına gelmez. Boyut artırma.'],
-    ['Günlük', 'Gerekçe + duygu + sonuç. Plan dışı davranışı işaretle.']
-  ]}
-};
-
-function renderEdu(){
-  const grid = $('eduGrid');
-  if(!grid || grid.dataset.done) return;
-  grid.dataset.done = '1';
-  grid.innerHTML = Object.entries(EDU).map(([k,v],i)=>`
-    <div class="edu-card" onclick="openEdu('${k}')">
-      <div style="font-family:var(--mono);font-weight:900;color:var(--cyan);font-size:14px;margin-bottom:8px">${String(i+1).padStart(2,'0')}</div>
-      <div style="font-weight:800;font-size:13px;margin-bottom:4px">${v.title}</div>
-      <div style="font-size:11px;color:var(--ink3)">${v.desc}</div>
-    </div>`).join('');
-}
-
-function openEdu(key){
-  const l = EDU[key];
-  if(!l) return;
-  const sections = l.sections.map((s,i)=>`
-    <div style="padding:14px;background:var(--bg3);border-radius:8px;margin-bottom:10px;border-left:3px solid var(--cyan)">
-      <div style="font-weight:800;font-size:12px;margin-bottom:6px;color:var(--cyan)">${i+1}. ${s[0]}</div>
-      <div style="font-size:12px;color:var(--ink2);line-height:1.7">${s[1]}</div>
-    </div>`).join('');
-  
-  let modal = document.getElementById('eduDetailModal');
-  if(!modal){
-    modal = document.createElement('div');
-    modal.className = 'mo';
-    modal.id = 'eduDetailModal';
-    modal.onclick = (e)=>{ if(e.target === modal) modal.classList.remove('on'); };
-    modal.innerHTML = '<div class="mb"><div class="mh"><div class="mt" id="eduDetailTitle"></div><button class="mc" onclick="document.getElementById(\'eduDetailModal\').classList.remove(\'on\')">×</button></div><div id="eduDetailBody"></div></div>';
-    document.body.appendChild(modal);
-  }
-  $('eduDetailTitle').textContent = '✦ ' + l.title;
-  $('eduDetailBody').innerHTML = sections;
-  modal.classList.add('on');
-}
-
-/* ═══════════════════════════════════════════════════════
-   BACKTEST
-   ═══════════════════════════════════════════════════════ */
-async function runBacktest(){
-  const btn = $('btBtn'), el = $('btResults');
-  if(!btn || !el) return;
-  btn.disabled = true;
-  btn.textContent = 'ÇALIŞIYOR...';
-  el.innerHTML = '<div class="text-c" style="padding:20px"><span class="spinner"></span></div>';
-  
-  try {
-    const cd = await getKlines(S.symbol, S.tf, 1000);
-    if(!cd || cd.length < 300) throw new Error('Yetersiz veri (min 300 mum)');
-    
-    const START = 1000, POS = 0.1, FEE = 0.001;
-    let bal = START, open = null;
-    const trades = [], equity = [{time: cd[200].time, value: START}];
-    let peak = START, maxDD = 0;
-    let wins = 0, losses = 0;
-    
-    for(let i = 200; i < cd.length - 5; i += 5){
-      const m = cd[i];
-      
-      if(open){
-        let exit = null, reason = '';
-        if(open.side === 'LONG'){
-          if(m.low <= open.sl){ exit = open.sl; reason = 'STOP'; }
-          else if(m.high >= open.tp){ exit = open.tp; reason = 'TP'; }
-        } else {
-          if(m.high >= open.sl){ exit = open.sl; reason = 'STOP'; }
-          else if(m.low <= open.tp){ exit = open.tp; reason = 'TP'; }
-        }
-        
-        if(exit){
-          const qty = open.size / open.entry;
-          const brut = open.side === 'LONG' ? (exit - open.entry)*qty : (open.entry - exit)*qty;
-          const net = brut - open.size * FEE * 2;
-          bal += net;
-          if(net > 0) wins++; else losses++;
-          trades.push({...open, exit, reason, pnl: net});
-          open = null;
-        }
-      }
-      
-      if(!open){
-        try {
-          const a = analyze(cd.slice(0, i), {skipFvg:true, skipVp:true, skipOb:false, skipIchi:false, context:false});
-          if(a.decision.includes('GÜÇLÜ LONG') || a.decision === 'LONG'){
-            open = {side:'LONG', entry: m.close, size: bal*POS, sl: a.stopLong, tp: a.tpLong};
-          } else if(a.decision.includes('GÜÇLÜ SHORT') || a.decision === 'SHORT'){
-            open = {side:'SHORT', entry: m.close, size: bal*POS, sl: a.stopShort, tp: a.tpShort};
-          }
-        } catch(e){}
-      }
-      
-      if(bal > peak) peak = bal;
-      const dd = ((peak - bal)/peak)*100;
-      if(dd > maxDD) maxDD = dd;
-      
-      if(i % 25 === 0) equity.push({time: m.time, value: bal});
-    }
-    
-    if(open){
-      const last = cd[cd.length-1].close;
-      const qty = open.size / open.entry;
-      const brut = open.side === 'LONG' ? (last - open.entry)*qty : (open.entry - last)*qty;
-      const net = brut - open.size * FEE * 2;
-      bal += net;
-      trades.push({...open, exit: last, reason: 'AÇIK', pnl: net});
-    }
-    
-    const total = trades.length;
-    const wr = total > 0 ? (wins/total*100) : 0;
-    const tw = trades.filter(t => t.pnl > 0).reduce((s,t) => s+t.pnl, 0);
-    const tl = Math.abs(trades.filter(t => t.pnl < 0).reduce((s,t) => s+t.pnl, 0));
-    const pf = tl > 0 ? tw/tl : (tw > 0 ? 999 : 0);
-    const ret = ((bal - START)/START)*100;
-    const cls = bal > START ? 'text-green' : 'text-red';
-    const canvasId = 'eqChart_' + Date.now();
-    
-    el.innerHTML = `
-      <div class="text-c mb12">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em">FİNAL BAKİYE</div>
-        <div style="font-family:var(--mono);font-size:32px;font-weight:900;margin-top:6px" class="${cls}">$${bal.toFixed(2)}</div>
-        <div style="font-family:var(--mono);font-size:13px;font-weight:700" class="${cls}">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div>
-      </div>
-      <div style="background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:12px">
-        <canvas id="${canvasId}" style="width:100%;height:120px"></canvas>
-      </div>
-      <div class="mgrid">
-        <div class="metric"><div class="metric-l">İşlem</div><div class="metric-v">${total}</div></div>
-        <div class="metric"><div class="metric-l">Win Rate</div><div class="metric-v ${wr >= 50 ? 'g' : 'r'}">${wr.toFixed(1)}%</div></div>
-        <div class="metric"><div class="metric-l">Profit Factor</div><div class="metric-v ${pf >= 1 ? 'g' : 'r'}">${pf.toFixed(2)}</div></div>
-        <div class="metric"><div class="metric-l">Max DD</div><div class="metric-v r">-${maxDD.toFixed(1)}%</div></div>
-      </div>
-      <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:10px">
-        ${S.symbol} • ${S.tf === 'D' ? '1 Gün' : S.tf + ' dk'} • 1000 mum
-      </div>`;
-    
-    const canvas = $(canvasId);
-    if(canvas && equity.length > 1){
-      const ctx = canvas.getContext('2d');
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-      ctx.scale(dpr, dpr);
-      const w = canvas.offsetWidth, h = canvas.offsetHeight;
-      const minV = Math.min(...equity.map(e => e.value));
-      const maxV = Math.max(...equity.map(e => e.value));
-      const range = maxV - minV || 1;
-      const isUp = bal > START;
-      
-      ctx.strokeStyle = 'rgba(0,180,255,.06)';
-      ctx.lineWidth = 1;
-      for(let i = 0; i <= 4; i++){
-        const y = (h/4) * i;
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-      }
-      
-      const grad = ctx.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, isUp ? 'rgba(0,230,118,.35)' : 'rgba(255,61,92,.35)');
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      
-      ctx.beginPath();
-      equity.forEach((e, i)=>{
-        const x = (i/(equity.length-1))*w;
-        const y = h - 10 - ((e.value - minV)/range)*(h - 20);
-        if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      });
-      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
-      
-      ctx.beginPath();
-      equity.forEach((e, i)=>{
-        const x = (i/(equity.length-1))*w;
-        const y = h - 10 - ((e.value - minV)/range)*(h - 20);
-        if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      });
-      ctx.strokeStyle = isUp ? '#00e676' : '#ff3d5c';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-    
-    log('signal', '💰 Backtest tamamlandı', '$' + bal.toFixed(2) + ' (WR: ' + wr.toFixed(1) + '% PF: ' + pf.toFixed(2) + ')');
-  } catch(e){
-    el.innerHTML = '<div class="alert d">Hata: ' + e.message + '</div>';
-  }
-  
-  btn.disabled = false;
-  btn.textContent = 'SİMÜLASYONU ÇALIŞTIR';
-}
-
-/* ═══════════════════════════════════════════════════════
-   EK INIT
-   ═══════════════════════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    try {
-      const capitalInput = $('botCapital');
-      if(capitalInput) capitalInput.addEventListener('input', updateRiskSummary);
-      
-      const profileSelect = $('riskProfile');
-      if(profileSelect) profileSelect.addEventListener('change', applyRiskProfile);
-      
-      ['riskPct','leverage','maxPos','dailyLimit','tpPct','slPct','trailPct'].forEach(id=>{
-        const el = $(id);
-        if(el){
-          el.addEventListener('input', () => {
-            const p = $('riskProfile');
-            if(p) p.value = 'custom';
-            updateRiskSummary();
-          });
-        }
-      });
-      
-      ['paperBalance','paperMaxPos','paperMinConf','paperScanCount'].forEach(id=>{
-        const el = $(id);
-        if(el){
-          el.addEventListener('change', () => {
-            if(id === 'paperBalance') S.paper.cfg.balance = parseFloat(el.value) || 100;
-            if(id === 'paperMaxPos') S.paper.cfg.maxPos = parseInt(el.value) || 5;
-            if(id === 'paperMinConf') S.paper.cfg.minConf = parseInt(el.value) || 70;
-            if(id === 'paperScanCount') S.paper.cfg.scanCount = parseInt(el.value) || 50;
-            localStorage.setItem('paperCfg', JSON.stringify(S.paper.cfg));
-          });
-        }
-      });
-      
-      const bt = $('btBtn');
-      if(bt) bt.onclick = runBacktest;
-      
-      updateRiskSummary();
-      
-      console.log('[NEBULA v8.1] Kısım 2/2 yüklendi ✓');
-    } catch(e){
-      console.error('[NEBULA] Kısım 2 init hatası:', e);
-    }
-  }, 200);
-});
 </script>
 </body>
 </html>
